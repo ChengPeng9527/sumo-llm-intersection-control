@@ -1,6 +1,6 @@
-﻿# Current Project Status
+# Current Project Status
 
 - Root: D:\Sumo\sumo_train
-- Snapshot: archive/original_snapshot/$(Get-Date -Format 'yyyyMMdd_HHmmss')
-- Git: not yet initialized at snapshot creation time
-- Notes: Phase 0 freeze and audit manifest created.
+- Snapshot: archive/original_snapshot/20260802_194429
+- Git: initialized with phase 0 snapshot commit
+- Notes: Phase 0 freeze complete; active project skeleton added in Phase 1.

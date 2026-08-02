@@ -1,0 +1,21 @@
+route_ids:
+  - N_S
+  - S_N
+  - E_W
+  - W_E
+
+compatibility:
+  - [N_S, S_N]
+  - [S_N, N_S]
+  - [E_W, W_E]
+  - [W_E, E_W]
+
+conflicts:
+  - [N_S, E_W]
+  - [N_S, W_E]
+  - [S_N, E_W]
+  - [S_N, W_E]
+  - [E_W, N_S]
+  - [E_W, S_N]
+  - [W_E, N_S]
+  - [W_E, S_N]

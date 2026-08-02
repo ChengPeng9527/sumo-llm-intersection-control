@@ -1,17 +1,16 @@
+from __future__ import annotations
+
 import pandas as pd
 
-df = pd.read_csv("baseline_records.csv")
 
-# throughput
-vehicles = df["vehicle"].nunique()
+def main():
+    df = pd.read_csv("results/summary_4v.csv")
+    if df.empty:
+        print("No summary data found.")
+        return
+    print("=== Summary Metrics ===")
+    print(df.to_string(index=False))
 
-# stop count
-stops = (df["speed"] < 0.1).sum()
 
-# average speed
-avg_speed = df["speed"].mean()
-
-print("=== Baseline Metrics ===")
-print(f"Vehicles passed: {vehicles}")
-print(f"Total stop events: {stops}")
-print(f"Average speed: {avg_speed:.2f}")
+if __name__ == "__main__":
+    main()

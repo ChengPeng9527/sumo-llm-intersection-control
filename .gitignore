@@ -1,0 +1,16 @@
+__pycache__/
+.pytest_cache/
+.mypy_cache/
+.venv/
+venv/
+env/
+.env
+results/
+archive/generated_old/
+archive/legacy_results/
+archive/legacy_code/
+archive/unrelated_documents/
+*.pyc
+*.pyo
+*.pyd
+*.log

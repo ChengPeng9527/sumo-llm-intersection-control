@@ -1,0 +1,32 @@
+action,relative_path,old_sha256,new_sha256,reason,restore_source,git_commit
+ADDED,.env.example,,,security template,git restore,582a6a8
+ADDED,.gitignore,,,ignore caches and results,git restore,582a6a8
+ADDED,README.md,,,project guide,git restore,582a6a8
+ADDED,requirements.txt,,,dependency list,git restore,582a6a8
+ADDED,config/project_config.yaml,,,project config,git restore,582a6a8
+ADDED,config/experiment_matrix.yaml,,,experiment matrix,git restore,582a6a8
+ADDED,config/route_conflicts.yaml,,,route matrix,git restore,582a6a8
+ADDED,config/prompt_config.yaml,,,prompt config,git restore,582a6a8
+ADDED,src/common/config.py,,,config loader,git restore,582a6a8
+ADDED,src/common/logging_schema.py,,,log schema,git restore,582a6a8
+ADDED,src/common/state.py,,,state dataclass,git restore,582a6a8
+ADDED,src/common/metrics.py,,,shared metrics,git restore,582a6a8
+ADDED,src/safety/route_conflict.py,,,route conflict matrix,git restore,582a6a8
+ADDED,src/safety/tti_safety.py,,,TTI safety helper,git restore,582a6a8
+ADDED,src/safety/safety_verifier.py,,,deterministic verifier,git restore,582a6a8
+ADDED,src/llm/prompt_builder.py,,,mock prompt builder,git restore,582a6a8
+ADDED,src/llm/response_parser.py,,,LLM response parser,git restore,582a6a8
+ADDED,src/llm/fallback_policy.py,,,mock LLM fallback,git restore,582a6a8
+ADDED,src/experiments/scenario_generator.py,,,scenario generator,git restore,582a6a8
+ADDED,src/experiments/run_single.py,,,single-run helper,git restore,582a6a8
+ADDED,src/experiments/experiment_runner.py,,,matrix runner,git restore,582a6a8
+ADDED,src/analysis/aggregate_results.py,,,aggregation helper,git restore,582a6a8
+ADDED,src/analysis/statistical_analysis.py,,,stats helper,git restore,582a6a8
+ADDED,src/analysis/generate_figures.py,,,figure helper,git restore,582a6a8
+ADDED,common.py,,,active compatibility layer,git restore,582a6a8
+ADDED,baseline_controller.py,,,active baseline controller,git restore,582a6a8
+ADDED,cooperative_controller.py,,,active cooperative controller,git restore,582a6a8
+ADDED,llm_controller.py,,,active mock LLM controller,git restore,582a6a8
+ADDED,ttc_safety.py,,,active safety wrapper,git restore,582a6a8
+ADDED,run_experiment.py,,,active runner,git restore,582a6a8
+ADDED,analyze_metrics.py,,,summary inspection helper,git restore,582a6a8

@@ -1,0 +1,16 @@
+project_root: D:/Sumo/sumo_train
+sumo_binary: D:/Sumo/bin/sumo.exe
+sumo_gui_binary: D:/Sumo/bin/sumo-gui.exe
+sumo_config: simulation.sumocfg
+results_dir: results
+control_radius: 45
+max_speed: 13.89
+stop_speed: 0.1
+tti_threshold_seconds: 3.0
+simulation_step_length: 1.0
+default_simulation_duration: 200
+default_seed: 1
+debug_mode: true
+intersection_center:
+  x: -43.65
+  y: 11.26

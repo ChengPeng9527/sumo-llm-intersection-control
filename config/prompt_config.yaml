@@ -1,0 +1,13 @@
+basic_prompt_version: v1
+structured_prompt_version: v1
+
+actions:
+  - PROCEED
+  - WAIT
+  - FREE
+
+output_format: json_only
+
+notes:
+  - Real LLM integration is pending.
+  - Mock prompt content should remain clearly marked as mock-only.

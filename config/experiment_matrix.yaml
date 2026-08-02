@@ -1,0 +1,46 @@
+controllers:
+  - baseline
+  - cooperative
+
+densities:
+  low:
+    vehicles_per_hour: 120
+    simulation_duration_seconds: 240
+    route_distribution:
+      N_S: 0.25
+      S_N: 0.25
+      E_W: 0.25
+      W_E: 0.25
+    minimum_depart_gap: 4
+    maximum_depart_gap: 12
+  medium:
+    vehicles_per_hour: 240
+    simulation_duration_seconds: 240
+    route_distribution:
+      N_S: 0.25
+      S_N: 0.25
+      E_W: 0.25
+      W_E: 0.25
+    minimum_depart_gap: 2
+    maximum_depart_gap: 8
+  high:
+    vehicles_per_hour: 360
+    simulation_duration_seconds: 240
+    route_distribution:
+      N_S: 0.25
+      S_N: 0.25
+      E_W: 0.25
+      W_E: 0.25
+    minimum_depart_gap: 1
+    maximum_depart_gap: 4
+
+seeds:
+  - 1
+  - 2
+  - 3
+  - 4
+  - 5
+
+reserved_controllers:
+  - real_llm
+  - real_llm_safety

@@ -69,16 +69,24 @@ Return JSON in exactly this format, using all required vehicle IDs:
 """
     return prompt.strip()
 
-from openai import OpenAI
 import json
 import re
+import os
 
+from openai import OpenAI
+
+OPENROUTER_API_KEY = os.getenv("OPENROUTER_API_KEY", "")
 client = OpenAI(
-    base_url="https://openrouter.ai/api/v1",
-    api_key="REDACTED_EXPOSED_OPENROUTER_KEY"
+    base_url=os.getenv("LLM_BASE_URL", "https://openrouter.ai/api/v1"),
+    api_key=OPENROUTER_API_KEY,
 )
+REAL_LLM_ENABLED = bool(OPENROUTER_API_KEY)
 
 def real_llm_decision(state):
+    if not REAL_LLM_ENABLED:
+        print("Real LLM disabled: using mock fallback only.")
+        return mock_llm_decision(state)
+
     prompt = build_llm_prompt(state)
 
     try:
