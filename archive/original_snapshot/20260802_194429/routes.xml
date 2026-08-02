@@ -1,0 +1,17 @@
+<routes>
+
+    <vType id="car" accel="2.6" decel="4.5"
+           sigma="0.5" length="5"
+           maxSpeed="13.9"/>
+
+    <route id="N_S" edges="N -S"/>
+    <route id="S_N" edges="S -N"/>
+    <route id="E_W" edges="E -W"/>
+    <route id="W_E" edges="W -E"/>
+
+    <vehicle id="car0" type="car" route="N_S" depart="0"/>
+    <vehicle id="car1" type="car" route="S_N" depart="2"/>
+    <vehicle id="car2" type="car" route="E_W" depart="4"/>
+    <vehicle id="car3" type="car" route="W_E" depart="6"/>
+
+</routes>
