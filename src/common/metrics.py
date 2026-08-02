@@ -11,11 +11,27 @@ from .config import load_project_config
 
 CONFIG = load_project_config()
 RESULTS_DIR = CONFIG["results_dir_path"]
+RAW_RESULTS_DIR = RESULTS_DIR / "raw"
+SUMMARIES_DIR = RESULTS_DIR / "summaries"
+FIGURES_DIR = RESULTS_DIR / "figures"
 
 
 def ensure_results_dir() -> Path:
     RESULTS_DIR.mkdir(parents=True, exist_ok=True)
+    RAW_RESULTS_DIR.mkdir(parents=True, exist_ok=True)
+    SUMMARIES_DIR.mkdir(parents=True, exist_ok=True)
+    FIGURES_DIR.mkdir(parents=True, exist_ok=True)
     return RESULTS_DIR
+
+
+def run_artifact_paths(run_id: str) -> dict[str, Path]:
+    run_dir = RAW_RESULTS_DIR / run_id
+    return {
+        "run_dir": run_dir,
+        "step_records": run_dir / "step_records.csv",
+        "run_metadata": run_dir / "run_metadata.json",
+        "events": run_dir / "events.jsonl",
+    }
 
 
 def route_direction_from_route_id(route_id: str) -> str:
@@ -54,6 +70,7 @@ def empty_record(**overrides):
             "final_decision": overrides.get("final_decision", "WAIT"),
             "conflict_detected": overrides.get("conflict_detected", False),
             "conflict_type": overrides.get("conflict_type", ""),
+            "priority_reason": overrides.get("priority_reason", ""),
             "safety_override": overrides.get("safety_override", False),
             "llm_called": overrides.get("llm_called", False),
             "llm_mode": overrides.get("llm_mode", "mock"),
@@ -112,15 +129,24 @@ def write_jsonl(path: Path | str, rows: Iterable[dict]) -> None:
             f.write(json.dumps(row, ensure_ascii=False) + "\n")
 
 
+def write_run_artifacts(run_id: str, records: list[dict], events: list[dict], metadata: dict) -> dict[str, Path]:
+    paths = run_artifact_paths(run_id)
+    paths["run_dir"].mkdir(parents=True, exist_ok=True)
+    write_csv(paths["step_records"], records, FIELDNAMES)
+    write_json(paths["run_metadata"], metadata)
+    write_jsonl(paths["events"], events)
+    return paths
+
+
 def calculate_summary(records: list[dict], run_metadata: dict | None = None) -> dict:
     if not records:
         return {}
 
     total_rows = len(records)
     vehicles = sorted({r["vehicle_id"] for r in records if r.get("vehicle_id")})
-    departed = sum(1 for r in records if r.get("departed"))
-    arrived = sum(1 for r in records if r.get("arrived"))
-    collisions = sum(1 for r in records if r.get("collision"))
+    departed = run_metadata.get("departed_count") if run_metadata else None
+    arrived = run_metadata.get("arrived_count") if run_metadata else None
+    collisions = run_metadata.get("collision_count") if run_metadata else None
     overrides = sum(1 for r in records if r.get("safety_override"))
     tti_conflicts = sum(1 for r in records if r.get("conflict_detected"))
     speeds = [float(r.get("speed_after_action") or 0.0) for r in records]
@@ -132,15 +158,15 @@ def calculate_summary(records: list[dict], run_metadata: dict | None = None) -> 
 
     summary = {
         "vehicles_observed": len(vehicles),
-        "departed": departed,
-        "arrived": arrived,
-        "throughput": arrived,
-        "completion_rate": arrived / departed if departed else 0.0,
+        "departed": departed if departed is not None else sum(1 for r in records if r.get("departed")),
+        "arrived": arrived if arrived is not None else sum(1 for r in records if r.get("arrived")),
+        "throughput": arrived if arrived is not None else sum(1 for r in records if r.get("arrived")),
+        "completion_rate": (arrived / departed) if departed else 0.0,
         "mean_speed": sum(speeds) / len(speeds),
         "mean_waiting_time": sum(waits) / len(vehicles) if vehicles else 0.0,
         "stopped_time_steps": len(waits),
         "stop_episode_count": len(waits),
-        "collision_count": collisions,
+        "collision_count": collisions if collisions is not None else sum(1 for r in records if r.get("collision")),
         "tti_conflict_event_count": tti_conflicts,
         "safety_override_count": overrides,
         "safety_override_rate": overrides / total_rows if total_rows else 0.0,

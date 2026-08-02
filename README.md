@@ -22,6 +22,8 @@ This repository is currently organized for Milestone A:
 - reproducible scenario generation
 - experiment runner scaffolding
 - aggregation and evidence templates
+- phase-by-phase traceability notes under `docs/phases/`
+- evidence templates under `docs/evidence/`
 
 Real LLM API experiments are intentionally not part of Milestone A.
 

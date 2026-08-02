@@ -8,13 +8,15 @@ from common import (
     CONFIG,
     MAX_SPEED,
     apply_decision,
+    build_event,
+    build_run_metadata,
     calculate_summary,
     create_record,
-    distance_to_center,
-    get_vehicle_route,
-    is_in_control_zone,
+    run_artifact_paths,
     print_summary,
-    write_records,
+    write_run_artifacts,
+    is_in_control_zone,
+    distance_to_center,
 )
 
 
@@ -25,7 +27,9 @@ CONTROLLER_NAME = "BaselineRule"
 SCENARIO = "debug_four_vehicle"
 SEED = CONFIG["default_seed"]
 SIMULATION_STEPS = CONFIG["default_simulation_duration"]
-OUTPUT_CSV = CONFIG["results_dir_path"] / "E01_BASELINE_4V_S1_records.csv"
+RUN_ID = f"{EXPERIMENT_ID}_seed{SEED}"
+ARTIFACTS = run_artifact_paths(RUN_ID)
+OUTPUT_CSV = ARTIFACTS["step_records"]
 
 
 def choose_priority_vehicle(vehicles):
@@ -51,10 +55,42 @@ def decide(vehicles):
 def run():
     traci.start([str(SUMO_BINARY), "-c", str(SUMO_CONFIG), "--start"])
     records = []
+    events = []
     all_seen_vehicles = set()
+    departed_seen = set()
+    arrived_seen = set()
 
     for step in range(SIMULATION_STEPS):
         traci.simulationStep()
+        departed_ids = list(traci.simulation.getDepartedIDList())
+        arrived_ids = list(traci.simulation.getArrivedIDList())
+        simulation_time = step * CONFIG["simulation_step_length"]
+        for vid in departed_ids:
+            if vid not in departed_seen:
+                departed_seen.add(vid)
+                events.append(
+                    build_event(
+                        run_id=RUN_ID,
+                        event_type="departed",
+                        simulation_step=step,
+                        simulation_time_seconds=simulation_time,
+                        vehicle_id=vid,
+                        details="vehicle entered the simulation",
+                    )
+                )
+        for vid in arrived_ids:
+            if vid not in arrived_seen:
+                arrived_seen.add(vid)
+                events.append(
+                    build_event(
+                        run_id=RUN_ID,
+                        event_type="arrived",
+                        simulation_step=step,
+                        simulation_time_seconds=simulation_time,
+                        vehicle_id=vid,
+                        details="vehicle left the simulation",
+                    )
+                )
         vehicles = list(traci.vehicle.getIDList())
         all_seen_vehicles.update(vehicles)
         decisions = decide(vehicles)
@@ -75,13 +111,30 @@ def run():
                     raw_decision=raw_decision,
                     final_decision=final_decision,
                     conflict=False,
+                    run_id=RUN_ID,
+                    safety_enabled=False,
+                    simulation_time_seconds=simulation_time,
+                    departed=vid in departed_seen,
+                    arrived=False,
                 )
             )
         time.sleep(0.03)
 
     traci.close(False)
-    write_records(OUTPUT_CSV, records)
-    summary = calculate_summary(records, all_seen_vehicles)
+    metadata = build_run_metadata(
+        run_id=RUN_ID,
+        controller=CONTROLLER_NAME,
+        safety_enabled=False,
+        scenario_id=SCENARIO,
+        density="debug",
+        seed=SEED,
+        status="completed",
+    )
+    metadata["departed_count"] = len(departed_seen)
+    metadata["arrived_count"] = len(arrived_seen)
+    metadata["collision_count"] = 0
+    write_run_artifacts(RUN_ID, records, events, metadata)
+    summary = calculate_summary(records, all_seen_vehicles, run_metadata=metadata)
     print_summary("Baseline Controller Metrics", summary, OUTPUT_CSV)
 
 

@@ -21,6 +21,7 @@ FIELDNAMES = [
     "final_decision",
     "conflict_detected",
     "conflict_type",
+    "priority_reason",
     "safety_override",
     "llm_called",
     "llm_mode",

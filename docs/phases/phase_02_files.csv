@@ -1,0 +1,6 @@
+action,relative_path,old_sha256,new_sha256,reason,restore_source,git_commit
+ADDED,tests/test_route_conflicts.py,,,route matrix test,git restore,9132c58
+MODIFIED,cooperative_controller.py,,,route compatibility fix,git restore,9132c58
+MODIFIED,config/route_conflicts.yaml,,,route matrix definition,git restore,9132c58
+MODIFIED,src/safety/route_conflict.py,,,shared route matrix helpers,git restore,9132c58
+MODIFIED,docs/current_project_status.md,,,status annotation,git restore,9132c58

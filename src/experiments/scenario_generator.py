@@ -6,6 +6,7 @@ from pathlib import Path
 from xml.etree import ElementTree as ET
 
 from src.common.config import load_project_config
+import yaml
 
 
 CONFIG = load_project_config()
@@ -26,15 +27,16 @@ def _route_sequence(route_distribution: dict[str, float], count: int, seed: int)
     return rnd.choices(routes, weights=weights, k=count)
 
 
-def generate_scenario(scenario_id: str, density_name: str, seed: int) -> dict:
-    matrix = load_project_config()
+def load_experiment_matrix() -> dict:
     matrix_path = PROJECT_ROOT / "config" / "experiment_matrix.yaml"
-    import yaml
-
     with matrix_path.open("r", encoding="utf-8") as f:
-        exp = yaml.safe_load(f)
+        return yaml.safe_load(f) or {}
 
-    density = exp["densities"][density_name]
+
+def generate_scenario(scenario_id: str, density_name: str, seed: int) -> dict:
+    experiment_matrix = load_experiment_matrix()
+
+    density = experiment_matrix["densities"][density_name]
     vehicles_per_hour = int(density["vehicles_per_hour"])
     duration = int(density["simulation_duration_seconds"])
     total_vehicles = max(1, int(round(vehicles_per_hour * duration / 3600)))
@@ -88,7 +90,20 @@ def generate_scenario(scenario_id: str, density_name: str, seed: int) -> dict:
         "vehicles_per_hour": vehicles_per_hour,
         "simulation_duration_seconds": duration,
         "total_vehicles": total_vehicles,
+        "route_sequence": route_ids,
     }
     (out_dir / "generation_config.json").write_text(json.dumps(generation_config, indent=2), encoding="utf-8")
-    (out_dir / "generation_manifest.json").write_text(json.dumps({"routes_file": str(routes_path)}, indent=2), encoding="utf-8")
+    (out_dir / "generation_manifest.json").write_text(
+        json.dumps(
+            {
+                "routes_file": str(routes_path),
+                "route_count": len(route_ids),
+                "route_ids": list(density["route_distribution"].keys()),
+                "seed": seed,
+                "scenario_id": scenario_id,
+            },
+            indent=2,
+        ),
+        encoding="utf-8",
+    )
     return generation_config

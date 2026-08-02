@@ -5,9 +5,12 @@ from pathlib import Path
 from src.common.config import load_project_config
 from src.common.logging_schema import FIELDNAMES
 from src.common.metrics import (
+    build_event,
     calculate_summary as _calculate_summary,
     empty_record,
     route_direction_from_route_id,
+    run_artifact_paths,
+    write_run_artifacts,
     write_csv,
     write_json,
     write_jsonl,
@@ -98,6 +101,7 @@ def create_record(
         final_decision=final_decision,
         conflict_detected=conflict,
         conflict_type=extra.get("conflict_type", ""),
+        priority_reason=extra.get("priority_reason", ""),
         safety_override=raw_decision != final_decision,
         llm_called=extra.get("llm_called", False),
         llm_mode=extra.get("llm_mode", "mock"),

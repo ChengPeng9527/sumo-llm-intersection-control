@@ -1,0 +1,9 @@
+action,relative_path,old_sha256,new_sha256,reason,restore_source,git_commit
+MODIFIED,src/common/metrics.py,,,run-level artifact helpers,git restore,9132c58
+MODIFIED,common.py,,,compatibility layer for unified logging,git restore,9132c58
+MODIFIED,baseline_controller.py,,,write step records and events,git restore,9132c58
+MODIFIED,cooperative_controller.py,,,write step records and events,git restore,9132c58
+MODIFIED,llm_controller.py,,,write step records and events,git restore,9132c58
+MODIFIED,run_experiment.py,,,read run-level outputs,git restore,9132c58
+MODIFIED,analyze_metrics.py,,,summary reader,git restore,9132c58
+ADDED,tests/test_metrics.py,,,schema and summary test,git restore,9132c58
