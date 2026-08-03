@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import os
 import time
+from pathlib import Path
 
 import traci
 
@@ -33,13 +34,13 @@ except Exception:  # pragma: no cover
 
 
 SUMO_BINARY = CONFIG["sumo_gui_binary_path"]
-SUMO_CONFIG = CONFIG["sumo_config_path"]
+SUMO_CONFIG = Path(os.getenv("SUMO_CONFIG_PATH", str(CONFIG["sumo_config_path"])))
 EXPERIMENT_ID = "E03_LLM_4V_S1"
 CONTROLLER_NAME = "LLMController"
 SCENARIO = os.getenv("SCENARIO_ID", "debug_four_vehicle")
 VEHICLE_COUNT = int(os.getenv("VEHICLE_COUNT", "4"))
 SEED = CONFIG["default_seed"]
-SIMULATION_STEPS = CONFIG["default_simulation_duration"]
+SIMULATION_STEPS = int(os.getenv("SIMULATION_STEPS", str(CONFIG["default_simulation_duration"])))
 USE_SAFETY_LAYER = True
 LLM_MODE = os.getenv("LLM_MODE", "mock").strip().lower()
 LLM_MODEL = os.getenv("LLM_MODEL", "openrouter/free")

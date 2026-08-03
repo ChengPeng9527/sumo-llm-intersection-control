@@ -1,0 +1,11 @@
+action,relative_path,reason
+MODIFIED,baseline_controller.py,use scenario-specific SUMO config and simulation length
+MODIFIED,cooperative_controller.py,use scenario-specific SUMO config and simulation length
+MODIFIED,docs/current_project_status.md,record scenario wiring fix
+ADDED,docs/phases/phase_13_diff_summary.md,traceable phase summary
+ADDED,docs/phases/phase_13_files.csv,traceable file list
+ADDED,docs/phases/phase_13_report.md,phase report
+MODIFIED,llm_controller.py,use scenario-specific SUMO config and simulation length
+MODIFIED,src/experiments/experiment_runner.py,pass scenario config path and simulation steps to controllers
+MODIFIED,src/experiments/scenario_generator.py,write per-scenario routes and sumocfg
+MODIFIED,tests/test_scenario_generation.py,assert scenario sumocfg is created

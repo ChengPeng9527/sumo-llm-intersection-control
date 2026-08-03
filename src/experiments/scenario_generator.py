@@ -12,6 +12,7 @@ import yaml
 CONFIG = load_project_config()
 PROJECT_ROOT = Path(CONFIG["project_root"])
 GENERATED_ROOT = PROJECT_ROOT / "simulation" / "generated_routes"
+BASE_SUMOCFG = PROJECT_ROOT / "simulation.sumocfg"
 EDGE_MAP = {
     "N_S": ("N", "-S"),
     "S_N": ("S", "-N"),
@@ -88,6 +89,29 @@ def generate_scenario(
     routes_path = out_dir / "routes.xml"
     ET.ElementTree(root).write(routes_path, encoding="utf-8", xml_declaration=True)
 
+    scenario_sumocfg = out_dir / "simulation.sumocfg"
+    try:
+        config_tree = ET.parse(BASE_SUMOCFG)
+        config_root = config_tree.getroot()
+        for route_node in config_root.iter("route-files"):
+            route_node.set("value", str(routes_path.resolve()))
+        for net_node in config_root.iter("net-file"):
+            net_node.set("value", str((PROJECT_ROOT / "net.net.xml").resolve()))
+        config_tree.write(scenario_sumocfg, encoding="utf-8", xml_declaration=True)
+    except Exception:
+        scenario_sumocfg.write_text(
+            (
+                "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n"
+                "<configuration>\n"
+                "  <input>\n"
+                f"    <net-file value=\"{(PROJECT_ROOT / 'net.net.xml').resolve()}\"/>\n"
+                f"    <route-files value=\"{routes_path.resolve()}\"/>\n"
+                "  </input>\n"
+                "</configuration>\n"
+            ),
+            encoding="utf-8",
+        )
+
     generation_config = {
         "scenario_id": scenario_id,
         "density": density_name,
@@ -97,6 +121,7 @@ def generate_scenario(
         "simulation_duration_seconds": duration,
         "total_vehicles": total_vehicles,
         "route_sequence": route_ids,
+        "sumocfg_path": str(scenario_sumocfg),
     }
     (out_dir / "generation_config.json").write_text(json.dumps(generation_config, indent=2), encoding="utf-8")
     (out_dir / "generation_manifest.json").write_text(
@@ -108,6 +133,7 @@ def generate_scenario(
                 "vehicle_count": total_vehicles,
                 "seed": seed,
                 "scenario_id": scenario_id,
+                "sumocfg_path": str(scenario_sumocfg),
             },
             indent=2,
         ),

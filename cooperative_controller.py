@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import os
 import time
+from pathlib import Path
 
 import traci
 
@@ -23,13 +24,13 @@ from src.safety.route_conflict import routes_compatible, validate_conflict_matri
 
 
 SUMO_BINARY = CONFIG["sumo_gui_binary_path"]
-SUMO_CONFIG = CONFIG["sumo_config_path"]
+SUMO_CONFIG = Path(os.getenv("SUMO_CONFIG_PATH", str(CONFIG["sumo_config_path"])))
 EXPERIMENT_ID = "E02_COOPERATIVE_4V_S1"
 CONTROLLER_NAME = "CooperativeRule"
 SCENARIO = os.getenv("SCENARIO_ID", "debug_four_vehicle")
 VEHICLE_COUNT = int(os.getenv("VEHICLE_COUNT", "4"))
 SEED = CONFIG["default_seed"]
-SIMULATION_STEPS = CONFIG["default_simulation_duration"]
+SIMULATION_STEPS = int(os.getenv("SIMULATION_STEPS", str(CONFIG["default_simulation_duration"])))
 RUN_ID = f"{EXPERIMENT_ID}_v{VEHICLE_COUNT}_seed{SEED}"
 ARTIFACTS = run_artifact_paths(RUN_ID)
 OUTPUT_CSV = ARTIFACTS["step_records"]

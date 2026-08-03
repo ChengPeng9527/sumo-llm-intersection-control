@@ -17,3 +17,4 @@ def test_generate_scenario_records_requested_vehicle_count():
     assert config["vehicle_count"] == 8
     assert config["total_vehicles"] == 8
     assert len(config["route_sequence"]) == 8
+    assert config["sumocfg_path"].endswith("simulation.sumocfg")

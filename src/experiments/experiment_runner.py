@@ -80,6 +80,8 @@ def main(argv: list[str] | None = None) -> int:
         launch_env = os.environ.copy()
         launch_env["SCENARIO_ID"] = scenario_id
         launch_env["VEHICLE_COUNT"] = str(vehicle_count)
+        launch_env["SUMO_CONFIG_PATH"] = scenario_config["sumocfg_path"]
+        launch_env["SIMULATION_STEPS"] = str(scenario_config["simulation_duration_seconds"])
         if controller == "llm":
             launch_env["LLM_MODE"] = args.llm_mode
         manifest_rows.append(
@@ -91,6 +93,7 @@ def main(argv: list[str] | None = None) -> int:
                 "scenario_id": scenario_id,
                 "controller_script": str(controller_script),
                 "scenario_config": scenario_config,
+                "sumocfg_path": scenario_config["sumocfg_path"],
                 "llm_mode": args.llm_mode if controller == "llm" else "",
             }
         )
