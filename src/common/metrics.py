@@ -55,6 +55,7 @@ def empty_record(**overrides):
             "safety_enabled": overrides.get("safety_enabled", False),
             "scenario_id": overrides.get("scenario_id", ""),
             "density": overrides.get("density", ""),
+            "vehicle_count": overrides.get("vehicle_count", 4),
             "seed": overrides.get("seed", 0),
             "simulation_step": overrides.get("simulation_step", 0),
             "simulation_time_seconds": overrides.get("simulation_time_seconds", 0.0),
@@ -180,6 +181,7 @@ def calculate_summary(records: list[dict], run_metadata: dict | None = None) -> 
                 "run_id": run_metadata.get("run_id", ""),
                 "controller": run_metadata.get("controller", ""),
                 "density": run_metadata.get("density", ""),
+                "vehicle_count": run_metadata.get("vehicle_count", len(vehicles)),
                 "seed": run_metadata.get("seed", 0),
             }
         )

@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import os
 import time
 
 import traci
@@ -20,22 +21,44 @@ from common import (
     write_run_artifacts,
 )
 from src.llm.fallback_policy import mock_llm_decision
+from src.llm.response_parser import parse_llm_response
 from src.llm.prompt_builder import build_structured_prompt
 from src.safety.route_conflict import validate_conflict_matrix
 from ttc_safety import verify_decisions
 
+try:
+    from openai import OpenAI
+except Exception:  # pragma: no cover
+    OpenAI = None
+
 
 SUMO_BINARY = CONFIG["sumo_gui_binary_path"]
 SUMO_CONFIG = CONFIG["sumo_config_path"]
-EXPERIMENT_ID = "E03_LLM_MOCK_4V_S1"
-CONTROLLER_NAME = "LLMMockController"
-SCENARIO = "debug_four_vehicle"
+EXPERIMENT_ID = "E03_LLM_4V_S1"
+CONTROLLER_NAME = "LLMController"
+SCENARIO = os.getenv("SCENARIO_ID", "debug_four_vehicle")
+VEHICLE_COUNT = int(os.getenv("VEHICLE_COUNT", "4"))
 SEED = CONFIG["default_seed"]
 SIMULATION_STEPS = CONFIG["default_simulation_duration"]
 USE_SAFETY_LAYER = True
-RUN_ID = f"{EXPERIMENT_ID}_seed{SEED}"
+LLM_MODE = os.getenv("LLM_MODE", "mock").strip().lower()
+LLM_MODEL = os.getenv("LLM_MODEL", "openrouter/free")
+LLM_BASE_URL = os.getenv("LLM_BASE_URL", "https://openrouter.ai/api/v1")
+OPENROUTER_API_KEY = os.getenv("OPENROUTER_API_KEY", "")
+RUN_ID = f"{EXPERIMENT_ID}_v{VEHICLE_COUNT}_seed{SEED}_{LLM_MODE}"
 ARTIFACTS = run_artifact_paths(RUN_ID)
 OUTPUT_CSV = ARTIFACTS["step_records"]
+
+
+def build_llm_client():
+    if LLM_MODE != "real":
+        return None
+    if not OPENROUTER_API_KEY or OpenAI is None:
+        return None
+    return OpenAI(base_url=LLM_BASE_URL, api_key=OPENROUTER_API_KEY)
+
+
+CLIENT = build_llm_client()
 
 
 def build_traffic_state(vehicles):
@@ -57,8 +80,46 @@ def build_traffic_state(vehicles):
 def decide(vehicles):
     traffic_state = build_traffic_state(vehicles)
     prompt = build_structured_prompt(traffic_state, validate_conflict_matrix())
+    vehicle_ids = [v["vehicle_id"] for v in traffic_state]
+    if LLM_MODE == "real" and CLIENT is not None:
+        start_time = time.perf_counter()
+        try:
+            response = CLIENT.chat.completions.create(
+                model=LLM_MODEL,
+                messages=[{"role": "user", "content": prompt}],
+            )
+            content = response.choices[0].message.content or ""
+            raw_decisions, parse_ok = parse_llm_response(content, vehicle_ids)
+            elapsed_ms = (time.perf_counter() - start_time) * 1000
+            return raw_decisions, prompt, {
+                "llm_called": True,
+                "llm_model": LLM_MODEL,
+                "llm_response_time_ms": round(elapsed_ms, 2),
+                "json_parse_success": parse_ok,
+                "fallback_used": False,
+            }
+        except Exception:
+            raw_decisions = mock_llm_decision(traffic_state)
+            elapsed_ms = (time.perf_counter() - start_time) * 1000
+            return raw_decisions, prompt, {
+                "llm_called": True,
+                "llm_model": LLM_MODEL,
+                "llm_response_time_ms": round(elapsed_ms, 2),
+                "json_parse_success": False,
+                "fallback_used": True,
+            }
+
+    if LLM_MODE == "real" and CLIENT is None:
+        print("LLM real mode requested but OpenAI client is unavailable; using mock fallback.")
+
     raw_decisions = mock_llm_decision(traffic_state)
-    return raw_decisions, prompt
+    return raw_decisions, prompt, {
+        "llm_called": False,
+        "llm_model": "",
+        "llm_response_time_ms": 0.0,
+        "json_parse_success": True,
+        "fallback_used": False,
+    }
 
 
 def run():
@@ -103,7 +164,7 @@ def run():
         vehicles = list(traci.vehicle.getIDList())
         all_seen_vehicles.update(vehicles)
 
-        raw_decisions, _prompt = decide(vehicles)
+        raw_decisions, _prompt, llm_meta = decide(vehicles)
         if USE_SAFETY_LAYER:
             final_decisions, conflict_flags, conflict_types, priority_reason = verify_decisions(
                 traci,
@@ -138,7 +199,13 @@ def run():
                     run_id=RUN_ID,
                     safety_enabled=USE_SAFETY_LAYER,
                     simulation_time_seconds=simulation_time,
-                    llm_mode="mock",
+                    vehicle_count=VEHICLE_COUNT,
+                    llm_mode=LLM_MODE,
+                    llm_called=llm_meta["llm_called"],
+                    llm_model=llm_meta["llm_model"],
+                    llm_response_time_ms=llm_meta["llm_response_time_ms"],
+                    json_parse_success=llm_meta["json_parse_success"],
+                    fallback_used=llm_meta["fallback_used"],
                     departed=vid in departed_seen,
                     arrived=False,
                 )
@@ -152,8 +219,10 @@ def run():
         safety_enabled=USE_SAFETY_LAYER,
         scenario_id=SCENARIO,
         density="debug",
+        vehicle_count=VEHICLE_COUNT,
         seed=SEED,
-        llm_mode="mock",
+        llm_mode=LLM_MODE,
+        llm_model=LLM_MODEL if LLM_MODE == "real" else "",
         status="completed",
     )
     metadata["departed_count"] = len(departed_seen)

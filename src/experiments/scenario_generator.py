@@ -33,13 +33,18 @@ def load_experiment_matrix() -> dict:
         return yaml.safe_load(f) or {}
 
 
-def generate_scenario(scenario_id: str, density_name: str, seed: int) -> dict:
+def generate_scenario(
+    scenario_id: str,
+    density_name: str,
+    seed: int,
+    vehicle_count: int | None = None,
+) -> dict:
     experiment_matrix = load_experiment_matrix()
 
     density = experiment_matrix["densities"][density_name]
     vehicles_per_hour = int(density["vehicles_per_hour"])
     duration = int(density["simulation_duration_seconds"])
-    total_vehicles = max(1, int(round(vehicles_per_hour * duration / 3600)))
+    total_vehicles = vehicle_count if vehicle_count is not None else max(1, int(round(vehicles_per_hour * duration / 3600)))
     route_ids = _route_sequence(density["route_distribution"], total_vehicles, seed)
     rnd = random.Random(seed)
 
@@ -87,6 +92,7 @@ def generate_scenario(scenario_id: str, density_name: str, seed: int) -> dict:
         "scenario_id": scenario_id,
         "density": density_name,
         "seed": seed,
+        "vehicle_count": total_vehicles,
         "vehicles_per_hour": vehicles_per_hour,
         "simulation_duration_seconds": duration,
         "total_vehicles": total_vehicles,
@@ -99,6 +105,7 @@ def generate_scenario(scenario_id: str, density_name: str, seed: int) -> dict:
                 "routes_file": str(routes_path),
                 "route_count": len(route_ids),
                 "route_ids": list(density["route_distribution"].keys()),
+                "vehicle_count": total_vehicles,
                 "seed": seed,
                 "scenario_id": scenario_id,
             },

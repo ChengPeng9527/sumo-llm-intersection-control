@@ -1,0 +1,19 @@
+action,relative_path,reason
+MODIFIED,.gitignore,ignore generated scenario artifacts
+MODIFIED,README.md,document 4/8/16 vehicle and LLM modes
+MODIFIED,baseline_controller.py,include vehicle count in run identity
+MODIFIED,common.py,add env helpers and vehicle count metadata
+MODIFIED,config/experiment_matrix.yaml,document vehicle-count options
+MODIFIED,cooperative_controller.py,include vehicle count in run identity
+MODIFIED,docs/current_project_status.md,record phase 12 progress
+ADDED,docs/phases/phase_12_diff_summary.md,traceable phase summary
+ADDED,docs/phases/phase_12_files.csv,traceable file list
+ADDED,docs/phases/phase_12_report.md,phase report
+MODIFIED,llm_controller.py,add mock and real LLM modes
+MODIFIED,src/common/logging_schema.py,record vehicle count
+MODIFIED,src/common/metrics.py,record vehicle count in summaries
+MODIFIED,src/experiments/experiment_runner.py,run 4/8/16 vehicle experiments and llm mode
+MODIFIED,src/experiments/scenario_generator.py,generate explicit vehicle-count scenarios
+ADDED,tests/test_response_parser.py,cover LLM response parsing
+MODIFIED,tests/test_metrics.py,cover vehicle-count fields
+MODIFIED,tests/test_scenario_generation.py,cover explicit 8-vehicle generation

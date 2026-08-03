@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import os
 import time
 
 import traci
@@ -25,10 +26,11 @@ SUMO_BINARY = CONFIG["sumo_gui_binary_path"]
 SUMO_CONFIG = CONFIG["sumo_config_path"]
 EXPERIMENT_ID = "E02_COOPERATIVE_4V_S1"
 CONTROLLER_NAME = "CooperativeRule"
-SCENARIO = "debug_four_vehicle"
+SCENARIO = os.getenv("SCENARIO_ID", "debug_four_vehicle")
+VEHICLE_COUNT = int(os.getenv("VEHICLE_COUNT", "4"))
 SEED = CONFIG["default_seed"]
 SIMULATION_STEPS = CONFIG["default_simulation_duration"]
-RUN_ID = f"{EXPERIMENT_ID}_seed{SEED}"
+RUN_ID = f"{EXPERIMENT_ID}_v{VEHICLE_COUNT}_seed{SEED}"
 ARTIFACTS = run_artifact_paths(RUN_ID)
 OUTPUT_CSV = ARTIFACTS["step_records"]
 
@@ -128,6 +130,7 @@ def run():
                     run_id=RUN_ID,
                     safety_enabled=False,
                     simulation_time_seconds=simulation_time,
+                    vehicle_count=VEHICLE_COUNT,
                     departed=vid in departed_seen,
                     arrived=False,
                 )
@@ -141,6 +144,7 @@ def run():
         safety_enabled=False,
         scenario_id=SCENARIO,
         density="debug",
+        vehicle_count=VEHICLE_COUNT,
         seed=SEED,
         status="completed",
     )

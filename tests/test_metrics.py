@@ -6,6 +6,7 @@ def test_empty_record_contains_unified_fields():
     assert record["run_id"] == "r1"
     assert record["experiment_id"] == "e1"
     assert record["controller"] == "c1"
+    assert record["vehicle_count"] == 4
     assert "safety_override" in record
     assert "llm_response_time_ms" in record
     assert "priority_reason" in record
@@ -30,8 +31,9 @@ def test_calculate_summary_uses_unified_schema():
             final_decision="PROCEED",
         ),
     ]
-    summary = calculate_summary(records, run_metadata={"departed_count": 2, "arrived_count": 1})
+    summary = calculate_summary(records, run_metadata={"departed_count": 2, "arrived_count": 1, "vehicle_count": 8})
     assert summary["vehicles_observed"] == 2
     assert summary["departed"] == 2
     assert summary["arrived"] == 1
     assert summary["completion_rate"] == 0.5
+    assert summary["vehicle_count"] == 8

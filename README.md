@@ -7,7 +7,7 @@ Design and Evaluation of a Safety-Constrained LLM-based Cooperative Decision Fra
 - SUMO-based unsignalized four-way intersection.
 - Deterministic baseline controller.
 - Cooperative rule controller.
-- LLM placeholder controller for later integration.
+- LLM controller with mock and real modes.
 - Deterministic safety verification layer.
 
 ## Status
@@ -24,8 +24,10 @@ This repository is currently organized for Milestone A:
 - aggregation and evidence templates
 - phase-by-phase traceability notes under `docs/phases/`
 - evidence templates under `docs/evidence/`
+- expandable 4/8/16-vehicle scenario generation
+- optional LLM dry-run and real API testing
 
-Real LLM API experiments are intentionally not part of Milestone A.
+Real LLM API experiments are only enabled when `LLM_MODE=real` and the API key is configured.
 
 ## Requirements
 

@@ -1,4 +1,4 @@
-from src.experiments.scenario_generator import _route_sequence
+from src.experiments.scenario_generator import _route_sequence, generate_scenario
 
 
 def test_route_sequence_is_deterministic():
@@ -9,3 +9,11 @@ def test_route_sequence_is_deterministic():
     assert first == second
     assert len(first) == 12
     assert set(first).issubset(route_distribution.keys())
+
+
+def test_generate_scenario_records_requested_vehicle_count():
+    config = generate_scenario("pytest_low_v8_seed7", "low", 7, vehicle_count=8)
+
+    assert config["vehicle_count"] == 8
+    assert config["total_vehicles"] == 8
+    assert len(config["route_sequence"]) == 8

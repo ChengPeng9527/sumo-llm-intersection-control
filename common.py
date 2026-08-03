@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import os
 from pathlib import Path
 
 from src.common.config import load_project_config
@@ -28,6 +29,21 @@ CONTROL_RADIUS = float(CONFIG["control_radius"])
 MAX_SPEED = float(CONFIG["max_speed"])
 STOP_SPEED = float(CONFIG["stop_speed"])
 TTC_THRESHOLD = float(CONFIG["tti_threshold_seconds"])
+
+
+def get_env_str(name: str, default: str) -> str:
+    value = os.getenv(name)
+    return value if value not in (None, "") else default
+
+
+def get_env_int(name: str, default: int) -> int:
+    value = os.getenv(name)
+    if value in (None, ""):
+        return default
+    try:
+        return int(value)
+    except ValueError:
+        return default
 
 
 def ensure_result_dir():
@@ -86,6 +102,7 @@ def create_record(
         safety_enabled=extra.get("safety_enabled", False),
         scenario_id=scenario,
         density=extra.get("density", "unknown"),
+        vehicle_count=extra.get("vehicle_count", 4),
         seed=seed,
         simulation_step=step,
         simulation_time_seconds=extra.get("simulation_time_seconds", float(step)),
@@ -137,6 +154,7 @@ def calculate_summary(records, all_seen_vehicles=None, run_metadata=None):
 def print_summary(title, summary, output_csv):
     print(f"=== {title} ===")
     print(f"Vehicles observed: {summary.get('vehicles_observed', 0)}")
+    print(f"Vehicle count: {summary.get('vehicle_count', 0)}")
     print(f"Departed: {summary.get('departed', 0)}")
     print(f"Arrived: {summary.get('arrived', 0)}")
     print(f"Throughput: {summary.get('throughput', 0)}")
@@ -155,6 +173,7 @@ def build_run_metadata(**kwargs):
         "safety_enabled": kwargs.get("safety_enabled", False),
         "scenario_id": kwargs.get("scenario_id", ""),
         "density": kwargs.get("density", ""),
+        "vehicle_count": kwargs.get("vehicle_count", 4),
         "seed": kwargs.get("seed", 0),
         "start_time": kwargs.get("start_time", ""),
         "end_time": kwargs.get("end_time", ""),

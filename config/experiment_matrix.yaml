@@ -1,6 +1,7 @@
 controllers:
   - baseline
   - cooperative
+  - llm
 
 densities:
   low:
@@ -40,6 +41,11 @@ seeds:
   - 3
   - 4
   - 5
+
+vehicle_counts:
+  - 4
+  - 8
+  - 16
 
 reserved_controllers:
   - real_llm

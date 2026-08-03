@@ -6,6 +6,7 @@ FIELDNAMES = [
     "safety_enabled",
     "scenario_id",
     "density",
+    "vehicle_count",
     "seed",
     "simulation_step",
     "simulation_time_seconds",

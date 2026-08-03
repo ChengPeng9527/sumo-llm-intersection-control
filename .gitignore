@@ -6,6 +6,7 @@ venv/
 env/
 .env
 results/
+simulation/generated_routes/
 archive/generated_old/
 archive/legacy_results/
 archive/legacy_code/
