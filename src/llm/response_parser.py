@@ -25,24 +25,37 @@ def _normalize_action(action: object) -> str:
 
 
 def parse_llm_response(response_text: str, vehicles: list[str]) -> tuple[dict[str, str], bool]:
+    _, validated, ok = parse_llm_response_details(response_text, vehicles)
+    return validated, ok
+
+
+def parse_llm_response_details(response_text: str, vehicles: list[str]) -> tuple[dict[str, str], dict[str, str], bool]:
     try:
         payload = json.loads(_extract_json_text(response_text))
         decisions = payload.get("decisions", payload)
+        raw_decisions = {}
+        validated_decisions = {}
         if isinstance(decisions, list):
-            parsed = {}
             for item in decisions:
                 vid = item.get("vehicle_id")
-                action = _normalize_action(item.get("decision", "WAIT"))
+                raw_action = item.get("decision", "MISSING")
+                action = _normalize_action(raw_action)
                 if vid in vehicles:
-                    parsed[vid] = action
+                    raw_decisions[vid] = raw_action if isinstance(raw_action, str) else "MISSING"
+                    validated_decisions[vid] = action
         elif isinstance(decisions, dict):
-            parsed = {}
             for vid in vehicles:
-                parsed[vid] = _normalize_action(decisions.get(vid, "WAIT"))
+                raw_action = decisions.get(vid, "MISSING")
+                raw_decisions[vid] = raw_action if isinstance(raw_action, str) else "MISSING"
+                validated_decisions[vid] = _normalize_action(raw_action)
         else:
-            parsed = {}
+            raw_decisions = {vid: "MISSING" for vid in vehicles}
+            validated_decisions = {vid: "WAIT" for vid in vehicles}
         for vid in vehicles:
-            parsed.setdefault(vid, "WAIT")
-        return parsed, True
+            raw_decisions.setdefault(vid, "MISSING")
+            validated_decisions.setdefault(vid, "WAIT")
+        return raw_decisions, validated_decisions, True
     except Exception:
-        return {vid: "WAIT" for vid in vehicles}, False
+        raw_decisions = {vid: "MISSING" for vid in vehicles}
+        validated_decisions = {vid: "WAIT" for vid in vehicles}
+        return raw_decisions, validated_decisions, False

@@ -1,0 +1,39 @@
+docs/
+  current_project_status.md
+  final_acceptance_checklist.md
+  project_inventory.md
+  evidence/
+    claim_evidence_matrix_template.md
+    source_log_template.csv
+  phases/
+    phase_17/
+      report.md
+      files.csv
+      diff.patch
+      tests.txt
+      project_tree.txt
+      metadata.json
+      prompt_snapshot.txt
+    phase_18/
+      environment.txt
+      report.md
+      tests.txt
+      project_tree.txt
+      metadata.json
+      files.csv
+      diff.patch
+src/
+  controllers/
+    decision_pipeline.py
+    raw_llm_controller.py
+    hybrid_llm_controller.py
+    hybrid_llm_safety_controller.py
+  llm/
+    postprocessor.py
+    response_parser.py
+  common/
+    logging_schema.py
+    metrics.py
+tests/
+  test_decision_pipeline.py
+  test_llm_postprocessor.py

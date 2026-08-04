@@ -1,0 +1,20 @@
+action,relative_path,old_sha256,new_sha256,reason,restore_source,git_commit
+MODIFIED,src/common/logging_schema.py,,,Add stage-level logging fields for decision separation,HEAD,phase-18-decision-pipeline-separation
+MODIFIED,src/common/metrics.py,,,Extend empty records with raw/hybrid/safety trace fields,HEAD,phase-18-decision-pipeline-separation
+MODIFIED,common.py,,,Populate the new trace-level record fields,HEAD,phase-18-decision-pipeline-separation
+MODIFIED,src/llm/response_parser.py,,,Return both raw and validated LLM decisions,HEAD,phase-18-decision-pipeline-separation
+MODIFIED,requirements.txt,,,Declare pytest/openai/python-dotenv for the project environment,HEAD,phase-18-decision-pipeline-separation
+MODIFIED,baseline_controller.py,,,Populate new logging fields without changing baseline logic,HEAD,phase-18-decision-pipeline-separation
+MODIFIED,cooperative_controller.py,,,Populate new logging fields without changing cooperative logic,HEAD,phase-18-decision-pipeline-separation
+MODIFIED,src/experiments/experiment_runner.py,,,Add controller mappings for the new decision-pipeline modes,HEAD,phase-18-decision-pipeline-separation
+ADDED,src/controllers/__init__.py,,,Create the shared controller package,HEAD,phase-18-decision-pipeline-separation
+ADDED,src/controllers/decision_pipeline.py,,,Shared raw/hybrid/safety execution pipeline,HEAD,phase-18-decision-pipeline-separation
+ADDED,src/controllers/raw_llm_controller.py,,,Raw LLM controller entrypoint,HEAD,phase-18-decision-pipeline-separation
+ADDED,src/controllers/hybrid_llm_controller.py,,,Hybrid controller entrypoint,HEAD,phase-18-decision-pipeline-separation
+ADDED,src/controllers/hybrid_llm_safety_controller.py,,,Hybrid+safe controller entrypoint,HEAD,phase-18-decision-pipeline-separation
+ADDED,src/llm/postprocessor.py,,,Deterministic cooperative and interface postprocessing,HEAD,phase-18-decision-pipeline-separation
+ADDED,raw_llm_controller.py,,,Root wrapper for the raw controller,HEAD,phase-18-decision-pipeline-separation
+ADDED,hybrid_llm_controller.py,,,Root wrapper for the hybrid controller,HEAD,phase-18-decision-pipeline-separation
+ADDED,hybrid_llm_safety_controller.py,,,Root wrapper for the hybrid+safety controller,HEAD,phase-18-decision-pipeline-separation
+ADDED,tests/test_decision_pipeline.py,,,Decision pipeline regression tests,HEAD,phase-18-decision-pipeline-separation
+ADDED,tests/test_llm_postprocessor.py,,,Postprocessor regression tests,HEAD,phase-18-decision-pipeline-separation

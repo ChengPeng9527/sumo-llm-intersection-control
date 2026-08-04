@@ -16,7 +16,11 @@ from src.experiments.scenario_generator import generate_scenario
 
 def main(argv: list[str] | None = None) -> int:
     parser = argparse.ArgumentParser()
-    parser.add_argument("--controller", choices=["baseline", "cooperative", "llm"], default=None)
+    parser.add_argument(
+        "--controller",
+        choices=["baseline", "cooperative", "cooperative_rule", "llm", "raw_llm", "hybrid_llm", "hybrid_llm_safety"],
+        default=None,
+    )
     parser.add_argument("--density", default=None)
     parser.add_argument("--seed", type=int, default=None)
     parser.add_argument("--vehicle-count", type=int, default=None)
@@ -73,10 +77,20 @@ def main(argv: list[str] | None = None) -> int:
         manifest_path.write_text(json.dumps(manifest_rows, indent=2), encoding="utf-8")
         return 0
 
+    controller_script_map = {
+        "baseline": root / "baseline_controller.py",
+        "cooperative": root / "cooperative_controller.py",
+        "cooperative_rule": root / "cooperative_controller.py",
+        "llm": root / "llm_controller.py",
+        "raw_llm": root / "raw_llm_controller.py",
+        "hybrid_llm": root / "hybrid_llm_controller.py",
+        "hybrid_llm_safety": root / "hybrid_llm_safety_controller.py",
+    }
+
     for controller, density, seed, vehicle_count in runs:
         scenario_id = f"{density}_v{vehicle_count}_seed{seed}"
         scenario_config = generate_scenario(scenario_id, density, seed, vehicle_count=vehicle_count)
-        controller_script = root / f"{controller}_controller.py"
+        controller_script = controller_script_map.get(controller, root / f"{controller}_controller.py")
         launch_env = os.environ.copy()
         launch_env["SCENARIO_ID"] = scenario_id
         launch_env["VEHICLE_COUNT"] = str(vehicle_count)

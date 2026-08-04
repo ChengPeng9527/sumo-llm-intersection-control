@@ -1,0 +1,23 @@
+Phase 18 validation notes:
+
+- Syntax-only validation completed successfully with `py_compile` against:
+  - `src/controllers/decision_pipeline.py`
+  - `src/controllers/raw_llm_controller.py`
+  - `src/controllers/hybrid_llm_controller.py`
+  - `src/controllers/hybrid_llm_safety_controller.py`
+  - `src/llm/postprocessor.py`
+  - `src/llm/response_parser.py`
+  - `src/common/logging_schema.py`
+  - `src/common/metrics.py`
+  - `common.py`
+  - `baseline_controller.py`
+  - `cooperative_controller.py`
+  - `src/experiments/experiment_runner.py`
+  - `llm_controller.py`
+  - `raw_llm_controller.py`
+  - `hybrid_llm_controller.py`
+  - `hybrid_llm_safety_controller.py`
+  - `tests/test_llm_postprocessor.py`
+  - `tests/test_decision_pipeline.py`
+- Runtime test execution with `pytest` is blocked in this shell because `pytest` is not available in the discoverable Python runtime.
+- Analysis execution is blocked in this shell because `matplotlib` is not available in the discoverable Python runtime.

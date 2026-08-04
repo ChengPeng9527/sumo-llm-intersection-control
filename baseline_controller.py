@@ -101,6 +101,7 @@ def run():
         for vid in vehicles:
             raw_decision = decisions[vid]
             final_decision = raw_decision
+            outside_rule = not is_in_control_zone(traci, vid)
             apply_decision(traci, vid, final_decision)
             records.append(
                 create_record(
@@ -114,10 +115,19 @@ def run():
                     raw_decision=raw_decision,
                     final_decision=final_decision,
                     conflict=False,
+                    llm_raw_decision=raw_decision,
+                    validated_llm_decision=raw_decision,
+                    postprocessed_decision=final_decision,
                     run_id=RUN_ID,
                     safety_enabled=False,
                     simulation_time_seconds=simulation_time,
                     vehicle_count=VEHICLE_COUNT,
+                    outside_control_zone_rule_applied=outside_rule,
+                    postprocess_applied=False,
+                    postprocess_reason="",
+                    safety_override=False,
+                    safety_reason="",
+                    decision_source="DETERMINISTIC_INTERFACE_RULE",
                     departed=vid in departed_seen,
                     arrived=False,
                 )

@@ -5,10 +5,15 @@
 - `baseline_controller.py`
 - `cooperative_controller.py`
 - `llm_controller.py`
+- `raw_llm_controller.py`
+- `hybrid_llm_controller.py`
+- `hybrid_llm_safety_controller.py`
 - `ttc_safety.py`
 - `run_experiment.py`
 - `analyze_metrics.py`
 - `common.py`
+- `src/controllers/`
+- `src/llm/postprocessor.py`
 
 ## Shared Packages
 
@@ -24,8 +29,9 @@
 - `tests/test_metrics.py`
 - `tests/test_safety_verifier.py`
 - `tests/test_scenario_generation.py`
+- `tests/test_decision_pipeline.py`
+- `tests/test_llm_postprocessor.py`
 
 ## Archive
 
 - `archive/original_snapshot/20260802_194429`
-

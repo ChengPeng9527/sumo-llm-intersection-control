@@ -1,0 +1,28 @@
+{
+  "phase": 18,
+  "objective": "Separate raw LLM, cooperative post-processing, and deterministic safety filtering into traceable stages.",
+  "start_time": "2026-08-04T22:15:58.4667195+01:00",
+  "end_time": "2026-08-04T22:15:58.4667195+01:00",
+  "previous_commit": "bd6d81a",
+  "current_commit": "",
+  "branch": "phase-18-decision-pipeline-separation",
+  "status": "BLOCKED_ENVIRONMENT",
+  "tests_passed": [
+    "Syntax-only validation via py_compile"
+  ],
+  "tests_failed": [
+    "pytest runtime execution unavailable",
+    "analysis runtime execution unavailable"
+  ],
+  "experiments_executed": [
+    "No Groq smoke run executed in this phase"
+  ],
+  "experiments_skipped": [
+    "No 8/16 vehicle comparison",
+    "No prompt tuning",
+    "No statistical comparison"
+  ],
+  "known_issues": [
+    "The discoverable Python runtime lacks pytest, matplotlib, pyyaml, openai, and python-dotenv."
+  ]
+}
