@@ -1,7 +1,5 @@
 from __future__ import annotations
 
-from src.safety.route_conflict import routes_compatible
-
 
 def choose_priority_vehicle(vehicle_states: list[dict]) -> dict | None:
     controlled = [state for state in vehicle_states if state.get("inside_control_zone")]
@@ -29,11 +27,16 @@ def apply_interface_rule(
 def apply_cooperative_postprocessing(
     trace: dict[str, dict],
     vehicle_states: list[dict],
+    routes_compatible_fn=None,
 ) -> dict[str, dict]:
     updated = {vid: dict(entry) for vid, entry in trace.items()}
     priority_vehicle = choose_priority_vehicle(vehicle_states)
     if priority_vehicle is None:
         return updated
+
+    if routes_compatible_fn is None:
+        def routes_compatible_fn(route_a: str, route_b: str) -> bool:
+            return route_a == route_b
 
     priority_route = priority_vehicle.get("route_id", "")
     priority_vehicle_id = priority_vehicle["vehicle_id"]
@@ -43,7 +46,7 @@ def apply_cooperative_postprocessing(
             continue
         if updated[vid]["postprocessed_decision"] != "WAIT":
             continue
-        if routes_compatible(priority_route, state.get("route_id", "")):
+        if routes_compatible_fn(priority_route, state.get("route_id", "")):
             updated[vid]["postprocessed_decision"] = "PROCEED"
             updated[vid]["postprocess_applied"] = True
             updated[vid]["postprocess_reason"] = f"compatible_with_priority:{priority_vehicle_id}"

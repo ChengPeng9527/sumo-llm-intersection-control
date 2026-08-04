@@ -1,9 +1,8 @@
-from types import SimpleNamespace
+from src.controllers.decision_pipeline import apply_safety_filter, build_decision_trace, execute_decision_pipeline, normalize_action
+from src.controllers.decision_rules import baseline_decide, cooperative_decide
+from src.llm.postprocessor import apply_cooperative_postprocessing, apply_interface_rule
 
-import baseline_controller
-import cooperative_controller
-
-from src.controllers.decision_pipeline import apply_safety_filter, build_decision_trace
+from tests.fakes import FixedPostprocessor, FixedSafetyGuard, PassThroughPostprocessor, PassThroughSafetyGuard, StubDecisionProvider
 
 
 def _build_state(vehicle_id: str, route_id: str, tti: float, inside: bool) -> dict:
@@ -17,80 +16,159 @@ def _build_state(vehicle_id: str, route_id: str, tti: float, inside: bool) -> di
     }
 
 
-def test_safety_verifier_downgrades_unsafe_proceed_to_wait():
+def test_raw_proceed_passes_through_pipeline():
+    traffic_state = [_build_state("car0", "N_S", 2.0, True)]
+    provider = StubDecisionProvider({"car0": "PROCEED"}, meta={"llm_called": True, "decision_source": "LLM_RAW"})
+    raw_decisions, llm_meta = provider(traffic_state)
+    trace = execute_decision_pipeline(traffic_state, raw_decisions, stage_mode="raw", llm_meta=llm_meta)
+
+    assert provider.calls == 1
+    assert trace["car0"]["llm_raw_decision"] == "PROCEED"
+    assert trace["car0"]["validated_llm_decision"] == "PROCEED"
+    assert trace["car0"]["postprocessed_decision"] == "PROCEED"
+    assert trace["car0"]["final_decision"] == "PROCEED"
+
+
+def test_normalize_action_strips_and_uppercases():
+    assert normalize_action(" proceed ") == "PROCEED"
+
+
+def test_invalid_action_becomes_wait():
+    traffic_state = [_build_state("car0", "N_S", 1.0, True)]
+    trace = execute_decision_pipeline(
+        traffic_state,
+        {"car0": "FLY"},
+        stage_mode="raw",
+        llm_meta={"llm_called": True, "decision_source": "FALLBACK"},
+    )
+
+    assert trace["car0"]["llm_raw_decision"] == "FLY"
+    assert trace["car0"]["validated_llm_decision"] == "WAIT"
+    assert trace["car0"]["final_decision"] == "WAIT"
+    assert trace["car0"]["decision_source"] == "FALLBACK"
+
+
+def test_postprocessor_can_change_decision_and_keep_fields_separate():
     traffic_state = [
         _build_state("car0", "N_S", 1.0, True),
-        _build_state("car1", "E_W", 1.1, True),
+        _build_state("car1", "N_S", 2.0, True),
     ]
-    trace = build_decision_trace(
+    postprocessor = FixedPostprocessor({"car1": "PROCEED"})
+    trace = execute_decision_pipeline(
         traffic_state,
-        {"car0": "PROCEED", "car1": "PROCEED"},
-        {"car0": "PROCEED", "car1": "PROCEED"},
-        {"llm_called": True},
+        {"car0": "PROCEED", "car1": "WAIT"},
+        stage_mode="hybrid",
+        llm_meta={"llm_called": True, "decision_source": "LLM_RAW"},
+        postprocessor_fn=postprocessor,
     )
-    trace = apply_safety_filter(trace, traffic_state)
 
-    assert trace["car0"]["final_decision"] == "PROCEED"
+    assert postprocessor.calls == 1
+    assert trace["car1"]["llm_raw_decision"] == "WAIT"
+    assert trace["car1"]["validated_llm_decision"] == "WAIT"
+    assert trace["car1"]["postprocessed_decision"] == "PROCEED"
+    assert trace["car1"]["final_decision"] == "PROCEED"
+    assert trace["car1"]["postprocess_applied"] is True
+
+
+def test_safety_guard_can_override_to_wait():
+    traffic_state = [
+        _build_state("car0", "N_S", 1.0, True),
+        _build_state("car1", "N_S", 1.2, True),
+    ]
+    postprocessor = FixedPostprocessor({"car1": "PROCEED"})
+    safety = FixedSafetyGuard({"car1": "WAIT"})
+    trace = execute_decision_pipeline(
+        traffic_state,
+        {"car0": "PROCEED", "car1": "WAIT"},
+        stage_mode="hybrid_safety",
+        llm_meta={"llm_called": True, "decision_source": "LLM_RAW"},
+        postprocessor_fn=postprocessor,
+        safety_guard_fn=safety,
+    )
+
+    assert postprocessor.calls == 1
+    assert safety.calls == 1
+    assert trace["car1"]["postprocessed_decision"] == "PROCEED"
     assert trace["car1"]["final_decision"] == "WAIT"
     assert trace["car1"]["safety_override"] is True
-    assert trace["car1"]["safety_reason"] != ""
+    assert trace["car1"]["safety_reason"] == "fixed_guard"
 
 
-def test_safety_verifier_never_upgrades_wait_to_proceed():
-    traffic_state = [
-        _build_state("car0", "N_S", 1.0, True),
-        _build_state("car1", "E_W", 1.1, True),
-    ]
+def test_safety_guard_never_upgrades_wait_to_proceed():
+    traffic_state = [_build_state("car0", "N_S", 1.0, True)]
     trace = build_decision_trace(
         traffic_state,
-        {"car0": "PROCEED", "car1": "WAIT"},
-        {"car0": "PROCEED", "car1": "WAIT"},
+        {"car0": "WAIT"},
+        {"car0": "WAIT"},
         {"llm_called": True},
     )
     trace = apply_safety_filter(trace, traffic_state)
 
-    assert trace["car1"]["final_decision"] == "WAIT"
-    assert trace["car1"]["safety_override"] is False
+    assert trace["car0"]["final_decision"] == "WAIT"
+    assert trace["car0"]["safety_override"] is False
 
 
-def test_baseline_behavior_is_not_broken(monkeypatch):
-    monkeypatch.setattr(baseline_controller, "is_in_control_zone", lambda _traci, vid: vid != "outside")
-    monkeypatch.setattr(baseline_controller, "distance_to_center", lambda _traci, vid: {"car0": 2.0, "car1": 4.0, "outside": 100.0}[vid])
+def test_pipeline_call_counts_and_outside_zone_rule():
+    traffic_state = [
+        _build_state("car0", "N_S", 1.0, True),
+        _build_state("car1", "N_S", 2.0, True),
+        _build_state("car2", "E_W", 3.0, False),
+    ]
+    provider = StubDecisionProvider(
+        {"car0": "PROCEED", "car1": "WAIT", "car2": "PROCEED"},
+        meta={"llm_called": True, "decision_source": "LLM_RAW"},
+    )
+    postprocessor = PassThroughPostprocessor()
+    safety = PassThroughSafetyGuard()
+    raw_decisions, llm_meta = provider(traffic_state)
+    trace = execute_decision_pipeline(
+        traffic_state,
+        raw_decisions,
+        stage_mode="hybrid_safety",
+        llm_meta=llm_meta,
+        postprocessor_fn=postprocessor,
+        safety_guard_fn=safety,
+    )
 
-    class FakeVehicleAPI:
-        def getSpeed(self, vid):
-            return {"car0": 5.0, "car1": 5.0, "outside": 5.0}[vid]
-
-        def getPosition(self, vid):
-            return (0.0, 0.0)
-
-    fake_traci = SimpleNamespace(vehicle=FakeVehicleAPI())
-    monkeypatch.setattr(baseline_controller, "traci", fake_traci)
-
-    decisions = baseline_controller.decide(["car0", "car1", "outside"])
-
-    assert decisions["car0"] == "PROCEED"
-    assert decisions["car1"] == "WAIT"
-    assert decisions["outside"] == "FREE"
+    assert provider.calls == 1
+    assert postprocessor.calls == 1
+    assert safety.calls == 1
+    assert trace["car2"]["final_decision"] == "FREE"
+    assert trace["car2"]["outside_control_zone_rule_applied"] is True
+    assert trace["car2"]["decision_source"] == "DETERMINISTIC_INTERFACE_RULE"
 
 
-def test_cooperative_behavior_is_not_broken(monkeypatch):
-    monkeypatch.setattr(cooperative_controller, "is_in_control_zone", lambda _traci, vid: vid != "outside")
-    monkeypatch.setattr(cooperative_controller, "distance_to_center", lambda _traci, vid: {"car0": 2.0, "car1": 4.0, "outside": 100.0}[vid])
-    monkeypatch.setattr(cooperative_controller, "get_vehicle_route", lambda _traci, vid: {"car0": "N_S", "car1": "E_W", "outside": "W_E"}[vid])
+def test_baseline_and_cooperative_rules_stay_consistent():
+    baseline_states = [
+        _build_state("car0", "N_S", 1.0, True),
+        _build_state("car1", "E_W", 2.0, True),
+        _build_state("car2", "W_E", 9.0, False),
+    ]
+    cooperative_states = [
+        _build_state("car0", "N_S", 1.0, True),
+        _build_state("car1", "N_S", 2.0, True),
+        _build_state("car2", "W_E", 9.0, False),
+    ]
 
-    class FakeVehicleAPI:
-        def getSpeed(self, vid):
-            return {"car0": 5.0, "car1": 5.0, "outside": 5.0}[vid]
+    baseline = baseline_decide(baseline_states)
+    cooperative = cooperative_decide(cooperative_states)
 
-        def getPosition(self, vid):
-            return (0.0, 0.0)
+    assert baseline == {"car0": "PROCEED", "car1": "WAIT", "car2": "FREE"}
+    assert cooperative == {"car0": "PROCEED", "car1": "PROCEED", "car2": "FREE"}
 
-    fake_traci = SimpleNamespace(vehicle=FakeVehicleAPI())
-    monkeypatch.setattr(cooperative_controller, "traci", fake_traci)
 
-    decisions = cooperative_controller.decide(["car0", "car1", "outside"])
+def test_decision_trace_fields_remain_distinct():
+    traffic_state = [_build_state("car0", "N_S", 1.0, True)]
+    trace = build_decision_trace(
+        traffic_state,
+        {"car0": "WAIT"},
+        {"car0": "WAIT"},
+        {"llm_called": True},
+    )
+    trace = apply_interface_rule(trace, traffic_state, target_field="postprocessed_decision")
+    trace = apply_cooperative_postprocessing(trace, traffic_state)
 
-    assert decisions["car0"] == "PROCEED"
-    assert decisions["car1"] == "WAIT"
-    assert decisions["outside"] == "FREE"
+    assert trace["car0"]["llm_raw_decision"] == "WAIT"
+    assert trace["car0"]["validated_llm_decision"] == "WAIT"
+    assert trace["car0"]["postprocessed_decision"] == "PROCEED"
+    assert trace["car0"]["final_decision"] == "WAIT"

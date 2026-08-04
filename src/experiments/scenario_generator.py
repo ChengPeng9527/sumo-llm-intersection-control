@@ -5,8 +5,7 @@ import random
 from pathlib import Path
 from xml.etree import ElementTree as ET
 
-from src.common.config import load_project_config
-import yaml
+from src.common.config import load_project_config, load_yaml_config
 
 
 CONFIG = load_project_config()
@@ -29,9 +28,7 @@ def _route_sequence(route_distribution: dict[str, float], count: int, seed: int)
 
 
 def load_experiment_matrix() -> dict:
-    matrix_path = PROJECT_ROOT / "config" / "experiment_matrix.yaml"
-    with matrix_path.open("r", encoding="utf-8") as f:
-        return yaml.safe_load(f) or {}
+    return load_yaml_config("experiment_matrix.yaml")
 
 
 def generate_scenario(

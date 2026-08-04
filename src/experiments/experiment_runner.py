@@ -8,9 +8,7 @@ import subprocess
 import sys
 from pathlib import Path
 
-import yaml
-
-from src.common.config import load_project_config
+from src.common.config import load_project_config, load_yaml_config
 from src.experiments.scenario_generator import generate_scenario
 
 
@@ -32,9 +30,7 @@ def main(argv: list[str] | None = None) -> int:
 
     project = load_project_config()
     root = Path(project["project_root"])
-    matrix_path = root / "config" / "experiment_matrix.yaml"
-    with matrix_path.open("r", encoding="utf-8") as f:
-        matrix = yaml.safe_load(f)
+    matrix = load_yaml_config("experiment_matrix.yaml")
 
     controllers = matrix["controllers"]
     densities = list(matrix["densities"].keys())
