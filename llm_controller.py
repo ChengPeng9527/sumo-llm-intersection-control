@@ -85,6 +85,14 @@ def build_traffic_state(vehicles):
     return state
 
 
+def enforce_zone_policy(traffic_state, raw_decisions):
+    final_decisions = dict(raw_decisions)
+    for state in traffic_state:
+        if not state["inside_control_zone"]:
+            final_decisions[state["vehicle_id"]] = "FREE"
+    return final_decisions
+
+
 def decide(vehicles):
     traffic_state = build_traffic_state(vehicles)
     prompt = build_structured_prompt(traffic_state, validate_conflict_matrix())
@@ -98,6 +106,7 @@ def decide(vehicles):
             )
             content = response.choices[0].message.content or ""
             raw_decisions, parse_ok = parse_llm_response(content, vehicle_ids)
+            raw_decisions = enforce_zone_policy(traffic_state, raw_decisions)
             elapsed_ms = (time.perf_counter() - start_time) * 1000
             return raw_decisions, prompt, {
                 "llm_called": True,
@@ -108,6 +117,7 @@ def decide(vehicles):
             }
         except Exception:
             raw_decisions = mock_llm_decision(traffic_state)
+            raw_decisions = enforce_zone_policy(traffic_state, raw_decisions)
             elapsed_ms = (time.perf_counter() - start_time) * 1000
             return raw_decisions, prompt, {
                 "llm_called": True,
@@ -121,6 +131,7 @@ def decide(vehicles):
         print("LLM real mode requested but OpenAI client is unavailable; using mock fallback.")
 
     raw_decisions = mock_llm_decision(traffic_state)
+    raw_decisions = enforce_zone_policy(traffic_state, raw_decisions)
     return raw_decisions, prompt, {
         "llm_called": False,
         "llm_model": LLM_MODEL if LLM_MODE == "real" else "",

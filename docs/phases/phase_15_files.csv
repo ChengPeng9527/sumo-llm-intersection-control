@@ -1,0 +1,7 @@
+action,relative_path,reason
+MODIFIED,docs/current_project_status.md,record extended-duration fix
+ADDED,docs/phases/phase_15_diff_summary.md,traceable phase summary
+ADDED,docs/phases/phase_15_files.csv,traceable file list
+ADDED,docs/phases/phase_15_report.md,phase report
+MODIFIED,src/experiments/scenario_generator.py,extend simulation window for larger vehicle counts
+MODIFIED,tests/test_scenario_generation.py,lock in duration scaling behavior

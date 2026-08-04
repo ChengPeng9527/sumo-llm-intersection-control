@@ -44,8 +44,13 @@ def generate_scenario(
 
     density = experiment_matrix["densities"][density_name]
     vehicles_per_hour = int(density["vehicles_per_hour"])
-    duration = int(density["simulation_duration_seconds"])
-    total_vehicles = vehicle_count if vehicle_count is not None else max(1, int(round(vehicles_per_hour * duration / 3600)))
+    base_duration = int(density["simulation_duration_seconds"])
+    if vehicle_count is not None:
+        total_vehicles = int(vehicle_count)
+        duration = max(base_duration, 240 + max(0, total_vehicles - 4) * 40)
+    else:
+        duration = base_duration
+        total_vehicles = max(1, int(round(vehicles_per_hour * duration / 3600)))
     route_ids = _route_sequence(density["route_distribution"], total_vehicles, seed)
     rnd = random.Random(seed)
 

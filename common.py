@@ -137,7 +137,8 @@ def apply_decision(traci, veh_id, decision):
     if decision == "WAIT":
         traci.vehicle.setSpeed(veh_id, 0)
     else:
-        traci.vehicle.setSpeed(veh_id, MAX_SPEED)
+        # Hand control back to SUMO so the vehicle follows normal car-following logic.
+        traci.vehicle.setSpeed(veh_id, -1)
 
 
 def write_records(output_csv, records):
