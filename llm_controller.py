@@ -24,7 +24,7 @@ from common import (
 from src.llm.fallback_policy import mock_llm_decision
 from src.llm.response_parser import parse_llm_response
 from src.llm.prompt_builder import build_structured_prompt
-from src.safety.route_conflict import validate_conflict_matrix
+from src.safety.route_conflict import routes_compatible, validate_conflict_matrix
 from ttc_safety import verify_decisions
 
 try:
@@ -93,9 +93,43 @@ def enforce_zone_policy(traffic_state, raw_decisions):
     return final_decisions
 
 
+def promote_compatible_routes(traffic_state, raw_decisions):
+    final_decisions = dict(raw_decisions)
+    controlled = [state for state in traffic_state if state["inside_control_zone"]]
+    if not controlled:
+        return final_decisions
+
+    priority_vehicle = min(controlled, key=lambda state: state["time_to_intersection"])
+    priority_route = priority_vehicle["route_id"]
+
+    for state in controlled:
+        vid = state["vehicle_id"]
+        if final_decisions.get(vid) == "WAIT" and routes_compatible(priority_route, state["route_id"]):
+            final_decisions[vid] = "PROCEED"
+    return final_decisions
+
+
 def decide(vehicles):
     traffic_state = build_traffic_state(vehicles)
-    prompt = build_structured_prompt(traffic_state, validate_conflict_matrix())
+    matrix = validate_conflict_matrix()
+    controlled = [state for state in traffic_state if state["inside_control_zone"]]
+    priority_route = ""
+    priority_vehicle_id = ""
+    if controlled:
+        priority_vehicle = min(controlled, key=lambda state: state["time_to_intersection"])
+        priority_route = priority_vehicle["route_id"]
+        priority_vehicle_id = priority_vehicle["vehicle_id"]
+    policy_hints = {
+        "priority_vehicle_id": priority_vehicle_id,
+        "priority_route_id": priority_route,
+        "controlled_vehicle_count": len(controlled),
+        "compatible_routes_with_priority": [
+            state["route_id"]
+            for state in controlled
+            if priority_route and routes_compatible(priority_route, state["route_id"])
+        ],
+    }
+    prompt = build_structured_prompt(traffic_state, matrix, policy_hints)
     vehicle_ids = [v["vehicle_id"] for v in traffic_state]
     if LLM_MODE == "real" and CLIENT is not None:
         start_time = time.perf_counter()
@@ -107,6 +141,7 @@ def decide(vehicles):
             content = response.choices[0].message.content or ""
             raw_decisions, parse_ok = parse_llm_response(content, vehicle_ids)
             raw_decisions = enforce_zone_policy(traffic_state, raw_decisions)
+            raw_decisions = promote_compatible_routes(traffic_state, raw_decisions)
             elapsed_ms = (time.perf_counter() - start_time) * 1000
             return raw_decisions, prompt, {
                 "llm_called": True,
@@ -118,6 +153,7 @@ def decide(vehicles):
         except Exception:
             raw_decisions = mock_llm_decision(traffic_state)
             raw_decisions = enforce_zone_policy(traffic_state, raw_decisions)
+            raw_decisions = promote_compatible_routes(traffic_state, raw_decisions)
             elapsed_ms = (time.perf_counter() - start_time) * 1000
             return raw_decisions, prompt, {
                 "llm_called": True,
@@ -132,6 +168,7 @@ def decide(vehicles):
 
     raw_decisions = mock_llm_decision(traffic_state)
     raw_decisions = enforce_zone_policy(traffic_state, raw_decisions)
+    raw_decisions = promote_compatible_routes(traffic_state, raw_decisions)
     return raw_decisions, prompt, {
         "llm_called": False,
         "llm_model": LLM_MODEL if LLM_MODE == "real" else "",
@@ -270,7 +307,7 @@ def run():
     metadata["collision_count"] = 0
     write_run_artifacts(RUN_ID, records, events, metadata)
     summary = calculate_summary(records, all_seen_vehicles, run_metadata=metadata)
-    print_summary("LLM Mock Controller With Safety Metrics", summary, OUTPUT_CSV)
+    print_summary("LLM Controller With Safety Metrics", summary, OUTPUT_CSV)
 
 
 if __name__ == "__main__":
