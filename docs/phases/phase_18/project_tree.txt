@@ -24,6 +24,7 @@ docs/
       diff.patch
 src/
   controllers/
+    decision_rules.py
     decision_pipeline.py
     raw_llm_controller.py
     hybrid_llm_controller.py
@@ -32,8 +33,16 @@ src/
     postprocessor.py
     response_parser.py
   common/
+    config.py
     logging_schema.py
     metrics.py
+pytest.ini
+requirements-test.txt
+scripts/
+  phase18_sumo_smoke.py
 tests/
+  __init__.py
+  conftest.py
+  fakes.py
   test_decision_pipeline.py
   test_llm_postprocessor.py

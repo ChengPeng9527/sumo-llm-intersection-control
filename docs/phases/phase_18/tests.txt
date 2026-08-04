@@ -1,7 +1,9 @@
 Phase 18 validation notes:
 
 - Syntax-only validation completed successfully with `py_compile` against:
+  - `src/common/config.py`
   - `src/controllers/decision_pipeline.py`
+  - `src/controllers/decision_rules.py`
   - `src/controllers/raw_llm_controller.py`
   - `src/controllers/hybrid_llm_controller.py`
   - `src/controllers/hybrid_llm_safety_controller.py`
@@ -13,11 +15,32 @@ Phase 18 validation notes:
   - `baseline_controller.py`
   - `cooperative_controller.py`
   - `src/experiments/experiment_runner.py`
+  - `src/experiments/scenario_generator.py`
   - `llm_controller.py`
   - `raw_llm_controller.py`
   - `hybrid_llm_controller.py`
   - `hybrid_llm_safety_controller.py`
-  - `tests/test_llm_postprocessor.py`
+  - `tests/__init__.py`
+  - `tests/conftest.py`
+  - `tests/fakes.py`
   - `tests/test_decision_pipeline.py`
-- Runtime test execution with `pytest` is blocked in this shell because `pytest` is not available in the discoverable Python runtime.
-- Analysis execution is blocked in this shell because `matplotlib` is not available in the discoverable Python runtime.
+  - `tests/test_llm_postprocessor.py`
+- Runtime test execution succeeded with `pytest` via `C:\Users\Admin\AppData\Local\Programs\Python\Python310\python.exe`.
+- `pytest` collected 30 tests and all 30 passed.
+- Standalone SUMO smoke execution succeeded via `C:\Users\Admin\AppData\Local\Programs\Python\Python310\python.exe scripts\phase18_sumo_smoke.py`.
+- `GROQ_API_KEY` check returned `missing`, so the live Groq smoke path was not executed.
+- Smoke run details:
+  - SUMO binary: `D:\Sumo\bin\sumo.exe` 1.27.0
+  - SUMO_HOME: `D:\Sumo\`
+  - `traci` path: `D:\Sumo\tools\traci\__init__.py`
+  - `sumolib` path: `D:\Sumo\tools\sumolib\__init__.py`
+  - scenario: deterministic 4-vehicle smoke scenario derived from `generate_scenario(...)`
+  - max steps: 60
+  - seed: 1
+  - llm mode: `mock`
+  - controller paths validated: `raw`, `hybrid`, `hybrid_safety`
+- Smoke output summary:
+  - `raw`: 184 rows, `decision_sources = [DETERMINISTIC_INTERFACE_RULE, FALLBACK]`
+  - `hybrid`: 149 rows, `decision_sources = [COOPERATIVE_POSTPROCESSOR, DETERMINISTIC_INTERFACE_RULE, FALLBACK]`
+  - `hybrid_safety`: 150 rows, `decision_sources = [DETERMINISTIC_INTERFACE_RULE, FALLBACK]`
+- The smoke summary artifact is stored at `results\phase18_smoke\phase18_sumo_smoke\smoke_summary.json`.

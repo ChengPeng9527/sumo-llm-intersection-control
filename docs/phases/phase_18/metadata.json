@@ -2,27 +2,29 @@
   "phase": 18,
   "objective": "Separate raw LLM, cooperative post-processing, and deterministic safety filtering into traceable stages.",
   "start_time": "2026-08-04T22:15:58.4667195+01:00",
-  "end_time": "2026-08-04T22:15:58.4667195+01:00",
+  "end_time": "2026-08-04T22:43:42.5719358+01:00",
   "previous_commit": "bd6d81a",
-  "current_commit": "24a339fd366b7c3c43d9dc414c415d6ac19f250e",
+  "current_commit": "e9d712b",
   "branch": "phase-18-decision-pipeline-separation",
-  "status": "BLOCKED_ENVIRONMENT",
+  "status": "INTEGRATION_VALIDATED_LIVE_GROQ_BLOCKED_CREDENTIALS",
   "tests_passed": [
-    "Syntax-only validation via py_compile"
+    "Syntax-only validation via py_compile",
+    "pytest (30 tests passed)",
+    "Standalone SUMO smoke script (raw/hybrid/hybrid_safety)"
   ],
-  "tests_failed": [
-    "pytest runtime execution unavailable",
-    "analysis runtime execution unavailable"
-  ],
+  "tests_failed": [],
   "experiments_executed": [
-    "No Groq smoke run executed in this phase"
+    "Headless SUMO smoke test with mock LLM on raw/hybrid/hybrid_safety"
   ],
   "experiments_skipped": [
+    "Live Groq validation",
     "No 8/16 vehicle comparison",
     "No prompt tuning",
     "No statistical comparison"
   ],
   "known_issues": [
-    "The discoverable Python runtime lacks pytest, matplotlib, pyyaml, openai, and python-dotenv."
+    "The discoverable shell runtime still does not expose python on PATH; the project interpreter had to be called explicitly.",
+    "GROQ_API_KEY is missing in the shell environment, so live Groq validation is blocked by credentials.",
+    "The smoke run validated the runtime path with mock LLM only; live Groq validation was not attempted."
   ]
 }

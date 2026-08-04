@@ -1,18 +1,35 @@
 Phase 18 Environment Audit
 
-Audit time: 2026-08-04T22:15:58.4667195+01:00
+Audit time: 2026-08-04T22:43:42.5719358+01:00
 
 Checked commands:
 
 - `where python`
 - `py -0p`
 - `python -c "import sys; print(sys.executable)"`
+- `C:\Users\Admin\AppData\Local\Programs\Python\Python310\python.exe -m pytest`
+- `C:\Users\Admin\AppData\Local\Programs\Python\Python310\python.exe -m py_compile ...`
+- `where sumo`
+- `where sumo-gui`
+- `echo $env:SUMO_HOME`
+- `C:\Users\Admin\AppData\Local\Programs\Python\Python310\python.exe --version`
+- `C:\Users\Admin\AppData\Local\Programs\Python\Python310\python.exe -c "import traci; print(traci.__file__)"`
+- `C:\Users\Admin\AppData\Local\Programs\Python\Python310\python.exe -c "import sumolib; print(sumolib.__file__)"`
+- `C:\Users\Admin\AppData\Local\Programs\Python\Python310\python.exe scripts\phase18_sumo_smoke.py`
 
 Results:
 
 - `where python` returned no discoverable system interpreter.
 - `py -0p` reported no installed Python interpreters.
 - `python -c "import sys; print(sys.executable)"` failed because `python` is not on PATH.
+- The explicit project interpreter `C:\Users\Admin\AppData\Local\Programs\Python\Python310\python.exe` is available and provides `pytest 9.1.1`.
+- `SUMO_HOME` is set to `D:\Sumo\`.
+- `sumo.exe` and `sumo-gui.exe` are available under `D:\Sumo\bin\`.
+- `traci` resolves to `D:\Sumo\tools\traci\__init__.py`.
+- `sumolib` resolves to `D:\Sumo\tools\sumolib\__init__.py`.
+- `py_compile` succeeded for the Phase 18 controller, pipeline, helper, and test modules.
+- `pytest` completed successfully with 30 passing tests.
+- The standalone SUMO smoke script completed successfully and wrote a smoke summary artifact.
 
 Bundled runtime used for inspection:
 
@@ -25,16 +42,18 @@ Package availability in bundled runtime:
 - `sumolib`: present
 - `pytest`: missing
 - `matplotlib`: missing
-- `yaml` / `pyyaml`: missing
+- `yaml` / `pyyaml`: missing in the bundled runtime, but Phase 18 now includes a fallback YAML reader for tests
 - `openai`: missing
 - `python-dotenv`: missing
 
 Interpretation:
 
 - A discoverable project Python environment could not be confirmed from the shell.
-- The bundled inspection runtime is sufficient for syntax checks but not for the full Phase 18 test and analysis stack.
-- Test verification for this phase is `BLOCKED_ENVIRONMENT`.
+- The explicit project interpreter was sufficient for syntax checks and the full Phase 18 pytest run.
+- The explicit project interpreter was also sufficient for the standalone SUMO smoke validation.
+- `GROQ_API_KEY` check returned `missing`, so live Groq validation is blocked by credentials.
+- Test verification for this phase is now `INTEGRATION_VALIDATED_LIVE_GROQ_BLOCKED_CREDENTIALS`.
 
-Suggested install command once the correct project interpreter is available:
+Suggested install command for the project interpreter:
 
 - `python -m pip install -r requirements.txt`
