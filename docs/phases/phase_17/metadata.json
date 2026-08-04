@@ -1,0 +1,54 @@
+{
+  "phase": 17,
+  "objective": "Freeze the validated real Groq-backed LLM version that completes 8/16 vehicle runs.",
+  "start_time": "2026-08-04T00:00:00Z",
+  "end_time": "2026-08-04T00:00:00Z",
+  "previous_commit": "c732052b171f72bf2378d0a95a3030ea7cbeebd0",
+  "current_commit": "c732052b171f72bf2378d0a95a3030ea7cbeebd0",
+  "branch": "master",
+  "status": "PASS",
+  "provider": "Groq",
+  "requested_model": "openai/gpt-oss-20b",
+  "actual_model": "openai/gpt-oss-20b",
+  "prompt_version": "v1",
+  "prompt_hash": "FC11E73E2D1D51127CED63C72A3D5AAF4493DC76847EDF6117E18FD9E4BCC0D1",
+  "decision_interval": 20,
+  "temperature": "provider_default_not_explicitly_set",
+  "max_tokens": "provider_default_not_explicitly_set",
+  "safety_threshold": {
+    "tti_threshold_seconds": 3.0,
+    "control_radius_m": 45
+  },
+  "control_zone": {
+    "center_x": -43.65,
+    "center_y": 11.26,
+    "radius_m": 45
+  },
+  "post_processing_rules": [
+    "Vehicles outside the control zone are forced to FREE.",
+    "WAIT decisions for compatible controlled vehicles may be promoted to PROCEED.",
+    "Safety verification is applied after raw LLM decisions."
+  ],
+  "routes_hash": "3374734C09DF854318CC83ACD9A3CEFAD7004D96C135C6FE88D50B658F2E7F21",
+  "sumo_config_hash": "72E3C83CE3931CAC125B116C38E916E0D4414CDA228705CF949D01E81A79A1DB",
+  "tests_passed": [
+    "Phase 16 recorded validation: 12/12 unit tests",
+    "Phase 16 recorded real Groq 8-vehicle run",
+    "Phase 16 recorded real Groq 16-vehicle run"
+  ],
+  "tests_failed": [
+    "Fresh local rerun blocked because bundled Python lacks pytest",
+    "Fresh local analysis blocked because bundled Python lacks matplotlib"
+  ],
+  "experiments_executed": [
+    "Frozen stable-version validation only; no new large experiment was run in this phase"
+  ],
+  "experiments_skipped": [
+    "No new baseline/cooperative/LLM sweep",
+    "No new seed sweep",
+    "No new real Groq throughput tuning"
+  ],
+  "known_issues": [
+    "The current shell cannot re-run the full Python test and analysis stack without additional packages."
+  ]
+}

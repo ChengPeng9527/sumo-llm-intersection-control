@@ -1,0 +1,212 @@
+﻿diff --git a/docs/current_project_status.md b/docs/current_project_status.md
+index 26d40e2..0fddc88 100644
+--- a/docs/current_project_status.md
++++ b/docs/current_project_status.md
+@@ -3,4 +3,6 @@
+ - Root: D:\Sumo\sumo_train
+ - Snapshot: archive/original_snapshot/20260802_194429
+ - Git: initialized with phase 0 snapshot commit
+-- Notes: Phase 0 freeze complete; active project skeleton added in Phase 1; safety, scenario, runner, analysis, vehicle-scaling, LLM, scenario-wiring, real Groq smoke-test, extended-duration, and throughput-bias phases are now documented and traceable.
++- Notes: Phase 0 freeze complete; active project skeleton added in Phase 1; safety, scenario, runner, analysis, vehicle-scaling, LLM, scenario-wiring, real Groq smoke-test, extended-duration, throughput-bias, and stable-version freeze phases are now documented and traceable.
++- Freeze tag: v0.8-real-llm-functional
++- Frozen code commit: c732052b171f72bf2378d0a95a3030ea7cbeebd0
+diff --git a/docs/phases/phase_17/files.csv b/docs/phases/phase_17/files.csv
+new file mode 100644
+index 0000000..19b4472
+--- /dev/null
++++ b/docs/phases/phase_17/files.csv
+@@ -0,0 +1,8 @@
++action,relative_path,old_sha256,new_sha256,reason,restore_source,git_commit
++MODIFIED,docs/current_project_status.md,4e1ba02bf19f974c08663b29a9253e34d391abb9c71d1df2cdb96739823677e7,e8a1ce25ef2ebb2fe30dcf2b15b1722b3893fff8d87e2686f8e330a08d69a748,Add freeze tag and frozen code commit,HEAD,c732052b171f72bf2378d0a95a3030ea7cbeebd0
++ADDED,docs/phases/phase_17/report.md,,dc565646308077d153ab8a3f648408bfa2f6e6e12e6f69527c7f1e61626b73b3,Record the freeze objective and validation summary,N/A,c732052b171f72bf2378d0a95a3030ea7cbeebd0
++ADDED,docs/phases/phase_17/prompt_snapshot.txt,,fc11e73e2d1d51127ced63c72a3d5aaf4493dc76847edf6117e18fd9e4bcc0d1,Snapshot the final throughput-biased prompt,N/A,c732052b171f72bf2378d0a95a3030ea7cbeebd0
++ADDED,docs/phases/phase_17/project_tree.txt,,06eb02b9e86d3fdf2375dacb6ade92384e440f90492eb09f0b06b0fea5045fdf,Snapshot the traceable project tree for the freeze,N/A,c732052b171f72bf2378d0a95a3030ea7cbeebd0
++ADDED,docs/phases/phase_17/tests.txt,,b86c3cb0f41cf783f013685c8e423dd4023508b854dd201212b4ed8b8a11a446,Record validation attempts and known environment blockers,N/A,c732052b171f72bf2378d0a95a3030ea7cbeebd0
++ADDED,docs/phases/phase_17/metadata.json,,df4e59d9691bb95e60ce741ee217081ee08b210b705f19107cf1858f55855fd3,Store the freeze metadata and validated run parameters,N/A,c732052b171f72bf2378d0a95a3030ea7cbeebd0
++ADDED,docs/phases/phase_17/diff.patch,,PENDING_FINAL_DIFF_EXPORT,Export the staged commit diff for traceability,N/A,c732052b171f72bf2378d0a95a3030ea7cbeebd0
+diff --git a/docs/phases/phase_17/metadata.json b/docs/phases/phase_17/metadata.json
+new file mode 100644
+index 0000000..06bf112
+--- /dev/null
++++ b/docs/phases/phase_17/metadata.json
+@@ -0,0 +1,54 @@
++{
++  "phase": 17,
++  "objective": "Freeze the validated real Groq-backed LLM version that completes 8/16 vehicle runs.",
++  "start_time": "2026-08-04T00:00:00Z",
++  "end_time": "2026-08-04T00:00:00Z",
++  "previous_commit": "c732052b171f72bf2378d0a95a3030ea7cbeebd0",
++  "current_commit": "c732052b171f72bf2378d0a95a3030ea7cbeebd0",
++  "branch": "master",
++  "status": "PASS",
++  "provider": "Groq",
++  "requested_model": "openai/gpt-oss-20b",
++  "actual_model": "openai/gpt-oss-20b",
++  "prompt_version": "v1",
++  "prompt_hash": "FC11E73E2D1D51127CED63C72A3D5AAF4493DC76847EDF6117E18FD9E4BCC0D1",
++  "decision_interval": 20,
++  "temperature": "provider_default_not_explicitly_set",
++  "max_tokens": "provider_default_not_explicitly_set",
++  "safety_threshold": {
++    "tti_threshold_seconds": 3.0,
++    "control_radius_m": 45
++  },
++  "control_zone": {
++    "center_x": -43.65,
++    "center_y": 11.26,
++    "radius_m": 45
++  },
++  "post_processing_rules": [
++    "Vehicles outside the control zone are forced to FREE.",
++    "WAIT decisions for compatible controlled vehicles may be promoted to PROCEED.",
++    "Safety verification is applied after raw LLM decisions."
++  ],
++  "routes_hash": "3374734C09DF854318CC83ACD9A3CEFAD7004D96C135C6FE88D50B658F2E7F21",
++  "sumo_config_hash": "72E3C83CE3931CAC125B116C38E916E0D4414CDA228705CF949D01E81A79A1DB",
++  "tests_passed": [
++    "Phase 16 recorded validation: 12/12 unit tests",
++    "Phase 16 recorded real Groq 8-vehicle run",
++    "Phase 16 recorded real Groq 16-vehicle run"
++  ],
++  "tests_failed": [
++    "Fresh local rerun blocked because bundled Python lacks pytest",
++    "Fresh local analysis blocked because bundled Python lacks matplotlib"
++  ],
++  "experiments_executed": [
++    "Frozen stable-version validation only; no new large experiment was run in this phase"
++  ],
++  "experiments_skipped": [
++    "No new baseline/cooperative/LLM sweep",
++    "No new seed sweep",
++    "No new real Groq throughput tuning"
++  ],
++  "known_issues": [
++    "The current shell cannot re-run the full Python test and analysis stack without additional packages."
++  ]
++}
+diff --git a/docs/phases/phase_17/project_tree.txt b/docs/phases/phase_17/project_tree.txt
+new file mode 100644
+index 0000000..319fe34
+--- /dev/null
++++ b/docs/phases/phase_17/project_tree.txt
+@@ -0,0 +1,33 @@
++docs/
++  current_project_status.md
++  final_acceptance_checklist.md
++  project_inventory.md
++  evidence/
++    claim_evidence_matrix_template.md
++    source_log_template.csv
++  phases/
++    phase_00_report.md
++    phase_01_report.md
++    phase_02_report.md
++    phase_03_report.md
++    phase_04_report.md
++    phase_05_report.md
++    phase_06_report.md
++    phase_07_report.md
++    phase_08_report.md
++    phase_09_report.md
++    phase_10_report.md
++    phase_11_report.md
++    phase_12_report.md
++    phase_13_report.md
++    phase_14_report.md
++    phase_15_report.md
++    phase_16_report.md
++    phase_17/
++      report.md
++      files.csv
++      diff.patch
++      tests.txt
++      project_tree.txt
++      metadata.json
++      prompt_snapshot.txt
+diff --git a/docs/phases/phase_17/prompt_snapshot.txt b/docs/phases/phase_17/prompt_snapshot.txt
+new file mode 100644
+index 0000000..f4a3d7c
+--- /dev/null
++++ b/docs/phases/phase_17/prompt_snapshot.txt
+@@ -0,0 +1,18 @@
++You are a throughput-biased centralized autonomous intersection decision module.
++Use the structured vehicle state and route conflict matrix.
++Safety first, but do not overuse WAIT.
++Vehicles outside the control zone MUST be FREE.
++For vehicles inside the control zone, prefer PROCEED when routes are compatible with the priority vehicle.
++Multiple compatible vehicles may PROCEED together.
++Use WAIT only for genuine route conflicts or when a vehicle should yield to a conflicting priority flow.
++Minimize unnecessary waiting while keeping the intersection safe.
++Return JSON only.
++
++Route conflict matrix:
++{{route_conflicts}}
++
++Policy hints:
++{{policy_hints}}
++
++Traffic state:
++{{traffic_state}}
+diff --git a/docs/phases/phase_17/report.md b/docs/phases/phase_17/report.md
+new file mode 100644
+index 0000000..d476526
+--- /dev/null
++++ b/docs/phases/phase_17/report.md
+@@ -0,0 +1,42 @@
++# Phase 17 Report
++
++## Objective
++
++Freeze the current stable real Groq-backed LLM version that already completes the 8-vehicle and 16-vehicle runs, and preserve a traceable snapshot of the validated configuration.
++
++## Verified Current State
++
++- `git status` is clean.
++- Current stable code commit: `c732052b171f72bf2378d0a95a3030ea7cbeebd0`.
++- Release tag created: `v0.8-real-llm-functional`.
++- Latest documented phase before this freeze: Phase 16.
++- Real Groq LLM runs completed previously for 8 and 16 vehicles.
++- The repository still contains the traceable phase history under `docs/phases/`.
++
++## Files Changed
++
++- `docs/current_project_status.md`
++- `docs/phases/phase_17/report.md`
++- `docs/phases/phase_17/files.csv`
++- `docs/phases/phase_17/diff.patch`
++- `docs/phases/phase_17/tests.txt`
++- `docs/phases/phase_17/project_tree.txt`
++- `docs/phases/phase_17/metadata.json`
++- `docs/phases/phase_17/prompt_snapshot.txt`
++
++## Validation
++
++- `git status --short` returned clean before the freeze write-up.
++- The release tag `v0.8-real-llm-functional` was created successfully.
++- Previous Phase 16 validation remains the latest successful automated validation record: 12/12 unit tests passed, and real Groq 8/16 vehicle runs completed.
++- Fresh local re-run of Python-based validation was blocked in this environment because the bundled Python image does not include `pytest` or `matplotlib`.
++
++## Notes
++
++- The frozen version is the currently validated code state, not a rewritten functional variant.
++- Prompting, safety post-processing, and route-compatibility promotion remain documented so the stable configuration can be reconstructed later.
++- The analysis layer still needs a Python environment with `pytest` and `matplotlib` if a fresh rerun is required inside this shell.
++
++## Acceptance Status
++
++PASS
+diff --git a/docs/phases/phase_17/tests.txt b/docs/phases/phase_17/tests.txt
+new file mode 100644
+index 0000000..7dad710
+--- /dev/null
++++ b/docs/phases/phase_17/tests.txt
+@@ -0,0 +1,9 @@
++Validation notes for Phase 17 freeze:
++
++- `git status --short` was clean before the freeze package was written.
++- `git tag -a v0.8-real-llm-functional` completed successfully.
++- Previous recorded automated validation from Phase 16 remains:
++  - 12/12 unit tests passed.
++  - Real Groq 8-vehicle run completed.
++  - Real Groq 16-vehicle run completed.
++- Fresh rerun in this shell was attempted, but the bundled Python runtime lacks `pytest` and `matplotlib`, so local re-execution of the test/analysis stack was blocked here.

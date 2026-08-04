@@ -1,0 +1,9 @@
+Validation notes for Phase 17 freeze:
+
+- `git status --short` was clean before the freeze package was written.
+- `git tag -a v0.8-real-llm-functional` completed successfully.
+- Previous recorded automated validation from Phase 16 remains:
+  - 12/12 unit tests passed.
+  - Real Groq 8-vehicle run completed.
+  - Real Groq 16-vehicle run completed.
+- Fresh rerun in this shell was attempted, but the bundled Python runtime lacks `pytest` and `matplotlib`, so local re-execution of the test/analysis stack was blocked here.
