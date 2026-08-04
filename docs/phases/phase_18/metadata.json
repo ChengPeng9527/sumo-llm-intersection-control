@@ -4,7 +4,7 @@
   "start_time": "2026-08-04T22:15:58.4667195+01:00",
   "end_time": "2026-08-04T22:15:58.4667195+01:00",
   "previous_commit": "bd6d81a",
-  "current_commit": "",
+  "current_commit": "24a339fd366b7c3c43d9dc414c415d6ac19f250e",
   "branch": "phase-18-decision-pipeline-separation",
   "status": "BLOCKED_ENVIRONMENT",
   "tests_passed": [

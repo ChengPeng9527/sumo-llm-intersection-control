@@ -1,0 +1,1745 @@
+﻿diff --git a/baseline_controller.py b/baseline_controller.py
+index 95c64a5..06a7d84 100644
+--- a/baseline_controller.py
++++ b/baseline_controller.py
+@@ -101,6 +101,7 @@ def run():
+         for vid in vehicles:
+             raw_decision = decisions[vid]
+             final_decision = raw_decision
++            outside_rule = not is_in_control_zone(traci, vid)
+             apply_decision(traci, vid, final_decision)
+             records.append(
+                 create_record(
+@@ -114,10 +115,19 @@ def run():
+                     raw_decision=raw_decision,
+                     final_decision=final_decision,
+                     conflict=False,
++                    llm_raw_decision=raw_decision,
++                    validated_llm_decision=raw_decision,
++                    postprocessed_decision=final_decision,
+                     run_id=RUN_ID,
+                     safety_enabled=False,
+                     simulation_time_seconds=simulation_time,
+                     vehicle_count=VEHICLE_COUNT,
++                    outside_control_zone_rule_applied=outside_rule,
++                    postprocess_applied=False,
++                    postprocess_reason="",
++                    safety_override=False,
++                    safety_reason="",
++                    decision_source="DETERMINISTIC_INTERFACE_RULE",
+                     departed=vid in departed_seen,
+                     arrived=False,
+                 )
+diff --git a/common.py b/common.py
+index 5edb622..f65e322 100644
+--- a/common.py
++++ b/common.py
+@@ -115,11 +115,19 @@ def create_record(
+         time_to_intersection=tti,
+         inside_control_zone=in_zone,
+         raw_decision=raw_decision,
++        llm_raw_decision=extra.get("llm_raw_decision", raw_decision),
++        validated_llm_decision=extra.get("validated_llm_decision", raw_decision),
++        postprocessed_decision=extra.get("postprocessed_decision", raw_decision),
+         final_decision=final_decision,
+         conflict_detected=conflict,
+         conflict_type=extra.get("conflict_type", ""),
+         priority_reason=extra.get("priority_reason", ""),
+-        safety_override=raw_decision != final_decision,
++        outside_control_zone_rule_applied=extra.get("outside_control_zone_rule_applied", False),
++        postprocess_applied=extra.get("postprocess_applied", False),
++        postprocess_reason=extra.get("postprocess_reason", ""),
++        safety_override=extra.get("safety_override", raw_decision != final_decision),
++        safety_reason=extra.get("safety_reason", ""),
++        decision_source=extra.get("decision_source", "FALLBACK"),
+         llm_called=extra.get("llm_called", False),
+         llm_mode=extra.get("llm_mode", "mock"),
+         llm_model=extra.get("llm_model", ""),
+diff --git a/cooperative_controller.py b/cooperative_controller.py
+index 5e2b281..b8dce2a 100644
+--- a/cooperative_controller.py
++++ b/cooperative_controller.py
+@@ -115,6 +115,11 @@ def run():
+         for vid in vehicles:
+             raw_decision = decisions[vid]
+             final_decision = raw_decision
++            outside_rule = not is_in_control_zone(traci, vid)
++            postprocess_applied = is_in_control_zone(traci, vid)
++            postprocess_reason = ""
++            if postprocess_applied:
++                postprocess_reason = "compatible_route" if final_decision == "PROCEED" else "route_conflict"
+             apply_decision(traci, vid, final_decision)
+             records.append(
+                 create_record(
+@@ -128,10 +133,19 @@ def run():
+                     raw_decision=raw_decision,
+                     final_decision=final_decision,
+                     conflict=False,
++                    llm_raw_decision=raw_decision,
++                    validated_llm_decision=raw_decision,
++                    postprocessed_decision=final_decision,
+                     run_id=RUN_ID,
+                     safety_enabled=False,
+                     simulation_time_seconds=simulation_time,
+                     vehicle_count=VEHICLE_COUNT,
++                    outside_control_zone_rule_applied=outside_rule,
++                    postprocess_applied=postprocess_applied,
++                    postprocess_reason=postprocess_reason,
++                    safety_override=False,
++                    safety_reason="",
++                    decision_source="COOPERATIVE_POSTPROCESSOR" if postprocess_applied else "DETERMINISTIC_INTERFACE_RULE",
+                     departed=vid in departed_seen,
+                     arrived=False,
+                 )
+diff --git a/docs/current_project_status.md b/docs/current_project_status.md
+index 0fddc88..25e9b3d 100644
+--- a/docs/current_project_status.md
++++ b/docs/current_project_status.md
+@@ -3,6 +3,8 @@
+ - Root: D:\Sumo\sumo_train
+ - Snapshot: archive/original_snapshot/20260802_194429
+ - Git: initialized with phase 0 snapshot commit
+-- Notes: Phase 0 freeze complete; active project skeleton added in Phase 1; safety, scenario, runner, analysis, vehicle-scaling, LLM, scenario-wiring, real Groq smoke-test, extended-duration, throughput-bias, and stable-version freeze phases are now documented and traceable.
++- Notes: Phase 0 freeze complete; active project skeleton added in Phase 1; safety, scenario, runner, analysis, vehicle-scaling, LLM, scenario-wiring, real Groq smoke-test, extended-duration, throughput-bias, stable-version freeze, and decision-pipeline-separation phases are now documented and traceable.
+ - Freeze tag: v0.8-real-llm-functional
+ - Frozen code commit: c732052b171f72bf2378d0a95a3030ea7cbeebd0
++- Phase 18 branch: phase-18-decision-pipeline-separation
++- Phase 18 status: BLOCKED_ENVIRONMENT for runtime test verification
+diff --git a/docs/phases/phase_18/environment.txt b/docs/phases/phase_18/environment.txt
+new file mode 100644
+index 0000000..737c198
+--- /dev/null
++++ b/docs/phases/phase_18/environment.txt
+@@ -0,0 +1,40 @@
++Phase 18 Environment Audit
++
++Audit time: 2026-08-04T22:15:58.4667195+01:00
++
++Checked commands:
++
++- `where python`
++- `py -0p`
++- `python -c "import sys; print(sys.executable)"`
++
++Results:
++
++- `where python` returned no discoverable system interpreter.
++- `py -0p` reported no installed Python interpreters.
++- `python -c "import sys; print(sys.executable)"` failed because `python` is not on PATH.
++
++Bundled runtime used for inspection:
++
++- `C:\Users\Admin\.cache\codex-runtimes\codex-primary-runtime\dependencies\python\python.exe`
++
++Package availability in bundled runtime:
++
++- `pandas`: present
++- `traci`: present
++- `sumolib`: present
++- `pytest`: missing
++- `matplotlib`: missing
++- `yaml` / `pyyaml`: missing
++- `openai`: missing
++- `python-dotenv`: missing
++
++Interpretation:
++
++- A discoverable project Python environment could not be confirmed from the shell.
++- The bundled inspection runtime is sufficient for syntax checks but not for the full Phase 18 test and analysis stack.
++- Test verification for this phase is `BLOCKED_ENVIRONMENT`.
++
++Suggested install command once the correct project interpreter is available:
++
++- `python -m pip install -r requirements.txt`
+diff --git a/docs/phases/phase_18/files.csv b/docs/phases/phase_18/files.csv
+new file mode 100644
+index 0000000..a28d7e1
+--- /dev/null
++++ b/docs/phases/phase_18/files.csv
+@@ -0,0 +1,20 @@
++action,relative_path,old_sha256,new_sha256,reason,restore_source,git_commit
++MODIFIED,src/common/logging_schema.py,,,Add stage-level logging fields for decision separation,HEAD,phase-18-decision-pipeline-separation
++MODIFIED,src/common/metrics.py,,,Extend empty records with raw/hybrid/safety trace fields,HEAD,phase-18-decision-pipeline-separation
++MODIFIED,common.py,,,Populate the new trace-level record fields,HEAD,phase-18-decision-pipeline-separation
++MODIFIED,src/llm/response_parser.py,,,Return both raw and validated LLM decisions,HEAD,phase-18-decision-pipeline-separation
++MODIFIED,requirements.txt,,,Declare pytest/openai/python-dotenv for the project environment,HEAD,phase-18-decision-pipeline-separation
++MODIFIED,baseline_controller.py,,,Populate new logging fields without changing baseline logic,HEAD,phase-18-decision-pipeline-separation
++MODIFIED,cooperative_controller.py,,,Populate new logging fields without changing cooperative logic,HEAD,phase-18-decision-pipeline-separation
++MODIFIED,src/experiments/experiment_runner.py,,,Add controller mappings for the new decision-pipeline modes,HEAD,phase-18-decision-pipeline-separation
++ADDED,src/controllers/__init__.py,,,Create the shared controller package,HEAD,phase-18-decision-pipeline-separation
++ADDED,src/controllers/decision_pipeline.py,,,Shared raw/hybrid/safety execution pipeline,HEAD,phase-18-decision-pipeline-separation
++ADDED,src/controllers/raw_llm_controller.py,,,Raw LLM controller entrypoint,HEAD,phase-18-decision-pipeline-separation
++ADDED,src/controllers/hybrid_llm_controller.py,,,Hybrid controller entrypoint,HEAD,phase-18-decision-pipeline-separation
++ADDED,src/controllers/hybrid_llm_safety_controller.py,,,Hybrid+safe controller entrypoint,HEAD,phase-18-decision-pipeline-separation
++ADDED,src/llm/postprocessor.py,,,Deterministic cooperative and interface postprocessing,HEAD,phase-18-decision-pipeline-separation
++ADDED,raw_llm_controller.py,,,Root wrapper for the raw controller,HEAD,phase-18-decision-pipeline-separation
++ADDED,hybrid_llm_controller.py,,,Root wrapper for the hybrid controller,HEAD,phase-18-decision-pipeline-separation
++ADDED,hybrid_llm_safety_controller.py,,,Root wrapper for the hybrid+safety controller,HEAD,phase-18-decision-pipeline-separation
++ADDED,tests/test_decision_pipeline.py,,,Decision pipeline regression tests,HEAD,phase-18-decision-pipeline-separation
++ADDED,tests/test_llm_postprocessor.py,,,Postprocessor regression tests,HEAD,phase-18-decision-pipeline-separation
+diff --git a/docs/phases/phase_18/metadata.json b/docs/phases/phase_18/metadata.json
+new file mode 100644
+index 0000000..e7793a7
+--- /dev/null
++++ b/docs/phases/phase_18/metadata.json
+@@ -0,0 +1,28 @@
++{
++  "phase": 18,
++  "objective": "Separate raw LLM, cooperative post-processing, and deterministic safety filtering into traceable stages.",
++  "start_time": "2026-08-04T22:15:58.4667195+01:00",
++  "end_time": "2026-08-04T22:15:58.4667195+01:00",
++  "previous_commit": "bd6d81a",
++  "current_commit": "",
++  "branch": "phase-18-decision-pipeline-separation",
++  "status": "BLOCKED_ENVIRONMENT",
++  "tests_passed": [
++    "Syntax-only validation via py_compile"
++  ],
++  "tests_failed": [
++    "pytest runtime execution unavailable",
++    "analysis runtime execution unavailable"
++  ],
++  "experiments_executed": [
++    "No Groq smoke run executed in this phase"
++  ],
++  "experiments_skipped": [
++    "No 8/16 vehicle comparison",
++    "No prompt tuning",
++    "No statistical comparison"
++  ],
++  "known_issues": [
++    "The discoverable Python runtime lacks pytest, matplotlib, pyyaml, openai, and python-dotenv."
++  ]
++}
+diff --git a/docs/phases/phase_18/project_tree.txt b/docs/phases/phase_18/project_tree.txt
+new file mode 100644
+index 0000000..9dcad43
+--- /dev/null
++++ b/docs/phases/phase_18/project_tree.txt
+@@ -0,0 +1,39 @@
++docs/
++  current_project_status.md
++  final_acceptance_checklist.md
++  project_inventory.md
++  evidence/
++    claim_evidence_matrix_template.md
++    source_log_template.csv
++  phases/
++    phase_17/
++      report.md
++      files.csv
++      diff.patch
++      tests.txt
++      project_tree.txt
++      metadata.json
++      prompt_snapshot.txt
++    phase_18/
++      environment.txt
++      report.md
++      tests.txt
++      project_tree.txt
++      metadata.json
++      files.csv
++      diff.patch
++src/
++  controllers/
++    decision_pipeline.py
++    raw_llm_controller.py
++    hybrid_llm_controller.py
++    hybrid_llm_safety_controller.py
++  llm/
++    postprocessor.py
++    response_parser.py
++  common/
++    logging_schema.py
++    metrics.py
++tests/
++  test_decision_pipeline.py
++  test_llm_postprocessor.py
+diff --git a/docs/phases/phase_18/report.md b/docs/phases/phase_18/report.md
+new file mode 100644
+index 0000000..1f7ea7f
+--- /dev/null
++++ b/docs/phases/phase_18/report.md
+@@ -0,0 +1,45 @@
++# Phase 18 Report
++
++## Objective
++
++Separate the decision pipeline into three explicitly traceable stages:
++
++1. Raw LLM decision
++2. Cooperative post-processing
++3. Deterministic safety filtering
++
++## Files Changed
++
++- `src/controllers/decision_pipeline.py`
++- `src/controllers/raw_llm_controller.py`
++- `src/controllers/hybrid_llm_controller.py`
++- `src/controllers/hybrid_llm_safety_controller.py`
++- `src/llm/postprocessor.py`
++- `src/llm/response_parser.py`
++- `src/common/logging_schema.py`
++- `src/common/metrics.py`
++- `common.py`
++- `baseline_controller.py`
++- `cooperative_controller.py`
++- `src/experiments/experiment_runner.py`
++- `requirements.txt`
++- `tests/test_decision_pipeline.py`
++- `tests/test_llm_postprocessor.py`
++- `docs/phases/phase_18/environment.txt`
++
++## Validation
++
++- Syntax-only validation passed via `py_compile` on all Phase 18 controller, pipeline, and test files.
++- Full `pytest` execution was not possible in the current shell because the only discoverable Python runtime does not provide `pytest` or `pyyaml`.
++- Full analysis execution was not possible in the current shell because the discoverable runtime also lacks `matplotlib`.
++
++## Notes
++
++- The raw, hybrid, and hybrid+safety paths are now separated in code and in logs.
++- Raw LLM records now keep the raw response, the validated action, the optional cooperative stage, and the optional safety stage distinct.
++- Cooperative and baseline controllers were updated to populate the new traceable fields without changing their core behavior.
++- The environment is currently `BLOCKED_ENVIRONMENT` for runtime test verification.
++
++## Acceptance Status
++
++BLOCKED_ENVIRONMENT
+diff --git a/docs/phases/phase_18/tests.txt b/docs/phases/phase_18/tests.txt
+new file mode 100644
+index 0000000..964139b
+--- /dev/null
++++ b/docs/phases/phase_18/tests.txt
+@@ -0,0 +1,23 @@
++Phase 18 validation notes:
++
++- Syntax-only validation completed successfully with `py_compile` against:
++  - `src/controllers/decision_pipeline.py`
++  - `src/controllers/raw_llm_controller.py`
++  - `src/controllers/hybrid_llm_controller.py`
++  - `src/controllers/hybrid_llm_safety_controller.py`
++  - `src/llm/postprocessor.py`
++  - `src/llm/response_parser.py`
++  - `src/common/logging_schema.py`
++  - `src/common/metrics.py`
++  - `common.py`
++  - `baseline_controller.py`
++  - `cooperative_controller.py`
++  - `src/experiments/experiment_runner.py`
++  - `llm_controller.py`
++  - `raw_llm_controller.py`
++  - `hybrid_llm_controller.py`
++  - `hybrid_llm_safety_controller.py`
++  - `tests/test_llm_postprocessor.py`
++  - `tests/test_decision_pipeline.py`
++- Runtime test execution with `pytest` is blocked in this shell because `pytest` is not available in the discoverable Python runtime.
++- Analysis execution is blocked in this shell because `matplotlib` is not available in the discoverable Python runtime.
+diff --git a/docs/project_inventory.md b/docs/project_inventory.md
+index d0ea05a..86e2666 100644
+--- a/docs/project_inventory.md
++++ b/docs/project_inventory.md
+@@ -5,10 +5,15 @@
+ - `baseline_controller.py`
+ - `cooperative_controller.py`
+ - `llm_controller.py`
++- `raw_llm_controller.py`
++- `hybrid_llm_controller.py`
++- `hybrid_llm_safety_controller.py`
+ - `ttc_safety.py`
+ - `run_experiment.py`
+ - `analyze_metrics.py`
+ - `common.py`
++- `src/controllers/`
++- `src/llm/postprocessor.py`
+ 
+ ## Shared Packages
+ 
+@@ -24,8 +29,9 @@
+ - `tests/test_metrics.py`
+ - `tests/test_safety_verifier.py`
+ - `tests/test_scenario_generation.py`
++- `tests/test_decision_pipeline.py`
++- `tests/test_llm_postprocessor.py`
+ 
+ ## Archive
+ 
+ - `archive/original_snapshot/20260802_194429`
+-
+diff --git a/hybrid_llm_controller.py b/hybrid_llm_controller.py
+new file mode 100644
+index 0000000..b8d44e8
+--- /dev/null
++++ b/hybrid_llm_controller.py
+@@ -0,0 +1,7 @@
++from __future__ import annotations
++
++from src.controllers.hybrid_llm_controller import main
++
++
++if __name__ == "__main__":
++    raise SystemExit(main())
+diff --git a/hybrid_llm_safety_controller.py b/hybrid_llm_safety_controller.py
+new file mode 100644
+index 0000000..eca9c90
+--- /dev/null
++++ b/hybrid_llm_safety_controller.py
+@@ -0,0 +1,7 @@
++from __future__ import annotations
++
++from src.controllers.hybrid_llm_safety_controller import main
++
++
++if __name__ == "__main__":
++    raise SystemExit(main())
+diff --git a/llm_controller.py b/llm_controller.py
+index d6704b0..eca9c90 100644
+--- a/llm_controller.py
++++ b/llm_controller.py
+@@ -1,314 +1,7 @@
+ from __future__ import annotations
+ 
+-import os
+-import time
+-from pathlib import Path
+-
+-import traci
+-
+-from common import (
+-    CONFIG,
+-    apply_decision,
+-    build_event,
+-    build_run_metadata,
+-    calculate_summary,
+-    create_record,
+-    distance_to_center,
+-    estimate_time_to_intersection,
+-    get_vehicle_route,
+-    is_in_control_zone,
+-    print_summary,
+-    run_artifact_paths,
+-    write_run_artifacts,
+-)
+-from src.llm.fallback_policy import mock_llm_decision
+-from src.llm.response_parser import parse_llm_response
+-from src.llm.prompt_builder import build_structured_prompt
+-from src.safety.route_conflict import routes_compatible, validate_conflict_matrix
+-from ttc_safety import verify_decisions
+-
+-try:
+-    from openai import OpenAI
+-except Exception:  # pragma: no cover
+-    OpenAI = None
+-
+-
+-SUMO_BINARY = CONFIG["sumo_gui_binary_path"]
+-SUMO_CONFIG = Path(os.getenv("SUMO_CONFIG_PATH", str(CONFIG["sumo_config_path"])))
+-EXPERIMENT_ID = "E03_LLM_4V_S1"
+-CONTROLLER_NAME = "LLMController"
+-SCENARIO = os.getenv("SCENARIO_ID", "debug_four_vehicle")
+-VEHICLE_COUNT = int(os.getenv("VEHICLE_COUNT", "4"))
+-SEED = CONFIG["default_seed"]
+-SIMULATION_STEPS = int(os.getenv("SIMULATION_STEPS", str(CONFIG["default_simulation_duration"])))
+-USE_SAFETY_LAYER = True
+-LLM_MODE = os.getenv("LLM_MODE", "mock").strip().lower()
+-LLM_DECISION_INTERVAL = max(1, int(os.getenv("LLM_DECISION_INTERVAL", "1")))
+-LLM_API_KEY = os.getenv("GROQ_API_KEY") or os.getenv("OPENROUTER_API_KEY", "")
+-LLM_BASE_URL = os.getenv(
+-    "LLM_BASE_URL",
+-    "https://api.groq.com/openai/v1" if os.getenv("GROQ_API_KEY") else "https://openrouter.ai/api/v1",
+-)
+-LLM_MODEL = os.getenv(
+-    "LLM_MODEL",
+-    "openai/gpt-oss-20b" if os.getenv("GROQ_API_KEY") else "openrouter/free",
+-)
+-RUN_ID = f"{EXPERIMENT_ID}_v{VEHICLE_COUNT}_seed{SEED}_{LLM_MODE}"
+-ARTIFACTS = run_artifact_paths(RUN_ID)
+-OUTPUT_CSV = ARTIFACTS["step_records"]
+-
+-
+-def build_llm_client():
+-    if LLM_MODE != "real":
+-        return None
+-    if not LLM_API_KEY or OpenAI is None:
+-        return None
+-    return OpenAI(base_url=LLM_BASE_URL, api_key=LLM_API_KEY)
+-
+-
+-CLIENT = build_llm_client()
+-
+-
+-def build_traffic_state(vehicles):
+-    state = []
+-    for vid in vehicles:
+-        state.append(
+-            {
+-                "vehicle_id": vid,
+-                "route_id": get_vehicle_route(traci, vid),
+-                "speed": round(traci.vehicle.getSpeed(vid), 2),
+-                "distance_to_intersection": round(distance_to_center(traci, vid), 2),
+-                "time_to_intersection": round(estimate_time_to_intersection(traci, vid), 2),
+-                "inside_control_zone": is_in_control_zone(traci, vid),
+-            }
+-        )
+-    return state
+-
+-
+-def enforce_zone_policy(traffic_state, raw_decisions):
+-    final_decisions = dict(raw_decisions)
+-    for state in traffic_state:
+-        if not state["inside_control_zone"]:
+-            final_decisions[state["vehicle_id"]] = "FREE"
+-    return final_decisions
+-
+-
+-def promote_compatible_routes(traffic_state, raw_decisions):
+-    final_decisions = dict(raw_decisions)
+-    controlled = [state for state in traffic_state if state["inside_control_zone"]]
+-    if not controlled:
+-        return final_decisions
+-
+-    priority_vehicle = min(controlled, key=lambda state: state["time_to_intersection"])
+-    priority_route = priority_vehicle["route_id"]
+-
+-    for state in controlled:
+-        vid = state["vehicle_id"]
+-        if final_decisions.get(vid) == "WAIT" and routes_compatible(priority_route, state["route_id"]):
+-            final_decisions[vid] = "PROCEED"
+-    return final_decisions
+-
+-
+-def decide(vehicles):
+-    traffic_state = build_traffic_state(vehicles)
+-    matrix = validate_conflict_matrix()
+-    controlled = [state for state in traffic_state if state["inside_control_zone"]]
+-    priority_route = ""
+-    priority_vehicle_id = ""
+-    if controlled:
+-        priority_vehicle = min(controlled, key=lambda state: state["time_to_intersection"])
+-        priority_route = priority_vehicle["route_id"]
+-        priority_vehicle_id = priority_vehicle["vehicle_id"]
+-    policy_hints = {
+-        "priority_vehicle_id": priority_vehicle_id,
+-        "priority_route_id": priority_route,
+-        "controlled_vehicle_count": len(controlled),
+-        "compatible_routes_with_priority": [
+-            state["route_id"]
+-            for state in controlled
+-            if priority_route and routes_compatible(priority_route, state["route_id"])
+-        ],
+-    }
+-    prompt = build_structured_prompt(traffic_state, matrix, policy_hints)
+-    vehicle_ids = [v["vehicle_id"] for v in traffic_state]
+-    if LLM_MODE == "real" and CLIENT is not None:
+-        start_time = time.perf_counter()
+-        try:
+-            response = CLIENT.chat.completions.create(
+-                model=LLM_MODEL,
+-                messages=[{"role": "user", "content": prompt}],
+-            )
+-            content = response.choices[0].message.content or ""
+-            raw_decisions, parse_ok = parse_llm_response(content, vehicle_ids)
+-            raw_decisions = enforce_zone_policy(traffic_state, raw_decisions)
+-            raw_decisions = promote_compatible_routes(traffic_state, raw_decisions)
+-            elapsed_ms = (time.perf_counter() - start_time) * 1000
+-            return raw_decisions, prompt, {
+-                "llm_called": True,
+-                "llm_model": LLM_MODEL,
+-                "llm_response_time_ms": round(elapsed_ms, 2),
+-                "json_parse_success": parse_ok,
+-                "fallback_used": False,
+-            }
+-        except Exception:
+-            raw_decisions = mock_llm_decision(traffic_state)
+-            raw_decisions = enforce_zone_policy(traffic_state, raw_decisions)
+-            raw_decisions = promote_compatible_routes(traffic_state, raw_decisions)
+-            elapsed_ms = (time.perf_counter() - start_time) * 1000
+-            return raw_decisions, prompt, {
+-                "llm_called": True,
+-                "llm_model": LLM_MODEL,
+-                "llm_response_time_ms": round(elapsed_ms, 2),
+-                "json_parse_success": False,
+-                "fallback_used": True,
+-            }
+-
+-    if LLM_MODE == "real" and CLIENT is None:
+-        print("LLM real mode requested but OpenAI client is unavailable; using mock fallback.")
+-
+-    raw_decisions = mock_llm_decision(traffic_state)
+-    raw_decisions = enforce_zone_policy(traffic_state, raw_decisions)
+-    raw_decisions = promote_compatible_routes(traffic_state, raw_decisions)
+-    return raw_decisions, prompt, {
+-        "llm_called": False,
+-        "llm_model": LLM_MODEL if LLM_MODE == "real" else "",
+-        "llm_response_time_ms": 0.0,
+-        "json_parse_success": True,
+-        "fallback_used": False,
+-    }
+-
+-
+-def run():
+-    traci.start([str(SUMO_BINARY), "-c", str(SUMO_CONFIG), "--start"])
+-    records = []
+-    events = []
+-    all_seen_vehicles = set()
+-    departed_seen = set()
+-    arrived_seen = set()
+-    cached_raw_decisions = {}
+-    cached_llm_meta = {
+-        "llm_called": False,
+-        "llm_model": "",
+-        "llm_response_time_ms": 0.0,
+-        "json_parse_success": True,
+-        "fallback_used": False,
+-    }
+-
+-    for step in range(SIMULATION_STEPS):
+-        traci.simulationStep()
+-        departed_ids = list(traci.simulation.getDepartedIDList())
+-        arrived_ids = list(traci.simulation.getArrivedIDList())
+-        simulation_time = step * CONFIG["simulation_step_length"]
+-        for vid in departed_ids:
+-            if vid not in departed_seen:
+-                departed_seen.add(vid)
+-                events.append(
+-                    build_event(
+-                        run_id=RUN_ID,
+-                        event_type="departed",
+-                        simulation_step=step,
+-                        simulation_time_seconds=simulation_time,
+-                        vehicle_id=vid,
+-                        details="vehicle entered the simulation",
+-                    )
+-                )
+-        for vid in arrived_ids:
+-            if vid not in arrived_seen:
+-                arrived_seen.add(vid)
+-                events.append(
+-                    build_event(
+-                        run_id=RUN_ID,
+-                        event_type="arrived",
+-                        simulation_step=step,
+-                        simulation_time_seconds=simulation_time,
+-                        vehicle_id=vid,
+-                        details="vehicle left the simulation",
+-                    )
+-                )
+-        vehicles = list(traci.vehicle.getIDList())
+-        all_seen_vehicles.update(vehicles)
+-
+-        if step % LLM_DECISION_INTERVAL == 0 or not cached_raw_decisions:
+-            raw_decisions, _prompt, llm_meta = decide(vehicles)
+-            cached_raw_decisions = dict(raw_decisions)
+-            cached_llm_meta = dict(llm_meta)
+-        else:
+-            raw_decisions = dict(cached_raw_decisions)
+-            llm_meta = {
+-                "llm_called": False,
+-                "llm_model": cached_llm_meta.get("llm_model", ""),
+-                "llm_response_time_ms": 0.0,
+-                "json_parse_success": cached_llm_meta.get("json_parse_success", True),
+-                "fallback_used": cached_llm_meta.get("fallback_used", False),
+-            }
+-
+-        if USE_SAFETY_LAYER:
+-            final_decisions, conflict_flags, conflict_types, priority_reason = verify_decisions(
+-                traci,
+-                vehicles,
+-                raw_decisions,
+-            )
+-        else:
+-            final_decisions = dict(raw_decisions)
+-            conflict_flags = {vid: False for vid in vehicles}
+-            conflict_types = {vid: "" for vid in vehicles}
+-            priority_reason = ""
+-
+-        for vid in vehicles:
+-            raw_decision = raw_decisions.get(vid, "WAIT")
+-            final_decision = final_decisions.get(vid, "WAIT")
+-            conflict = conflict_flags.get(vid, False)
+-            apply_decision(traci, vid, final_decision)
+-            records.append(
+-                create_record(
+-                    experiment_id=EXPERIMENT_ID,
+-                    controller=CONTROLLER_NAME,
+-                    scenario=SCENARIO,
+-                    seed=SEED,
+-                    step=step,
+-                    traci=traci,
+-                    veh_id=vid,
+-                    raw_decision=raw_decision,
+-                    final_decision=final_decision,
+-                    conflict=conflict,
+-                    conflict_type=conflict_types.get(vid, ""),
+-                    priority_reason=priority_reason,
+-                    run_id=RUN_ID,
+-                    safety_enabled=USE_SAFETY_LAYER,
+-                    simulation_time_seconds=simulation_time,
+-                    vehicle_count=VEHICLE_COUNT,
+-                    llm_mode=LLM_MODE,
+-                    llm_called=llm_meta["llm_called"],
+-                    llm_model=llm_meta["llm_model"],
+-                    llm_response_time_ms=llm_meta["llm_response_time_ms"],
+-                    json_parse_success=llm_meta["json_parse_success"],
+-                    fallback_used=llm_meta["fallback_used"],
+-                    departed=vid in departed_seen,
+-                    arrived=False,
+-                )
+-            )
+-        time.sleep(0.03)
+-
+-    traci.close(False)
+-    metadata = build_run_metadata(
+-        run_id=RUN_ID,
+-        controller=CONTROLLER_NAME,
+-        safety_enabled=USE_SAFETY_LAYER,
+-        scenario_id=SCENARIO,
+-        density="debug",
+-        vehicle_count=VEHICLE_COUNT,
+-        seed=SEED,
+-        llm_mode=LLM_MODE,
+-        llm_model=LLM_MODEL if LLM_MODE == "real" else "",
+-        status="completed",
+-    )
+-    metadata["departed_count"] = len(departed_seen)
+-    metadata["arrived_count"] = len(arrived_seen)
+-    metadata["collision_count"] = 0
+-    write_run_artifacts(RUN_ID, records, events, metadata)
+-    summary = calculate_summary(records, all_seen_vehicles, run_metadata=metadata)
+-    print_summary("LLM Controller With Safety Metrics", summary, OUTPUT_CSV)
++from src.controllers.hybrid_llm_safety_controller import main
+ 
+ 
+ if __name__ == "__main__":
+-    run()
++    raise SystemExit(main())
+diff --git a/raw_llm_controller.py b/raw_llm_controller.py
+new file mode 100644
+index 0000000..2c0daeb
+--- /dev/null
++++ b/raw_llm_controller.py
+@@ -0,0 +1,7 @@
++from __future__ import annotations
++
++from src.controllers.raw_llm_controller import main
++
++
++if __name__ == "__main__":
++    raise SystemExit(main())
+diff --git a/requirements.txt b/requirements.txt
+index 2b90756..93b2534 100644
+--- a/requirements.txt
++++ b/requirements.txt
+@@ -3,5 +3,8 @@ numpy>=1.26
+ matplotlib>=3.8
+ pyyaml>=6.0
+ openpyxl>=3.1
++openai>=1.0
++python-dotenv>=1.0
++pytest>=8.0
+ traci
+ sumolib
+diff --git a/src/common/logging_schema.py b/src/common/logging_schema.py
+index e3803ab..1ae8188 100644
+--- a/src/common/logging_schema.py
++++ b/src/common/logging_schema.py
+@@ -19,11 +19,19 @@ FIELDNAMES = [
+     "time_to_intersection",
+     "inside_control_zone",
+     "raw_decision",
++    "llm_raw_decision",
++    "validated_llm_decision",
++    "postprocessed_decision",
+     "final_decision",
+     "conflict_detected",
+     "conflict_type",
+     "priority_reason",
++    "outside_control_zone_rule_applied",
++    "postprocess_applied",
++    "postprocess_reason",
+     "safety_override",
++    "safety_reason",
++    "decision_source",
+     "llm_called",
+     "llm_mode",
+     "llm_model",
+diff --git a/src/common/metrics.py b/src/common/metrics.py
+index 474a065..45ca4bc 100644
+--- a/src/common/metrics.py
++++ b/src/common/metrics.py
+@@ -68,11 +68,19 @@ def empty_record(**overrides):
+             "time_to_intersection": overrides.get("time_to_intersection", 0.0),
+             "inside_control_zone": overrides.get("inside_control_zone", False),
+             "raw_decision": overrides.get("raw_decision", "WAIT"),
++            "llm_raw_decision": overrides.get("llm_raw_decision", "MISSING"),
++            "validated_llm_decision": overrides.get("validated_llm_decision", "WAIT"),
++            "postprocessed_decision": overrides.get("postprocessed_decision", "WAIT"),
+             "final_decision": overrides.get("final_decision", "WAIT"),
+             "conflict_detected": overrides.get("conflict_detected", False),
+             "conflict_type": overrides.get("conflict_type", ""),
+             "priority_reason": overrides.get("priority_reason", ""),
++            "outside_control_zone_rule_applied": overrides.get("outside_control_zone_rule_applied", False),
++            "postprocess_applied": overrides.get("postprocess_applied", False),
++            "postprocess_reason": overrides.get("postprocess_reason", ""),
+             "safety_override": overrides.get("safety_override", False),
++            "safety_reason": overrides.get("safety_reason", ""),
++            "decision_source": overrides.get("decision_source", "FALLBACK"),
+             "llm_called": overrides.get("llm_called", False),
+             "llm_mode": overrides.get("llm_mode", "mock"),
+             "llm_model": overrides.get("llm_model", ""),
+diff --git a/src/controllers/__init__.py b/src/controllers/__init__.py
+new file mode 100644
+index 0000000..9d48db4
+--- /dev/null
++++ b/src/controllers/__init__.py
+@@ -0,0 +1 @@
++from __future__ import annotations
+diff --git a/src/controllers/decision_pipeline.py b/src/controllers/decision_pipeline.py
+new file mode 100644
+index 0000000..0afc6e9
+--- /dev/null
++++ b/src/controllers/decision_pipeline.py
+@@ -0,0 +1,388 @@
++from __future__ import annotations
++
++import json
++import time
++from pathlib import Path
++
++import traci
++
++from common import (
++    CONFIG,
++    apply_decision,
++    build_event,
++    build_run_metadata,
++    calculate_summary,
++    create_record,
++    distance_to_center,
++    estimate_time_to_intersection,
++    get_vehicle_route,
++    is_in_control_zone,
++    print_summary,
++    run_artifact_paths,
++    write_run_artifacts,
++)
++from src.llm.fallback_policy import mock_llm_decision
++from src.llm.postprocessor import apply_cooperative_postprocessing, apply_interface_rule
++from src.llm.prompt_builder import build_structured_prompt
++from src.llm.response_parser import parse_llm_response_details
++from src.safety.route_conflict import routes_compatible, validate_conflict_matrix
++from ttc_safety import verify_decisions
++
++try:
++    from openai import OpenAI
++except Exception:  # pragma: no cover
++    OpenAI = None
++
++
++def build_traffic_state(vehicles: list[str]) -> list[dict]:
++    state: list[dict] = []
++    for vid in vehicles:
++        state.append(
++            {
++                "vehicle_id": vid,
++                "route_id": get_vehicle_route(traci, vid),
++                "speed": round(traci.vehicle.getSpeed(vid), 2),
++                "distance_to_intersection": round(distance_to_center(traci, vid), 2),
++                "time_to_intersection": round(estimate_time_to_intersection(traci, vid), 2),
++                "inside_control_zone": is_in_control_zone(traci, vid),
++            }
++        )
++    return state
++
++
++def build_policy_hints(traffic_state: list[dict]) -> dict:
++    controlled = [state for state in traffic_state if state.get("inside_control_zone")]
++    priority_route = ""
++    priority_vehicle_id = ""
++    compatible_routes: list[str] = []
++    if controlled:
++        priority_vehicle = min(controlled, key=lambda state: state.get("time_to_intersection", float("inf")))
++        priority_route = priority_vehicle.get("route_id", "")
++        priority_vehicle_id = priority_vehicle["vehicle_id"]
++        compatible_routes = [
++            state.get("route_id", "")
++            for state in controlled
++            if priority_route and routes_compatible(priority_route, state.get("route_id", ""))
++        ]
++    return {
++        "priority_vehicle_id": priority_vehicle_id,
++        "priority_route_id": priority_route,
++        "controlled_vehicle_count": len(controlled),
++        "compatible_routes_with_priority": compatible_routes,
++    }
++
++
++def build_decision_trace(
++    traffic_state: list[dict],
++    llm_raw_decisions: dict[str, str],
++    validated_llm_decisions: dict[str, str],
++    llm_meta: dict,
++) -> dict[str, dict]:
++    trace: dict[str, dict] = {}
++    for state in traffic_state:
++        vid = state["vehicle_id"]
++        raw_action = llm_raw_decisions.get(vid, "MISSING")
++        validated_action = validated_llm_decisions.get(vid, "WAIT")
++        decision_source = "LLM_RAW" if raw_action in {"PROCEED", "WAIT", "FREE"} else "FALLBACK"
++        trace[vid] = {
++            "llm_raw_decision": raw_action,
++            "validated_llm_decision": validated_action,
++            "postprocessed_decision": validated_action,
++            "final_decision": validated_action,
++            "outside_control_zone_rule_applied": False,
++            "postprocess_applied": False,
++            "postprocess_reason": "",
++            "safety_override": False,
++            "safety_reason": "",
++            "decision_source": decision_source,
++            "conflict_detected": False,
++            "conflict_type": "",
++            "priority_reason": "",
++            "llm_called": llm_meta.get("llm_called", False),
++            "llm_mode": llm_meta.get("llm_mode", "mock"),
++            "llm_model": llm_meta.get("llm_model", ""),
++            "llm_response_time_ms": llm_meta.get("llm_response_time_ms", 0.0),
++            "json_parse_success": llm_meta.get("json_parse_success", False),
++            "fallback_used": llm_meta.get("fallback_used", False),
++        }
++        base_source = llm_meta.get("decision_source", "FALLBACK")
++        if raw_action not in {"PROCEED", "WAIT", "FREE"}:
++            base_source = "FALLBACK"
++        trace[vid]["decision_source"] = base_source
++    return trace
++
++
++def apply_safety_filter(trace: dict[str, dict], vehicle_states: list[dict]) -> dict[str, dict]:
++    updated = {vid: dict(entry) for vid, entry in trace.items()}
++    postprocessed = {vid: entry["postprocessed_decision"] for vid, entry in updated.items()}
++    final_decisions, conflict_flags, conflict_types, priority_reason = verify_decisions(vehicle_states, postprocessed)
++    for state in vehicle_states:
++        vid = state["vehicle_id"]
++        updated[vid]["final_decision"] = final_decisions.get(vid, updated[vid]["postprocessed_decision"])
++        updated[vid]["conflict_detected"] = conflict_flags.get(vid, False)
++        updated[vid]["conflict_type"] = conflict_types.get(vid, "")
++        updated[vid]["priority_reason"] = priority_reason
++        if updated[vid]["final_decision"] != updated[vid]["postprocessed_decision"]:
++            updated[vid]["safety_override"] = True
++            updated[vid]["safety_reason"] = conflict_types.get(vid, "") or priority_reason or "safety_downgrade"
++            updated[vid]["decision_source"] = "SAFETY_VERIFIER"
++        else:
++            updated[vid]["safety_override"] = False
++            updated[vid]["safety_reason"] = ""
++    return updated
++
++
++def build_real_llm_client(llm_mode: str, api_key: str, base_url: str):
++    if llm_mode != "real":
++        return None
++    if not api_key or OpenAI is None:
++        return None
++    return OpenAI(base_url=base_url, api_key=api_key)
++
++
++def get_llm_response_text(
++    *,
++    llm_mode: str,
++    llm_model: str,
++    client,
++    prompt: str,
++    traffic_state: list[dict],
++) -> tuple[str, dict]:
++    if llm_mode == "real" and client is not None:
++        start_time = time.perf_counter()
++        try:
++            response = client.chat.completions.create(
++                model=llm_model,
++                messages=[{"role": "user", "content": prompt}],
++            )
++            elapsed_ms = (time.perf_counter() - start_time) * 1000
++            return (
++                response.choices[0].message.content or "",
++                {
++                    "llm_called": True,
++                    "llm_model": llm_model,
++                    "llm_response_time_ms": round(elapsed_ms, 2),
++                    "json_parse_success": True,
++                    "fallback_used": False,
++                    "llm_mode": llm_mode,
++                    "decision_source": "LLM_RAW",
++                },
++            )
++        except Exception:
++            elapsed_ms = (time.perf_counter() - start_time) * 1000
++            fallback_response = json.dumps({"decisions": mock_llm_decision(traffic_state)})
++            return (
++                fallback_response,
++                {
++                    "llm_called": True,
++                    "llm_model": llm_model,
++                    "llm_response_time_ms": round(elapsed_ms, 2),
++                    "json_parse_success": False,
++                    "fallback_used": True,
++                    "llm_mode": llm_mode,
++                    "decision_source": "FALLBACK",
++                },
++            )
++
++    fallback_response = json.dumps({"decisions": mock_llm_decision(traffic_state)})
++    return (
++        fallback_response,
++        {
++            "llm_called": False,
++            "llm_model": llm_model if llm_mode == "real" else "",
++            "llm_response_time_ms": 0.0,
++            "json_parse_success": True,
++            "fallback_used": False,
++            "llm_mode": llm_mode,
++            "decision_source": "FALLBACK",
++        },
++    )
++
++
++def run_pipeline_controller(
++    *,
++    experiment_id: str,
++    controller_name: str,
++    stage_mode: str,
++    scenario: str,
++    vehicle_count: int,
++    seed: int,
++    sumo_binary: Path,
++    sumo_config: Path,
++    simulation_steps: int,
++    llm_mode: str,
++    llm_decision_interval: int,
++    llm_model: str,
++    llm_base_url: str,
++    llm_api_key: str,
++    prompt_version: str = "v2",
++) -> None:
++    if stage_mode not in {"raw", "hybrid", "hybrid_safety"}:
++        raise ValueError(f"Unsupported stage mode: {stage_mode}")
++
++    client = build_real_llm_client(llm_mode, llm_api_key, llm_base_url)
++    run_id = f"{experiment_id}_v{vehicle_count}_seed{seed}_{llm_mode}"
++    artifacts = run_artifact_paths(run_id)
++    output_csv = artifacts["step_records"]
++
++    traci.start([str(sumo_binary), "-c", str(sumo_config), "--start"])
++    records = []
++    events = []
++    all_seen_vehicles = set()
++    departed_seen = set()
++    arrived_seen = set()
++    cached_llm_raw: dict[str, str] = {}
++    cached_validated: dict[str, str] = {}
++    cached_llm_meta = {
++        "llm_called": False,
++        "llm_model": "",
++        "llm_response_time_ms": 0.0,
++        "json_parse_success": True,
++        "fallback_used": False,
++        "llm_mode": llm_mode,
++        "decision_source": "FALLBACK",
++    }
++
++    for step in range(simulation_steps):
++        traci.simulationStep()
++        departed_ids = list(traci.simulation.getDepartedIDList())
++        arrived_ids = list(traci.simulation.getArrivedIDList())
++        simulation_time = step * CONFIG["simulation_step_length"]
++        for vid in departed_ids:
++            if vid not in departed_seen:
++                departed_seen.add(vid)
++                events.append(
++                    build_event(
++                        run_id=run_id,
++                        event_type="departed",
++                        simulation_step=step,
++                        simulation_time_seconds=simulation_time,
++                        vehicle_id=vid,
++                        details="vehicle entered the simulation",
++                    )
++                )
++        for vid in arrived_ids:
++            if vid not in arrived_seen:
++                arrived_seen.add(vid)
++                events.append(
++                    build_event(
++                        run_id=run_id,
++                        event_type="arrived",
++                        simulation_step=step,
++                        simulation_time_seconds=simulation_time,
++                        vehicle_id=vid,
++                        details="vehicle left the simulation",
++                    )
++                )
++        vehicles = list(traci.vehicle.getIDList())
++        all_seen_vehicles.update(vehicles)
++        traffic_state = build_traffic_state(vehicles)
++
++        if step % llm_decision_interval == 0 or not cached_llm_raw:
++            prompt = build_structured_prompt(traffic_state, validate_conflict_matrix(), build_policy_hints(traffic_state))
++            response_text, llm_meta = get_llm_response_text(
++                llm_mode=llm_mode,
++                llm_model=llm_model,
++                client=client,
++                prompt=prompt,
++                traffic_state=traffic_state,
++            )
++            raw_decisions, validated_decisions, parse_ok = parse_llm_response_details(response_text, vehicles)
++            llm_meta["json_parse_success"] = parse_ok if llm_mode == "real" else True
++            cached_llm_raw = dict(raw_decisions)
++            cached_validated = dict(validated_decisions)
++            cached_llm_meta = dict(llm_meta)
++        else:
++            raw_decisions = dict(cached_llm_raw)
++            validated_decisions = dict(cached_validated)
++            llm_meta = {
++                "llm_called": False,
++                "llm_model": cached_llm_meta.get("llm_model", ""),
++                "llm_response_time_ms": 0.0,
++                "json_parse_success": cached_llm_meta.get("json_parse_success", True),
++                "fallback_used": cached_llm_meta.get("fallback_used", False),
++                "llm_mode": llm_mode,
++                "decision_source": cached_llm_meta.get("decision_source", "FALLBACK"),
++            }
++
++        trace = build_decision_trace(traffic_state, raw_decisions, validated_decisions, llm_meta)
++
++        if stage_mode == "raw":
++            trace = apply_interface_rule(trace, traffic_state, target_field="final_decision")
++            for entry in trace.values():
++                entry["postprocessed_decision"] = entry["validated_llm_decision"]
++                entry["final_decision"] = entry["final_decision"] if entry["final_decision"] else entry["validated_llm_decision"]
++        else:
++            trace = apply_interface_rule(trace, traffic_state, target_field="postprocessed_decision")
++            trace = apply_cooperative_postprocessing(trace, traffic_state)
++            for entry in trace.values():
++                entry["final_decision"] = entry["postprocessed_decision"]
++            if stage_mode == "hybrid_safety":
++                trace = apply_safety_filter(trace, traffic_state)
++            else:
++                for entry in trace.values():
++                    entry["safety_override"] = False
++                    entry["safety_reason"] = ""
++
++        for vid in vehicles:
++            entry = trace[vid]
++            apply_decision(traci, vid, entry["final_decision"])
++            records.append(
++                create_record(
++                    experiment_id=experiment_id,
++                    controller=controller_name,
++                    scenario=scenario,
++                    seed=seed,
++                    step=step,
++                    traci=traci,
++                    veh_id=vid,
++                    raw_decision=entry["validated_llm_decision"],
++                    final_decision=entry["final_decision"],
++                    conflict=entry["conflict_detected"],
++                    conflict_type=entry["conflict_type"],
++                    priority_reason=entry["priority_reason"],
++                    run_id=run_id,
++                    safety_enabled=stage_mode == "hybrid_safety",
++                    simulation_time_seconds=simulation_time,
++                    vehicle_count=vehicle_count,
++                    llm_raw_decision=entry["llm_raw_decision"],
++                    validated_llm_decision=entry["validated_llm_decision"],
++                    postprocessed_decision=entry["postprocessed_decision"],
++                    outside_control_zone_rule_applied=entry["outside_control_zone_rule_applied"],
++                    postprocess_applied=entry["postprocess_applied"],
++                    postprocess_reason=entry["postprocess_reason"],
++                    safety_override=entry["safety_override"],
++                    safety_reason=entry["safety_reason"],
++                    decision_source=entry["decision_source"],
++                    llm_mode=entry["llm_mode"],
++                    llm_called=entry["llm_called"],
++                    llm_model=entry["llm_model"],
++                    llm_response_time_ms=entry["llm_response_time_ms"],
++                    json_parse_success=entry["json_parse_success"],
++                    fallback_used=entry["fallback_used"],
++                    departed=vid in departed_seen,
++                    arrived=False,
++                )
++            )
++        time.sleep(0.03)
++
++    traci.close(False)
++    metadata = build_run_metadata(
++        run_id=run_id,
++        controller=controller_name,
++        safety_enabled=stage_mode == "hybrid_safety",
++        scenario_id=scenario,
++        density="debug",
++        vehicle_count=vehicle_count,
++        seed=seed,
++        llm_mode=llm_mode,
++        llm_model=llm_model if llm_mode == "real" else "",
++        prompt_version=prompt_version,
++        status="completed",
++    )
++    metadata["departed_count"] = len(departed_seen)
++    metadata["arrived_count"] = len(arrived_seen)
++    metadata["collision_count"] = 0
++    write_run_artifacts(run_id, records, events, metadata)
++    summary = calculate_summary(records, all_seen_vehicles, run_metadata=metadata)
++    print_summary(controller_name, summary, output_csv)
+diff --git a/src/controllers/hybrid_llm_controller.py b/src/controllers/hybrid_llm_controller.py
+new file mode 100644
+index 0000000..592a5ee
+--- /dev/null
++++ b/src/controllers/hybrid_llm_controller.py
+@@ -0,0 +1,51 @@
++from __future__ import annotations
++
++import os
++from pathlib import Path
++
++from common import CONFIG
++from src.controllers.decision_pipeline import run_pipeline_controller
++
++
++SUMO_BINARY = CONFIG["sumo_gui_binary_path"]
++SUMO_CONFIG = Path(os.getenv("SUMO_CONFIG_PATH", str(CONFIG["sumo_config_path"])))
++SCENARIO = os.getenv("SCENARIO_ID", "debug_four_vehicle")
++VEHICLE_COUNT = int(os.getenv("VEHICLE_COUNT", "4"))
++SEED = CONFIG["default_seed"]
++SIMULATION_STEPS = int(os.getenv("SIMULATION_STEPS", str(CONFIG["default_simulation_duration"])))
++LLM_MODE = os.getenv("LLM_MODE", "mock").strip().lower()
++LLM_DECISION_INTERVAL = max(1, int(os.getenv("LLM_DECISION_INTERVAL", "1")))
++LLM_API_KEY = os.getenv("GROQ_API_KEY") or os.getenv("OPENROUTER_API_KEY", "")
++LLM_BASE_URL = os.getenv(
++    "LLM_BASE_URL",
++    "https://api.groq.com/openai/v1" if os.getenv("GROQ_API_KEY") else "https://openrouter.ai/api/v1",
++)
++LLM_MODEL = os.getenv(
++    "LLM_MODEL",
++    "openai/gpt-oss-20b" if os.getenv("GROQ_API_KEY") else "openrouter/free",
++)
++
++
++def main() -> int:
++    run_pipeline_controller(
++        experiment_id="E05_HYBRID_LLM_4V_S1",
++        controller_name="HybridLLMController",
++        stage_mode="hybrid",
++        scenario=SCENARIO,
++        vehicle_count=VEHICLE_COUNT,
++        seed=SEED,
++        sumo_binary=SUMO_BINARY,
++        sumo_config=SUMO_CONFIG,
++        simulation_steps=SIMULATION_STEPS,
++        llm_mode=LLM_MODE,
++        llm_decision_interval=LLM_DECISION_INTERVAL,
++        llm_model=LLM_MODEL,
++        llm_base_url=LLM_BASE_URL,
++        llm_api_key=LLM_API_KEY,
++        prompt_version="v2-stage-separated",
++    )
++    return 0
++
++
++if __name__ == "__main__":
++    raise SystemExit(main())
+diff --git a/src/controllers/hybrid_llm_safety_controller.py b/src/controllers/hybrid_llm_safety_controller.py
+new file mode 100644
+index 0000000..846544a
+--- /dev/null
++++ b/src/controllers/hybrid_llm_safety_controller.py
+@@ -0,0 +1,51 @@
++from __future__ import annotations
++
++import os
++from pathlib import Path
++
++from common import CONFIG
++from src.controllers.decision_pipeline import run_pipeline_controller
++
++
++SUMO_BINARY = CONFIG["sumo_gui_binary_path"]
++SUMO_CONFIG = Path(os.getenv("SUMO_CONFIG_PATH", str(CONFIG["sumo_config_path"])))
++SCENARIO = os.getenv("SCENARIO_ID", "debug_four_vehicle")
++VEHICLE_COUNT = int(os.getenv("VEHICLE_COUNT", "4"))
++SEED = CONFIG["default_seed"]
++SIMULATION_STEPS = int(os.getenv("SIMULATION_STEPS", str(CONFIG["default_simulation_duration"])))
++LLM_MODE = os.getenv("LLM_MODE", "mock").strip().lower()
++LLM_DECISION_INTERVAL = max(1, int(os.getenv("LLM_DECISION_INTERVAL", "1")))
++LLM_API_KEY = os.getenv("GROQ_API_KEY") or os.getenv("OPENROUTER_API_KEY", "")
++LLM_BASE_URL = os.getenv(
++    "LLM_BASE_URL",
++    "https://api.groq.com/openai/v1" if os.getenv("GROQ_API_KEY") else "https://openrouter.ai/api/v1",
++)
++LLM_MODEL = os.getenv(
++    "LLM_MODEL",
++    "openai/gpt-oss-20b" if os.getenv("GROQ_API_KEY") else "openrouter/free",
++)
++
++
++def main() -> int:
++    run_pipeline_controller(
++        experiment_id="E06_HYBRID_LLM_SAFETY_4V_S1",
++        controller_name="HybridLLMSafetyController",
++        stage_mode="hybrid_safety",
++        scenario=SCENARIO,
++        vehicle_count=VEHICLE_COUNT,
++        seed=SEED,
++        sumo_binary=SUMO_BINARY,
++        sumo_config=SUMO_CONFIG,
++        simulation_steps=SIMULATION_STEPS,
++        llm_mode=LLM_MODE,
++        llm_decision_interval=LLM_DECISION_INTERVAL,
++        llm_model=LLM_MODEL,
++        llm_base_url=LLM_BASE_URL,
++        llm_api_key=LLM_API_KEY,
++        prompt_version="v2-stage-separated",
++    )
++    return 0
++
++
++if __name__ == "__main__":
++    raise SystemExit(main())
+diff --git a/src/controllers/raw_llm_controller.py b/src/controllers/raw_llm_controller.py
+new file mode 100644
+index 0000000..29c2454
+--- /dev/null
++++ b/src/controllers/raw_llm_controller.py
+@@ -0,0 +1,51 @@
++from __future__ import annotations
++
++import os
++from pathlib import Path
++
++from common import CONFIG
++from src.controllers.decision_pipeline import run_pipeline_controller
++
++
++SUMO_BINARY = CONFIG["sumo_gui_binary_path"]
++SUMO_CONFIG = Path(os.getenv("SUMO_CONFIG_PATH", str(CONFIG["sumo_config_path"])))
++SCENARIO = os.getenv("SCENARIO_ID", "debug_four_vehicle")
++VEHICLE_COUNT = int(os.getenv("VEHICLE_COUNT", "4"))
++SEED = CONFIG["default_seed"]
++SIMULATION_STEPS = int(os.getenv("SIMULATION_STEPS", str(CONFIG["default_simulation_duration"])))
++LLM_MODE = os.getenv("LLM_MODE", "mock").strip().lower()
++LLM_DECISION_INTERVAL = max(1, int(os.getenv("LLM_DECISION_INTERVAL", "1")))
++LLM_API_KEY = os.getenv("GROQ_API_KEY") or os.getenv("OPENROUTER_API_KEY", "")
++LLM_BASE_URL = os.getenv(
++    "LLM_BASE_URL",
++    "https://api.groq.com/openai/v1" if os.getenv("GROQ_API_KEY") else "https://openrouter.ai/api/v1",
++)
++LLM_MODEL = os.getenv(
++    "LLM_MODEL",
++    "openai/gpt-oss-20b" if os.getenv("GROQ_API_KEY") else "openrouter/free",
++)
++
++
++def main() -> int:
++    run_pipeline_controller(
++        experiment_id="E04_RAW_LLM_4V_S1",
++        controller_name="RawLLMController",
++        stage_mode="raw",
++        scenario=SCENARIO,
++        vehicle_count=VEHICLE_COUNT,
++        seed=SEED,
++        sumo_binary=SUMO_BINARY,
++        sumo_config=SUMO_CONFIG,
++        simulation_steps=SIMULATION_STEPS,
++        llm_mode=LLM_MODE,
++        llm_decision_interval=LLM_DECISION_INTERVAL,
++        llm_model=LLM_MODEL,
++        llm_base_url=LLM_BASE_URL,
++        llm_api_key=LLM_API_KEY,
++        prompt_version="v2-stage-separated",
++    )
++    return 0
++
++
++if __name__ == "__main__":
++    raise SystemExit(main())
+diff --git a/src/experiments/experiment_runner.py b/src/experiments/experiment_runner.py
+index 7c6046a..51b0621 100644
+--- a/src/experiments/experiment_runner.py
++++ b/src/experiments/experiment_runner.py
+@@ -16,7 +16,11 @@ from src.experiments.scenario_generator import generate_scenario
+ 
+ def main(argv: list[str] | None = None) -> int:
+     parser = argparse.ArgumentParser()
+-    parser.add_argument("--controller", choices=["baseline", "cooperative", "llm"], default=None)
++    parser.add_argument(
++        "--controller",
++        choices=["baseline", "cooperative", "cooperative_rule", "llm", "raw_llm", "hybrid_llm", "hybrid_llm_safety"],
++        default=None,
++    )
+     parser.add_argument("--density", default=None)
+     parser.add_argument("--seed", type=int, default=None)
+     parser.add_argument("--vehicle-count", type=int, default=None)
+@@ -73,10 +77,20 @@ def main(argv: list[str] | None = None) -> int:
+         manifest_path.write_text(json.dumps(manifest_rows, indent=2), encoding="utf-8")
+         return 0
+ 
++    controller_script_map = {
++        "baseline": root / "baseline_controller.py",
++        "cooperative": root / "cooperative_controller.py",
++        "cooperative_rule": root / "cooperative_controller.py",
++        "llm": root / "llm_controller.py",
++        "raw_llm": root / "raw_llm_controller.py",
++        "hybrid_llm": root / "hybrid_llm_controller.py",
++        "hybrid_llm_safety": root / "hybrid_llm_safety_controller.py",
++    }
++
+     for controller, density, seed, vehicle_count in runs:
+         scenario_id = f"{density}_v{vehicle_count}_seed{seed}"
+         scenario_config = generate_scenario(scenario_id, density, seed, vehicle_count=vehicle_count)
+-        controller_script = root / f"{controller}_controller.py"
++        controller_script = controller_script_map.get(controller, root / f"{controller}_controller.py")
+         launch_env = os.environ.copy()
+         launch_env["SCENARIO_ID"] = scenario_id
+         launch_env["VEHICLE_COUNT"] = str(vehicle_count)
+diff --git a/src/llm/postprocessor.py b/src/llm/postprocessor.py
+new file mode 100644
+index 0000000..f0441fc
+--- /dev/null
++++ b/src/llm/postprocessor.py
+@@ -0,0 +1,51 @@
++from __future__ import annotations
++
++from src.safety.route_conflict import routes_compatible
++
++
++def choose_priority_vehicle(vehicle_states: list[dict]) -> dict | None:
++    controlled = [state for state in vehicle_states if state.get("inside_control_zone")]
++    if not controlled:
++        return None
++    return min(controlled, key=lambda state: state.get("time_to_intersection", float("inf")))
++
++
++def apply_interface_rule(
++    trace: dict[str, dict],
++    vehicle_states: list[dict],
++    target_field: str,
++) -> dict[str, dict]:
++    updated = {vid: dict(entry) for vid, entry in trace.items()}
++    for state in vehicle_states:
++        vid = state["vehicle_id"]
++        if state.get("inside_control_zone"):
++            continue
++        updated[vid][target_field] = "FREE"
++        updated[vid]["outside_control_zone_rule_applied"] = True
++        updated[vid]["decision_source"] = "DETERMINISTIC_INTERFACE_RULE"
++    return updated
++
++
++def apply_cooperative_postprocessing(
++    trace: dict[str, dict],
++    vehicle_states: list[dict],
++) -> dict[str, dict]:
++    updated = {vid: dict(entry) for vid, entry in trace.items()}
++    priority_vehicle = choose_priority_vehicle(vehicle_states)
++    if priority_vehicle is None:
++        return updated
++
++    priority_route = priority_vehicle.get("route_id", "")
++    priority_vehicle_id = priority_vehicle["vehicle_id"]
++    for state in vehicle_states:
++        vid = state["vehicle_id"]
++        if not state.get("inside_control_zone"):
++            continue
++        if updated[vid]["postprocessed_decision"] != "WAIT":
++            continue
++        if routes_compatible(priority_route, state.get("route_id", "")):
++            updated[vid]["postprocessed_decision"] = "PROCEED"
++            updated[vid]["postprocess_applied"] = True
++            updated[vid]["postprocess_reason"] = f"compatible_with_priority:{priority_vehicle_id}"
++            updated[vid]["decision_source"] = "COOPERATIVE_POSTPROCESSOR"
++    return updated
+diff --git a/src/llm/response_parser.py b/src/llm/response_parser.py
+index 4303169..81386db 100644
+--- a/src/llm/response_parser.py
++++ b/src/llm/response_parser.py
+@@ -25,24 +25,37 @@ def _normalize_action(action: object) -> str:
+ 
+ 
+ def parse_llm_response(response_text: str, vehicles: list[str]) -> tuple[dict[str, str], bool]:
++    _, validated, ok = parse_llm_response_details(response_text, vehicles)
++    return validated, ok
++
++
++def parse_llm_response_details(response_text: str, vehicles: list[str]) -> tuple[dict[str, str], dict[str, str], bool]:
+     try:
+         payload = json.loads(_extract_json_text(response_text))
+         decisions = payload.get("decisions", payload)
++        raw_decisions = {}
++        validated_decisions = {}
+         if isinstance(decisions, list):
+-            parsed = {}
+             for item in decisions:
+                 vid = item.get("vehicle_id")
+-                action = _normalize_action(item.get("decision", "WAIT"))
++                raw_action = item.get("decision", "MISSING")
++                action = _normalize_action(raw_action)
+                 if vid in vehicles:
+-                    parsed[vid] = action
++                    raw_decisions[vid] = raw_action if isinstance(raw_action, str) else "MISSING"
++                    validated_decisions[vid] = action
+         elif isinstance(decisions, dict):
+-            parsed = {}
+             for vid in vehicles:
+-                parsed[vid] = _normalize_action(decisions.get(vid, "WAIT"))
++                raw_action = decisions.get(vid, "MISSING")
++                raw_decisions[vid] = raw_action if isinstance(raw_action, str) else "MISSING"
++                validated_decisions[vid] = _normalize_action(raw_action)
+         else:
+-            parsed = {}
++            raw_decisions = {vid: "MISSING" for vid in vehicles}
++            validated_decisions = {vid: "WAIT" for vid in vehicles}
+         for vid in vehicles:
+-            parsed.setdefault(vid, "WAIT")
+-        return parsed, True
++            raw_decisions.setdefault(vid, "MISSING")
++            validated_decisions.setdefault(vid, "WAIT")
++        return raw_decisions, validated_decisions, True
+     except Exception:
+-        return {vid: "WAIT" for vid in vehicles}, False
++        raw_decisions = {vid: "MISSING" for vid in vehicles}
++        validated_decisions = {vid: "WAIT" for vid in vehicles}
++        return raw_decisions, validated_decisions, False
+diff --git a/tests/test_decision_pipeline.py b/tests/test_decision_pipeline.py
+new file mode 100644
+index 0000000..89c786e
+--- /dev/null
++++ b/tests/test_decision_pipeline.py
+@@ -0,0 +1,96 @@
++from types import SimpleNamespace
++
++import baseline_controller
++import cooperative_controller
++
++from src.controllers.decision_pipeline import apply_safety_filter, build_decision_trace
++
++
++def _build_state(vehicle_id: str, route_id: str, tti: float, inside: bool) -> dict:
++    return {
++        "vehicle_id": vehicle_id,
++        "route_id": route_id,
++        "speed": 5.0,
++        "distance_to_intersection": 10.0,
++        "time_to_intersection": tti,
++        "inside_control_zone": inside,
++    }
++
++
++def test_safety_verifier_downgrades_unsafe_proceed_to_wait():
++    traffic_state = [
++        _build_state("car0", "N_S", 1.0, True),
++        _build_state("car1", "E_W", 1.1, True),
++    ]
++    trace = build_decision_trace(
++        traffic_state,
++        {"car0": "PROCEED", "car1": "PROCEED"},
++        {"car0": "PROCEED", "car1": "PROCEED"},
++        {"llm_called": True},
++    )
++    trace = apply_safety_filter(trace, traffic_state)
++
++    assert trace["car0"]["final_decision"] == "PROCEED"
++    assert trace["car1"]["final_decision"] == "WAIT"
++    assert trace["car1"]["safety_override"] is True
++    assert trace["car1"]["safety_reason"] != ""
++
++
++def test_safety_verifier_never_upgrades_wait_to_proceed():
++    traffic_state = [
++        _build_state("car0", "N_S", 1.0, True),
++        _build_state("car1", "E_W", 1.1, True),
++    ]
++    trace = build_decision_trace(
++        traffic_state,
++        {"car0": "PROCEED", "car1": "WAIT"},
++        {"car0": "PROCEED", "car1": "WAIT"},
++        {"llm_called": True},
++    )
++    trace = apply_safety_filter(trace, traffic_state)
++
++    assert trace["car1"]["final_decision"] == "WAIT"
++    assert trace["car1"]["safety_override"] is False
++
++
++def test_baseline_behavior_is_not_broken(monkeypatch):
++    monkeypatch.setattr(baseline_controller, "is_in_control_zone", lambda _traci, vid: vid != "outside")
++    monkeypatch.setattr(baseline_controller, "distance_to_center", lambda _traci, vid: {"car0": 2.0, "car1": 4.0, "outside": 100.0}[vid])
++
++    class FakeVehicleAPI:
++        def getSpeed(self, vid):
++            return {"car0": 5.0, "car1": 5.0, "outside": 5.0}[vid]
++
++        def getPosition(self, vid):
++            return (0.0, 0.0)
++
++    fake_traci = SimpleNamespace(vehicle=FakeVehicleAPI())
++    monkeypatch.setattr(baseline_controller, "traci", fake_traci)
++
++    decisions = baseline_controller.decide(["car0", "car1", "outside"])
++
++    assert decisions["car0"] == "PROCEED"
++    assert decisions["car1"] == "WAIT"
++    assert decisions["outside"] == "FREE"
++
++
++def test_cooperative_behavior_is_not_broken(monkeypatch):
++    monkeypatch.setattr(cooperative_controller, "is_in_control_zone", lambda _traci, vid: vid != "outside")
++    monkeypatch.setattr(cooperative_controller, "distance_to_center", lambda _traci, vid: {"car0": 2.0, "car1": 4.0, "outside": 100.0}[vid])
++    monkeypatch.setattr(cooperative_controller, "get_vehicle_route", lambda _traci, vid: {"car0": "N_S", "car1": "E_W", "outside": "W_E"}[vid])
++
++    class FakeVehicleAPI:
++        def getSpeed(self, vid):
++            return {"car0": 5.0, "car1": 5.0, "outside": 5.0}[vid]
++
++        def getPosition(self, vid):
++            return (0.0, 0.0)
++
++    fake_traci = SimpleNamespace(vehicle=FakeVehicleAPI())
++    monkeypatch.setattr(cooperative_controller, "traci", fake_traci)
++
++    decisions = cooperative_controller.decide(["car0", "car1", "outside"])
++
++    assert decisions["car0"] == "PROCEED"
++    assert decisions["car1"] == "WAIT"
++    assert decisions["outside"] == "FREE"
+diff --git a/tests/test_llm_postprocessor.py b/tests/test_llm_postprocessor.py
+new file mode 100644
+index 0000000..25993bd
+--- /dev/null
++++ b/tests/test_llm_postprocessor.py
+@@ -0,0 +1,128 @@
++from src.controllers.decision_pipeline import apply_safety_filter, build_decision_trace
++from src.llm.postprocessor import apply_cooperative_postprocessing, apply_interface_rule
++
++
++def _build_state(vehicle_id: str, route_id: str, tti: float, inside: bool) -> dict:
++    return {
++        "vehicle_id": vehicle_id,
++        "route_id": route_id,
++        "speed": 5.0,
++        "distance_to_intersection": 10.0,
++        "time_to_intersection": tti,
++        "inside_control_zone": inside,
++    }
++
++
++def test_raw_llm_wait_remains_wait_without_promotion():
++    traffic_state = [_build_state("car0", "N_S", 2.0, True)]
++    trace = build_decision_trace(traffic_state, {"car0": "WAIT"}, {"car0": "WAIT"}, {"llm_called": True})
++
++    assert trace["car0"]["llm_raw_decision"] == "WAIT"
++    assert trace["car0"]["validated_llm_decision"] == "WAIT"
++    assert trace["car0"]["postprocessed_decision"] == "WAIT"
++    assert trace["car0"]["final_decision"] == "WAIT"
++
++
++def test_raw_llm_does_not_promote_compatible_vehicle():
++    traffic_state = [_build_state("car0", "N_S", 2.0, True)]
++    trace = build_decision_trace(traffic_state, {"car0": "WAIT"}, {"car0": "WAIT"}, {"llm_called": True})
++
++    assert trace["car0"]["postprocessed_decision"] == "WAIT"
++    assert trace["car0"]["decision_source"] == "LLM_RAW"
++
++
++def test_hybrid_promotes_compatible_wait_vehicle():
++    traffic_state = [
++        _build_state("car0", "N_S", 1.0, True),
++        _build_state("car1", "N_S", 2.0, True),
++    ]
++    trace = build_decision_trace(
++        traffic_state,
++        {"car0": "PROCEED", "car1": "WAIT"},
++        {"car0": "PROCEED", "car1": "WAIT"},
++        {"llm_called": True},
++    )
++    trace = apply_interface_rule(trace, traffic_state, target_field="postprocessed_decision")
++    trace = apply_cooperative_postprocessing(trace, traffic_state)
++
++    assert trace["car1"]["postprocessed_decision"] == "PROCEED"
++    assert trace["car1"]["postprocess_applied"] is True
++    assert trace["car1"]["decision_source"] == "COOPERATIVE_POSTPROCESSOR"
++
++
++def test_hybrid_does_not_promote_conflicting_routes():
++    traffic_state = [
++        _build_state("car0", "N_S", 1.0, True),
++        _build_state("car1", "E_W", 2.0, True),
++    ]
++    trace = build_decision_trace(
++        traffic_state,
++        {"car0": "PROCEED", "car1": "WAIT"},
++        {"car0": "PROCEED", "car1": "WAIT"},
++        {"llm_called": True},
++    )
++    trace = apply_interface_rule(trace, traffic_state, target_field="postprocessed_decision")
++    trace = apply_cooperative_postprocessing(trace, traffic_state)
++
++    assert trace["car1"]["postprocessed_decision"] == "WAIT"
++    assert trace["car1"]["postprocess_applied"] is False
++
++
++def test_invalid_llm_action_becomes_wait():
++    traffic_state = [_build_state("car0", "N_S", 1.0, True)]
++    trace = build_decision_trace(traffic_state, {"car0": "GO"}, {"car0": "WAIT"}, {"llm_called": True})
++
++    assert trace["car0"]["llm_raw_decision"] == "GO"
++    assert trace["car0"]["validated_llm_decision"] == "WAIT"
++
++
++def test_missing_vehicle_decision_becomes_wait():
++    traffic_state = [_build_state("car0", "N_S", 1.0, True), _build_state("car1", "E_W", 2.0, True)]
++    trace = build_decision_trace(traffic_state, {"car0": "PROCEED"}, {"car0": "PROCEED"}, {"llm_called": True})
++
++    assert trace["car1"]["llm_raw_decision"] == "MISSING"
++    assert trace["car1"]["validated_llm_decision"] == "WAIT"
++
++
++def test_outside_control_zone_free_rule_is_logged_deterministically():
++    traffic_state = [_build_state("car0", "N_S", 1.0, False)]
++    trace = build_decision_trace(traffic_state, {"car0": "PROCEED"}, {"car0": "PROCEED"}, {"llm_called": True})
++    trace = apply_interface_rule(trace, traffic_state, target_field="final_decision")
++
++    assert trace["car0"]["final_decision"] == "FREE"
++    assert trace["car0"]["outside_control_zone_rule_applied"] is True
++    assert trace["car0"]["decision_source"] == "DETERMINISTIC_INTERFACE_RULE"
++
++
++def test_four_decision_fields_contain_expected_values():
++    traffic_state = [_build_state("car0", "N_S", 1.0, True)]
++    trace = build_decision_trace(traffic_state, {"car0": "WAIT"}, {"car0": "WAIT"}, {"llm_called": True})
++    trace = apply_interface_rule(trace, traffic_state, target_field="postprocessed_decision")
++    trace = apply_cooperative_postprocessing(trace, traffic_state)
++
++    assert trace["car0"]["llm_raw_decision"] == "WAIT"
++    assert trace["car0"]["validated_llm_decision"] == "WAIT"
++    assert trace["car0"]["postprocessed_decision"] == "PROCEED"
++    assert trace["car0"]["final_decision"] == "WAIT"
++
++
++def test_postprocess_and_safety_override_remain_separate():
++    traffic_state = [
++        _build_state("car0", "N_S", 1.0, True),
++        _build_state("car1", "E_W", 1.2, True),
++    ]
++    trace = build_decision_trace(
++        traffic_state,
++        {"car0": "PROCEED", "car1": "PROCEED"},
++        {"car0": "PROCEED", "car1": "PROCEED"},
++        {"llm_called": True},
++    )
++    trace = apply_interface_rule(trace, traffic_state, target_field="postprocessed_decision")
++    trace = apply_cooperative_postprocessing(trace, traffic_state)
++    trace = apply_safety_filter(trace, traffic_state)
++
++    assert trace["car0"]["postprocess_applied"] is False
++    assert trace["car0"]["safety_override"] is False
++    assert trace["car1"]["postprocess_applied"] is False
++    assert trace["car1"]["safety_override"] is True
++    assert trace["car1"]["final_decision"] == "WAIT"

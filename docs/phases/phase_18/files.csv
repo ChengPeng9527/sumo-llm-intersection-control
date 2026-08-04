@@ -1,20 +1,22 @@
 action,relative_path,old_sha256,new_sha256,reason,restore_source,git_commit
-MODIFIED,src/common/logging_schema.py,,,Add stage-level logging fields for decision separation,HEAD,phase-18-decision-pipeline-separation
-MODIFIED,src/common/metrics.py,,,Extend empty records with raw/hybrid/safety trace fields,HEAD,phase-18-decision-pipeline-separation
-MODIFIED,common.py,,,Populate the new trace-level record fields,HEAD,phase-18-decision-pipeline-separation
-MODIFIED,src/llm/response_parser.py,,,Return both raw and validated LLM decisions,HEAD,phase-18-decision-pipeline-separation
-MODIFIED,requirements.txt,,,Declare pytest/openai/python-dotenv for the project environment,HEAD,phase-18-decision-pipeline-separation
-MODIFIED,baseline_controller.py,,,Populate new logging fields without changing baseline logic,HEAD,phase-18-decision-pipeline-separation
-MODIFIED,cooperative_controller.py,,,Populate new logging fields without changing cooperative logic,HEAD,phase-18-decision-pipeline-separation
-MODIFIED,src/experiments/experiment_runner.py,,,Add controller mappings for the new decision-pipeline modes,HEAD,phase-18-decision-pipeline-separation
-ADDED,src/controllers/__init__.py,,,Create the shared controller package,HEAD,phase-18-decision-pipeline-separation
-ADDED,src/controllers/decision_pipeline.py,,,Shared raw/hybrid/safety execution pipeline,HEAD,phase-18-decision-pipeline-separation
-ADDED,src/controllers/raw_llm_controller.py,,,Raw LLM controller entrypoint,HEAD,phase-18-decision-pipeline-separation
-ADDED,src/controllers/hybrid_llm_controller.py,,,Hybrid controller entrypoint,HEAD,phase-18-decision-pipeline-separation
-ADDED,src/controllers/hybrid_llm_safety_controller.py,,,Hybrid+safe controller entrypoint,HEAD,phase-18-decision-pipeline-separation
-ADDED,src/llm/postprocessor.py,,,Deterministic cooperative and interface postprocessing,HEAD,phase-18-decision-pipeline-separation
-ADDED,raw_llm_controller.py,,,Root wrapper for the raw controller,HEAD,phase-18-decision-pipeline-separation
-ADDED,hybrid_llm_controller.py,,,Root wrapper for the hybrid controller,HEAD,phase-18-decision-pipeline-separation
-ADDED,hybrid_llm_safety_controller.py,,,Root wrapper for the hybrid+safety controller,HEAD,phase-18-decision-pipeline-separation
-ADDED,tests/test_decision_pipeline.py,,,Decision pipeline regression tests,HEAD,phase-18-decision-pipeline-separation
-ADDED,tests/test_llm_postprocessor.py,,,Postprocessor regression tests,HEAD,phase-18-decision-pipeline-separation
+MODIFIED,docs/current_project_status.md,,d7abccf5d73d81b3b62951d4962f090c172391cadb0db4a4022804da32134d99,Record the Phase 18 branch and environment status,HEAD,24a339fd366b7c3c43d9dc414c415d6ac19f250e
+MODIFIED,docs/project_inventory.md,,372d6d27d5985cddc061faba52dcf405192e7fd41030f90316753d5e45c27eb6,Add the new controller and pipeline modules,HEAD,24a339fd366b7c3c43d9dc414c415d6ac19f250e
+MODIFIED,src/common/logging_schema.py,,e863512cd39480b6b8a4bc5983d8e6dbbeb1c43c547426ae6baf6bcbbb17f4b7,Add stage-level logging fields for decision separation,HEAD,24a339fd366b7c3c43d9dc414c415d6ac19f250e
+MODIFIED,src/common/metrics.py,,68b82a25a4f498ab100da3f6720bd9e100c775704391da3029c25056c7c4b9aa,Extend empty records with raw/hybrid/safety trace fields,HEAD,24a339fd366b7c3c43d9dc414c415d6ac19f250e
+MODIFIED,common.py,,0d04cafe92ab291af2e17f28f0b650dc398db3d3708b140980dcbf8ddbe1fbad,Populate the new trace-level record fields,HEAD,24a339fd366b7c3c43d9dc414c415d6ac19f250e
+MODIFIED,src/llm/response_parser.py,,c2ca4dbdd6196dfcb173c338828ca8d56269ff60b20cbd98e9c948e304dccaca,Return both raw and validated LLM decisions,HEAD,24a339fd366b7c3c43d9dc414c415d6ac19f250e
+MODIFIED,requirements.txt,,1dd5082c0aa591d4d944fd866adfa2a8ba80a19a43dc5e49cd44775dc1678cf8,Declare pytest/openai/python-dotenv for the project environment,HEAD,24a339fd366b7c3c43d9dc414c415d6ac19f250e
+MODIFIED,baseline_controller.py,,5d97a1bc8d77e9dc6a2d8d185fe76419d4a5ee2145481626ab7b382f5363ae97,Populate new logging fields without changing baseline logic,HEAD,24a339fd366b7c3c43d9dc414c415d6ac19f250e
+MODIFIED,cooperative_controller.py,,681996d39e4a387fa051b995f3dfd6bb548794ad3ed6fbeee547aa25af3977b2,Populate new logging fields without changing cooperative logic,HEAD,24a339fd366b7c3c43d9dc414c415d6ac19f250e
+MODIFIED,src/experiments/experiment_runner.py,,1d299c7225117f0af0e13fed18cc3f1f92ffb1e3163e5cbebe4dc11fee4e0e6b,Add controller mappings for the new decision-pipeline modes,HEAD,24a339fd366b7c3c43d9dc414c415d6ac19f250e
+ADDED,src/controllers/__init__.py,,5384bfdb2df380b6557cc7a71d16891415bccaa87699406e236f752c6415389f,Create the shared controller package,HEAD,24a339fd366b7c3c43d9dc414c415d6ac19f250e
+ADDED,src/controllers/decision_pipeline.py,,391c0867ea9ca31ace2015fdba3d2af767ebfb17a143329415748fd7e83d6a08,Shared raw/hybrid/safety execution pipeline,HEAD,24a339fd366b7c3c43d9dc414c415d6ac19f250e
+ADDED,src/controllers/raw_llm_controller.py,,cd9ba4fa9ad2d35cd22eda65bbe9157c41cf021ba30ee31af86589c58f11b3fc,Raw LLM controller entrypoint,HEAD,24a339fd366b7c3c43d9dc414c415d6ac19f250e
+ADDED,src/controllers/hybrid_llm_controller.py,,b4036f0afc439a80a0efb7a93aa2bd455ea8bb94a27787b5ea31dfcd1c533d3c,Hybrid controller entrypoint,HEAD,24a339fd366b7c3c43d9dc414c415d6ac19f250e
+ADDED,src/controllers/hybrid_llm_safety_controller.py,,bee61ae06a70d3a47bbf99df99b7d1d1043562d5fcec581a18922d4e71c975b6,Hybrid+safe controller entrypoint,HEAD,24a339fd366b7c3c43d9dc414c415d6ac19f250e
+ADDED,src/llm/postprocessor.py,,ea2feddc763474275075c9c356cfbb575fcb709fefd9591fe049c19d3ff05288,Deterministic cooperative and interface postprocessing,HEAD,24a339fd366b7c3c43d9dc414c415d6ac19f250e
+ADDED,raw_llm_controller.py,,c6032bf541c72bcf5f5eaa3d558ad38e997e89e2a279651a767b993387dd2bf5,Root wrapper for the raw controller,HEAD,24a339fd366b7c3c43d9dc414c415d6ac19f250e
+ADDED,hybrid_llm_controller.py,,28af40df8359d19faf20e5b26b3aaf16a283f675e039b0584528891830080e37,Root wrapper for the hybrid controller,HEAD,24a339fd366b7c3c43d9dc414c415d6ac19f250e
+ADDED,hybrid_llm_safety_controller.py,,c864838066c1746ad3e3a89cf5f909c7d99fe54bb874a492d854ccea464baf9a,Root wrapper for the hybrid+safety controller,HEAD,24a339fd366b7c3c43d9dc414c415d6ac19f250e
+ADDED,tests/test_decision_pipeline.py,,b058fca9fde8d97f9b9996ad5f418d3e77ae80774f400e301a8e1c7946225228,Decision pipeline regression tests,HEAD,24a339fd366b7c3c43d9dc414c415d6ac19f250e
+ADDED,tests/test_llm_postprocessor.py,,f72e89e86369e94a049ace4ede28d6a8a21cb7dfc94bb6a431064c5533665840,Postprocessor regression tests,HEAD,24a339fd366b7c3c43d9dc414c415d6ac19f250e
