@@ -43,9 +43,16 @@ SEED = CONFIG["default_seed"]
 SIMULATION_STEPS = int(os.getenv("SIMULATION_STEPS", str(CONFIG["default_simulation_duration"])))
 USE_SAFETY_LAYER = True
 LLM_MODE = os.getenv("LLM_MODE", "mock").strip().lower()
-LLM_MODEL = os.getenv("LLM_MODEL", "openrouter/free")
-LLM_BASE_URL = os.getenv("LLM_BASE_URL", "https://openrouter.ai/api/v1")
-OPENROUTER_API_KEY = os.getenv("OPENROUTER_API_KEY", "")
+LLM_DECISION_INTERVAL = max(1, int(os.getenv("LLM_DECISION_INTERVAL", "1")))
+LLM_API_KEY = os.getenv("GROQ_API_KEY") or os.getenv("OPENROUTER_API_KEY", "")
+LLM_BASE_URL = os.getenv(
+    "LLM_BASE_URL",
+    "https://api.groq.com/openai/v1" if os.getenv("GROQ_API_KEY") else "https://openrouter.ai/api/v1",
+)
+LLM_MODEL = os.getenv(
+    "LLM_MODEL",
+    "openai/gpt-oss-20b" if os.getenv("GROQ_API_KEY") else "openrouter/free",
+)
 RUN_ID = f"{EXPERIMENT_ID}_v{VEHICLE_COUNT}_seed{SEED}_{LLM_MODE}"
 ARTIFACTS = run_artifact_paths(RUN_ID)
 OUTPUT_CSV = ARTIFACTS["step_records"]
@@ -54,9 +61,9 @@ OUTPUT_CSV = ARTIFACTS["step_records"]
 def build_llm_client():
     if LLM_MODE != "real":
         return None
-    if not OPENROUTER_API_KEY or OpenAI is None:
+    if not LLM_API_KEY or OpenAI is None:
         return None
-    return OpenAI(base_url=LLM_BASE_URL, api_key=OPENROUTER_API_KEY)
+    return OpenAI(base_url=LLM_BASE_URL, api_key=LLM_API_KEY)
 
 
 CLIENT = build_llm_client()
@@ -116,7 +123,7 @@ def decide(vehicles):
     raw_decisions = mock_llm_decision(traffic_state)
     return raw_decisions, prompt, {
         "llm_called": False,
-        "llm_model": "",
+        "llm_model": LLM_MODEL if LLM_MODE == "real" else "",
         "llm_response_time_ms": 0.0,
         "json_parse_success": True,
         "fallback_used": False,
@@ -130,6 +137,14 @@ def run():
     all_seen_vehicles = set()
     departed_seen = set()
     arrived_seen = set()
+    cached_raw_decisions = {}
+    cached_llm_meta = {
+        "llm_called": False,
+        "llm_model": "",
+        "llm_response_time_ms": 0.0,
+        "json_parse_success": True,
+        "fallback_used": False,
+    }
 
     for step in range(SIMULATION_STEPS):
         traci.simulationStep()
@@ -165,7 +180,20 @@ def run():
         vehicles = list(traci.vehicle.getIDList())
         all_seen_vehicles.update(vehicles)
 
-        raw_decisions, _prompt, llm_meta = decide(vehicles)
+        if step % LLM_DECISION_INTERVAL == 0 or not cached_raw_decisions:
+            raw_decisions, _prompt, llm_meta = decide(vehicles)
+            cached_raw_decisions = dict(raw_decisions)
+            cached_llm_meta = dict(llm_meta)
+        else:
+            raw_decisions = dict(cached_raw_decisions)
+            llm_meta = {
+                "llm_called": False,
+                "llm_model": cached_llm_meta.get("llm_model", ""),
+                "llm_response_time_ms": 0.0,
+                "json_parse_success": cached_llm_meta.get("json_parse_success", True),
+                "fallback_used": cached_llm_meta.get("fallback_used", False),
+            }
+
         if USE_SAFETY_LAYER:
             final_decisions, conflict_flags, conflict_types, priority_reason = verify_decisions(
                 traci,

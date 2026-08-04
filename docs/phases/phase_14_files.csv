@@ -1,0 +1,8 @@
+action,relative_path,reason
+MODIFIED,.env.example,document Groq settings and decision interval
+ADDED,docs/phases/phase_14_diff_summary.md,traceable phase summary
+ADDED,docs/phases/phase_14_files.csv,traceable file list
+ADDED,docs/phases/phase_14_report.md,phase report
+MODIFIED,docs/current_project_status.md,record real Groq smoke-test phase
+MODIFIED,llm_controller.py,add Groq compatibility and decision caching
+MODIFIED,test_free_llm.py,allow Groq smoke testing
