@@ -6,15 +6,17 @@
   "previous_commit": "bd6d81a",
   "current_commit": "e9d712b",
   "branch": "phase-18-decision-pipeline-separation",
-  "status": "INTEGRATION_VALIDATED_LIVE_GROQ_BLOCKED_CREDENTIALS",
+  "status": "PHASE18_LIVE_REVALIDATED",
   "tests_passed": [
     "Syntax-only validation via py_compile",
     "pytest (30 tests passed)",
-    "Standalone SUMO smoke script (raw/hybrid/hybrid_safety)"
+    "Standalone SUMO smoke script (raw/hybrid/hybrid_safety)",
+    "Single-request live Groq revalidation"
   ],
   "tests_failed": [],
   "experiments_executed": [
-    "Headless SUMO smoke test with mock LLM on raw/hybrid/hybrid_safety"
+    "Headless SUMO smoke test with mock LLM on raw/hybrid/hybrid_safety",
+    "Single minimal live Groq revalidation on one vehicle without SUMO"
   ],
   "experiments_skipped": [
     "Live Groq validation",
@@ -24,7 +26,7 @@
   ],
   "known_issues": [
     "The discoverable shell runtime still does not expose python on PATH; the project interpreter had to be called explicitly.",
-    "GROQ_API_KEY is missing in the shell environment, so live Groq validation is blocked by credentials.",
-    "The smoke run validated the runtime path with mock LLM only; live Groq validation was not attempted."
+    "The project scripts still rely on environment variables and do not auto-load .env.",
+    "The smoke run validated the runtime path with mock LLM only; the new live revalidation used a single minimal provider call without SUMO."
   ]
 }

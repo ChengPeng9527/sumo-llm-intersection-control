@@ -29,6 +29,10 @@ Phase 18 validation notes:
 - `pytest` collected 30 tests and all 30 passed.
 - Standalone SUMO smoke execution succeeded via `C:\Users\Admin\AppData\Local\Programs\Python\Python310\python.exe scripts\phase18_sumo_smoke.py`.
 - `GROQ_API_KEY` check returned `missing`, so the live Groq smoke path was not executed.
+- A single live Groq revalidation request was executed with the current Phase 18 pipeline and a minimal one-vehicle input.
+- The live request succeeded with `provider_connected = true`, `request_count = 1`, `retry_count = 0`, `parser_success = true`, `logging_success = true`, and `trace_success = true`.
+- The raw response was non-empty, the parser produced `raw_decision = MISSING` and `validated_decision = WAIT`, cooperative post-processing produced `postprocessed_decision = PROCEED`, and safety verification left `final_decision = PROCEED`.
+- The live revalidation wrote `results\phase18_live_revalidation\live_summary.json` and `results\phase18_live_revalidation\trace.json`.
 - Smoke run details:
   - SUMO binary: `D:\Sumo\bin\sumo.exe` 1.27.0
   - SUMO_HOME: `D:\Sumo\`

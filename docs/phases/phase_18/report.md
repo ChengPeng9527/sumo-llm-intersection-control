@@ -55,8 +55,12 @@ Separate the decision pipeline into three explicitly traceable stages:
 - A lightweight YAML fallback was added so the test suite can run without `PyYAML`.
 - Cooperative logic was preserved with pure helper functions for regression tests.
 - The phase now has a working minimal pytest environment and a standalone SUMO smoke path.
-- Live Groq validation was checked for feasibility, but `GROQ_API_KEY` was missing in the shell environment, so the live Groq smoke path is blocked by credentials and was not executed.
+- Live Groq revalidation was completed with a single minimal provider request using the current Phase 18 pipeline and a one-vehicle input.
+- The live request used Groq via `https://api.groq.com/openai/v1` and `openai/gpt-oss-20b`.
+- The raw provider response was non-empty and parsed successfully, but the direct vehicle-key lookup returned `MISSING`, so the validated decision normalized to `WAIT`.
+- Cooperative post-processing promoted the decision to `PROCEED`, and safety verification left it unchanged.
+- No SUMO main experiment, 8/16-vehicle sweep, or prompt/strategy change was performed during live revalidation.
 
 ## Acceptance Status
 
-INTEGRATION_VALIDATED_LIVE_GROQ_BLOCKED_CREDENTIALS
+PHASE18_LIVE_REVALIDATED

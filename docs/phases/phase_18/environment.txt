@@ -51,8 +51,9 @@ Interpretation:
 - A discoverable project Python environment could not be confirmed from the shell.
 - The explicit project interpreter was sufficient for syntax checks and the full Phase 18 pytest run.
 - The explicit project interpreter was also sufficient for the standalone SUMO smoke validation.
-- `GROQ_API_KEY` check returned `missing`, so live Groq validation is blocked by credentials.
-- Test verification for this phase is now `INTEGRATION_VALIDATED_LIVE_GROQ_BLOCKED_CREDENTIALS`.
+- `GROQ_API_KEY` was injected into the live revalidation shell and used successfully for the minimal live request.
+- The project scripts still read credentials from environment variables and do not auto-load `.env`.
+- Test verification for this phase is now `PHASE18_LIVE_REVALIDATED`.
 
 Suggested install command for the project interpreter:
 
