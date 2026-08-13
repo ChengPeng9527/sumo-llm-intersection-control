@@ -1,11 +1,15 @@
 from __future__ import annotations
 
 import json
+import os
 import time
 from pathlib import Path
 from typing import Callable
 
 from src.llm.postprocessor import apply_cooperative_postprocessing, apply_interface_rule
+from src.llm.diagnostics import build_provider_diagnostics
+from src.llm.provider_gate_diagnostics import build_live_provider_gate_diagnostics
+from src.llm.request_config import build_live_client_kwargs, build_live_request_kwargs
 from src.llm.response_parser import parse_llm_response_details
 
 
@@ -16,6 +20,14 @@ VALID_DECISION_SOURCES = {
     "SAFETY_VERIFIER",
     "FALLBACK",
 }
+
+
+def run_live_llm_request(client, *, llm_model: str, prompt: str):
+    return client.chat.completions.create(
+        model=llm_model,
+        messages=[{"role": "user", "content": prompt}],
+        **build_live_request_kwargs(),
+    )
 
 
 def normalize_action(action: object) -> str:
@@ -61,8 +73,44 @@ def build_decision_trace(
             "llm_mode": llm_meta.get("llm_mode", "mock"),
             "llm_model": llm_meta.get("llm_model", ""),
             "llm_response_time_ms": llm_meta.get("llm_response_time_ms", 0.0),
+            "finish_reason": llm_meta.get("finish_reason", ""),
+            "prompt_tokens": llm_meta.get("prompt_tokens", None),
+            "completion_tokens": llm_meta.get("completion_tokens", None),
+            "total_tokens": llm_meta.get("total_tokens", None),
+            "reasoning_tokens": llm_meta.get("reasoning_tokens", None),
+            "visible_completion_tokens": llm_meta.get("visible_completion_tokens", None),
             "json_parse_success": llm_meta.get("json_parse_success", False),
             "fallback_used": llm_meta.get("fallback_used", False),
+            "provider_request_attempted": llm_meta.get("provider_request_attempted", False),
+            "provider_request_success": llm_meta.get("provider_request_success", False),
+            "provider_name": llm_meta.get("provider_name", ""),
+            "model_name": llm_meta.get("model_name", ""),
+            "http_status": llm_meta.get("http_status", None),
+            "response_object_type": llm_meta.get("response_object_type", ""),
+            "response_content_present": llm_meta.get("response_content_present", False),
+            "response_content_length": llm_meta.get("response_content_length", 0),
+            "response_content_redacted": llm_meta.get("response_content_redacted", ""),
+            "parser_input_present": llm_meta.get("parser_input_present", False),
+            "parser_input_length": llm_meta.get("parser_input_length", 0),
+            "parser_input_redacted": llm_meta.get("parser_input_redacted", ""),
+            "parser_success": llm_meta.get("parser_success", False),
+            "parser_action": llm_meta.get("parser_action", ""),
+            "parser_failure_reason": llm_meta.get("parser_failure_reason", ""),
+            "fallback_triggered": llm_meta.get("fallback_triggered", False),
+            "fallback_reason": llm_meta.get("fallback_reason", ""),
+            "llm_branch_entered": llm_meta.get("llm_branch_entered", False),
+            "live_provider_gate_entered": llm_meta.get("live_provider_gate_entered", False),
+            "live_provider_enabled": llm_meta.get("live_provider_enabled", False),
+            "credential_available": llm_meta.get("credential_available", False),
+            "live_client_constructed": llm_meta.get("live_client_constructed", False),
+            "provider_call_function_entered": llm_meta.get("provider_call_function_entered", False),
+            "provider_request_kwargs_built": llm_meta.get("provider_request_kwargs_built", False),
+            "provider_request_skipped": llm_meta.get("provider_request_skipped", False),
+            "provider_skip_reason": llm_meta.get("provider_skip_reason", ""),
+            "fallback_trigger_reason": llm_meta.get("fallback_trigger_reason", ""),
+            "exception_type": llm_meta.get("exception_type", ""),
+            "exception_message_redacted": llm_meta.get("exception_message_redacted", ""),
+            "latency_ms": llm_meta.get("latency_ms", llm_meta.get("llm_response_time_ms", 0.0)),
         }
     return trace
 
@@ -160,6 +208,7 @@ def run_pipeline_controller(
     llm_model: str,
     llm_base_url: str,
     llm_api_key: str,
+    llm_client=None,
     prompt_version: str = "v2",
 ) -> None:
     from common import (
@@ -231,51 +280,166 @@ def run_pipeline_controller(
     def build_real_llm_client():
         if llm_mode != "real":
             return None
+        if llm_client is not None:
+            return llm_client
         if not llm_api_key or OpenAI is None:
             return None
-        return OpenAI(base_url=llm_base_url, api_key=llm_api_key)
+        return OpenAI(**build_live_client_kwargs(base_url=llm_base_url, api_key=llm_api_key))
+
+    def run_live_llm_request(client, prompt: str):
+        return client.chat.completions.create(
+            model=llm_model,
+            messages=[{"role": "user", "content": prompt}],
+            **build_live_request_kwargs(),
+        )
 
     def llm_provider(traffic_state: list[dict]) -> tuple[dict[str, str], dict]:
         prompt = build_structured_prompt(traffic_state, validate_conflict_matrix(), build_policy_hints(traffic_state))
+        vehicle_ids = [v["vehicle_id"] for v in traffic_state]
+        credential_available = bool(llm_api_key)
+        openai_available = OpenAI is not None
         client = build_real_llm_client()
+        live_client_constructed = client is not None
+        llm_branch_entered = True
+        base_gate_meta = build_live_provider_gate_diagnostics(
+            llm_mode=llm_mode,
+            credential_available=credential_available,
+            openai_available=openai_available,
+            live_client_constructed=live_client_constructed,
+            llm_branch_entered=llm_branch_entered,
+            provider_call_function_entered=False,
+            provider_request_kwargs_built=False,
+            provider_request_attempted=False,
+            provider_request_skipped=True,
+            eligible_vehicle_count=len(vehicle_ids),
+            decision_source="FALLBACK",
+        )
         if llm_mode == "real" and client is not None:
             start_time = time.perf_counter()
             try:
-                response = client.chat.completions.create(model=llm_model, messages=[{"role": "user", "content": prompt}])
+                gate_meta = build_live_provider_gate_diagnostics(
+                    llm_mode=llm_mode,
+                    credential_available=credential_available,
+                    openai_available=openai_available,
+                    live_client_constructed=True,
+                    llm_branch_entered=True,
+                    provider_call_function_entered=True,
+                    provider_request_kwargs_built=True,
+                    provider_request_attempted=True,
+                    provider_request_skipped=False,
+                    eligible_vehicle_count=len(vehicle_ids),
+                    decision_source="LLM_RAW",
+                )
+                response = run_live_llm_request(client, prompt)
                 elapsed_ms = (time.perf_counter() - start_time) * 1000
-                raw_decisions, parse_ok = parse_llm_response_details(response.choices[0].message.content or "", [v["vehicle_id"] for v in traffic_state])
+                response_text = ""
+                if response is not None and getattr(response, "choices", None):
+                    choice = response.choices[0]
+                    message = getattr(choice, "message", None)
+                    response_text = getattr(message, "content", "") or ""
+                raw_decisions, validated_decisions, parse_ok = parse_llm_response_details(response_text, vehicle_ids)
+                parse_actions = [validated_decisions.get(vid, "WAIT") for vid in vehicle_ids]
+                first_action = parse_actions[0] if parse_actions else ""
+                response_meta = build_provider_diagnostics(
+                    provider_name="Groq",
+                    model_name=llm_model,
+                    response=response,
+                    parser_input=response_text,
+                    parser_success=parse_ok,
+                    parser_action=first_action,
+                    parser_failure_reason="" if parse_ok else "PARSER_FAILURE",
+                    fallback_triggered=False,
+                    fallback_reason="",
+                    latency_ms=elapsed_ms,
+                    provider_request_attempted=True,
+                    provider_request_success=True,
+                )
                 meta = {
                     "llm_called": True,
+                    "llm_branch_entered": True,
                     "llm_model": llm_model,
                     "llm_response_time_ms": round(elapsed_ms, 2),
                     "json_parse_success": parse_ok,
                     "fallback_used": False,
                     "llm_mode": llm_mode,
                     "decision_source": "LLM_RAW",
+                    **gate_meta,
+                    **response_meta,
                 }
+                if parse_ok:
+                    meta["parser_failure_reason"] = ""
+                else:
+                    meta["parser_failure_reason"] = "PARSER_FAILURE"
                 return raw_decisions, meta
-            except Exception:
+            except Exception as exc:
                 elapsed_ms = (time.perf_counter() - start_time) * 1000
                 raw = mock_llm_decision(traffic_state)
+                exception_meta = build_provider_diagnostics(
+                    provider_name="Groq",
+                    model_name=llm_model,
+                    parser_input="",
+                    parser_success=False,
+                    parser_action="",
+                    parser_failure_reason="PROVIDER_REQUEST_EXCEPTION",
+                    fallback_triggered=True,
+                    fallback_reason="PROVIDER_REQUEST_EXCEPTION",
+                    exception=exc,
+                    latency_ms=elapsed_ms,
+                    provider_request_attempted=True,
+                    provider_request_success=False,
+                )
+                gate_meta = build_live_provider_gate_diagnostics(
+                    llm_mode=llm_mode,
+                    credential_available=credential_available,
+                    openai_available=openai_available,
+                    live_client_constructed=True,
+                    llm_branch_entered=True,
+                    provider_call_function_entered=True,
+                    provider_request_kwargs_built=True,
+                    provider_request_attempted=True,
+                    provider_request_skipped=False,
+                    eligible_vehicle_count=len(vehicle_ids),
+                    fallback_trigger_reason="PROVIDER_REQUEST_EXCEPTION",
+                    decision_source="FALLBACK",
+                )
                 return raw, {
                     "llm_called": True,
+                    "llm_branch_entered": True,
                     "llm_model": llm_model,
                     "llm_response_time_ms": round(elapsed_ms, 2),
                     "json_parse_success": False,
                     "fallback_used": True,
                     "llm_mode": llm_mode,
                     "decision_source": "FALLBACK",
+                    **gate_meta,
+                    **exception_meta,
                 }
 
         raw = mock_llm_decision(traffic_state)
+        fallback_meta = build_provider_diagnostics(
+            provider_name="Groq" if llm_mode == "real" else "mock",
+            model_name=llm_model if llm_mode == "real" else "",
+            parser_input="",
+            parser_success=True,
+            parser_action="",
+            parser_failure_reason="",
+            fallback_triggered=False,
+            fallback_reason=base_gate_meta["fallback_trigger_reason"],
+            latency_ms=0.0,
+            provider_request_attempted=False,
+            provider_request_success=False,
+        )
         return raw, {
-            "llm_called": False,
+            "llm_called": True,
+            "llm_branch_entered": True,
             "llm_model": llm_model if llm_mode == "real" else "",
             "llm_response_time_ms": 0.0,
             "json_parse_success": True,
-            "fallback_used": False,
+            "fallback_used": True,
             "llm_mode": llm_mode,
             "decision_source": "FALLBACK",
+            **base_gate_meta,
+            **fallback_meta,
         }
 
     def safety_guard(trace: dict[str, dict], vehicle_states: list[dict]) -> dict[str, dict]:
@@ -298,12 +462,43 @@ def run_pipeline_controller(
     cached_trace: dict[str, dict] = {}
     cached_llm_meta = {
         "llm_called": False,
+        "llm_branch_entered": False,
+        "live_provider_gate_entered": False,
+        "live_provider_enabled": False,
+        "credential_available": False,
+        "live_client_constructed": False,
+        "provider_call_function_entered": False,
+        "provider_request_kwargs_built": False,
+        "provider_request_attempted": False,
+        "provider_request_skipped": False,
+        "provider_skip_reason": "",
+        "fallback_trigger_reason": "",
         "llm_model": "",
         "llm_response_time_ms": 0.0,
         "json_parse_success": True,
         "fallback_used": False,
         "llm_mode": llm_mode,
         "decision_source": "FALLBACK",
+        "provider_request_attempted": False,
+        "provider_request_success": False,
+        "provider_name": "",
+        "model_name": "",
+        "http_status": None,
+        "response_object_type": "",
+        "response_content_present": False,
+        "response_content_length": 0,
+        "response_content_redacted": "",
+        "parser_input_present": False,
+        "parser_input_length": 0,
+        "parser_input_redacted": "",
+        "parser_success": False,
+        "parser_action": "",
+        "parser_failure_reason": "",
+        "fallback_triggered": False,
+        "fallback_reason": "",
+        "exception_type": "",
+        "exception_message_redacted": "",
+        "latency_ms": 0.0,
     }
 
     traci_started = False
@@ -401,8 +596,34 @@ def run_pipeline_controller(
                         llm_called=entry["llm_called"],
                         llm_model=entry["llm_model"],
                         llm_response_time_ms=entry["llm_response_time_ms"],
+                        finish_reason=entry.get("finish_reason", ""),
+                        prompt_tokens=entry.get("prompt_tokens", None),
+                        completion_tokens=entry.get("completion_tokens", None),
+                        total_tokens=entry.get("total_tokens", None),
+                        reasoning_tokens=entry.get("reasoning_tokens", None),
+                        visible_completion_tokens=entry.get("visible_completion_tokens", None),
                         json_parse_success=entry["json_parse_success"],
                         fallback_used=entry["fallback_used"],
+                        provider_request_attempted=entry["provider_request_attempted"],
+                        provider_request_success=entry["provider_request_success"],
+                        provider_name=entry["provider_name"],
+                        model_name=entry["model_name"],
+                        http_status=entry["http_status"],
+                        response_object_type=entry["response_object_type"],
+                        response_content_present=entry["response_content_present"],
+                        response_content_length=entry["response_content_length"],
+                        response_content_redacted=entry["response_content_redacted"],
+                        parser_input_present=entry["parser_input_present"],
+                        parser_input_length=entry["parser_input_length"],
+                        parser_input_redacted=entry["parser_input_redacted"],
+                        parser_success=entry["parser_success"],
+                        parser_action=entry["parser_action"],
+                        parser_failure_reason=entry["parser_failure_reason"],
+                        fallback_triggered=entry["fallback_triggered"],
+                        fallback_reason=entry["fallback_reason"],
+                        exception_type=entry["exception_type"],
+                        exception_message_redacted=entry["exception_message_redacted"],
+                        latency_ms=entry["latency_ms"],
                         departed=vid in departed_seen,
                         arrived=False,
                     )

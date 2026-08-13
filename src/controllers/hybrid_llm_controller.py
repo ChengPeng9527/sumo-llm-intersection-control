@@ -3,7 +3,7 @@ from __future__ import annotations
 import os
 from pathlib import Path
 
-from common import CONFIG
+from common import CONFIG, get_env_int, get_env_str
 from src.controllers.decision_pipeline import run_pipeline_controller
 
 
@@ -11,7 +11,7 @@ SUMO_BINARY = CONFIG["sumo_gui_binary_path"]
 SUMO_CONFIG = Path(os.getenv("SUMO_CONFIG_PATH", str(CONFIG["sumo_config_path"])))
 SCENARIO = os.getenv("SCENARIO_ID", "debug_four_vehicle")
 VEHICLE_COUNT = int(os.getenv("VEHICLE_COUNT", "4"))
-SEED = CONFIG["default_seed"]
+SEED = get_env_int("SEED", CONFIG["default_seed"])
 SIMULATION_STEPS = int(os.getenv("SIMULATION_STEPS", str(CONFIG["default_simulation_duration"])))
 LLM_MODE = os.getenv("LLM_MODE", "mock").strip().lower()
 LLM_DECISION_INTERVAL = max(1, int(os.getenv("LLM_DECISION_INTERVAL", "1")))
@@ -24,11 +24,12 @@ LLM_MODEL = os.getenv(
     "LLM_MODEL",
     "openai/gpt-oss-20b" if os.getenv("GROQ_API_KEY") else "openrouter/free",
 )
+EXPERIMENT_ID = get_env_str("EXPERIMENT_ID", "E05_HYBRID_LLM_4V_S1")
 
 
 def main() -> int:
     run_pipeline_controller(
-        experiment_id="E05_HYBRID_LLM_4V_S1",
+        experiment_id=EXPERIMENT_ID,
         controller_name="HybridLLMController",
         stage_mode="hybrid",
         scenario=SCENARIO,

@@ -10,12 +10,15 @@ import time
 from collections import Counter, defaultdict
 from pathlib import Path
 
+PROJECT_ROOT = Path(__file__).resolve().parents[1]
+if str(PROJECT_ROOT) not in sys.path:
+    sys.path.insert(0, str(PROJECT_ROOT))
+
 from src.common.config import load_project_config
 from src.common.logging_schema import FIELDNAMES
 from src.experiments.scenario_generator import generate_scenario
 
 
-PROJECT_ROOT = Path(__file__).resolve().parents[1]
 PILOT_ROOT = PROJECT_ROOT / "results" / "pilot" / "dissertation_pilot_v1"
 PILOT_SCENARIO_DENSITY = "low"
 PILOT_SCENARIO_SEED = 1
@@ -118,6 +121,53 @@ def _ensure_no_residual_sumo_processes() -> list[str]:
     return residual
 
 
+def _find_owned_sumo_processes(commandline_marker: str) -> list[dict[str, object]]:
+    marker = commandline_marker.replace("'", "''")
+    script = f"""
+$marker = '{marker}'
+Get-CimInstance Win32_Process |
+    Where-Object {{
+        ($_.Name -eq 'sumo.exe' -or $_.Name -eq 'sumo-gui.exe') -and
+        $_.CommandLine -and $_.CommandLine.Contains($marker)
+    }} |
+    Select-Object ProcessId, Name, CommandLine |
+    ConvertTo-Json -Depth 3
+"""
+    result = subprocess.run(
+        ["powershell", "-NoProfile", "-Command", script],
+        capture_output=True,
+        text=True,
+        check=False,
+    )
+    payload = result.stdout.strip()
+    if not payload:
+        return []
+    try:
+        parsed = json.loads(payload)
+    except Exception:
+        return []
+    if isinstance(parsed, dict):
+        parsed = [parsed]
+    return [item for item in parsed if isinstance(item, dict) and item.get("ProcessId")]
+
+
+def _cleanup_owned_sumo_processes(commandline_marker: str) -> list[str]:
+    owned = _find_owned_sumo_processes(commandline_marker)
+    if not owned:
+        return []
+
+    pids = [str(int(item["ProcessId"])) for item in owned if str(item.get("ProcessId", "")).strip()]
+    if pids:
+        subprocess.run(
+            ["powershell", "-NoProfile", "-Command", f"Stop-Process -Id {', '.join(pids)} -Force"],
+            capture_output=True,
+            text=True,
+            check=False,
+        )
+        time.sleep(1.0)
+    return _ensure_no_residual_sumo_processes()
+
+
 def _run_controller(script: Path, env: dict[str, str]) -> float:
     start = time.perf_counter()
     subprocess.run([sys.executable, str(script)], cwd=PROJECT_ROOT, env=env, check=True)
@@ -145,7 +195,7 @@ def _write_json(path: Path, payload: object) -> None:
 def _write_csv(path: Path, rows: list[dict[str, object]], fieldnames: list[str]) -> None:
     path.parent.mkdir(parents=True, exist_ok=True)
     with path.open("w", encoding="utf-8", newline="") as f:
-        writer = csv.DictWriter(f, fieldnames=fieldnames)
+        writer = csv.DictWriter(f, fieldnames=fieldnames, extrasaction="ignore")
         writer.writeheader()
         writer.writerows(rows)
 
@@ -371,6 +421,19 @@ def main() -> int:
             )
             summary["status"] = "completed"
             summary_rows.append(summary)
+            residual_after_controller = _cleanup_owned_sumo_processes(scenario_config["sumocfg_path"])
+            if residual_after_controller:
+                failures.append(
+                    {
+                        "controller_key": controller_key,
+                        "controller_label": controller_label,
+                        "run_id": controller["run_id"],
+                        "error": "Residual SUMO processes remained after targeted cleanup",
+                        "residual_processes": residual_after_controller,
+                    }
+                )
+                overall_status = "failed"
+                break
             request_cost_summary[controller_key] = {
                 "controller_label": controller_label,
                 "provider": summary["provider"],
@@ -499,7 +562,7 @@ def main() -> int:
     _write_json(PILOT_ROOT / "request_cost_summary.json", request_cost_summary)
     _write_json(PILOT_ROOT / "runtime_summary.json", runtime_summary)
 
-    residual_sumo = _ensure_no_residual_sumo_processes()
+    residual_sumo = _cleanup_owned_sumo_processes(scenario_config["sumocfg_path"])
     _write_json(
         PILOT_ROOT / "pilot_verification.json",
         {

@@ -9,6 +9,8 @@ def test_empty_record_contains_unified_fields():
     assert record["vehicle_count"] == 4
     assert "safety_override" in record
     assert "llm_response_time_ms" in record
+    assert "finish_reason" in record
+    assert "completion_tokens" in record
     assert "priority_reason" in record
 
 

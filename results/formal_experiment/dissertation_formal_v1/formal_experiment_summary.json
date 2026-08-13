@@ -1,0 +1,8 @@
+{
+  "planned_runs": 24,
+  "completed_runs": 0,
+  "skipped_completed_runs": 0,
+  "dry_run": true,
+  "manifest": "D:\\Sumo\\sumo_train\\results\\formal_experiment\\dissertation_formal_v1\\run_manifest.json",
+  "dry_run_plan": "D:\\Sumo\\sumo_train\\results\\formal_experiment\\dissertation_formal_v1\\dry_run_plan.json"
+}

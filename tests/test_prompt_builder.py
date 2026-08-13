@@ -1,7 +1,7 @@
 from src.llm.prompt_builder import build_structured_prompt
 
 
-def test_structured_prompt_includes_throughput_bias_guidance():
+def test_structured_prompt_matches_canonical_prompt_contract():
     traffic_state = [
         {
             "vehicle_id": "car0",
@@ -18,7 +18,14 @@ def test_structured_prompt_includes_throughput_bias_guidance():
         policy_hints={"priority_route_id": "N_S"},
     )
 
-    assert "throughput-biased" in prompt
-    assert "do not overuse WAIT" in prompt
-    assert "Multiple compatible vehicles may PROCEED together" in prompt
+    assert "centralized autonomous intersection decision module" in prompt
+    assert "Follow the canonical output contract exactly." in prompt
+    assert '"decisions": {' in prompt
+    assert '"<vehicle_id>": "PROCEED|WAIT|FREE"' in prompt
+    assert "Use the exact vehicle_id values from Traffic state." in prompt
+    assert "Include exactly one decision for every vehicle in Traffic state." in prompt
+    assert "Vehicles outside the control zone must be FREE." in prompt
+    assert "Route conflict matrix:" in prompt
+    assert "Policy hints:" in prompt
+    assert "Traffic state:" in prompt
     assert "priority_route_id" in prompt

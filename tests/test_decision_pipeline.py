@@ -29,6 +29,48 @@ def test_raw_proceed_passes_through_pipeline():
     assert trace["car0"]["final_decision"] == "PROCEED"
 
 
+def test_pipeline_preserves_diagnostic_meta_without_changing_decisions():
+    traffic_state = [_build_state("car0", "N_S", 2.0, True)]
+    provider = StubDecisionProvider(
+        {"car0": "PROCEED"},
+        meta={
+            "llm_called": True,
+            "decision_source": "LLM_RAW",
+            "provider_request_attempted": True,
+            "provider_request_success": True,
+            "provider_name": "Groq",
+            "model_name": "openai/gpt-oss-20b",
+            "http_status": 200,
+            "response_object_type": "Response",
+            "response_content_present": True,
+            "response_content_length": 32,
+            "response_content_redacted": "{\"car0\":\"PROCEED\"}",
+            "parser_input_present": True,
+            "parser_input_length": 32,
+            "parser_input_redacted": "{\"car0\":\"PROCEED\"}",
+            "parser_success": True,
+            "parser_action": "PROCEED",
+            "parser_failure_reason": "",
+            "fallback_triggered": False,
+            "fallback_reason": "",
+            "exception_type": "",
+            "exception_message_redacted": "",
+            "latency_ms": 12.34,
+        },
+    )
+    raw_decisions, llm_meta = provider(traffic_state)
+    trace = execute_decision_pipeline(traffic_state, raw_decisions, stage_mode="raw", llm_meta=llm_meta)
+
+    assert trace["car0"]["final_decision"] == "PROCEED"
+    assert trace["car0"]["provider_request_attempted"] is True
+    assert trace["car0"]["provider_request_success"] is True
+    assert trace["car0"]["provider_name"] == "Groq"
+    assert trace["car0"]["model_name"] == "openai/gpt-oss-20b"
+    assert trace["car0"]["parser_success"] is True
+    assert trace["car0"]["parser_action"] == "PROCEED"
+    assert trace["car0"]["latency_ms"] == 12.34
+
+
 def test_normalize_action_strips_and_uppercases():
     assert normalize_action(" proceed ") == "PROCEED"
 
