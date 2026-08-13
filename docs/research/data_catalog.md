@@ -1,4 +1,4 @@
-﻿# Data Catalog
+# Data Catalog
 
 ## Classification Rules
 
@@ -20,6 +20,7 @@
 | Canonical prompt final revalidation v2 | 18 | raw LLM / P1 / P2 / P3 | prompt-development scenario | 4 | 404/505/606 | live | canonical prompt freeze confirmation | provider success rate, parser success given provider success, fallback rate, action distribution, response length, completion tokens, finish_reason, latency | `results/prompt_development/canonical_prompt_final_revalidation_v2/` | ENGINEERING_EVIDENCE_ONLY |
 | Frozen Groq request configuration | 18 | raw LLM / hybrid / hybrid+safety | live Groq request path | 4 | 1 | live | request reproducibility freeze | max_completion_tokens, reasoning_effort, timeout, max_retries | `docs/research/llm_request_configuration_specification.md` | ENGINEERING_EVIDENCE_ONLY |
 | Formal experiment infrastructure freeze | 18 | rule_based / raw_llm / hybrid / hybrid_safety | formal matrix scheduler | 4 / 8 | 1 / 2 / 3 | dry-run | execution-control validation | planned run count, batch order, unique run IDs, resume support, non-overwrite copy path | `results/formal_experiment/dissertation_formal_v1/` | ENGINEERING_EVIDENCE_ONLY |
+| Fresh formal v2 sweep | 18 | rule_based / raw_llm / hybrid / hybrid_safety | formal low 4V/8V | 4 / 8 | 1 / 2 / 3 | live | dissertation formal results | completion rate, throughput, waiting time, speed, episode duration, collision count, live request count, parser success, fallback count, finish_reason, truncation, latency, postprocessor intervention, safety override | `results/formal_experiment/dissertation_formal_v2/` | YES |
 | Eight-vehicle live smoke | 18 | raw_llm | formal low v8 seed1 | 8 | 1 | live | end-to-end execution smoke | provider success, parser success, finish_reason, completion_tokens, reasoning_tokens, completion rate, TraCI cleanup | `results/diagnostics/eight_vehicle_live_smoke_v1/` and `results/raw/SMOKE_8V_RAW_V2_v8_seed1_real/` | ENGINEERING_EVIDENCE_ONLY |
 | Historical baseline 4V run | historical | baseline | debug four-vehicle | 4 | 1 | mock | baseline reference | completion, arrival, collisions | `results/raw/E01_BASELINE_4V_S1_seed1` | PRELIMINARY_ONLY |
 | Historical cooperative 4V run | historical | cooperative | debug four-vehicle | 4 | 1 | mock | cooperative reference | completion, arrival, collisions | `results/raw/E02_COOPERATIVE_4V_S1_seed1` | PRELIMINARY_ONLY |
@@ -39,6 +40,7 @@
 - The canonical pilot after the parser compatibility fix is execution-readiness evidence, not a formal dissertation sweep.
 - The older fallback-dominated pilot record is superseded by the latest canonical pilot run and should be kept only for provenance.
 - The canonical prompt development batch and final revalidation batches are engineering evidence for prompt selection, not a formal experiment.
+- The fresh formal v2 sweep is the dissertation-grade experimental dataset and should be used for results tables after aggregation.
 
 ## Pilot Plan Status
 
@@ -63,5 +65,5 @@ When writing the dissertation:
 
 - use `ENGINEERING_EVIDENCE_ONLY` entries to support implementation claims,
 - use `PRELIMINARY_ONLY` entries only as supporting context,
-- use `YES` entries for final experimental claims once formal sweeps are complete,
+- use `YES` entries for final experimental claims,
 - exclude `NO` entries from results tables.
