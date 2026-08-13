@@ -68,8 +68,48 @@ def _move_partial_run_dir(run_dir: Path) -> Path:
     return partial_dir
 
 
+
+
+def _load_env_file(path: Path) -> dict[str, str]:
+    if not path.exists():
+        return {}
+    values: dict[str, str] = {}
+    for raw_line in path.read_text(encoding="utf-8").splitlines():
+        line = raw_line.strip()
+        if not line or line.startswith("#") or "=" not in line:
+            continue
+        key, value = line.split("=", 1)
+        key = key.strip()
+        value = value.strip().strip('"').strip("'")
+        if key:
+            values[key] = value
+    return values
+
+
+def _merge_runtime_credentials(env: dict[str, str]) -> dict[str, str]:
+    merged = dict(env)
+    candidate_paths = []
+    for credential_env in ("GROQ_CREDENTIAL_FILE", "LLM_CREDENTIAL_FILE"):
+        credential_file = os.getenv(credential_env, "")
+        if credential_file:
+            candidate_paths.append(Path(credential_file))
+    for user_env in (os.getenv("USERPROFILE", ""), os.getenv("HOME", "")):
+        if user_env:
+            candidate_paths.append(Path(user_env) / ".codex" / ".env")
+    candidate_paths.extend([
+        Path.home() / ".codex" / ".env",
+        PROJECT_ROOT / ".env",
+        PROJECT_ROOT / ".codex" / ".env",
+    ])
+    for candidate in candidate_paths:
+        for key, value in _load_env_file(candidate).items():
+            if key in {"GROQ_API_KEY", "OPENROUTER_API_KEY", "SUMO_HOME", "PYTHONPATH"} and not merged.get(key):
+                merged[key] = value
+    return merged
+
+
 def _build_env(spec, scenario_config: dict[str, object]) -> dict[str, str]:
-    env = os.environ.copy()
+    env = _merge_runtime_credentials(os.environ.copy())
     env["EXPERIMENT_ID"] = spec.experiment_id
     env["SEED"] = str(spec.seed)
     env["SCENARIO_ID"] = spec.scenario_id

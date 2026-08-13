@@ -3,7 +3,7 @@ from __future__ import annotations
 import os
 from pathlib import Path
 
-from common import CONFIG, get_env_int, get_env_str
+from common import CONFIG, get_env_int, get_env_str, resolve_llm_api_key
 from src.controllers.decision_pipeline import run_pipeline_controller
 
 
@@ -15,14 +15,14 @@ SEED = get_env_int("SEED", CONFIG["default_seed"])
 SIMULATION_STEPS = int(os.getenv("SIMULATION_STEPS", str(CONFIG["default_simulation_duration"])))
 LLM_MODE = os.getenv("LLM_MODE", "mock").strip().lower()
 LLM_DECISION_INTERVAL = max(1, int(os.getenv("LLM_DECISION_INTERVAL", "1")))
-LLM_API_KEY = os.getenv("GROQ_API_KEY") or os.getenv("OPENROUTER_API_KEY", "")
+LLM_API_KEY = resolve_llm_api_key()
 LLM_BASE_URL = os.getenv(
     "LLM_BASE_URL",
-    "https://api.groq.com/openai/v1" if os.getenv("GROQ_API_KEY") else "https://openrouter.ai/api/v1",
+    "https://api.groq.com/openai/v1" if LLM_API_KEY else "https://openrouter.ai/api/v1",
 )
 LLM_MODEL = os.getenv(
     "LLM_MODEL",
-    "openai/gpt-oss-20b" if os.getenv("GROQ_API_KEY") else "openrouter/free",
+    "openai/gpt-oss-20b" if LLM_API_KEY else "openrouter/free",
 )
 
 

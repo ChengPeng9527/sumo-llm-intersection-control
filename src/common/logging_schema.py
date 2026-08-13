@@ -56,7 +56,6 @@ FIELDNAMES = [
     "json_parse_success",
     "retry_count",
     "fallback_used",
-    "provider_request_attempted",
     "provider_request_success",
     "provider_name",
     "model_name",

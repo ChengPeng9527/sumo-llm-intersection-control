@@ -213,6 +213,7 @@ def run_pipeline_controller(
 ) -> None:
     from common import (
         CONFIG,
+        resolve_llm_api_key,
         apply_decision,
         build_event,
         build_run_metadata,
@@ -228,6 +229,8 @@ def run_pipeline_controller(
     )
     from src.llm.fallback_policy import mock_llm_decision
     from src.llm.prompt_builder import build_structured_prompt
+
+    llm_api_key = llm_api_key or resolve_llm_api_key()
     from src.safety.route_conflict import routes_compatible, validate_conflict_matrix
     from ttc_safety import verify_decisions
 
@@ -319,7 +322,7 @@ def run_pipeline_controller(
             try:
                 gate_meta = build_live_provider_gate_diagnostics(
                     llm_mode=llm_mode,
-                    credential_available=credential_available,
+                    credential_available=True,
                     openai_available=openai_available,
                     live_client_constructed=True,
                     llm_branch_entered=True,
@@ -390,7 +393,7 @@ def run_pipeline_controller(
                 )
                 gate_meta = build_live_provider_gate_diagnostics(
                     llm_mode=llm_mode,
-                    credential_available=credential_available,
+                    credential_available=True,
                     openai_available=openai_available,
                     live_client_constructed=True,
                     llm_branch_entered=True,
@@ -594,6 +597,16 @@ def run_pipeline_controller(
                         decision_source=entry["decision_source"],
                         llm_mode=entry["llm_mode"],
                         llm_called=entry["llm_called"],
+                        llm_branch_entered=entry.get("llm_branch_entered", False),
+                        live_provider_gate_entered=entry.get("live_provider_gate_entered", False),
+                        live_provider_enabled=entry.get("live_provider_enabled", False),
+                        credential_available=entry.get("credential_available", False),
+                        live_client_constructed=entry.get("live_client_constructed", False),
+                        provider_call_function_entered=entry.get("provider_call_function_entered", False),
+                        provider_request_kwargs_built=entry.get("provider_request_kwargs_built", False),
+                        provider_request_skipped=entry.get("provider_request_skipped", False),
+                        provider_skip_reason=entry.get("provider_skip_reason", ""),
+                        fallback_trigger_reason=entry.get("fallback_trigger_reason", ""),
                         llm_model=entry["llm_model"],
                         llm_response_time_ms=entry["llm_response_time_ms"],
                         finish_reason=entry.get("finish_reason", ""),

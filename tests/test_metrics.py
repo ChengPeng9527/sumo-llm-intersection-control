@@ -1,3 +1,4 @@
+from src.common.logging_schema import FIELDNAMES
 from src.common.metrics import calculate_summary, empty_record
 
 
@@ -39,3 +40,7 @@ def test_calculate_summary_uses_unified_schema():
     assert summary["arrived"] == 1
     assert summary["completion_rate"] == 0.5
     assert summary["vehicle_count"] == 8
+
+
+def test_logging_schema_fieldnames_are_unique():
+    assert len(FIELDNAMES) == len(set(FIELDNAMES))

@@ -46,6 +46,53 @@ def get_env_int(name: str, default: int) -> int:
         return default
 
 
+def _load_env_file(path: Path) -> dict[str, str]:
+    if not path.exists():
+        return {}
+    values: dict[str, str] = {}
+    for raw_line in path.read_text(encoding="utf-8").splitlines():
+        line = raw_line.strip()
+        if not line or line.startswith("#") or "=" not in line:
+            continue
+        key, value = line.split("=", 1)
+        key = key.strip()
+        value = value.strip().strip('"').strip("'")
+        if key:
+            values[key] = value
+    return values
+
+
+def _credential_candidate_paths() -> list[Path]:
+    paths: list[Path] = []
+    for env_name in ("GROQ_CREDENTIAL_FILE", "LLM_CREDENTIAL_FILE"):
+        raw_path = os.getenv(env_name, "")
+        if raw_path:
+            paths.append(Path(raw_path))
+    for user_env in (os.getenv("USERPROFILE", ""), os.getenv("HOME", "")):
+        if user_env:
+            paths.append(Path(user_env) / ".codex" / ".env")
+    paths.extend([
+        Path.home() / ".codex" / ".env",
+        PROJECT_ROOT / ".env",
+        PROJECT_ROOT / ".codex" / ".env",
+    ])
+    return paths
+
+
+def resolve_llm_api_key() -> str:
+    for name in ("GROQ_API_KEY", "OPENROUTER_API_KEY"):
+        value = os.getenv(name, "")
+        if value:
+            return value
+    for candidate in _credential_candidate_paths():
+        env_values = _load_env_file(candidate)
+        for name in ("GROQ_API_KEY", "OPENROUTER_API_KEY"):
+            value = env_values.get(name, "")
+            if value:
+                return value
+    return ""
+
+
 def ensure_result_dir():
     Path(RESULT_DIR).mkdir(parents=True, exist_ok=True)
 

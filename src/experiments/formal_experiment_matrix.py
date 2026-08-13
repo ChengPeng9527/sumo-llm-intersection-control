@@ -20,7 +20,7 @@ from src.llm.request_config import (
 
 
 PROJECT_ROOT = Path(load_project_config()["project_root"])
-FORMAL_RESULTS_ROOT = PROJECT_ROOT / "results" / "formal_experiment" / "dissertation_formal_v1"
+FORMAL_RESULTS_ROOT = PROJECT_ROOT / "results" / "formal_experiment" / "dissertation_formal_v2"
 FORMAL_PROMPT_IDENTIFIER = "P1_BASELINE"
 FORMAL_SCENARIO_DENSITY = "low"
 FORMAL_SEEDS = (1, 2, 3)
@@ -102,6 +102,8 @@ def build_formal_run_plan() -> list[FormalRunSpec]:
         for order_position, controller in enumerate(controller_order_for_seed(seed), start=1):
             spec = FORMAL_CONTROLLER_SPECS[controller]
             run_id = f"{spec['experiment_id']}_v{vehicle_count}_seed{seed}"
+            if spec["llm_mode"]:
+                run_id = f"{run_id}_{spec['llm_mode']}"
             plan.append(
                 FormalRunSpec(
                     batch_id=batch_id,
