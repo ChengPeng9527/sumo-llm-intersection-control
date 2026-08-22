@@ -7,6 +7,7 @@ from typing import Callable
 
 from src.llm.diagnostics import build_provider_diagnostics, redact_sensitive_text
 from src.llm.prompt_builder import build_candidate_selection_prompt
+from src.llm.request_config import build_candidate_selection_request_kwargs
 from src.llm.response_parser import parse_candidate_selection_response
 from src.safety.cooperative_comparator import CandidateScore, rank_candidate_groups, select_candidate_group
 
@@ -83,6 +84,22 @@ def _response_text(response: object) -> str:
         return "" if content is None else str(content)
     content = getattr(response, "content", None)
     return "" if content is None else str(content)
+
+
+def run_live_candidate_request(
+    client,
+    *,
+    model_name: str,
+    prompt: str,
+    candidate_ids: list[str] | tuple[str, ...],
+    request_context: dict | None = None,
+):
+    return client.chat.completions.create(
+        model=model_name,
+        messages=[{"role": "user", "content": prompt}],
+        _request_context=request_context or {},
+        **build_candidate_selection_request_kwargs(candidate_ids),
+    )
 
 
 @dataclass(frozen=True)

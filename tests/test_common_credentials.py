@@ -42,3 +42,11 @@ def test_resolve_llm_api_key_falls_back_to_dotenv(monkeypatch, tmp_path):
     monkeypatch.setenv("HOME", str(tmp_path))
     monkeypatch.setattr(common.Path, "home", classmethod(lambda cls: tmp_path / "sandbox-home"))
     assert common.resolve_llm_api_key() == "file-value"
+
+
+def test_resolve_llm_api_key_can_select_gemini_without_using_groq(monkeypatch, tmp_path):
+    monkeypatch.setenv("GROQ_API_KEY", "historical-groq")
+    monkeypatch.setenv("GEMINI_API_KEY", "phase2-gemini")
+    monkeypatch.setattr(common.Path, "home", classmethod(lambda cls: tmp_path))
+
+    assert common.resolve_llm_api_key("Gemini") == "phase2-gemini"

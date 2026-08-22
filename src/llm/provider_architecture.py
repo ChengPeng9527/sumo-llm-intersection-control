@@ -319,12 +319,16 @@ def _gemini_response_schema() -> dict[str, Any]:
     }
 
 
-def _gemini_structured_config(*, max_completion_tokens: int | None) -> dict[str, Any]:
+def _gemini_structured_config(
+    *,
+    max_completion_tokens: int | None,
+    response_json_schema: dict[str, Any] | None = None,
+) -> dict[str, Any]:
     config: dict[str, Any] = {}
     if max_completion_tokens is not None:
         config["maxOutputTokens"] = max_completion_tokens
     config["responseMimeType"] = "application/json"
-    config["responseJsonSchema"] = _gemini_response_schema()
+    config["responseJsonSchema"] = response_json_schema or _gemini_response_schema()
     config["thinkingConfig"] = {"thinkingLevel": "minimal"}
     return config
 
@@ -689,7 +693,10 @@ class GeminiProviderAdapter:
         max_completion_tokens = _to_int(request_config.get("max_completion_tokens", None))
         response_format = request_config.get("response_format")
         if isinstance(response_format, dict) and _normalized_name(response_format.get("type", "")).lower() == "json_object":
-            generation_config = _gemini_structured_config(max_completion_tokens=max_completion_tokens)
+            generation_config = _gemini_structured_config(
+                max_completion_tokens=max_completion_tokens,
+                response_json_schema=request_config.get("response_json_schema"),
+            )
         elif max_completion_tokens is not None:
             generation_config["maxOutputTokens"] = max_completion_tokens
         body: dict[str, Any] = {"contents": contents}
@@ -802,7 +809,9 @@ class GeminiProviderAdapter:
                 if max_completion_tokens is not None:
                     config_kwargs["max_output_tokens"] = max_completion_tokens
                 config_kwargs["response_mime_type"] = "application/json"
-                config_kwargs["response_json_schema"] = _gemini_response_schema()
+                config_kwargs["response_json_schema"] = (
+                    request_config.get("response_json_schema") or _gemini_response_schema()
+                )
                 try:
                     config_kwargs["thinking_config"] = types.ThinkingConfig(thinking_level="minimal")
                 except Exception:

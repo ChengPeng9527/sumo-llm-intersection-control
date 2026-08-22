@@ -14,6 +14,13 @@ LIVE_TIMEOUT_SECONDS = 30.0
 GEMINI_TIMEOUT_SECONDS = 60.0
 LIVE_MAX_RETRIES = 4
 
+# Canonical Phase 2 provider freeze. Phase 1 defaults above remain historical compatibility settings.
+PHASE2_PROVIDER_NAME = "Gemini"
+PHASE2_BASE_URL = "https://generativelanguage.googleapis.com/v1beta"
+PHASE2_MODEL = "gemini-3.6-flash"
+PHASE2_TIMEOUT_SECONDS = GEMINI_TIMEOUT_SECONDS
+PHASE2_PROVIDER_MODE = "RESEARCH_FIXED_PROVIDER"
+
 LIVE_PROVIDER_MODE = os.getenv("LLM_PROVIDER_MODE", "RESEARCH_FIXED_PROVIDER").strip().upper()
 LIVE_REQUESTED_PROVIDER = os.getenv("LLM_REQUESTED_PROVIDER", LIVE_PROVIDER_NAME).strip() or LIVE_PROVIDER_NAME
 LIVE_REQUESTED_MODEL = os.getenv("LLM_REQUESTED_MODEL", LIVE_MODEL).strip() or LIVE_MODEL
@@ -42,6 +49,27 @@ def build_live_request_kwargs() -> dict[str, object]:
         "max_completion_tokens": LIVE_MAX_COMPLETION_TOKENS,
         "reasoning_effort": LIVE_REASONING_EFFORT,
         "response_format": {"type": "json_object"},
+    }
+
+
+def build_candidate_selection_request_kwargs(candidate_ids: list[str] | tuple[str, ...]) -> dict[str, object]:
+    candidate_ids = list(candidate_ids)
+    if not candidate_ids:
+        raise ValueError("Candidate selection requires at least one candidate ID")
+    return {
+        **build_live_request_kwargs(),
+        "response_json_schema": {
+            "type": "object",
+            "properties": {
+                "selected_candidate_id": {
+                    "type": "string",
+                    "enum": candidate_ids,
+                }
+            },
+            "required": ["selected_candidate_id"],
+            "additionalProperties": False,
+            "propertyOrdering": ["selected_candidate_id"],
+        },
     }
 
 
@@ -98,8 +126,8 @@ def create_live_client(
 
     use_multi_provider = (
         effective_provider_mode != "RESEARCH_FIXED_PROVIDER"
-        or effective_requested_provider != LIVE_PROVIDER_NAME
-        or effective_provider_chain != (LIVE_PROVIDER_NAME,)
+        or effective_requested_provider != "Groq"
+        or effective_provider_chain != ("Groq",)
     )
     if not use_multi_provider:
         kwargs["timeout"] = effective_timeout
@@ -115,7 +143,8 @@ def create_live_client(
     from src.llm.provider_architecture import MultiProviderClient
 
     provider_api_keys = dict(provider_api_keys or {})
-    provider_api_keys.setdefault("Groq", api_key)
+    provider_api_keys.setdefault(effective_requested_provider, api_key)
+    provider_api_keys.setdefault("Groq", os.getenv("GROQ_API_KEY", ""))
     provider_api_keys.setdefault("Gemini", os.getenv("GEMINI_API_KEY", ""))
     provider_api_keys.setdefault("OpenRouter", os.getenv("OPENROUTER_API_KEY", ""))
     provider_api_keys.setdefault("Cerebras", os.getenv("CEREBRAS_API_KEY", ""))
@@ -157,5 +186,21 @@ def create_live_client(
         state=state,
         sleep_fn=sleep_fn or __import__("time").sleep,
         monotonic_fn=monotonic_fn or __import__("time").monotonic,
+        opener=opener,
+    )
+
+
+def create_phase2_live_client(*, api_key: str, opener=None):
+    return create_live_client(
+        base_url=PHASE2_BASE_URL,
+        api_key=api_key,
+        timeout=PHASE2_TIMEOUT_SECONDS,
+        provider_mode=PHASE2_PROVIDER_MODE,
+        requested_provider=PHASE2_PROVIDER_NAME,
+        requested_model=PHASE2_MODEL,
+        provider_chain=(PHASE2_PROVIDER_NAME,),
+        provider_models={PHASE2_PROVIDER_NAME: PHASE2_MODEL},
+        provider_api_keys={PHASE2_PROVIDER_NAME: api_key},
+        provider_base_urls={PHASE2_PROVIDER_NAME: PHASE2_BASE_URL},
         opener=opener,
     )

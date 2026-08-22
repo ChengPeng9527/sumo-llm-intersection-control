@@ -80,14 +80,22 @@ def _credential_candidate_paths() -> list[Path]:
     return paths
 
 
-def resolve_llm_api_key() -> str:
-    for name in ("GROQ_API_KEY", "GEMINI_API_KEY", "OPENROUTER_API_KEY", "CEREBRAS_API_KEY"):
+def resolve_llm_api_key(provider_name: str | None = None) -> str:
+    provider_variables = {
+        "groq": "GROQ_API_KEY",
+        "gemini": "GEMINI_API_KEY",
+        "openrouter": "OPENROUTER_API_KEY",
+        "cerebras": "CEREBRAS_API_KEY",
+    }
+    requested_variable = provider_variables.get(str(provider_name or "").strip().lower())
+    variable_names = (requested_variable,) if requested_variable else tuple(provider_variables.values())
+    for name in variable_names:
         value = os.getenv(name, "")
         if value:
             return value
     for candidate in _credential_candidate_paths():
         env_values = _load_env_file(candidate)
-        for name in ("GROQ_API_KEY", "GEMINI_API_KEY", "OPENROUTER_API_KEY", "CEREBRAS_API_KEY"):
+        for name in variable_names:
             value = env_values.get(name, "")
             if value:
                 return value
