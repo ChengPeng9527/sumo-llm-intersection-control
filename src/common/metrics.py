@@ -5,8 +5,9 @@ import json
 from pathlib import Path
 from typing import Iterable
 
-from .logging_schema import FIELDNAMES, EVENT_FIELDS
+from .logging_schema import EVENT_FIELDS, FIELDNAMES
 from .config import load_project_config
+from src.safety.route_semantics import describe_route_id
 
 
 CONFIG = load_project_config()
@@ -35,13 +36,19 @@ def run_artifact_paths(run_id: str) -> dict[str, Path]:
 
 
 def route_direction_from_route_id(route_id: str) -> str:
+    try:
+        semantics = describe_route_id(route_id)
+    except ValueError:
+        return "unknown"
     mapping = {
-        "N_S": "north_south",
-        "S_N": "south_north",
-        "E_W": "east_west",
-        "W_E": "west_east",
+        "N": "north",
+        "E": "east",
+        "S": "south",
+        "W": "west",
     }
-    return mapping.get(route_id, "unknown")
+    incoming = mapping.get(semantics.incoming_edge, "unknown")
+    outgoing = mapping.get(semantics.outgoing_edge.lstrip("-"), "unknown")
+    return f"{incoming}_{outgoing}"
 
 
 def empty_record(**overrides):
@@ -61,6 +68,9 @@ def empty_record(**overrides):
             "simulation_time_seconds": overrides.get("simulation_time_seconds", 0.0),
             "vehicle_id": overrides.get("vehicle_id", ""),
             "route_id": overrides.get("route_id", ""),
+            "incoming_edge": overrides.get("incoming_edge", ""),
+            "outgoing_edge": overrides.get("outgoing_edge", ""),
+            "movement": overrides.get("movement", "UNKNOWN"),
             "route_direction": overrides.get("route_direction", "unknown"),
             "speed_before_action": overrides.get("speed_before_action", 0.0),
             "speed_after_action": overrides.get("speed_after_action", 0.0),
@@ -89,6 +99,7 @@ def empty_record(**overrides):
             "live_client_constructed": overrides.get("live_client_constructed", False),
             "provider_call_function_entered": overrides.get("provider_call_function_entered", False),
             "provider_request_kwargs_built": overrides.get("provider_request_kwargs_built", False),
+            "provider_request_attempted": overrides.get("provider_request_attempted", False),
             "provider_request_skipped": overrides.get("provider_request_skipped", False),
             "provider_skip_reason": overrides.get("provider_skip_reason", ""),
             "fallback_trigger_reason": overrides.get("fallback_trigger_reason", ""),

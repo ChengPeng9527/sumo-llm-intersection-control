@@ -16,6 +16,7 @@ from src.common.metrics import (
     write_json,
     write_jsonl,
 )
+from src.safety.route_semantics import describe_route_id
 
 
 CONFIG = load_project_config()
@@ -147,6 +148,15 @@ def create_record(
     **extra,
 ):
     route_id = get_vehicle_route(traci, veh_id)
+    try:
+        semantics = describe_route_id(route_id)
+        incoming_edge = semantics.incoming_edge
+        outgoing_edge = semantics.outgoing_edge
+        movement = semantics.movement
+    except ValueError:
+        incoming_edge = ""
+        outgoing_edge = ""
+        movement = "UNKNOWN"
     speed_before = float(traci.vehicle.getSpeed(veh_id))
     tti = estimate_time_to_intersection(traci, veh_id)
     in_zone = is_in_control_zone(traci, veh_id)
@@ -166,6 +176,9 @@ def create_record(
         simulation_time_seconds=extra.get("simulation_time_seconds", float(step)),
         vehicle_id=veh_id,
         route_id=route_id,
+        incoming_edge=incoming_edge,
+        outgoing_edge=outgoing_edge,
+        movement=movement,
         route_direction=route_direction_from_route_id(route_id),
         speed_before_action=speed_before,
         speed_after_action=speed_after,

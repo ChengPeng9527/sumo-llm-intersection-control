@@ -126,6 +126,9 @@ def test_create_record_preserves_request_provenance_for_shared_request(monkeypat
 
     assert row1["request_id"] == "req-123"
     assert row2["request_id"] == "req-123"
+    assert row1["incoming_edge"] == "N"
+    assert row1["outgoing_edge"] == "-S"
+    assert row1["movement"] == "STRAIGHT"
     assert row1["request_simulation_step"] == 7
     assert row1["http_attempt_id"] == 1
     assert row1["prompt_hash"] == "HASH123"

@@ -7,8 +7,11 @@ from dataclasses import dataclass
 class VehicleState:
     vehicle_id: str
     route_id: str
-    route_direction: str
-    speed: float
-    distance_to_intersection: float
-    time_to_intersection: float
-    inside_control_zone: bool
+    incoming_edge: str = ""
+    outgoing_edge: str = ""
+    movement: str = "UNKNOWN"
+    route_direction: str = "unknown"
+    speed: float = 0.0
+    distance_to_intersection: float = 0.0
+    time_to_intersection: float = 0.0
+    inside_control_zone: bool = False

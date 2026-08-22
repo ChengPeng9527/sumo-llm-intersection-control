@@ -6,18 +6,13 @@ from pathlib import Path
 from xml.etree import ElementTree as ET
 
 from src.common.config import load_project_config, load_yaml_config
+from src.safety.route_semantics import route_edges_for_route_id, supported_route_ids
 
 
 CONFIG = load_project_config()
 PROJECT_ROOT = Path(CONFIG["project_root"])
 GENERATED_ROOT = PROJECT_ROOT / "simulation" / "generated_routes"
 BASE_SUMOCFG = PROJECT_ROOT / "simulation.sumocfg"
-EDGE_MAP = {
-    "N_S": ("N", "-S"),
-    "S_N": ("S", "-N"),
-    "E_W": ("E", "-W"),
-    "W_E": ("W", "-E"),
-}
 
 
 def _route_sequence(route_distribution: dict[str, float], count: int, seed: int) -> list[str]:
@@ -50,6 +45,7 @@ def generate_scenario(
         total_vehicles = max(1, int(round(vehicles_per_hour * duration / 3600)))
     route_ids = _route_sequence(density["route_distribution"], total_vehicles, seed)
     rnd = random.Random(seed)
+    supported_routes = set(supported_route_ids())
 
     out_dir = GENERATED_ROOT / scenario_id
     out_dir.mkdir(parents=True, exist_ok=True)
@@ -68,7 +64,9 @@ def generate_scenario(
         },
     )
     for route_id in density["route_distribution"].keys():
-        edge_a, edge_b = EDGE_MAP.get(route_id, (route_id, route_id))
+        if route_id not in supported_routes:
+            raise ValueError(f"Unsupported route id for scenario generation: {route_id}")
+        edge_a, edge_b = route_edges_for_route_id(route_id)
         ET.SubElement(root, "route", attrib={"id": route_id, "edges": f"{edge_a} {edge_b}"})
 
     depart = 0

@@ -34,6 +34,24 @@ densities:
       W_E: 0.25
     minimum_depart_gap: 1
     maximum_depart_gap: 4
+  mixed_turns:
+    vehicles_per_hour: 240
+    simulation_duration_seconds: 240
+    route_distribution:
+      N_S: 0.08333333333333333
+      N_W: 0.08333333333333333
+      N_E: 0.08333333333333333
+      E_N: 0.08333333333333333
+      E_W: 0.08333333333333333
+      E_S: 0.08333333333333333
+      S_E: 0.08333333333333333
+      S_N: 0.08333333333333333
+      S_W: 0.08333333333333333
+      W_S: 0.08333333333333333
+      W_E: 0.08333333333333333
+      W_N: 0.08333333333333333
+    minimum_depart_gap: 2
+    maximum_depart_gap: 8
 
 seeds:
   - 1

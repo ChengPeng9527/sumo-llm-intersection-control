@@ -57,6 +57,9 @@ def build_decision_trace(
         trace[vid] = {
             "vehicle_id": vid,
             "route_id": state.get("route_id", ""),
+            "incoming_edge": state.get("incoming_edge", ""),
+            "outgoing_edge": state.get("outgoing_edge", ""),
+            "movement": state.get("movement", "UNKNOWN"),
             "inside_control_zone": bool(state.get("inside_control_zone", False)),
             "llm_raw_decision": raw_action,
             "validated_llm_decision": validated_action,
@@ -250,6 +253,7 @@ def run_pipeline_controller(
 
     llm_api_key = llm_api_key or resolve_llm_api_key()
     from src.safety.route_conflict import routes_compatible, validate_conflict_matrix
+    from src.safety.route_semantics import describe_route_id
     from ttc_safety import verify_decisions
 
     try:
@@ -260,10 +264,23 @@ def run_pipeline_controller(
     def build_traffic_state(vehicles: list[str]) -> list[dict]:
         state: list[dict] = []
         for vid in vehicles:
+            route_id = get_vehicle_route(traci, vid)
+            try:
+                semantics = describe_route_id(route_id)
+                incoming_edge = semantics.incoming_edge
+                outgoing_edge = semantics.outgoing_edge
+                movement = semantics.movement
+            except ValueError:
+                incoming_edge = ""
+                outgoing_edge = ""
+                movement = "UNKNOWN"
             state.append(
                 {
                     "vehicle_id": vid,
-                    "route_id": get_vehicle_route(traci, vid),
+                    "route_id": route_id,
+                    "incoming_edge": incoming_edge,
+                    "outgoing_edge": outgoing_edge,
+                    "movement": movement,
                     "speed": round(traci.vehicle.getSpeed(vid), 2),
                     "distance_to_intersection": round(distance_to_center(traci, vid), 2),
                     "time_to_intersection": round(estimate_time_to_intersection(traci, vid), 2),

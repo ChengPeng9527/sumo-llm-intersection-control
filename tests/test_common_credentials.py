@@ -6,6 +6,8 @@ import common
 
 
 def test_resolve_llm_api_key_prefers_existing_env(monkeypatch, tmp_path):
+    for name in ("GROQ_API_KEY", "GEMINI_API_KEY", "OPENROUTER_API_KEY", "CEREBRAS_API_KEY", "GROQ_CREDENTIAL_FILE", "LLM_CREDENTIAL_FILE"):
+        monkeypatch.delenv(name, raising=False)
     monkeypatch.setenv("GEMINI_API_KEY", "env-value")
     codex_env = tmp_path / ".codex" / ".env"
     codex_env.parent.mkdir(parents=True)

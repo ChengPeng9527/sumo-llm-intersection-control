@@ -5,9 +5,17 @@
            maxSpeed="13.9"/>
 
     <route id="N_S" edges="N -S"/>
-    <route id="S_N" edges="S -N"/>
+    <route id="N_W" edges="N -W"/>
+    <route id="N_E" edges="N -E"/>
+    <route id="E_N" edges="E -N"/>
     <route id="E_W" edges="E -W"/>
+    <route id="E_S" edges="E -S"/>
+    <route id="S_E" edges="S -E"/>
+    <route id="S_N" edges="S -N"/>
+    <route id="S_W" edges="S -W"/>
+    <route id="W_S" edges="W -S"/>
     <route id="W_E" edges="W -E"/>
+    <route id="W_N" edges="W -N"/>
 
     <vehicle id="car0" type="car" route="N_S" depart="0"/>
     <vehicle id="car1" type="car" route="S_N" depart="2"/>
