@@ -210,3 +210,24 @@ def parse_llm_response_details(response_text: str, vehicles: list[str]) -> tuple
     except (json.JSONDecodeError, TypeError, ValueError):
         pass
     return _parse_textual_response(response_text, vehicles)
+
+
+def parse_candidate_selection_response(
+    response_text: str,
+    candidate_ids: list[str] | tuple[str, ...],
+) -> tuple[str, bool, str]:
+    if not isinstance(response_text, str) or not response_text.strip():
+        return "", False, "EMPTY_RESPONSE"
+    try:
+        payload = json.loads(response_text.strip())
+    except (json.JSONDecodeError, TypeError, ValueError):
+        return "", False, "MALFORMED_JSON"
+    if not isinstance(payload, dict) or set(payload) != {"selected_candidate_id"}:
+        return "", False, "INVALID_OUTPUT_CONTRACT"
+    selected_candidate_id = payload.get("selected_candidate_id")
+    if not isinstance(selected_candidate_id, str):
+        return "", False, "MULTIPLE_OR_ILLEGAL_SELECTION"
+    selected_candidate_id = selected_candidate_id.strip()
+    if selected_candidate_id not in set(candidate_ids):
+        return selected_candidate_id, False, "UNKNOWN_CANDIDATE_ID"
+    return selected_candidate_id, True, ""

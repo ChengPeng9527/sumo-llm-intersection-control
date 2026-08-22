@@ -8,11 +8,12 @@ from pathlib import Path
 from typing import Callable
 
 from src.llm.postprocessor import apply_cooperative_postprocessing, apply_interface_rule
+from src.llm.candidate_selector import select_candidate_with_llm
 from src.llm.diagnostics import build_provider_diagnostics
 from src.llm.provider_gate_diagnostics import build_live_provider_gate_diagnostics
 from src.llm.request_config import build_live_request_kwargs, create_live_client
 from src.llm.response_parser import parse_llm_response_details
-from src.safety.cooperative_comparator import compare_and_build_decisions
+from src.safety.cooperative_comparator import build_decisions_from_selection, compare_and_build_decisions
 
 
 VALID_DECISION_SOURCES = {
@@ -20,6 +21,8 @@ VALID_DECISION_SOURCES = {
     "DETERMINISTIC_INTERFACE_RULE",
     "COOPERATIVE_POSTPROCESSOR",
     "COOPERATIVE_COMPARATOR",
+    "LLM_CANDIDATE",
+    "DETERMINISTIC_FALLBACK",
     "SAFETY_VERIFIER",
     "FALLBACK",
 }
@@ -139,6 +142,15 @@ def build_decision_trace(
             "selected_candidate_id": llm_meta.get("selected_candidate_id", ""),
             "selected_vehicle_ids": llm_meta.get("selected_vehicle_ids", ()),
             "candidate_selection_reason": llm_meta.get("candidate_selection_reason", ""),
+            "llm_raw_output": llm_meta.get("llm_raw_output", ""),
+            "llm_candidate_id": llm_meta.get("llm_candidate_id", ""),
+            "deterministic_candidate_id": llm_meta.get("deterministic_candidate_id", ""),
+            "candidate_agreement": llm_meta.get("candidate_agreement", None),
+            "candidate_disagreement": llm_meta.get("candidate_disagreement", False),
+            "fallback_selected_candidate": llm_meta.get("fallback_selected_candidate", ""),
+            "final_selected_candidate": llm_meta.get("final_selected_candidate", ""),
+            "selection_source": llm_meta.get("selection_source", ""),
+            "safety_intervened": llm_meta.get("safety_intervened", False),
         }
     return trace
 
@@ -168,6 +180,9 @@ def execute_cooperative_comparator_pipeline(
             "selected_candidate_id": selection.selected_candidate_id,
             "selected_vehicle_ids": selection.selected_vehicle_ids,
             "candidate_selection_reason": selection.selection_reason,
+            "deterministic_candidate_id": selection.selected_candidate_id,
+            "final_selected_candidate": selection.selected_candidate_id,
+            "selection_source": "DETERMINISTIC_COMPARATOR",
         },
     )
     for entry in trace.values():
@@ -182,6 +197,68 @@ def execute_cooperative_comparator_pipeline(
     if safety_guard_fn is not None:
         return safety_guard_fn(trace, vehicle_states)
     return apply_safety_filter(trace, vehicle_states)
+
+
+def execute_llm_candidate_selector_pipeline(
+    vehicle_states: list[dict],
+    candidate_groups: list[list[str]],
+    provider_call: Callable[[str], object],
+    *,
+    provider_name: str = "",
+    model_name: str = "",
+    llm_mode: str = "mock",
+    safety_guard_fn: Callable[[dict[str, dict], list[dict]], dict[str, dict]] | None = None,
+) -> dict[str, dict]:
+    selection = select_candidate_with_llm(
+        vehicle_states,
+        candidate_groups,
+        provider_call,
+        provider_name=provider_name,
+        model_name=model_name,
+    )
+    decisions = build_decisions_from_selection(vehicle_states, selection.selected_vehicle_ids)
+    trace = build_decision_trace(
+        vehicle_states,
+        decisions,
+        decisions,
+        llm_meta={
+            **selection.provider_meta,
+            "llm_called": True,
+            "llm_branch_entered": True,
+            "llm_mode": llm_mode,
+            "llm_model": model_name,
+            "json_parse_success": selection.parser_success,
+            "fallback_used": selection.fallback_used,
+            "decision_source": selection.selection_source,
+            "candidate_groups": tuple(tuple(group) for group in candidate_groups),
+            "candidate_ranking": selection.candidate_ranking,
+            "selected_candidate_id": selection.final_selected_candidate,
+            "selected_vehicle_ids": selection.selected_vehicle_ids,
+            "candidate_selection_reason": selection.selection_source,
+            "llm_raw_output": selection.llm_raw_output,
+            "llm_candidate_id": selection.llm_candidate_id,
+            "deterministic_candidate_id": selection.deterministic_candidate_id,
+            "candidate_agreement": selection.candidate_agreement,
+            "candidate_disagreement": selection.candidate_disagreement,
+            "fallback_selected_candidate": selection.fallback_selected_candidate,
+            "final_selected_candidate": selection.final_selected_candidate,
+            "selection_source": selection.selection_source,
+        },
+    )
+    trace = apply_interface_rule(trace, vehicle_states, target_field="postprocessed_decision")
+    for entry in trace.values():
+        entry["final_decision"] = entry["postprocessed_decision"]
+
+    guarded_trace = (
+        safety_guard_fn(trace, vehicle_states)
+        if safety_guard_fn is not None
+        else apply_safety_filter(trace, vehicle_states)
+    )
+    for vehicle_id, entry in guarded_trace.items():
+        entry["safety_intervened"] = (
+            entry.get("final_decision") != trace[vehicle_id].get("postprocessed_decision")
+        )
+    return guarded_trace
 
 
 def execute_decision_pipeline(
@@ -252,6 +329,7 @@ def _build_runtime_trace_from_guard(
         else:
             updated[vid]["safety_override"] = False
             updated[vid]["safety_reason"] = ""
+        updated[vid]["safety_intervened"] = updated[vid]["safety_override"]
     return updated
 
 
@@ -680,6 +758,15 @@ def run_pipeline_controller(
                         selected_candidate_id=entry.get("selected_candidate_id", ""),
                         selected_vehicle_ids=entry.get("selected_vehicle_ids", ()),
                         candidate_selection_reason=entry.get("candidate_selection_reason", ""),
+                        llm_raw_output=entry.get("llm_raw_output", ""),
+                        llm_candidate_id=entry.get("llm_candidate_id", ""),
+                        deterministic_candidate_id=entry.get("deterministic_candidate_id", ""),
+                        candidate_agreement=entry.get("candidate_agreement", None),
+                        candidate_disagreement=entry.get("candidate_disagreement", False),
+                        fallback_selected_candidate=entry.get("fallback_selected_candidate", ""),
+                        final_selected_candidate=entry.get("final_selected_candidate", ""),
+                        selection_source=entry.get("selection_source", ""),
+                        safety_intervened=entry.get("safety_intervened", False),
                         safety_override=entry["safety_override"],
                         safety_reason=entry["safety_reason"],
                         decision_source=entry["decision_source"],
