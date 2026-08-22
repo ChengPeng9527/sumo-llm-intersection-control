@@ -14,4 +14,5 @@ class VehicleState:
     speed: float = 0.0
     distance_to_intersection: float = 0.0
     time_to_intersection: float = 0.0
+    waiting_time: float = 0.0
     inside_control_zone: bool = False

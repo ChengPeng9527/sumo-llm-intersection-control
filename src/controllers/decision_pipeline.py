@@ -12,12 +12,14 @@ from src.llm.diagnostics import build_provider_diagnostics
 from src.llm.provider_gate_diagnostics import build_live_provider_gate_diagnostics
 from src.llm.request_config import build_live_request_kwargs, create_live_client
 from src.llm.response_parser import parse_llm_response_details
+from src.safety.cooperative_comparator import compare_and_build_decisions
 
 
 VALID_DECISION_SOURCES = {
     "LLM_RAW",
     "DETERMINISTIC_INTERFACE_RULE",
     "COOPERATIVE_POSTPROCESSOR",
+    "COOPERATIVE_COMPARATOR",
     "SAFETY_VERIFIER",
     "FALLBACK",
 }
@@ -60,6 +62,7 @@ def build_decision_trace(
             "incoming_edge": state.get("incoming_edge", ""),
             "outgoing_edge": state.get("outgoing_edge", ""),
             "movement": state.get("movement", "UNKNOWN"),
+            "waiting_time": state.get("waiting_time", 0.0),
             "inside_control_zone": bool(state.get("inside_control_zone", False)),
             "llm_raw_decision": raw_action,
             "validated_llm_decision": validated_action,
@@ -131,6 +134,11 @@ def build_decision_trace(
             "exception_type": llm_meta.get("exception_type", ""),
             "exception_message_redacted": llm_meta.get("exception_message_redacted", ""),
             "latency_ms": llm_meta.get("latency_ms", llm_meta.get("llm_response_time_ms", 0.0)),
+            "candidate_groups": llm_meta.get("candidate_groups", ()),
+            "candidate_ranking": llm_meta.get("candidate_ranking", ()),
+            "selected_candidate_id": llm_meta.get("selected_candidate_id", ""),
+            "selected_vehicle_ids": llm_meta.get("selected_vehicle_ids", ()),
+            "candidate_selection_reason": llm_meta.get("candidate_selection_reason", ""),
         }
     return trace
 
@@ -139,6 +147,41 @@ def apply_safety_filter(trace: dict[str, dict], vehicle_states: list[dict]) -> d
     from src.safety.safety_verifier import verify_decisions
 
     return _build_runtime_trace_from_guard(trace, vehicle_states, verify_decisions)
+
+
+def execute_cooperative_comparator_pipeline(
+    vehicle_states: list[dict],
+    candidate_groups: list[list[str]],
+    *,
+    safety_guard_fn: Callable[[dict[str, dict], list[dict]], dict[str, dict]] | None = None,
+) -> dict[str, dict]:
+    """Select a Step 3 candidate group, then retain the existing safety final authority."""
+    decisions, selection = compare_and_build_decisions(vehicle_states, candidate_groups)
+    trace = build_decision_trace(
+        vehicle_states,
+        decisions,
+        decisions,
+        llm_meta={
+            "decision_source": "COOPERATIVE_COMPARATOR",
+            "candidate_groups": tuple(tuple(group) for group in candidate_groups),
+            "candidate_ranking": selection.ranking_trace(),
+            "selected_candidate_id": selection.selected_candidate_id,
+            "selected_vehicle_ids": selection.selected_vehicle_ids,
+            "candidate_selection_reason": selection.selection_reason,
+        },
+    )
+    for entry in trace.values():
+        entry["postprocessed_decision"] = entry["validated_llm_decision"]
+        entry["final_decision"] = entry["validated_llm_decision"]
+
+    trace = apply_interface_rule(trace, vehicle_states, target_field="postprocessed_decision")
+    for entry in trace.values():
+        if entry["outside_control_zone_rule_applied"]:
+            entry["final_decision"] = "FREE"
+
+    if safety_guard_fn is not None:
+        return safety_guard_fn(trace, vehicle_states)
+    return apply_safety_filter(trace, vehicle_states)
 
 
 def execute_decision_pipeline(
@@ -284,6 +327,7 @@ def run_pipeline_controller(
                     "speed": round(traci.vehicle.getSpeed(vid), 2),
                     "distance_to_intersection": round(distance_to_center(traci, vid), 2),
                     "time_to_intersection": round(estimate_time_to_intersection(traci, vid), 2),
+                    "waiting_time": round(traci.vehicle.getWaitingTime(vid), 2),
                     "inside_control_zone": is_in_control_zone(traci, vid),
                 }
             )
@@ -631,6 +675,11 @@ def run_pipeline_controller(
                         outside_control_zone_rule_applied=entry["outside_control_zone_rule_applied"],
                         postprocess_applied=entry["postprocess_applied"],
                         postprocess_reason=entry["postprocess_reason"],
+                        candidate_groups=entry.get("candidate_groups", ()),
+                        candidate_ranking=entry.get("candidate_ranking", ()),
+                        selected_candidate_id=entry.get("selected_candidate_id", ""),
+                        selected_vehicle_ids=entry.get("selected_vehicle_ids", ()),
+                        candidate_selection_reason=entry.get("candidate_selection_reason", ""),
                         safety_override=entry["safety_override"],
                         safety_reason=entry["safety_reason"],
                         decision_source=entry["decision_source"],

@@ -1,6 +1,8 @@
 from __future__ import annotations
 
 from src.llm.postprocessor import choose_priority_vehicle
+from src.safety.candidate_groups import build_safe_candidate_groups
+from src.safety.cooperative_comparator import compare_and_build_decisions
 
 
 def baseline_decide(vehicle_states: list[dict]) -> dict[str, str]:
@@ -20,7 +22,17 @@ def baseline_decide(vehicle_states: list[dict]) -> dict[str, str]:
 def cooperative_decide(
     vehicle_states: list[dict],
     routes_compatible_fn=None,
+    candidate_groups: list[list[str]] | None = None,
 ) -> dict[str, str]:
+    if candidate_groups is not None:
+        decisions, _ = compare_and_build_decisions(vehicle_states, candidate_groups)
+        return decisions
+
+    generated_groups = build_safe_candidate_groups(vehicle_states)
+    if generated_groups:
+        decisions, _ = compare_and_build_decisions(vehicle_states, generated_groups)
+        return decisions
+
     if routes_compatible_fn is None:
         def routes_compatible_fn(route_a: str, route_b: str) -> bool:
             return route_a == route_b
