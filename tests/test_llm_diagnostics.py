@@ -129,3 +129,36 @@ def test_infer_parser_failure_reason_flags_list_collapsing_gap():
     text = '[{"vehicle_id":"diag_car0","decision":"PROCEED"}]'
 
     assert infer_parser_failure_reason(text, True, "MISSING") == "TOP_LEVEL_JSON_LIST_WAS_COLLAPSED_TO_OBJECT"
+
+
+def test_build_provider_diagnostics_derives_attempt_ids_when_missing():
+    response = SimpleNamespace(
+        request_id='req-123',
+        request_simulation_step=7,
+        prompt_hash='abc123',
+        request_started_at='2026-08-18T18:00:00+00:00',
+        request_finished_at='2026-08-18T18:00:01+00:00',
+        provider_success=True,
+        retry_count=0,
+        choices=[SimpleNamespace(message=SimpleNamespace(content='{}'), finish_reason='stop')],
+        usage=SimpleNamespace(prompt_tokens=1, completion_tokens=2, total_tokens=3),
+        headers={},
+        status_code=200,
+    )
+
+    diagnostics = build_provider_diagnostics(
+        provider_name='Gemini',
+        model_name='gemini-3.6-flash',
+        response=response,
+        parser_input='{}',
+        parser_success=True,
+        parser_action='PROCEED',
+        fallback_triggered=False,
+        fallback_reason='',
+        latency_ms=12.0,
+        provider_request_attempted=True,
+        provider_request_success=True,
+    )
+
+    assert diagnostics['http_attempt_id'] == 1
+    assert diagnostics['request_attempt_count'] == 1

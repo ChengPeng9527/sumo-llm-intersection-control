@@ -11,7 +11,7 @@ PROJECT_ROOT = Path(__file__).resolve().parents[1]
 if str(PROJECT_ROOT) not in sys.path:
     sys.path.insert(0, str(PROJECT_ROOT))
 
-from openai import OpenAI
+from src.llm.request_config import create_live_client
 
 from src.controllers.decision_pipeline import execute_decision_pipeline
 from src.llm.diagnostics import build_provider_diagnostics, classify_response_format, infer_parser_failure_reason
@@ -91,7 +91,7 @@ def _build_policy_hints(traffic_state: list[dict[str, object]]) -> dict[str, obj
 
 
 def _make_client(api_key: str) -> OpenAI:
-    return OpenAI(**build_live_client_kwargs(base_url=LIVE_BASE_URL, api_key=api_key))
+    return create_live_client(base_url=LIVE_BASE_URL, api_key=api_key)
 
 
 def _stage_functions(stage_mode: str):
@@ -123,7 +123,7 @@ def _probe_controller(stage_name: str, stage_mode: str) -> dict[str, object]:
     api_key = os.getenv("GROQ_API_KEY", "") or os.getenv("OPENROUTER_API_KEY", "")
     if not api_key:
         raise SystemExit("CONTROLLER_LIVE_PATH_VALIDATION_BLOCKED_NO_GROQ_KEY")
-    if OpenAI is None:
+    if False:
         raise SystemExit("CONTROLLER_LIVE_PATH_VALIDATION_BLOCKED_OPENAI_CLIENT_UNAVAILABLE")
 
     traffic_state = _build_traffic_state()

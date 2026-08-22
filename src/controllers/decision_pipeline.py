@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import hashlib
 import json
 import os
 import time
@@ -9,7 +10,7 @@ from typing import Callable
 from src.llm.postprocessor import apply_cooperative_postprocessing, apply_interface_rule
 from src.llm.diagnostics import build_provider_diagnostics
 from src.llm.provider_gate_diagnostics import build_live_provider_gate_diagnostics
-from src.llm.request_config import build_live_client_kwargs, build_live_request_kwargs
+from src.llm.request_config import build_live_request_kwargs, create_live_client
 from src.llm.response_parser import parse_llm_response_details
 
 
@@ -22,10 +23,11 @@ VALID_DECISION_SOURCES = {
 }
 
 
-def run_live_llm_request(client, *, llm_model: str, prompt: str):
+def run_live_llm_request(client, *, llm_model: str, prompt: str, request_context: dict | None = None):
     return client.chat.completions.create(
         model=llm_model,
         messages=[{"role": "user", "content": prompt}],
+        _request_context=request_context or {},
         **build_live_request_kwargs(),
     )
 
@@ -85,6 +87,21 @@ def build_decision_trace(
             "provider_request_success": llm_meta.get("provider_request_success", False),
             "provider_name": llm_meta.get("provider_name", ""),
             "model_name": llm_meta.get("model_name", ""),
+            "request_id": llm_meta.get("request_id", ""),
+            "request_simulation_step": llm_meta.get("request_simulation_step", None),
+            "http_attempt_id": llm_meta.get("http_attempt_id", llm_meta.get("request_attempt_count", None)),
+            "prompt_hash": llm_meta.get("prompt_hash", ""),
+            "request_started_at": llm_meta.get("request_started_at", ""),
+            "request_finished_at": llm_meta.get("request_finished_at", ""),
+            "request_attempt_count": llm_meta.get("request_attempt_count", None),
+            "requested_provider": llm_meta.get("requested_provider", ""),
+            "requested_model": llm_meta.get("requested_model", ""),
+            "actual_provider": llm_meta.get("actual_provider", ""),
+            "actual_model": llm_meta.get("actual_model", ""),
+            "provider_switch_count": llm_meta.get("provider_switch_count", 0),
+            "provider_chain": llm_meta.get("provider_chain", ()),
+            "provider_failure_reason": llm_meta.get("provider_failure_reason", ""),
+            "provider_success": llm_meta.get("provider_success", False),
             "http_status": llm_meta.get("http_status", None),
             "response_object_type": llm_meta.get("response_object_type", ""),
             "response_content_present": llm_meta.get("response_content_present", False),
@@ -214,6 +231,7 @@ def run_pipeline_controller(
     from common import (
         CONFIG,
         resolve_llm_api_key,
+        resolve_sumo_termination_reason,
         apply_decision,
         build_event,
         build_run_metadata,
@@ -238,11 +256,6 @@ def run_pipeline_controller(
         import traci
     except Exception as exc:  # pragma: no cover
         raise RuntimeError("traci is required to run SUMO controllers") from exc
-
-    try:
-        from openai import OpenAI
-    except Exception:  # pragma: no cover
-        OpenAI = None
 
     def build_traffic_state(vehicles: list[str]) -> list[dict]:
         state: list[dict] = []
@@ -285,22 +298,28 @@ def run_pipeline_controller(
             return None
         if llm_client is not None:
             return llm_client
-        if not llm_api_key or OpenAI is None:
+        if not llm_api_key:
             return None
-        return OpenAI(**build_live_client_kwargs(base_url=llm_base_url, api_key=llm_api_key))
+        return create_live_client(base_url=llm_base_url, api_key=llm_api_key)
 
-    def run_live_llm_request(client, prompt: str):
+    def run_live_llm_request(client, *, llm_model: str, prompt: str, request_context: dict | None = None):
         return client.chat.completions.create(
             model=llm_model,
             messages=[{"role": "user", "content": prompt}],
+            _request_context=request_context or {},
             **build_live_request_kwargs(),
         )
 
-    def llm_provider(traffic_state: list[dict]) -> tuple[dict[str, str], dict]:
+    def llm_provider(traffic_state: list[dict], *, simulation_step: int) -> tuple[dict[str, str], dict]:
         prompt = build_structured_prompt(traffic_state, validate_conflict_matrix(), build_policy_hints(traffic_state))
         vehicle_ids = [v["vehicle_id"] for v in traffic_state]
+        request_context = {
+            "request_id": f"{run_id}_step{simulation_step:05d}",
+            "request_simulation_step": simulation_step,
+            "prompt_hash": hashlib.sha256(prompt.encode("utf-8")).hexdigest().upper(),
+        }
         credential_available = bool(llm_api_key)
-        openai_available = OpenAI is not None
+        openai_available = True
         client = build_real_llm_client()
         live_client_constructed = client is not None
         llm_branch_entered = True
@@ -333,7 +352,7 @@ def run_pipeline_controller(
                     eligible_vehicle_count=len(vehicle_ids),
                     decision_source="LLM_RAW",
                 )
-                response = run_live_llm_request(client, prompt)
+                response = run_live_llm_request(client, llm_model=llm_model, prompt=prompt, request_context=request_context)
                 elapsed_ms = (time.perf_counter() - start_time) * 1000
                 response_text = ""
                 if response is not None and getattr(response, "choices", None):
@@ -454,7 +473,8 @@ def run_pipeline_controller(
         return _build_runtime_trace_from_guard(trace, vehicle_states, guard_fn)
 
     client = build_real_llm_client()
-    run_id = f"{experiment_id}_v{vehicle_count}_seed{seed}_{llm_mode}"
+    run_suffix = os.getenv("RUN_SUFFIX", "")
+    run_id = f"{experiment_id}_v{vehicle_count}_seed{seed}{run_suffix}_{llm_mode}"
     artifacts = run_artifact_paths(run_id)
     output_csv = artifacts["step_records"]
     records = []
@@ -509,7 +529,9 @@ def run_pipeline_controller(
         traci.start([str(sumo_binary), "-c", str(sumo_config), "--start"])
         traci_started = True
 
-        for step in range(simulation_steps):
+        step = 0
+        termination_reason = "UNEXPECTED_SUMO_TERMINATION"
+        while step < simulation_steps:
             traci.simulationStep()
             departed_ids = list(traci.simulation.getDepartedIDList())
             arrived_ids = list(traci.simulation.getArrivedIDList())
@@ -545,7 +567,7 @@ def run_pipeline_controller(
             traffic_state = build_traffic_state(vehicles)
 
             if step % llm_decision_interval == 0 or not cached_trace:
-                raw_decisions, llm_meta = llm_provider(traffic_state)
+                raw_decisions, llm_meta = llm_provider(traffic_state, simulation_step=step)
                 cached_trace = execute_decision_pipeline(
                     traffic_state,
                     raw_decisions,
@@ -597,6 +619,13 @@ def run_pipeline_controller(
                         decision_source=entry["decision_source"],
                         llm_mode=entry["llm_mode"],
                         llm_called=entry["llm_called"],
+                        request_id=entry.get("request_id", ""),
+                        request_simulation_step=entry.get("request_simulation_step", None),
+                        http_attempt_id=entry.get("http_attempt_id", None),
+                        prompt_hash=entry.get("prompt_hash", ""),
+                        request_started_at=entry.get("request_started_at", ""),
+                        request_finished_at=entry.get("request_finished_at", ""),
+                        request_attempt_count=entry.get("request_attempt_count", None),
                         llm_branch_entered=entry.get("llm_branch_entered", False),
                         live_provider_gate_entered=entry.get("live_provider_gate_entered", False),
                         live_provider_enabled=entry.get("live_provider_enabled", False),
@@ -619,6 +648,14 @@ def run_pipeline_controller(
                         fallback_used=entry["fallback_used"],
                         provider_request_attempted=entry["provider_request_attempted"],
                         provider_request_success=entry["provider_request_success"],
+                        requested_provider=entry.get("requested_provider", ""),
+                        requested_model=entry.get("requested_model", ""),
+                        actual_provider=entry.get("actual_provider", ""),
+                        actual_model=entry.get("actual_model", ""),
+                        provider_switch_count=entry.get("provider_switch_count", 0),
+                        provider_chain=entry.get("provider_chain", ()),
+                        provider_failure_reason=entry.get("provider_failure_reason", ""),
+                        provider_success=entry.get("provider_success", False),
                         provider_name=entry["provider_name"],
                         model_name=entry["model_name"],
                         http_status=entry["http_status"],
@@ -641,6 +678,16 @@ def run_pipeline_controller(
                         arrived=False,
                     )
                 )
+            termination_reason = resolve_sumo_termination_reason(
+                simulation_step=step,
+                simulation_steps=simulation_steps,
+                expected_remaining=int(traci.simulation.getMinExpectedNumber()),
+                arrived_count=len(arrived_seen),
+                target_vehicle_count=vehicle_count,
+            )
+            if termination_reason:
+                break
+            step += 1
             time.sleep(0.03)
     finally:
         if traci_started:
@@ -661,6 +708,7 @@ def run_pipeline_controller(
         llm_model=llm_model if llm_mode == "real" else "",
         prompt_version=prompt_version,
         status="completed",
+        termination_reason=termination_reason,
     )
     metadata["departed_count"] = len(departed_seen)
     metadata["arrived_count"] = len(arrived_seen)

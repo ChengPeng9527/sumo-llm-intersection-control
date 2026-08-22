@@ -1,6 +1,7 @@
-from __future__ import annotations
+﻿from __future__ import annotations
 
 from dataclasses import dataclass
+import os
 from pathlib import Path
 import hashlib
 import subprocess
@@ -20,9 +21,17 @@ from src.llm.request_config import (
 
 
 PROJECT_ROOT = Path(load_project_config()["project_root"])
-FORMAL_RESULTS_ROOT = PROJECT_ROOT / "results" / "formal_experiment" / "dissertation_formal_v2"
+
+
+def formal_results_root() -> Path:
+    results_id = os.getenv("FORMAL_RESULTS_ID", "dissertation_formal_v2")
+    return PROJECT_ROOT / "results" / "formal_experiment" / results_id
+
+
+FORMAL_RESULTS_ROOT = formal_results_root()
 FORMAL_PROMPT_IDENTIFIER = "P1_BASELINE"
 FORMAL_SCENARIO_DENSITY = "low"
+FORMAL_RUN_SUFFIX = os.getenv("FORMAL_RUN_SUFFIX", "")
 FORMAL_SEEDS = (1, 2, 3)
 FORMAL_VEHICLE_COUNTS = (4, 8)
 FORMAL_BATCH_ORDER = ((1, 4), (2, 8), (3, 4), (1, 8), (2, 4), (3, 8))
@@ -101,7 +110,7 @@ def build_formal_run_plan() -> list[FormalRunSpec]:
         batch_id = f"seed{seed}_v{vehicle_count}"
         for order_position, controller in enumerate(controller_order_for_seed(seed), start=1):
             spec = FORMAL_CONTROLLER_SPECS[controller]
-            run_id = f"{spec['experiment_id']}_v{vehicle_count}_seed{seed}"
+            run_id = f"{spec['experiment_id']}_v{vehicle_count}_seed{seed}{FORMAL_RUN_SUFFIX}"
             if spec["llm_mode"]:
                 run_id = f"{run_id}_{spec['llm_mode']}"
             plan.append(

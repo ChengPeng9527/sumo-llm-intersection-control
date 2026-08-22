@@ -71,6 +71,50 @@ def test_pipeline_preserves_diagnostic_meta_without_changing_decisions():
     assert trace["car0"]["latency_ms"] == 12.34
 
 
+def test_decision_trace_preserves_request_provenance_fields():
+    traffic_state = [_build_state("car0", "N_S", 2.0, True)]
+    provider = StubDecisionProvider(
+        {"car0": "PROCEED"},
+        meta={
+            "llm_called": True,
+            "decision_source": "LLM_RAW",
+            "provider_request_attempted": True,
+            "provider_request_success": True,
+            "provider_name": "Gemini",
+            "model_name": "gemini-3.6-flash",
+            "request_id": "req-123",
+            "request_simulation_step": 42,
+            "http_attempt_id": 3,
+            "prompt_hash": "HASH123",
+            "request_started_at": "2026-08-18T10:00:00.000+00:00",
+            "request_finished_at": "2026-08-18T10:00:01.000+00:00",
+            "requested_provider": "Gemini",
+            "requested_model": "gemini-3.6-flash",
+            "actual_provider": "Gemini",
+            "actual_model": "gemini-3.6-flash",
+            "provider_switch_count": 0,
+            "provider_chain": ("Gemini",),
+            "provider_success": True,
+        },
+    )
+    raw_decisions, llm_meta = provider(traffic_state)
+    trace = execute_decision_pipeline(traffic_state, raw_decisions, stage_mode="raw", llm_meta=llm_meta)
+
+    assert trace["car0"]["request_id"] == "req-123"
+    assert trace["car0"]["request_simulation_step"] == 42
+    assert trace["car0"]["http_attempt_id"] == 3
+    assert trace["car0"]["prompt_hash"] == "HASH123"
+    assert trace["car0"]["request_started_at"] == "2026-08-18T10:00:00.000+00:00"
+    assert trace["car0"]["request_finished_at"] == "2026-08-18T10:00:01.000+00:00"
+    assert trace["car0"]["requested_provider"] == "Gemini"
+    assert trace["car0"]["requested_model"] == "gemini-3.6-flash"
+    assert trace["car0"]["actual_provider"] == "Gemini"
+    assert trace["car0"]["actual_model"] == "gemini-3.6-flash"
+    assert trace["car0"]["provider_switch_count"] == 0
+    assert trace["car0"]["provider_chain"] == ("Gemini",)
+    assert trace["car0"]["provider_success"] is True
+
+
 def test_normalize_action_strips_and_uppercases():
     assert normalize_action(" proceed ") == "PROCEED"
 

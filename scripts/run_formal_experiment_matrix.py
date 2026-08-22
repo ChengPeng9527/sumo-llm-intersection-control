@@ -1,4 +1,4 @@
-from __future__ import annotations
+﻿from __future__ import annotations
 
 import argparse
 import csv
@@ -118,6 +118,7 @@ def _build_env(spec, scenario_config: dict[str, object]) -> dict[str, str]:
     env["LLM_MODEL"] = FORMAL_REQUEST_CONFIG["model"]
     env["LLM_BASE_URL"] = FORMAL_REQUEST_CONFIG["base_url"]
     env["LLM_DECISION_INTERVAL"] = "1"
+    env["RUN_SUFFIX"] = os.getenv("FORMAL_RUN_SUFFIX", "")
     if spec.llm_mode:
         env["LLM_MODE"] = spec.llm_mode
     return env
@@ -128,9 +129,14 @@ def main(argv: list[str] | None = None) -> int:
     parser.add_argument("--dry-run", action="store_true")
     parser.add_argument("--max-runs", type=int, default=0)
     parser.add_argument("--cooldown-seconds", type=int, default=COOLDOWN_SECONDS)
+    parser.add_argument("--vehicle-counts", nargs="*", type=int, default=None)
     args = parser.parse_args(argv)
 
     plan = build_formal_run_plan()
+    if args.vehicle_counts:
+        allowed_vehicle_counts = set(args.vehicle_counts)
+        plan = [spec for spec in plan if spec.vehicle_count in allowed_vehicle_counts]
+
     if args.max_runs:
         plan = plan[: args.max_runs]
 
@@ -178,8 +184,10 @@ def main(argv: list[str] | None = None) -> int:
             row["formal_partial_backup_path"] = str(partial_target)
 
         scenario_config = generate_scenario(spec.scenario_id, FORMAL_SCENARIO_DENSITY, spec.seed, vehicle_count=spec.vehicle_count)
+        simulation_steps = int(scenario_config["simulation_duration_seconds"])
         env = _build_env(spec, scenario_config)
-        row["simulation_steps"] = scenario_config["simulation_duration_seconds"]
+        env["SIMULATION_STEPS"] = str(simulation_steps)
+        row["simulation_steps"] = simulation_steps
         row["sumocfg_path"] = scenario_config["sumocfg_path"]
         row["status"] = "running"
         row["reason"] = ""

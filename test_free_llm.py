@@ -1,6 +1,11 @@
 import os
+import pytest
 
-from openai import OpenAI
+if __name__ != "__main__" and os.getenv("RUN_LIVE_PROVIDER_MANUAL_SMOKE", "0") != "1":
+    pytest.skip("manual live smoke; enable RUN_LIVE_PROVIDER_MANUAL_SMOKE=1 to run", allow_module_level=True)
+
+
+from src.llm.request_config import create_live_client
 
 api_key = os.getenv("GROQ_API_KEY") or os.getenv("OPENROUTER_API_KEY", "")
 base_url = os.getenv(
@@ -9,7 +14,7 @@ base_url = os.getenv(
 )
 model = os.getenv("LLM_MODEL", "openai/gpt-oss-20b" if os.getenv("GROQ_API_KEY") else "openrouter/free")
 
-client = OpenAI(
+client = create_live_client(
     base_url=base_url,
     api_key=api_key,
 )

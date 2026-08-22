@@ -31,10 +31,10 @@ def test_frozen_request_config_verification_matches_expected():
     assert audit.matches is True
     assert audit.current == audit.expected
     assert audit.current["model"] == "openai/gpt-oss-20b"
-    assert audit.current["max_completion_tokens"] == 256
+    assert audit.current["max_completion_tokens"] == 512
     assert audit.current["reasoning_effort"] == "low"
     assert audit.current["timeout"] == 30.0
-    assert audit.current["max_retries"] == 0
+    assert audit.current["max_retries"] == 4
 
 
 def test_execution_order_persistence_is_stable_in_manifest(tmp_path):

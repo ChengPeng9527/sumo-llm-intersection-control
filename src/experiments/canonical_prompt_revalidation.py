@@ -26,15 +26,11 @@ from src.llm.request_config import (
     LIVE_PROVIDER_NAME,
     LIVE_REASONING_EFFORT,
     LIVE_TIMEOUT_SECONDS,
-    build_live_client_kwargs,
 )
 from src.llm.response_parser import parse_llm_response_details
 from src.safety.route_conflict import validate_conflict_matrix
 
-try:
-    from openai import OpenAI
-except Exception:  # pragma: no cover
-    OpenAI = None
+from src.llm.request_config import create_live_client
 
 
 PROJECT_ROOT = Path(CONFIG["project_root"])
@@ -184,9 +180,7 @@ def build_provider_probe_prompt() -> str:
 
 
 def _build_provider_client(api_key: str):
-    if OpenAI is None:
-        raise RuntimeError("openai package is required for the canonical prompt revalidation runner")
-    return OpenAI(**build_live_client_kwargs(base_url=LIVE_BASE_URL, api_key=api_key))
+    return create_live_client(base_url=LIVE_BASE_URL, api_key=api_key)
 
 
 def run_provider_probe(api_key: str) -> dict[str, object]:

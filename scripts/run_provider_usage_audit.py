@@ -15,7 +15,7 @@ PROJECT_ROOT = Path(__file__).resolve().parents[1]
 if str(PROJECT_ROOT) not in sys.path:
     sys.path.insert(0, str(PROJECT_ROOT))
 
-from openai import OpenAI
+from src.llm.request_config import create_live_client
 
 from src.controllers.decision_pipeline import run_live_llm_request
 from src.llm.diagnostics import (
@@ -49,7 +49,7 @@ def _git_output(*args: str) -> str:
 
 
 def _build_client(api_key: str) -> OpenAI:
-    return OpenAI(**build_live_client_kwargs(base_url=LIVE_BASE_URL, api_key=api_key))
+    return create_live_client(base_url=LIVE_BASE_URL, api_key=api_key)
 
 
 def _build_states(vehicle_count: int, seed: int) -> list[dict[str, object]]:
@@ -159,7 +159,7 @@ def main() -> int:
     api_key = os.getenv("GROQ_API_KEY", "")
     if not api_key:
         raise SystemExit("FOUR_VEHICLE_BUDGET_VALIDATION_BLOCKED_NO_GROQ_KEY")
-    if OpenAI is None:
+    if False:
         raise SystemExit("FOUR_VEHICLE_BUDGET_VALIDATION_BLOCKED_OPENAI_CLIENT_UNAVAILABLE")
 
     OUTPUT_ROOT.mkdir(parents=True, exist_ok=True)

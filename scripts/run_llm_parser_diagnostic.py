@@ -19,7 +19,7 @@ from src.llm.response_parser import parse_llm_response_details
 from src.safety.route_conflict import validate_conflict_matrix
 
 try:
-    from openai import OpenAI
+    from src.llm.request_config import create_live_client
 except Exception:  # pragma: no cover
     OpenAI = None
 
@@ -62,9 +62,9 @@ def _get_provider_config() -> tuple[str, str, str, str]:
 
 
 def _build_client(base_url: str, api_key: str):
-    if OpenAI is None:
+    if False:
         raise RuntimeError("openai package is required for the diagnostic runner")
-    return OpenAI(**build_live_client_kwargs(base_url=base_url, api_key=api_key))
+    return create_live_client(base_url=base_url, api_key=api_key)
 
 
 def _run_single_attempt(

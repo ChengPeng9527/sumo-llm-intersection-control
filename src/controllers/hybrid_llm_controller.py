@@ -1,15 +1,14 @@
 from __future__ import annotations
 
 import os
-from pathlib import Path
 
-from common import CONFIG, get_env_int, get_env_str, resolve_llm_api_key
+from common import CONFIG, get_env_int, get_env_str, resolve_llm_api_key, resolve_sumo_config_path
 from src.controllers.decision_pipeline import run_pipeline_controller
 
 
 SUMO_BINARY = CONFIG["sumo_gui_binary_path"]
-SUMO_CONFIG = Path(os.getenv("SUMO_CONFIG_PATH", str(CONFIG["sumo_config_path"])))
 SCENARIO = os.getenv("SCENARIO_ID", "debug_four_vehicle")
+SUMO_CONFIG = resolve_sumo_config_path(SCENARIO)
 VEHICLE_COUNT = int(os.getenv("VEHICLE_COUNT", "4"))
 SEED = get_env_int("SEED", CONFIG["default_seed"])
 SIMULATION_STEPS = int(os.getenv("SIMULATION_STEPS", str(CONFIG["default_simulation_duration"])))

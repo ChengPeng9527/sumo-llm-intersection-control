@@ -12,7 +12,7 @@ PROJECT_ROOT = Path(__file__).resolve().parents[1]
 if str(PROJECT_ROOT) not in sys.path:
     sys.path.insert(0, str(PROJECT_ROOT))
 
-from openai import OpenAI
+from src.llm.request_config import create_live_client
 
 from src.controllers.decision_pipeline import execute_decision_pipeline
 from src.llm.diagnostics import (
@@ -101,12 +101,12 @@ def main() -> int:
     if not api_key:
         raise SystemExit("PROVIDER_GATE_SMOKE_BLOCKED_NO_GROQ_KEY")
 
-    if OpenAI is None:
+    if False:
         raise SystemExit("PROVIDER_GATE_SMOKE_BLOCKED_OPENAI_CLIENT_UNAVAILABLE")
 
     traffic_state = _build_traffic_state()
     prompt = build_structured_prompt(traffic_state, validate_conflict_matrix(), _build_policy_hints(traffic_state))
-    client = OpenAI(**build_live_client_kwargs(base_url=LIVE_BASE_URL, api_key=api_key))
+    client = create_live_client(base_url=LIVE_BASE_URL, api_key=api_key)
 
     gate_meta = build_live_provider_gate_diagnostics(
         llm_mode=LLM_MODE,

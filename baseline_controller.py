@@ -8,6 +8,8 @@ import traci
 
 from common import (
     CONFIG,
+    resolve_sumo_config_path,
+    resolve_sumo_termination_reason,
     MAX_SPEED,
     apply_decision,
     build_event,
@@ -25,14 +27,15 @@ from common import (
 
 
 SUMO_BINARY = CONFIG["sumo_gui_binary_path"]
-SUMO_CONFIG = Path(os.getenv("SUMO_CONFIG_PATH", str(CONFIG["sumo_config_path"])))
 EXPERIMENT_ID = get_env_str("EXPERIMENT_ID", "E01_BASELINE_4V_S1")
 CONTROLLER_NAME = "BaselineRule"
 SCENARIO = os.getenv("SCENARIO_ID", "debug_four_vehicle")
+SUMO_CONFIG = resolve_sumo_config_path(SCENARIO)
 VEHICLE_COUNT = int(os.getenv("VEHICLE_COUNT", "4"))
 SEED = get_env_int("SEED", CONFIG["default_seed"])
 SIMULATION_STEPS = int(os.getenv("SIMULATION_STEPS", str(CONFIG["default_simulation_duration"])))
-RUN_ID = f"{EXPERIMENT_ID}_v{VEHICLE_COUNT}_seed{SEED}"
+RUN_SUFFIX = os.getenv("RUN_SUFFIX", "")
+RUN_ID = f"{EXPERIMENT_ID}_v{VEHICLE_COUNT}_seed{SEED}{RUN_SUFFIX}"
 ARTIFACTS = run_artifact_paths(RUN_ID)
 OUTPUT_CSV = ARTIFACTS["step_records"]
 
@@ -60,12 +63,14 @@ def decide(vehicles):
 def run():
     traci.start([str(SUMO_BINARY), "-c", str(SUMO_CONFIG), "--start"])
     records = []
+    termination_reason = "UNEXPECTED_SUMO_TERMINATION"
     events = []
     all_seen_vehicles = set()
     departed_seen = set()
     arrived_seen = set()
 
-    for step in range(SIMULATION_STEPS):
+    step = 0
+    while step < SIMULATION_STEPS:
         traci.simulationStep()
         departed_ids = list(traci.simulation.getDepartedIDList())
         arrived_ids = list(traci.simulation.getArrivedIDList())
@@ -134,6 +139,16 @@ def run():
                     arrived=False,
                 )
             )
+        termination_reason = resolve_sumo_termination_reason(
+            simulation_step=step,
+            simulation_steps=SIMULATION_STEPS,
+            expected_remaining=int(traci.simulation.getMinExpectedNumber()),
+            arrived_count=len(arrived_seen),
+            target_vehicle_count=VEHICLE_COUNT,
+        )
+        if termination_reason:
+            break
+        step += 1
         time.sleep(0.03)
 
     traci.close(False)
@@ -146,6 +161,7 @@ def run():
         vehicle_count=VEHICLE_COUNT,
         seed=SEED,
         status="completed",
+        termination_reason=termination_reason,
     )
     metadata["departed_count"] = len(departed_seen)
     metadata["arrived_count"] = len(arrived_seen)

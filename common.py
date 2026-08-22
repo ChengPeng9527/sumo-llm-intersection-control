@@ -80,17 +80,28 @@ def _credential_candidate_paths() -> list[Path]:
 
 
 def resolve_llm_api_key() -> str:
-    for name in ("GROQ_API_KEY", "OPENROUTER_API_KEY"):
+    for name in ("GROQ_API_KEY", "GEMINI_API_KEY", "OPENROUTER_API_KEY", "CEREBRAS_API_KEY"):
         value = os.getenv(name, "")
         if value:
             return value
     for candidate in _credential_candidate_paths():
         env_values = _load_env_file(candidate)
-        for name in ("GROQ_API_KEY", "OPENROUTER_API_KEY"):
+        for name in ("GROQ_API_KEY", "GEMINI_API_KEY", "OPENROUTER_API_KEY", "CEREBRAS_API_KEY"):
             value = env_values.get(name, "")
             if value:
                 return value
     return ""
+
+
+def resolve_sumo_config_path(scenario_id: str | None = None) -> Path:
+    explicit = os.getenv("SUMO_CONFIG_PATH", "")
+    if explicit:
+        return Path(explicit)
+    if scenario_id:
+        scenario_path = PROJECT_ROOT / "simulation" / "generated_routes" / scenario_id / "simulation.sumocfg"
+        if scenario_path.exists():
+            return scenario_path
+    return Path(CONFIG["sumo_config_path"])
 
 
 def ensure_result_dir():
@@ -178,6 +189,12 @@ def create_record(
         llm_called=extra.get("llm_called", False),
         llm_mode=extra.get("llm_mode", "mock"),
         llm_model=extra.get("llm_model", ""),
+        request_id=extra.get("request_id", ""),
+        request_simulation_step=extra.get("request_simulation_step", None),
+        http_attempt_id=extra.get("http_attempt_id", None),
+        prompt_hash=extra.get("prompt_hash", ""),
+        request_started_at=extra.get("request_started_at", ""),
+        request_finished_at=extra.get("request_finished_at", ""),
         llm_response_time_ms=extra.get("llm_response_time_ms", 0.0),
         finish_reason=extra.get("finish_reason", ""),
         prompt_tokens=extra.get("prompt_tokens", None),
@@ -187,9 +204,26 @@ def create_record(
         visible_completion_tokens=extra.get("visible_completion_tokens", None),
         json_parse_success=extra.get("json_parse_success", False),
         retry_count=extra.get("retry_count", 0),
+        request_attempt_count=extra.get("request_attempt_count", None),
+        request_pacing_delay_ms=extra.get("request_pacing_delay_ms", None),
+        retry_after_seconds=extra.get("retry_after_seconds", None),
+        rate_limit_limit_tokens=extra.get("rate_limit_limit_tokens", None),
+        rate_limit_remaining_tokens=extra.get("rate_limit_remaining_tokens", None),
+        rate_limit_reset_tokens_seconds=extra.get("rate_limit_reset_tokens_seconds", None),
+        rate_limit_limit_requests=extra.get("rate_limit_limit_requests", None),
+        rate_limit_remaining_requests=extra.get("rate_limit_remaining_requests", None),
+        rate_limit_reset_requests_seconds=extra.get("rate_limit_reset_requests_seconds", None),
         fallback_used=extra.get("fallback_used", False),
         provider_request_attempted=extra.get("provider_request_attempted", False),
         provider_request_success=extra.get("provider_request_success", False),
+        requested_provider=extra.get("requested_provider", ""),
+        requested_model=extra.get("requested_model", ""),
+        actual_provider=extra.get("actual_provider", ""),
+        actual_model=extra.get("actual_model", ""),
+        provider_switch_count=extra.get("provider_switch_count", 0),
+        provider_chain=extra.get("provider_chain", ()),
+        provider_failure_reason=extra.get("provider_failure_reason", ""),
+        provider_success=extra.get("provider_success", False),
         provider_name=extra.get("provider_name", ""),
         model_name=extra.get("model_name", ""),
         http_status=extra.get("http_status", None),
@@ -267,4 +301,22 @@ def build_run_metadata(**kwargs):
         "llm_mode": kwargs.get("llm_mode", "mock"),
         "llm_model": kwargs.get("llm_model", ""),
         "status": kwargs.get("status", "pending"),
+        "termination_reason": kwargs.get("termination_reason", ""),
     }
+
+
+def resolve_sumo_termination_reason(
+    *,
+    simulation_step: int,
+    simulation_steps: int,
+    expected_remaining: int,
+    arrived_count: int,
+    target_vehicle_count: int | None = None,
+) -> str | None:
+    if expected_remaining <= 0:
+        if target_vehicle_count is not None and arrived_count >= target_vehicle_count:
+            return "ALL_VEHICLES_COMPLETED"
+        return "SUMO_NO_EXPECTED_VEHICLES"
+    if simulation_step + 1 >= simulation_steps:
+        return "MAX_HORIZON_REACHED"
+    return None

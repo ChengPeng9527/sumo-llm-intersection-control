@@ -73,10 +73,10 @@ import json
 import re
 import os
 
-from openai import OpenAI
+from src.llm.request_config import create_live_client
 
 OPENROUTER_API_KEY = os.getenv("OPENROUTER_API_KEY", "")
-client = OpenAI(
+client = create_live_client(
     base_url=os.getenv("LLM_BASE_URL", "https://openrouter.ai/api/v1"),
     api_key=OPENROUTER_API_KEY,
 )
