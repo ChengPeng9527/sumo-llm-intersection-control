@@ -53,6 +53,42 @@ densities:
     minimum_depart_gap: 2
     maximum_depart_gap: 8
 
+targeted_scenarios:
+  S1_BALANCED_MIXED_TURN:
+    purpose: balanced mixed-turn reference
+    supported_vehicle_counts: [8, 12, 16]
+    route_cycle: [N_W, E_W, S_W, W_N, N_S, E_N, S_N, W_E]
+    depart_offsets: [0, 3, 6, 9, 12, 15, 18, 21]
+    wave_spacing_seconds: 24
+    departure_jitter_seconds: 1
+    simulation_duration_seconds: 300
+  S2_SIMULTANEOUS_CONFLICT:
+    purpose: near-simultaneous conflicting arrivals
+    supported_vehicle_counts: [8, 12, 16]
+    route_cycle: [N_S, E_W, S_N, W_E, N_E, E_S, S_W, W_N]
+    depart_offsets: [0, 0, 1, 1, 2, 2, 3, 3]
+    wave_spacing_seconds: 7
+    departure_jitter_seconds: 0
+    simulation_duration_seconds: 300
+  S3_COOPERATIVE_OPPORTUNITY:
+    purpose: competing compatible multi-vehicle groups
+    supported_vehicle_counts: [8, 12, 16]
+    route_cycle: [N_W, E_N, S_E, W_S, N_S, S_N, E_S, W_N]
+    depart_offsets: [0, 0, 1, 1, 3, 3, 5, 5]
+    wave_spacing_seconds: 9
+    departure_jitter_seconds: 1
+    simulation_duration_seconds: 300
+  S4_FAIRNESS_PRESSURE:
+    purpose: larger compatible group competing with a waiting left turn
+    supported_vehicle_counts: [8, 12, 16]
+    route_cycle: [N_E, E_N, S_E, W_S, N_W, E_W, S_N, W_E]
+    depart_offsets: [0, 0, 1, 1, 2, 2, 3, 3]
+    wave_spacing_seconds: 9
+    departure_jitter_seconds: 0
+    simulation_duration_seconds: 300
+    fairness_target_route: N_E
+    intended_waiting_pressure_seconds: 3
+
 seeds:
   - 1
   - 2

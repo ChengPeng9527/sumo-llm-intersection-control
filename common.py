@@ -192,6 +192,7 @@ def create_record(
         speed_after_action=speed_after,
         distance_to_intersection=distance_to_center(traci, veh_id),
         time_to_intersection=tti,
+        waiting_time=extra.get("waiting_time", 0.0),
         inside_control_zone=in_zone,
         raw_decision=raw_decision,
         llm_raw_decision=extra.get("llm_raw_decision", raw_decision),

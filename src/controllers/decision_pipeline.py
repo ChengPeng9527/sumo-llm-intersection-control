@@ -351,7 +351,12 @@ def run_pipeline_controller(
     llm_api_key: str,
     llm_client=None,
     prompt_version: str = "v2",
-) -> None:
+    candidate_planner_mode: str | None = None,
+    grant_timeout_seconds: float = 45.0,
+    candidate_provider_call: Callable[[str], object] | None = None,
+    max_candidate_provider_requests: int = 0,
+    initial_demand_signature: str = "",
+) -> dict:
     from common import (
         CONFIG,
         resolve_llm_api_key,
@@ -368,11 +373,17 @@ def run_pipeline_controller(
         print_summary,
         run_artifact_paths,
         write_run_artifacts,
+        write_json,
+        write_jsonl,
     )
     from src.llm.fallback_policy import mock_llm_decision
     from src.llm.prompt_builder import build_structured_prompt
 
-    llm_api_key = llm_api_key or resolve_llm_api_key()
+    requested_candidate_mode = str(candidate_planner_mode or "").strip().upper()
+    if requested_candidate_mode == "GEMINI_CANDIDATE":
+        llm_api_key = llm_api_key or resolve_llm_api_key("Gemini")
+    elif not requested_candidate_mode:
+        llm_api_key = llm_api_key or resolve_llm_api_key()
     from src.safety.route_conflict import routes_compatible, validate_conflict_matrix
     from src.safety.route_semantics import describe_route_id
     from ttc_safety import verify_decisions
@@ -611,9 +622,28 @@ def run_pipeline_controller(
 
         return _build_runtime_trace_from_guard(trace, vehicle_states, guard_fn)
 
-    client = build_real_llm_client()
+    from src.controllers.candidate_runtime import (
+        DETERMINISTIC_CANDIDATE,
+        GEMINI_CANDIDATE,
+        CandidateGrantController,
+        PlannerDecision,
+        normalize_candidate_planner_mode,
+    )
+
+    normalized_candidate_mode = (
+        normalize_candidate_planner_mode(candidate_planner_mode)
+        if candidate_planner_mode
+        else ""
+    )
+    phase2_client = None
+    if normalized_candidate_mode == GEMINI_CANDIDATE and candidate_provider_call is None and llm_api_key:
+        from src.llm.request_config import create_phase2_live_client
+
+        phase2_client = create_phase2_live_client(api_key=llm_api_key)
+
     run_suffix = os.getenv("RUN_SUFFIX", "")
-    run_id = f"{experiment_id}_v{vehicle_count}_seed{seed}{run_suffix}_{llm_mode}"
+    planner_suffix = f"_{normalized_candidate_mode.lower()}" if normalized_candidate_mode else f"_{llm_mode}"
+    run_id = f"{experiment_id}_v{vehicle_count}_seed{seed}{run_suffix}{planner_suffix}"
     artifacts = run_artifact_paths(run_id)
     output_csv = artifacts["step_records"]
     records = []
@@ -622,6 +652,11 @@ def run_pipeline_controller(
     departed_seen = set()
     arrived_seen = set()
     cached_trace: dict[str, dict] = {}
+    collision_count = 0
+    speed_total = 0.0
+    speed_observation_count = 0
+    maximum_waiting_by_vehicle: dict[str, float] = {}
+    candidate_provider_request_count = 0
     cached_llm_meta = {
         "llm_called": False,
         "llm_branch_entered": False,
@@ -663,14 +698,126 @@ def run_pipeline_controller(
         "latency_ms": 0.0,
     }
 
-    traci_started = False
-    try:
-        traci.start([str(sumo_binary), "-c", str(sumo_config), "--start"])
-        traci_started = True
+    def candidate_planner(
+        traffic_state: list[dict],
+        candidate_groups: list[list[str]],
+        decision_epoch: int,
+        simulation_step: int,
+        simulation_time: float,
+    ) -> PlannerDecision:
+        nonlocal candidate_provider_request_count
+        if normalized_candidate_mode == DETERMINISTIC_CANDIDATE:
+            return PlannerDecision(
+                trace=execute_cooperative_comparator_pipeline(
+                    traffic_state,
+                    candidate_groups,
+                    safety_guard_fn=safety_guard,
+                )
+            )
 
-        step = 0
-        termination_reason = "UNEXPECTED_SUMO_TERMINATION"
+        from src.llm.candidate_selector import build_candidate_selection_context, run_live_candidate_request
+        from src.llm.prompt_builder import build_candidate_selection_prompt
+        from src.llm.request_config import (
+            LIVE_MAX_RETRIES,
+            PHASE2_MODEL,
+            PHASE2_PROVIDER_NAME,
+            PHASE2_TIMEOUT_SECONDS,
+            build_candidate_selection_request_kwargs,
+        )
+
+        local_state, candidate_features, _ = build_candidate_selection_context(
+            traffic_state,
+            candidate_groups,
+        )
+        candidate_ids = [feature["candidate_id"] for feature in candidate_features]
+        canonical_prompt = build_candidate_selection_prompt(local_state, candidate_features)
+        prompt_hash = hashlib.sha256(canonical_prompt.encode("utf-8")).hexdigest().upper()
+        request_context = {
+            "request_id": f"{run_id}_epoch{decision_epoch:04d}",
+            "request_simulation_step": simulation_step,
+            "prompt_hash": prompt_hash,
+            "simulation_time": simulation_time,
+        }
+
+        if (
+            max_candidate_provider_requests > 0
+            and candidate_provider_request_count >= max_candidate_provider_requests
+        ):
+            raise RuntimeError("GEMINI_REQUEST_LIMIT_REACHED_BEFORE_EPISODE_COMPLETION")
+        candidate_provider_request_count += 1
+
+        def provider_call(prompt: str):
+            if candidate_provider_call is not None:
+                return candidate_provider_call(prompt)
+            if phase2_client is None:
+                raise RuntimeError("GEMINI_API_KEY is unavailable for Gemini candidate mode")
+            return run_live_candidate_request(
+                phase2_client,
+                model_name=PHASE2_MODEL,
+                prompt=prompt,
+                candidate_ids=candidate_ids,
+                request_context=request_context,
+            )
+
+        trace = execute_llm_candidate_selector_pipeline(
+            traffic_state,
+            candidate_groups,
+            provider_call,
+            provider_name=PHASE2_PROVIDER_NAME,
+            model_name=PHASE2_MODEL,
+            llm_mode="real",
+            safety_guard_fn=safety_guard,
+        )
+        request_parameters = {
+            "model": PHASE2_MODEL,
+            "timeout_seconds": PHASE2_TIMEOUT_SECONDS,
+            "max_retries": LIVE_MAX_RETRIES,
+            **build_candidate_selection_request_kwargs(candidate_ids),
+        }
+        return PlannerDecision(
+            trace=trace,
+            prompt_hash=prompt_hash,
+            request_parameters=request_parameters,
+            provider_default_parameters=("temperature", "top_p", "seed"),
+        )
+
+    candidate_controller = (
+        CandidateGrantController(
+            planner_mode=normalized_candidate_mode,
+            planner_fn=candidate_planner,
+            safety_guard_fn=safety_guard,
+            run_id=run_id,
+            scenario_id=scenario,
+            vehicle_count=vehicle_count,
+            seed=seed,
+            grant_timeout_seconds=grant_timeout_seconds,
+        )
+        if normalized_candidate_mode
+        else None
+    )
+
+    traci_started = False
+    step = 0
+    simulation_time = 0.0
+    termination_reason = "UNEXPECTED_SUMO_TERMINATION"
+
+    def neutralize_native_signal() -> None:
+        if candidate_controller is None:
+            return
+        for signal_id in traci.trafficlight.getIDList():
+            current_state = traci.trafficlight.getRedYellowGreenState(signal_id)
+            traci.trafficlight.setRedYellowGreenState(signal_id, "G" * len(current_state))
+
+    try:
+        command = [str(sumo_binary), "-c", str(sumo_config), "--start"]
+        if candidate_controller is not None:
+            command.extend(["--seed", str(seed), "--no-step-log", "true", "--no-warnings", "true"])
+        traci.start(command)
+        traci_started = True
+        neutralize_native_signal()
+
         while step < simulation_steps:
+            neutralize_native_signal()
             traci.simulationStep()
             departed_ids = list(traci.simulation.getDepartedIDList())
             arrived_ids = list(traci.simulation.getArrivedIDList())
@@ -704,8 +851,50 @@ def run_pipeline_controller(
             vehicles = list(traci.vehicle.getIDList())
             all_seen_vehicles.update(vehicles)
             traffic_state = build_traffic_state(vehicles)
+            state_by_vehicle_id = {state["vehicle_id"]: state for state in traffic_state}
+            for state in traffic_state:
+                speed_total += float(state.get("speed", 0.0))
+                speed_observation_count += 1
+                vehicle_id = state["vehicle_id"]
+                try:
+                    accumulated_wait = float(traci.vehicle.getAccumulatedWaitingTime(vehicle_id))
+                except Exception:
+                    accumulated_wait = float(state.get("waiting_time", 0.0))
+                maximum_waiting_by_vehicle[vehicle_id] = max(
+                    maximum_waiting_by_vehicle.get(vehicle_id, 0.0),
+                    accumulated_wait,
+                )
 
-            if step % llm_decision_interval == 0 or not cached_trace:
+            if candidate_controller is not None:
+                grant_update = candidate_controller.update(
+                    traffic_state,
+                    simulation_step=step,
+                    simulation_time=simulation_time,
+                )
+                trace = grant_update.trace
+                if grant_update.decision_epoch_started:
+                    events.append(
+                        build_event(
+                            run_id=run_id,
+                            event_type="decision_epoch",
+                            simulation_step=step,
+                            simulation_time_seconds=simulation_time,
+                            vehicle_id="",
+                            details=f"candidate grant decision epoch {candidate_controller.decision_epoch_count}",
+                        )
+                    )
+                if grant_update.grant_ended:
+                    events.append(
+                        build_event(
+                            run_id=run_id,
+                            event_type="grant_ended",
+                            simulation_step=step,
+                            simulation_time_seconds=simulation_time,
+                            vehicle_id="",
+                            details=grant_update.grant_clearance_reason,
+                        )
+                    )
+            elif step % llm_decision_interval == 0 or not cached_trace:
                 raw_decisions, llm_meta = llm_provider(traffic_state, simulation_step=step)
                 cached_trace = execute_decision_pipeline(
                     traffic_state,
@@ -721,10 +910,10 @@ def run_pipeline_controller(
                     safety_guard_fn=safety_guard if stage_mode == "hybrid_safety" else None,
                 )
                 cached_llm_meta = dict(llm_meta)
+                trace = dict(cached_trace)
             else:
                 llm_meta = dict(cached_llm_meta)
-
-            trace = dict(cached_trace)
+                trace = dict(cached_trace)
 
             for vid in vehicles:
                 entry = trace[vid]
@@ -744,9 +933,10 @@ def run_pipeline_controller(
                         conflict_type=entry["conflict_type"],
                         priority_reason=entry["priority_reason"],
                         run_id=run_id,
-                        safety_enabled=stage_mode == "hybrid_safety",
+                        safety_enabled=stage_mode == "hybrid_safety" or candidate_controller is not None,
                         simulation_time_seconds=simulation_time,
                         vehicle_count=vehicle_count,
+                        waiting_time=state_by_vehicle_id[vid].get("waiting_time", 0.0),
                         llm_raw_decision=entry["llm_raw_decision"],
                         validated_llm_decision=entry["validated_llm_decision"],
                         postprocessed_decision=entry["postprocessed_decision"],
@@ -831,6 +1021,10 @@ def run_pipeline_controller(
                         arrived=False,
                     )
                 )
+            try:
+                collision_count += int(traci.simulation.getCollidingVehiclesNumber())
+            except Exception:
+                pass
             termination_reason = resolve_sumo_termination_reason(
                 simulation_step=step,
                 simulation_steps=simulation_steps,
@@ -841,8 +1035,14 @@ def run_pipeline_controller(
             if termination_reason:
                 break
             step += 1
-            time.sleep(0.03)
+            if candidate_controller is None:
+                time.sleep(0.03)
     finally:
+        if candidate_controller is not None:
+            candidate_controller.finish(
+                simulation_step=step,
+                simulation_time=simulation_time,
+            )
         if traci_started:
             try:
                 traci.close(False)
@@ -852,7 +1052,7 @@ def run_pipeline_controller(
     metadata = build_run_metadata(
         run_id=run_id,
         controller=controller_name,
-        safety_enabled=stage_mode == "hybrid_safety",
+        safety_enabled=stage_mode == "hybrid_safety" or candidate_controller is not None,
         scenario_id=scenario,
         density="debug",
         vehicle_count=vehicle_count,
@@ -865,7 +1065,38 @@ def run_pipeline_controller(
     )
     metadata["departed_count"] = len(departed_seen)
     metadata["arrived_count"] = len(arrived_seen)
-    metadata["collision_count"] = 0
+    metadata["collision_count"] = collision_count
+    metadata["episode_duration_seconds"] = simulation_time
+    metadata["candidate_planner_mode"] = normalized_candidate_mode
+    metadata["initial_demand_signature"] = initial_demand_signature
+    if candidate_controller is not None:
+        metadata.update(candidate_controller.summary())
     write_run_artifacts(run_id, records, events, metadata)
+    if candidate_controller is not None:
+        write_jsonl(artifacts["decision_records"], candidate_controller.decision_records)
     summary = calculate_summary(records, all_seen_vehicles, run_metadata=metadata)
+    if records:
+        summary.update(
+            {
+                "mean_waiting_time": (
+                    sum(maximum_waiting_by_vehicle.values()) / len(departed_seen)
+                    if departed_seen
+                    else 0.0
+                ),
+                "maximum_waiting_time": max(maximum_waiting_by_vehicle.values(), default=0.0),
+                "mean_speed": speed_total / speed_observation_count if speed_observation_count else 0.0,
+                "episode_duration_seconds": simulation_time,
+                "collision_count": collision_count,
+            }
+        )
+    if candidate_controller is not None:
+        summary.update(candidate_controller.summary())
+    write_json(artifacts["summary"], summary)
     print_summary(controller_name, summary, output_csv)
+    return {
+        "run_id": run_id,
+        "metadata": metadata,
+        "summary": summary,
+        "artifact_paths": {name: str(path) for name, path in artifacts.items()},
+        "decision_records": candidate_controller.decision_records if candidate_controller is not None else [],
+    }

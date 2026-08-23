@@ -32,6 +32,8 @@ def run_artifact_paths(run_id: str) -> dict[str, Path]:
         "step_records": run_dir / "step_records.csv",
         "run_metadata": run_dir / "run_metadata.json",
         "events": run_dir / "events.jsonl",
+        "decision_records": run_dir / "decision_records.jsonl",
+        "summary": run_dir / "summary.json",
     }
 
 
@@ -76,6 +78,7 @@ def empty_record(**overrides):
             "speed_after_action": overrides.get("speed_after_action", 0.0),
             "distance_to_intersection": overrides.get("distance_to_intersection", 0.0),
             "time_to_intersection": overrides.get("time_to_intersection", 0.0),
+            "waiting_time": overrides.get("waiting_time", 0.0),
             "inside_control_zone": overrides.get("inside_control_zone", False),
             "raw_decision": overrides.get("raw_decision", "WAIT"),
             "llm_raw_decision": overrides.get("llm_raw_decision", "MISSING"),

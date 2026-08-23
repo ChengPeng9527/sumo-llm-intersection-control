@@ -24,6 +24,7 @@ def _local_vehicle_state(state: dict) -> dict:
         "movement": state.get("movement", "UNKNOWN"),
         "waiting_time": state.get("waiting_time", 0.0),
         "speed": state.get("speed", 0.0),
+        "distance_to_intersection": state.get("distance_to_intersection", 0.0),
         "time_to_intersection": _finite_or_none(float(state.get("time_to_intersection", math.inf))),
         "inside_control_zone": bool(state.get("inside_control_zone", False)),
     }

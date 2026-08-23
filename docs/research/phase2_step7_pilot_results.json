@@ -1,0 +1,1690 @@
+{
+  "step": "PHASE2_STEP7",
+  "seed": 7,
+  "provider": "Gemini",
+  "model": "gemini-3.6-flash",
+  "deterministic_runs": [
+    {
+      "summary": {
+        "controlled_decisions": 45,
+        "candidate_sets": 45,
+        "candidate_sets_with_multiple_legal_candidates": 37,
+        "candidate_sets_with_multi_vehicle_candidates": 24,
+        "maximum_candidate_count": 8,
+        "mean_candidate_count": 4.355555555555555,
+        "mean_candidate_group_size": 1.1581632653061225,
+        "maximum_compatible_group_size": 2,
+        "candidate_richness_ratio": 0.8222222222222222,
+        "cooperative_opportunity_ratio": 0.5333333333333333,
+        "fairness_pressure_decisions": 0,
+        "safety_intervention_count": 0,
+        "richness_label": "MEDIUM",
+        "scenario_class": "S1_BALANCED_MIXED_TURN",
+        "scenario_id": "step7_s1_balanced_mixed_turn_v8_seed7",
+        "vehicle_count": 8,
+        "seed": 7,
+        "departed_count": 8,
+        "arrived_count": 8,
+        "collision_count": 0,
+        "pilot_execution_mode": "SUMO_OBSERVER_NATIVE_SIGNAL",
+        "route_sequence": [
+          "N_W",
+          "E_W",
+          "S_W",
+          "W_N",
+          "N_S",
+          "E_N",
+          "S_N",
+          "W_E"
+        ],
+        "departure_times": [
+          1,
+          3,
+          7,
+          9,
+          12,
+          15,
+          19,
+          21
+        ],
+        "movement_sequence": [
+          "RIGHT",
+          "STRAIGHT",
+          "LEFT",
+          "LEFT",
+          "STRAIGHT",
+          "RIGHT",
+          "STRAIGHT",
+          "STRAIGHT"
+        ]
+      },
+      "representative_observation": {
+        "scenario_class": "S1_BALANCED_MIXED_TURN",
+        "simulation_step": 24,
+        "controlled_vehicle_count": 6,
+        "candidate_count": 8,
+        "candidate_group_sizes": [
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          2,
+          2
+        ],
+        "mean_candidate_group_size": 1.25,
+        "maximum_compatible_group_size": 2,
+        "has_multiple_candidates": true,
+        "has_multi_vehicle_candidate": true,
+        "movement_diversity": 3,
+        "arrival_tti_spread": 0.31999999999999984,
+        "maximum_waiting_time": 14.0,
+        "maximum_selected_waiting_time": 14.0,
+        "maximum_unselected_waiting_time": 8.0,
+        "fairness_target_waiting_time": 0.0,
+        "fairness_pressure_present": false,
+        "deterministic_candidate_id": "step7_s1_balanced_mixed_turn_v8_seed7_7_5|step7_s1_balanced_mixed_turn_v8_seed7_7_0",
+        "selected_vehicle_ids": [
+          "step7_s1_balanced_mixed_turn_v8_seed7_7_5",
+          "step7_s1_balanced_mixed_turn_v8_seed7_7_0"
+        ],
+        "safety_intervention_count": 0,
+        "candidate_groups": [
+          [
+            "step7_s1_balanced_mixed_turn_v8_seed7_7_0"
+          ],
+          [
+            "step7_s1_balanced_mixed_turn_v8_seed7_7_2"
+          ],
+          [
+            "step7_s1_balanced_mixed_turn_v8_seed7_7_3"
+          ],
+          [
+            "step7_s1_balanced_mixed_turn_v8_seed7_7_4"
+          ],
+          [
+            "step7_s1_balanced_mixed_turn_v8_seed7_7_5"
+          ],
+          [
+            "step7_s1_balanced_mixed_turn_v8_seed7_7_6"
+          ],
+          [
+            "step7_s1_balanced_mixed_turn_v8_seed7_7_5",
+            "step7_s1_balanced_mixed_turn_v8_seed7_7_0"
+          ],
+          [
+            "step7_s1_balanced_mixed_turn_v8_seed7_7_6",
+            "step7_s1_balanced_mixed_turn_v8_seed7_7_4"
+          ]
+        ],
+        "vehicle_states": [
+          {
+            "vehicle_id": "step7_s1_balanced_mixed_turn_v8_seed7_7_0",
+            "route_id": "N_W",
+            "incoming_edge": "N",
+            "outgoing_edge": "-W",
+            "movement": "RIGHT",
+            "speed": 0.0,
+            "distance_to_intersection": 21.13,
+            "time_to_intersection": null,
+            "waiting_time": 14.0,
+            "inside_control_zone": true
+          },
+          {
+            "vehicle_id": "step7_s1_balanced_mixed_turn_v8_seed7_7_1",
+            "route_id": "E_W",
+            "incoming_edge": "E",
+            "outgoing_edge": "-W",
+            "movement": "STRAIGHT",
+            "speed": 12.82,
+            "distance_to_intersection": 133.18,
+            "time_to_intersection": 10.39,
+            "waiting_time": 0.0,
+            "inside_control_zone": false
+          },
+          {
+            "vehicle_id": "step7_s1_balanced_mixed_turn_v8_seed7_7_2",
+            "route_id": "S_W",
+            "incoming_edge": "S",
+            "outgoing_edge": "-W",
+            "movement": "LEFT",
+            "speed": 0.0,
+            "distance_to_intersection": 18.55,
+            "time_to_intersection": null,
+            "waiting_time": 8.0,
+            "inside_control_zone": true
+          },
+          {
+            "vehicle_id": "step7_s1_balanced_mixed_turn_v8_seed7_7_3",
+            "route_id": "W_N",
+            "incoming_edge": "W",
+            "outgoing_edge": "-N",
+            "movement": "LEFT",
+            "speed": 13.34,
+            "distance_to_intersection": 43.62,
+            "time_to_intersection": 3.27,
+            "waiting_time": 0.0,
+            "inside_control_zone": true
+          },
+          {
+            "vehicle_id": "step7_s1_balanced_mixed_turn_v8_seed7_7_4",
+            "route_id": "N_S",
+            "incoming_edge": "N",
+            "outgoing_edge": "-S",
+            "movement": "STRAIGHT",
+            "speed": 0.01,
+            "distance_to_intersection": 19.63,
+            "time_to_intersection": null,
+            "waiting_time": 3.0,
+            "inside_control_zone": true
+          },
+          {
+            "vehicle_id": "step7_s1_balanced_mixed_turn_v8_seed7_7_5",
+            "route_id": "E_N",
+            "incoming_edge": "E",
+            "outgoing_edge": "-N",
+            "movement": "RIGHT",
+            "speed": 12.32,
+            "distance_to_intersection": 36.4,
+            "time_to_intersection": 2.95,
+            "waiting_time": 0.0,
+            "inside_control_zone": true
+          },
+          {
+            "vehicle_id": "step7_s1_balanced_mixed_turn_v8_seed7_7_6",
+            "route_id": "S_N",
+            "incoming_edge": "S",
+            "outgoing_edge": "-N",
+            "movement": "STRAIGHT",
+            "speed": 13.4,
+            "distance_to_intersection": 40.46,
+            "time_to_intersection": 3.02,
+            "waiting_time": 0.0,
+            "inside_control_zone": true
+          },
+          {
+            "vehicle_id": "step7_s1_balanced_mixed_turn_v8_seed7_7_7",
+            "route_id": "W_E",
+            "incoming_edge": "W",
+            "outgoing_edge": "-E",
+            "movement": "STRAIGHT",
+            "speed": 12.84,
+            "distance_to_intersection": 94.08,
+            "time_to_intersection": 7.33,
+            "waiting_time": 0.0,
+            "inside_control_zone": false
+          }
+        ]
+      }
+    },
+    {
+      "summary": {
+        "controlled_decisions": 49,
+        "candidate_sets": 49,
+        "candidate_sets_with_multiple_legal_candidates": 45,
+        "candidate_sets_with_multi_vehicle_candidates": 45,
+        "maximum_candidate_count": 12,
+        "mean_candidate_count": 6.26530612244898,
+        "mean_candidate_group_size": 1.3257328990228012,
+        "maximum_compatible_group_size": 2,
+        "candidate_richness_ratio": 0.9183673469387755,
+        "cooperative_opportunity_ratio": 0.9183673469387755,
+        "fairness_pressure_decisions": 0,
+        "safety_intervention_count": 0,
+        "richness_label": "MEDIUM",
+        "scenario_class": "S2_SIMULTANEOUS_CONFLICT",
+        "scenario_id": "step7_s2_simultaneous_conflict_v8_seed7",
+        "vehicle_count": 8,
+        "seed": 7,
+        "departed_count": 8,
+        "arrived_count": 8,
+        "collision_count": 0,
+        "pilot_execution_mode": "SUMO_OBSERVER_NATIVE_SIGNAL",
+        "route_sequence": [
+          "N_S",
+          "E_W",
+          "S_N",
+          "W_E",
+          "N_E",
+          "E_S",
+          "S_W",
+          "W_N"
+        ],
+        "departure_times": [
+          0,
+          0,
+          1,
+          1,
+          2,
+          2,
+          3,
+          3
+        ],
+        "movement_sequence": [
+          "STRAIGHT",
+          "STRAIGHT",
+          "STRAIGHT",
+          "STRAIGHT",
+          "LEFT",
+          "LEFT",
+          "LEFT",
+          "LEFT"
+        ]
+      },
+      "representative_observation": {
+        "scenario_class": "S2_SIMULTANEOUS_CONFLICT",
+        "simulation_step": 19,
+        "controlled_vehicle_count": 4,
+        "candidate_count": 6,
+        "candidate_group_sizes": [
+          1,
+          1,
+          1,
+          1,
+          2,
+          2
+        ],
+        "mean_candidate_group_size": 1.3333333333333333,
+        "maximum_compatible_group_size": 2,
+        "has_multiple_candidates": true,
+        "has_multi_vehicle_candidate": true,
+        "movement_diversity": 2,
+        "arrival_tti_spread": 0.0,
+        "maximum_waiting_time": 10.0,
+        "maximum_selected_waiting_time": 10.0,
+        "maximum_unselected_waiting_time": 9.0,
+        "fairness_target_waiting_time": 0.0,
+        "fairness_pressure_present": false,
+        "deterministic_candidate_id": "step7_s2_simultaneous_conflict_v8_seed7_7_0|step7_s2_simultaneous_conflict_v8_seed7_7_2",
+        "selected_vehicle_ids": [
+          "step7_s2_simultaneous_conflict_v8_seed7_7_0",
+          "step7_s2_simultaneous_conflict_v8_seed7_7_2"
+        ],
+        "safety_intervention_count": 0,
+        "candidate_groups": [
+          [
+            "step7_s2_simultaneous_conflict_v8_seed7_7_0"
+          ],
+          [
+            "step7_s2_simultaneous_conflict_v8_seed7_7_2"
+          ],
+          [
+            "step7_s2_simultaneous_conflict_v8_seed7_7_4"
+          ],
+          [
+            "step7_s2_simultaneous_conflict_v8_seed7_7_6"
+          ],
+          [
+            "step7_s2_simultaneous_conflict_v8_seed7_7_0",
+            "step7_s2_simultaneous_conflict_v8_seed7_7_2"
+          ],
+          [
+            "step7_s2_simultaneous_conflict_v8_seed7_7_4",
+            "step7_s2_simultaneous_conflict_v8_seed7_7_6"
+          ]
+        ],
+        "vehicle_states": [
+          {
+            "vehicle_id": "step7_s2_simultaneous_conflict_v8_seed7_7_0",
+            "route_id": "N_S",
+            "incoming_edge": "N",
+            "outgoing_edge": "-S",
+            "movement": "STRAIGHT",
+            "speed": 0.0,
+            "distance_to_intersection": 19.63,
+            "time_to_intersection": null,
+            "waiting_time": 10.0,
+            "inside_control_zone": true
+          },
+          {
+            "vehicle_id": "step7_s2_simultaneous_conflict_v8_seed7_7_1",
+            "route_id": "E_W",
+            "incoming_edge": "E",
+            "outgoing_edge": "-W",
+            "movement": "STRAIGHT",
+            "speed": 13.78,
+            "distance_to_intersection": 107.11,
+            "time_to_intersection": 7.77,
+            "waiting_time": 0.0,
+            "inside_control_zone": false
+          },
+          {
+            "vehicle_id": "step7_s2_simultaneous_conflict_v8_seed7_7_2",
+            "route_id": "S_N",
+            "incoming_edge": "S",
+            "outgoing_edge": "-N",
+            "movement": "STRAIGHT",
+            "speed": 0.0,
+            "distance_to_intersection": 19.62,
+            "time_to_intersection": null,
+            "waiting_time": 9.0,
+            "inside_control_zone": true
+          },
+          {
+            "vehicle_id": "step7_s2_simultaneous_conflict_v8_seed7_7_3",
+            "route_id": "W_E",
+            "incoming_edge": "W",
+            "outgoing_edge": "-E",
+            "movement": "STRAIGHT",
+            "speed": 13.69,
+            "distance_to_intersection": 106.92,
+            "time_to_intersection": 7.81,
+            "waiting_time": 0.0,
+            "inside_control_zone": false
+          },
+          {
+            "vehicle_id": "step7_s2_simultaneous_conflict_v8_seed7_7_4",
+            "route_id": "N_E",
+            "incoming_edge": "N",
+            "outgoing_edge": "-E",
+            "movement": "LEFT",
+            "speed": 0.0,
+            "distance_to_intersection": 18.56,
+            "time_to_intersection": null,
+            "waiting_time": 9.0,
+            "inside_control_zone": true
+          },
+          {
+            "vehicle_id": "step7_s2_simultaneous_conflict_v8_seed7_7_5",
+            "route_id": "E_S",
+            "incoming_edge": "E",
+            "outgoing_edge": "-S",
+            "movement": "LEFT",
+            "speed": 12.84,
+            "distance_to_intersection": 53.39,
+            "time_to_intersection": 4.16,
+            "waiting_time": 0.0,
+            "inside_control_zone": false
+          },
+          {
+            "vehicle_id": "step7_s2_simultaneous_conflict_v8_seed7_7_6",
+            "route_id": "S_W",
+            "incoming_edge": "S",
+            "outgoing_edge": "-W",
+            "movement": "LEFT",
+            "speed": 0.0,
+            "distance_to_intersection": 18.55,
+            "time_to_intersection": null,
+            "waiting_time": 7.0,
+            "inside_control_zone": true
+          },
+          {
+            "vehicle_id": "step7_s2_simultaneous_conflict_v8_seed7_7_7",
+            "route_id": "W_N",
+            "incoming_edge": "W",
+            "outgoing_edge": "-N",
+            "movement": "LEFT",
+            "speed": 12.73,
+            "distance_to_intersection": 56.34,
+            "time_to_intersection": 4.43,
+            "waiting_time": 0.0,
+            "inside_control_zone": false
+          }
+        ]
+      }
+    },
+    {
+      "summary": {
+        "controlled_decisions": 42,
+        "candidate_sets": 42,
+        "candidate_sets_with_multiple_legal_candidates": 41,
+        "candidate_sets_with_multi_vehicle_candidates": 41,
+        "maximum_candidate_count": 16,
+        "mean_candidate_count": 7.642857142857143,
+        "mean_candidate_group_size": 1.4641744548286604,
+        "maximum_compatible_group_size": 4,
+        "candidate_richness_ratio": 0.9761904761904762,
+        "cooperative_opportunity_ratio": 0.9761904761904762,
+        "fairness_pressure_decisions": 0,
+        "safety_intervention_count": 0,
+        "richness_label": "HIGH",
+        "scenario_class": "S3_COOPERATIVE_OPPORTUNITY",
+        "scenario_id": "step7_s3_cooperative_opportunity_v8_seed7",
+        "vehicle_count": 8,
+        "seed": 7,
+        "departed_count": 8,
+        "arrived_count": 8,
+        "collision_count": 0,
+        "pilot_execution_mode": "SUMO_OBSERVER_NATIVE_SIGNAL",
+        "route_sequence": [
+          "E_N",
+          "N_W",
+          "W_S",
+          "S_E",
+          "N_S",
+          "S_N",
+          "W_N",
+          "E_S"
+        ],
+        "departure_times": [
+          0,
+          1,
+          1,
+          2,
+          3,
+          3,
+          5,
+          6
+        ],
+        "movement_sequence": [
+          "RIGHT",
+          "RIGHT",
+          "RIGHT",
+          "RIGHT",
+          "STRAIGHT",
+          "STRAIGHT",
+          "LEFT",
+          "LEFT"
+        ]
+      },
+      "representative_observation": {
+        "scenario_class": "S3_COOPERATIVE_OPPORTUNITY",
+        "simulation_step": 12,
+        "controlled_vehicle_count": 7,
+        "candidate_count": 16,
+        "candidate_group_sizes": [
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          2,
+          2,
+          2,
+          2,
+          2,
+          2,
+          2,
+          3,
+          4
+        ],
+        "mean_candidate_group_size": 1.75,
+        "maximum_compatible_group_size": 4,
+        "has_multiple_candidates": true,
+        "has_multi_vehicle_candidate": true,
+        "movement_diversity": 3,
+        "arrival_tti_spread": 94.96,
+        "maximum_waiting_time": 1.0,
+        "maximum_selected_waiting_time": 1.0,
+        "maximum_unselected_waiting_time": 0.0,
+        "fairness_target_waiting_time": 0.0,
+        "fairness_pressure_present": false,
+        "deterministic_candidate_id": "step7_s3_cooperative_opportunity_v8_seed7_7_2|step7_s3_cooperative_opportunity_v8_seed7_7_0|step7_s3_cooperative_opportunity_v8_seed7_7_1|step7_s3_cooperative_opportunity_v8_seed7_7_3",
+        "selected_vehicle_ids": [
+          "step7_s3_cooperative_opportunity_v8_seed7_7_2",
+          "step7_s3_cooperative_opportunity_v8_seed7_7_0",
+          "step7_s3_cooperative_opportunity_v8_seed7_7_1",
+          "step7_s3_cooperative_opportunity_v8_seed7_7_3"
+        ],
+        "safety_intervention_count": 0,
+        "candidate_groups": [
+          [
+            "step7_s3_cooperative_opportunity_v8_seed7_7_0"
+          ],
+          [
+            "step7_s3_cooperative_opportunity_v8_seed7_7_1"
+          ],
+          [
+            "step7_s3_cooperative_opportunity_v8_seed7_7_2"
+          ],
+          [
+            "step7_s3_cooperative_opportunity_v8_seed7_7_3"
+          ],
+          [
+            "step7_s3_cooperative_opportunity_v8_seed7_7_4"
+          ],
+          [
+            "step7_s3_cooperative_opportunity_v8_seed7_7_5"
+          ],
+          [
+            "step7_s3_cooperative_opportunity_v8_seed7_7_6"
+          ],
+          [
+            "step7_s3_cooperative_opportunity_v8_seed7_7_0",
+            "step7_s3_cooperative_opportunity_v8_seed7_7_1"
+          ],
+          [
+            "step7_s3_cooperative_opportunity_v8_seed7_7_0",
+            "step7_s3_cooperative_opportunity_v8_seed7_7_3"
+          ],
+          [
+            "step7_s3_cooperative_opportunity_v8_seed7_7_1",
+            "step7_s3_cooperative_opportunity_v8_seed7_7_3"
+          ],
+          [
+            "step7_s3_cooperative_opportunity_v8_seed7_7_2",
+            "step7_s3_cooperative_opportunity_v8_seed7_7_0"
+          ],
+          [
+            "step7_s3_cooperative_opportunity_v8_seed7_7_2",
+            "step7_s3_cooperative_opportunity_v8_seed7_7_1"
+          ],
+          [
+            "step7_s3_cooperative_opportunity_v8_seed7_7_2",
+            "step7_s3_cooperative_opportunity_v8_seed7_7_3"
+          ],
+          [
+            "step7_s3_cooperative_opportunity_v8_seed7_7_5",
+            "step7_s3_cooperative_opportunity_v8_seed7_7_4"
+          ],
+          [
+            "step7_s3_cooperative_opportunity_v8_seed7_7_0",
+            "step7_s3_cooperative_opportunity_v8_seed7_7_1",
+            "step7_s3_cooperative_opportunity_v8_seed7_7_3"
+          ],
+          [
+            "step7_s3_cooperative_opportunity_v8_seed7_7_2",
+            "step7_s3_cooperative_opportunity_v8_seed7_7_0",
+            "step7_s3_cooperative_opportunity_v8_seed7_7_1",
+            "step7_s3_cooperative_opportunity_v8_seed7_7_3"
+          ]
+        ],
+        "vehicle_states": [
+          {
+            "vehicle_id": "step7_s3_cooperative_opportunity_v8_seed7_7_0",
+            "route_id": "E_N",
+            "incoming_edge": "E",
+            "outgoing_edge": "-N",
+            "movement": "RIGHT",
+            "speed": 6.8,
+            "distance_to_intersection": 23.03,
+            "time_to_intersection": 3.39,
+            "waiting_time": 0.0,
+            "inside_control_zone": true
+          },
+          {
+            "vehicle_id": "step7_s3_cooperative_opportunity_v8_seed7_7_1",
+            "route_id": "N_W",
+            "incoming_edge": "N",
+            "outgoing_edge": "-W",
+            "movement": "RIGHT",
+            "speed": 0.04,
+            "distance_to_intersection": 21.13,
+            "time_to_intersection": null,
+            "waiting_time": 1.0,
+            "inside_control_zone": true
+          },
+          {
+            "vehicle_id": "step7_s3_cooperative_opportunity_v8_seed7_7_2",
+            "route_id": "W_S",
+            "incoming_edge": "W",
+            "outgoing_edge": "-S",
+            "movement": "RIGHT",
+            "speed": 7.57,
+            "distance_to_intersection": 24.83,
+            "time_to_intersection": 3.28,
+            "waiting_time": 0.0,
+            "inside_control_zone": true
+          },
+          {
+            "vehicle_id": "step7_s3_cooperative_opportunity_v8_seed7_7_3",
+            "route_id": "S_E",
+            "incoming_edge": "S",
+            "outgoing_edge": "-E",
+            "movement": "RIGHT",
+            "speed": 0.05,
+            "distance_to_intersection": 21.15,
+            "time_to_intersection": null,
+            "waiting_time": 1.0,
+            "inside_control_zone": true
+          },
+          {
+            "vehicle_id": "step7_s3_cooperative_opportunity_v8_seed7_7_4",
+            "route_id": "N_S",
+            "incoming_edge": "N",
+            "outgoing_edge": "-S",
+            "movement": "STRAIGHT",
+            "speed": 0.2,
+            "distance_to_intersection": 19.72,
+            "time_to_intersection": 98.08,
+            "waiting_time": 0.0,
+            "inside_control_zone": true
+          },
+          {
+            "vehicle_id": "step7_s3_cooperative_opportunity_v8_seed7_7_5",
+            "route_id": "S_N",
+            "incoming_edge": "S",
+            "outgoing_edge": "-N",
+            "movement": "STRAIGHT",
+            "speed": 0.98,
+            "distance_to_intersection": 19.72,
+            "time_to_intersection": 20.06,
+            "waiting_time": 0.0,
+            "inside_control_zone": true
+          },
+          {
+            "vehicle_id": "step7_s3_cooperative_opportunity_v8_seed7_7_6",
+            "route_id": "W_N",
+            "incoming_edge": "W",
+            "outgoing_edge": "-N",
+            "movement": "LEFT",
+            "speed": 13.18,
+            "distance_to_intersection": 41.09,
+            "time_to_intersection": 3.12,
+            "waiting_time": 0.0,
+            "inside_control_zone": true
+          },
+          {
+            "vehicle_id": "step7_s3_cooperative_opportunity_v8_seed7_7_7",
+            "route_id": "E_S",
+            "incoming_edge": "E",
+            "outgoing_edge": "-S",
+            "movement": "LEFT",
+            "speed": 13.07,
+            "distance_to_intersection": 63.53,
+            "time_to_intersection": 4.86,
+            "waiting_time": 0.0,
+            "inside_control_zone": false
+          }
+        ]
+      }
+    },
+    {
+      "summary": {
+        "controlled_decisions": 47,
+        "candidate_sets": 47,
+        "candidate_sets_with_multiple_legal_candidates": 42,
+        "candidate_sets_with_multi_vehicle_candidates": 39,
+        "maximum_candidate_count": 17,
+        "mean_candidate_count": 6.148936170212766,
+        "mean_candidate_group_size": 1.397923875432526,
+        "maximum_compatible_group_size": 4,
+        "candidate_richness_ratio": 0.8936170212765957,
+        "cooperative_opportunity_ratio": 0.8297872340425532,
+        "fairness_pressure_decisions": 30,
+        "safety_intervention_count": 0,
+        "richness_label": "HIGH",
+        "scenario_class": "S4_FAIRNESS_PRESSURE",
+        "scenario_id": "step7_s4_fairness_pressure_v8_seed7",
+        "vehicle_count": 8,
+        "seed": 7,
+        "departed_count": 8,
+        "arrived_count": 8,
+        "collision_count": 0,
+        "pilot_execution_mode": "SUMO_OBSERVER_NATIVE_SIGNAL",
+        "route_sequence": [
+          "N_E",
+          "E_N",
+          "S_E",
+          "W_S",
+          "N_W",
+          "E_W",
+          "S_N",
+          "W_E"
+        ],
+        "departure_times": [
+          0,
+          0,
+          1,
+          1,
+          2,
+          2,
+          3,
+          3
+        ],
+        "movement_sequence": [
+          "LEFT",
+          "RIGHT",
+          "RIGHT",
+          "RIGHT",
+          "RIGHT",
+          "STRAIGHT",
+          "STRAIGHT",
+          "STRAIGHT"
+        ]
+      },
+      "representative_observation": {
+        "scenario_class": "S4_FAIRNESS_PRESSURE",
+        "simulation_step": 40,
+        "controlled_vehicle_count": 4,
+        "candidate_count": 5,
+        "candidate_group_sizes": [
+          1,
+          1,
+          1,
+          1,
+          2
+        ],
+        "mean_candidate_group_size": 1.2,
+        "maximum_compatible_group_size": 2,
+        "has_multiple_candidates": true,
+        "has_multi_vehicle_candidate": true,
+        "movement_diversity": 3,
+        "arrival_tti_spread": 0.0,
+        "maximum_waiting_time": 32.0,
+        "maximum_selected_waiting_time": 30.0,
+        "maximum_unselected_waiting_time": 32.0,
+        "fairness_target_waiting_time": 32.0,
+        "fairness_pressure_present": true,
+        "deterministic_candidate_id": "step7_s4_fairness_pressure_v8_seed7_7_2|step7_s4_fairness_pressure_v8_seed7_7_4",
+        "selected_vehicle_ids": [
+          "step7_s4_fairness_pressure_v8_seed7_7_2",
+          "step7_s4_fairness_pressure_v8_seed7_7_4"
+        ],
+        "safety_intervention_count": 0,
+        "candidate_groups": [
+          [
+            "step7_s4_fairness_pressure_v8_seed7_7_0"
+          ],
+          [
+            "step7_s4_fairness_pressure_v8_seed7_7_2"
+          ],
+          [
+            "step7_s4_fairness_pressure_v8_seed7_7_4"
+          ],
+          [
+            "step7_s4_fairness_pressure_v8_seed7_7_6"
+          ],
+          [
+            "step7_s4_fairness_pressure_v8_seed7_7_2",
+            "step7_s4_fairness_pressure_v8_seed7_7_4"
+          ]
+        ],
+        "vehicle_states": [
+          {
+            "vehicle_id": "step7_s4_fairness_pressure_v8_seed7_7_0",
+            "route_id": "N_E",
+            "incoming_edge": "N",
+            "outgoing_edge": "-E",
+            "movement": "LEFT",
+            "speed": 0.0,
+            "distance_to_intersection": 18.56,
+            "time_to_intersection": null,
+            "waiting_time": 32.0,
+            "inside_control_zone": true
+          },
+          {
+            "vehicle_id": "step7_s4_fairness_pressure_v8_seed7_7_2",
+            "route_id": "S_E",
+            "incoming_edge": "S",
+            "outgoing_edge": "-E",
+            "movement": "RIGHT",
+            "speed": 0.0,
+            "distance_to_intersection": 21.13,
+            "time_to_intersection": null,
+            "waiting_time": 30.0,
+            "inside_control_zone": true
+          },
+          {
+            "vehicle_id": "step7_s4_fairness_pressure_v8_seed7_7_4",
+            "route_id": "N_W",
+            "incoming_edge": "N",
+            "outgoing_edge": "-W",
+            "movement": "RIGHT",
+            "speed": 0.0,
+            "distance_to_intersection": 21.13,
+            "time_to_intersection": null,
+            "waiting_time": 29.0,
+            "inside_control_zone": true
+          },
+          {
+            "vehicle_id": "step7_s4_fairness_pressure_v8_seed7_7_6",
+            "route_id": "S_N",
+            "incoming_edge": "S",
+            "outgoing_edge": "-N",
+            "movement": "STRAIGHT",
+            "speed": 0.0,
+            "distance_to_intersection": 19.62,
+            "time_to_intersection": null,
+            "waiting_time": 28.0,
+            "inside_control_zone": true
+          }
+        ]
+      }
+    },
+    {
+      "summary": {
+        "controlled_decisions": 43,
+        "candidate_sets": 43,
+        "candidate_sets_with_multiple_legal_candidates": 41,
+        "candidate_sets_with_multi_vehicle_candidates": 41,
+        "maximum_candidate_count": 31,
+        "mean_candidate_count": 16.023255813953487,
+        "mean_candidate_group_size": 1.8403483309143687,
+        "maximum_compatible_group_size": 6,
+        "candidate_richness_ratio": 0.9534883720930233,
+        "cooperative_opportunity_ratio": 0.9534883720930233,
+        "fairness_pressure_decisions": 0,
+        "safety_intervention_count": 0,
+        "richness_label": "HIGH",
+        "scenario_class": "S3_COOPERATIVE_OPPORTUNITY",
+        "scenario_id": "step7_s3_cooperative_opportunity_v12_seed7",
+        "vehicle_count": 12,
+        "seed": 7,
+        "departed_count": 12,
+        "arrived_count": 12,
+        "collision_count": 0,
+        "pilot_execution_mode": "SUMO_OBSERVER_NATIVE_SIGNAL",
+        "route_sequence": [
+          "E_N",
+          "N_W",
+          "W_S",
+          "S_E",
+          "N_S",
+          "S_N",
+          "W_N",
+          "E_S",
+          "N_W",
+          "E_N",
+          "S_E",
+          "W_S"
+        ],
+        "departure_times": [
+          0,
+          1,
+          1,
+          2,
+          3,
+          3,
+          5,
+          6,
+          9,
+          9,
+          10,
+          11
+        ],
+        "movement_sequence": [
+          "RIGHT",
+          "RIGHT",
+          "RIGHT",
+          "RIGHT",
+          "STRAIGHT",
+          "STRAIGHT",
+          "LEFT",
+          "LEFT",
+          "RIGHT",
+          "RIGHT",
+          "RIGHT",
+          "RIGHT"
+        ]
+      },
+      "representative_observation": {
+        "scenario_class": "S3_COOPERATIVE_OPPORTUNITY",
+        "simulation_step": 19,
+        "controlled_vehicle_count": 10,
+        "candidate_count": 31,
+        "candidate_group_sizes": [
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          2,
+          2,
+          2,
+          2,
+          2,
+          2,
+          2,
+          2,
+          2,
+          2,
+          2,
+          2,
+          2,
+          2,
+          2,
+          2,
+          2,
+          3,
+          4,
+          5,
+          6
+        ],
+        "mean_candidate_group_size": 2.0,
+        "maximum_compatible_group_size": 6,
+        "has_multiple_candidates": true,
+        "has_multi_vehicle_candidate": true,
+        "movement_diversity": 3,
+        "arrival_tti_spread": 120.21,
+        "maximum_waiting_time": 8.0,
+        "maximum_selected_waiting_time": 8.0,
+        "maximum_unselected_waiting_time": 7.0,
+        "fairness_target_waiting_time": 0.0,
+        "fairness_pressure_present": false,
+        "deterministic_candidate_id": "step7_s3_cooperative_opportunity_v12_seed7_7_9|step7_s3_cooperative_opportunity_v12_seed7_7_11|step7_s3_cooperative_opportunity_v12_seed7_7_10|step7_s3_cooperative_opportunity_v12_seed7_7_8|step7_s3_cooperative_opportunity_v12_seed7_7_1|step7_s3_cooperative_opportunity_v12_seed7_7_3",
+        "selected_vehicle_ids": [
+          "step7_s3_cooperative_opportunity_v12_seed7_7_9",
+          "step7_s3_cooperative_opportunity_v12_seed7_7_11",
+          "step7_s3_cooperative_opportunity_v12_seed7_7_10",
+          "step7_s3_cooperative_opportunity_v12_seed7_7_8",
+          "step7_s3_cooperative_opportunity_v12_seed7_7_1",
+          "step7_s3_cooperative_opportunity_v12_seed7_7_3"
+        ],
+        "safety_intervention_count": 0,
+        "candidate_groups": [
+          [
+            "step7_s3_cooperative_opportunity_v12_seed7_7_1"
+          ],
+          [
+            "step7_s3_cooperative_opportunity_v12_seed7_7_10"
+          ],
+          [
+            "step7_s3_cooperative_opportunity_v12_seed7_7_11"
+          ],
+          [
+            "step7_s3_cooperative_opportunity_v12_seed7_7_3"
+          ],
+          [
+            "step7_s3_cooperative_opportunity_v12_seed7_7_4"
+          ],
+          [
+            "step7_s3_cooperative_opportunity_v12_seed7_7_5"
+          ],
+          [
+            "step7_s3_cooperative_opportunity_v12_seed7_7_6"
+          ],
+          [
+            "step7_s3_cooperative_opportunity_v12_seed7_7_7"
+          ],
+          [
+            "step7_s3_cooperative_opportunity_v12_seed7_7_8"
+          ],
+          [
+            "step7_s3_cooperative_opportunity_v12_seed7_7_9"
+          ],
+          [
+            "step7_s3_cooperative_opportunity_v12_seed7_7_1",
+            "step7_s3_cooperative_opportunity_v12_seed7_7_3"
+          ],
+          [
+            "step7_s3_cooperative_opportunity_v12_seed7_7_10",
+            "step7_s3_cooperative_opportunity_v12_seed7_7_1"
+          ],
+          [
+            "step7_s3_cooperative_opportunity_v12_seed7_7_10",
+            "step7_s3_cooperative_opportunity_v12_seed7_7_3"
+          ],
+          [
+            "step7_s3_cooperative_opportunity_v12_seed7_7_10",
+            "step7_s3_cooperative_opportunity_v12_seed7_7_8"
+          ],
+          [
+            "step7_s3_cooperative_opportunity_v12_seed7_7_11",
+            "step7_s3_cooperative_opportunity_v12_seed7_7_1"
+          ],
+          [
+            "step7_s3_cooperative_opportunity_v12_seed7_7_11",
+            "step7_s3_cooperative_opportunity_v12_seed7_7_10"
+          ],
+          [
+            "step7_s3_cooperative_opportunity_v12_seed7_7_11",
+            "step7_s3_cooperative_opportunity_v12_seed7_7_3"
+          ],
+          [
+            "step7_s3_cooperative_opportunity_v12_seed7_7_11",
+            "step7_s3_cooperative_opportunity_v12_seed7_7_8"
+          ],
+          [
+            "step7_s3_cooperative_opportunity_v12_seed7_7_4",
+            "step7_s3_cooperative_opportunity_v12_seed7_7_5"
+          ],
+          [
+            "step7_s3_cooperative_opportunity_v12_seed7_7_7",
+            "step7_s3_cooperative_opportunity_v12_seed7_7_6"
+          ],
+          [
+            "step7_s3_cooperative_opportunity_v12_seed7_7_8",
+            "step7_s3_cooperative_opportunity_v12_seed7_7_1"
+          ],
+          [
+            "step7_s3_cooperative_opportunity_v12_seed7_7_8",
+            "step7_s3_cooperative_opportunity_v12_seed7_7_3"
+          ],
+          [
+            "step7_s3_cooperative_opportunity_v12_seed7_7_9",
+            "step7_s3_cooperative_opportunity_v12_seed7_7_1"
+          ],
+          [
+            "step7_s3_cooperative_opportunity_v12_seed7_7_9",
+            "step7_s3_cooperative_opportunity_v12_seed7_7_10"
+          ],
+          [
+            "step7_s3_cooperative_opportunity_v12_seed7_7_9",
+            "step7_s3_cooperative_opportunity_v12_seed7_7_11"
+          ],
+          [
+            "step7_s3_cooperative_opportunity_v12_seed7_7_9",
+            "step7_s3_cooperative_opportunity_v12_seed7_7_3"
+          ],
+          [
+            "step7_s3_cooperative_opportunity_v12_seed7_7_9",
+            "step7_s3_cooperative_opportunity_v12_seed7_7_8"
+          ],
+          [
+            "step7_s3_cooperative_opportunity_v12_seed7_7_8",
+            "step7_s3_cooperative_opportunity_v12_seed7_7_1",
+            "step7_s3_cooperative_opportunity_v12_seed7_7_3"
+          ],
+          [
+            "step7_s3_cooperative_opportunity_v12_seed7_7_10",
+            "step7_s3_cooperative_opportunity_v12_seed7_7_8",
+            "step7_s3_cooperative_opportunity_v12_seed7_7_1",
+            "step7_s3_cooperative_opportunity_v12_seed7_7_3"
+          ],
+          [
+            "step7_s3_cooperative_opportunity_v12_seed7_7_11",
+            "step7_s3_cooperative_opportunity_v12_seed7_7_10",
+            "step7_s3_cooperative_opportunity_v12_seed7_7_8",
+            "step7_s3_cooperative_opportunity_v12_seed7_7_1",
+            "step7_s3_cooperative_opportunity_v12_seed7_7_3"
+          ],
+          [
+            "step7_s3_cooperative_opportunity_v12_seed7_7_9",
+            "step7_s3_cooperative_opportunity_v12_seed7_7_11",
+            "step7_s3_cooperative_opportunity_v12_seed7_7_10",
+            "step7_s3_cooperative_opportunity_v12_seed7_7_8",
+            "step7_s3_cooperative_opportunity_v12_seed7_7_1",
+            "step7_s3_cooperative_opportunity_v12_seed7_7_3"
+          ]
+        ],
+        "vehicle_states": [
+          {
+            "vehicle_id": "step7_s3_cooperative_opportunity_v12_seed7_7_1",
+            "route_id": "N_W",
+            "incoming_edge": "N",
+            "outgoing_edge": "-W",
+            "movement": "RIGHT",
+            "speed": 0.0,
+            "distance_to_intersection": 21.13,
+            "time_to_intersection": null,
+            "waiting_time": 8.0,
+            "inside_control_zone": true
+          },
+          {
+            "vehicle_id": "step7_s3_cooperative_opportunity_v12_seed7_7_10",
+            "route_id": "S_E",
+            "incoming_edge": "S",
+            "outgoing_edge": "-E",
+            "movement": "RIGHT",
+            "speed": 4.04,
+            "distance_to_intersection": 27.89,
+            "time_to_intersection": 6.9,
+            "waiting_time": 0.0,
+            "inside_control_zone": true
+          },
+          {
+            "vehicle_id": "step7_s3_cooperative_opportunity_v12_seed7_7_11",
+            "route_id": "W_S",
+            "incoming_edge": "W",
+            "outgoing_edge": "-S",
+            "movement": "RIGHT",
+            "speed": 11.4,
+            "distance_to_intersection": 40.77,
+            "time_to_intersection": 3.58,
+            "waiting_time": 0.0,
+            "inside_control_zone": true
+          },
+          {
+            "vehicle_id": "step7_s3_cooperative_opportunity_v12_seed7_7_2",
+            "route_id": "W_S",
+            "incoming_edge": "W",
+            "outgoing_edge": "-S",
+            "movement": "RIGHT",
+            "speed": 12.73,
+            "distance_to_intersection": 109.8,
+            "time_to_intersection": 8.62,
+            "waiting_time": 0.0,
+            "inside_control_zone": false
+          },
+          {
+            "vehicle_id": "step7_s3_cooperative_opportunity_v12_seed7_7_3",
+            "route_id": "S_E",
+            "incoming_edge": "S",
+            "outgoing_edge": "-E",
+            "movement": "RIGHT",
+            "speed": 0.0,
+            "distance_to_intersection": 21.13,
+            "time_to_intersection": null,
+            "waiting_time": 8.0,
+            "inside_control_zone": true
+          },
+          {
+            "vehicle_id": "step7_s3_cooperative_opportunity_v12_seed7_7_4",
+            "route_id": "N_S",
+            "incoming_edge": "N",
+            "outgoing_edge": "-S",
+            "movement": "STRAIGHT",
+            "speed": 0.0,
+            "distance_to_intersection": 19.63,
+            "time_to_intersection": null,
+            "waiting_time": 7.0,
+            "inside_control_zone": true
+          },
+          {
+            "vehicle_id": "step7_s3_cooperative_opportunity_v12_seed7_7_5",
+            "route_id": "S_N",
+            "incoming_edge": "S",
+            "outgoing_edge": "-N",
+            "movement": "STRAIGHT",
+            "speed": 0.0,
+            "distance_to_intersection": 19.62,
+            "time_to_intersection": null,
+            "waiting_time": 7.0,
+            "inside_control_zone": true
+          },
+          {
+            "vehicle_id": "step7_s3_cooperative_opportunity_v12_seed7_7_6",
+            "route_id": "W_N",
+            "incoming_edge": "W",
+            "outgoing_edge": "-N",
+            "movement": "LEFT",
+            "speed": 11.4,
+            "distance_to_intersection": 28.33,
+            "time_to_intersection": 2.48,
+            "waiting_time": 0.0,
+            "inside_control_zone": true
+          },
+          {
+            "vehicle_id": "step7_s3_cooperative_opportunity_v12_seed7_7_7",
+            "route_id": "E_S",
+            "incoming_edge": "E",
+            "outgoing_edge": "-S",
+            "movement": "LEFT",
+            "speed": 8.69,
+            "distance_to_intersection": 7.01,
+            "time_to_intersection": 0.81,
+            "waiting_time": 0.0,
+            "inside_control_zone": true
+          },
+          {
+            "vehicle_id": "step7_s3_cooperative_opportunity_v12_seed7_7_8",
+            "route_id": "N_W",
+            "incoming_edge": "N",
+            "outgoing_edge": "-W",
+            "movement": "RIGHT",
+            "speed": 0.23,
+            "distance_to_intersection": 27.87,
+            "time_to_intersection": 121.02,
+            "waiting_time": 0.0,
+            "inside_control_zone": true
+          },
+          {
+            "vehicle_id": "step7_s3_cooperative_opportunity_v12_seed7_7_9",
+            "route_id": "E_N",
+            "incoming_edge": "E",
+            "outgoing_edge": "-N",
+            "movement": "RIGHT",
+            "speed": 11.59,
+            "distance_to_intersection": 34.81,
+            "time_to_intersection": 3.0,
+            "waiting_time": 0.0,
+            "inside_control_zone": true
+          }
+        ]
+      }
+    },
+    {
+      "summary": {
+        "controlled_decisions": 48,
+        "candidate_sets": 48,
+        "candidate_sets_with_multiple_legal_candidates": 45,
+        "candidate_sets_with_multi_vehicle_candidates": 44,
+        "maximum_candidate_count": 34,
+        "mean_candidate_count": 17.020833333333332,
+        "mean_candidate_group_size": 1.7576499388004896,
+        "maximum_compatible_group_size": 6,
+        "candidate_richness_ratio": 0.9375,
+        "cooperative_opportunity_ratio": 0.9166666666666666,
+        "fairness_pressure_decisions": 30,
+        "safety_intervention_count": 0,
+        "richness_label": "HIGH",
+        "scenario_class": "S4_FAIRNESS_PRESSURE",
+        "scenario_id": "step7_s4_fairness_pressure_v16_seed7",
+        "vehicle_count": 16,
+        "seed": 7,
+        "departed_count": 16,
+        "arrived_count": 16,
+        "collision_count": 0,
+        "pilot_execution_mode": "SUMO_OBSERVER_NATIVE_SIGNAL",
+        "route_sequence": [
+          "N_E",
+          "E_N",
+          "S_E",
+          "W_S",
+          "N_W",
+          "E_W",
+          "S_N",
+          "W_E",
+          "N_E",
+          "E_N",
+          "S_E",
+          "W_S",
+          "N_W",
+          "E_W",
+          "S_N",
+          "W_E"
+        ],
+        "departure_times": [
+          0,
+          0,
+          1,
+          1,
+          2,
+          2,
+          3,
+          3,
+          9,
+          9,
+          10,
+          10,
+          11,
+          11,
+          12,
+          12
+        ],
+        "movement_sequence": [
+          "LEFT",
+          "RIGHT",
+          "RIGHT",
+          "RIGHT",
+          "RIGHT",
+          "STRAIGHT",
+          "STRAIGHT",
+          "STRAIGHT",
+          "LEFT",
+          "RIGHT",
+          "RIGHT",
+          "RIGHT",
+          "RIGHT",
+          "STRAIGHT",
+          "STRAIGHT",
+          "STRAIGHT"
+        ]
+      },
+      "representative_observation": {
+        "scenario_class": "S4_FAIRNESS_PRESSURE",
+        "simulation_step": 40,
+        "controlled_vehicle_count": 8,
+        "candidate_count": 18,
+        "candidate_group_sizes": [
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          2,
+          2,
+          2,
+          2,
+          2,
+          2,
+          2,
+          2,
+          3,
+          4
+        ],
+        "mean_candidate_group_size": 1.7222222222222223,
+        "maximum_compatible_group_size": 4,
+        "has_multiple_candidates": true,
+        "has_multi_vehicle_candidate": true,
+        "movement_diversity": 3,
+        "arrival_tti_spread": 0.0,
+        "maximum_waiting_time": 32.0,
+        "maximum_selected_waiting_time": 30.0,
+        "maximum_unselected_waiting_time": 32.0,
+        "fairness_target_waiting_time": 32.0,
+        "fairness_pressure_present": true,
+        "deterministic_candidate_id": "step7_s4_fairness_pressure_v16_seed7_7_10|step7_s4_fairness_pressure_v16_seed7_7_12|step7_s4_fairness_pressure_v16_seed7_7_2|step7_s4_fairness_pressure_v16_seed7_7_4",
+        "selected_vehicle_ids": [
+          "step7_s4_fairness_pressure_v16_seed7_7_10",
+          "step7_s4_fairness_pressure_v16_seed7_7_12",
+          "step7_s4_fairness_pressure_v16_seed7_7_2",
+          "step7_s4_fairness_pressure_v16_seed7_7_4"
+        ],
+        "safety_intervention_count": 0,
+        "candidate_groups": [
+          [
+            "step7_s4_fairness_pressure_v16_seed7_7_0"
+          ],
+          [
+            "step7_s4_fairness_pressure_v16_seed7_7_10"
+          ],
+          [
+            "step7_s4_fairness_pressure_v16_seed7_7_12"
+          ],
+          [
+            "step7_s4_fairness_pressure_v16_seed7_7_14"
+          ],
+          [
+            "step7_s4_fairness_pressure_v16_seed7_7_2"
+          ],
+          [
+            "step7_s4_fairness_pressure_v16_seed7_7_4"
+          ],
+          [
+            "step7_s4_fairness_pressure_v16_seed7_7_6"
+          ],
+          [
+            "step7_s4_fairness_pressure_v16_seed7_7_8"
+          ],
+          [
+            "step7_s4_fairness_pressure_v16_seed7_7_0",
+            "step7_s4_fairness_pressure_v16_seed7_7_8"
+          ],
+          [
+            "step7_s4_fairness_pressure_v16_seed7_7_10",
+            "step7_s4_fairness_pressure_v16_seed7_7_12"
+          ],
+          [
+            "step7_s4_fairness_pressure_v16_seed7_7_10",
+            "step7_s4_fairness_pressure_v16_seed7_7_2"
+          ],
+          [
+            "step7_s4_fairness_pressure_v16_seed7_7_10",
+            "step7_s4_fairness_pressure_v16_seed7_7_4"
+          ],
+          [
+            "step7_s4_fairness_pressure_v16_seed7_7_12",
+            "step7_s4_fairness_pressure_v16_seed7_7_2"
+          ],
+          [
+            "step7_s4_fairness_pressure_v16_seed7_7_12",
+            "step7_s4_fairness_pressure_v16_seed7_7_4"
+          ],
+          [
+            "step7_s4_fairness_pressure_v16_seed7_7_14",
+            "step7_s4_fairness_pressure_v16_seed7_7_6"
+          ],
+          [
+            "step7_s4_fairness_pressure_v16_seed7_7_2",
+            "step7_s4_fairness_pressure_v16_seed7_7_4"
+          ],
+          [
+            "step7_s4_fairness_pressure_v16_seed7_7_12",
+            "step7_s4_fairness_pressure_v16_seed7_7_2",
+            "step7_s4_fairness_pressure_v16_seed7_7_4"
+          ],
+          [
+            "step7_s4_fairness_pressure_v16_seed7_7_10",
+            "step7_s4_fairness_pressure_v16_seed7_7_12",
+            "step7_s4_fairness_pressure_v16_seed7_7_2",
+            "step7_s4_fairness_pressure_v16_seed7_7_4"
+          ]
+        ],
+        "vehicle_states": [
+          {
+            "vehicle_id": "step7_s4_fairness_pressure_v16_seed7_7_0",
+            "route_id": "N_E",
+            "incoming_edge": "N",
+            "outgoing_edge": "-E",
+            "movement": "LEFT",
+            "speed": 0.0,
+            "distance_to_intersection": 18.56,
+            "time_to_intersection": null,
+            "waiting_time": 32.0,
+            "inside_control_zone": true
+          },
+          {
+            "vehicle_id": "step7_s4_fairness_pressure_v16_seed7_7_10",
+            "route_id": "S_E",
+            "incoming_edge": "S",
+            "outgoing_edge": "-E",
+            "movement": "RIGHT",
+            "speed": 0.0,
+            "distance_to_intersection": 27.78,
+            "time_to_intersection": null,
+            "waiting_time": 18.0,
+            "inside_control_zone": true
+          },
+          {
+            "vehicle_id": "step7_s4_fairness_pressure_v16_seed7_7_12",
+            "route_id": "N_W",
+            "incoming_edge": "N",
+            "outgoing_edge": "-W",
+            "movement": "RIGHT",
+            "speed": 0.0,
+            "distance_to_intersection": 19.63,
+            "time_to_intersection": null,
+            "waiting_time": 20.0,
+            "inside_control_zone": true
+          },
+          {
+            "vehicle_id": "step7_s4_fairness_pressure_v16_seed7_7_14",
+            "route_id": "S_N",
+            "incoming_edge": "S",
+            "outgoing_edge": "-N",
+            "movement": "STRAIGHT",
+            "speed": 0.0,
+            "distance_to_intersection": 18.55,
+            "time_to_intersection": null,
+            "waiting_time": 19.0,
+            "inside_control_zone": true
+          },
+          {
+            "vehicle_id": "step7_s4_fairness_pressure_v16_seed7_7_2",
+            "route_id": "S_E",
+            "incoming_edge": "S",
+            "outgoing_edge": "-E",
+            "movement": "RIGHT",
+            "speed": 0.0,
+            "distance_to_intersection": 21.13,
+            "time_to_intersection": null,
+            "waiting_time": 30.0,
+            "inside_control_zone": true
+          },
+          {
+            "vehicle_id": "step7_s4_fairness_pressure_v16_seed7_7_4",
+            "route_id": "N_W",
+            "incoming_edge": "N",
+            "outgoing_edge": "-W",
+            "movement": "RIGHT",
+            "speed": 0.0,
+            "distance_to_intersection": 21.13,
+            "time_to_intersection": null,
+            "waiting_time": 29.0,
+            "inside_control_zone": true
+          },
+          {
+            "vehicle_id": "step7_s4_fairness_pressure_v16_seed7_7_6",
+            "route_id": "S_N",
+            "incoming_edge": "S",
+            "outgoing_edge": "-N",
+            "movement": "STRAIGHT",
+            "speed": 0.0,
+            "distance_to_intersection": 19.62,
+            "time_to_intersection": null,
+            "waiting_time": 28.0,
+            "inside_control_zone": true
+          },
+          {
+            "vehicle_id": "step7_s4_fairness_pressure_v16_seed7_7_8",
+            "route_id": "N_E",
+            "incoming_edge": "N",
+            "outgoing_edge": "-E",
+            "movement": "LEFT",
+            "speed": 0.0,
+            "distance_to_intersection": 17.99,
+            "time_to_intersection": null,
+            "waiting_time": 22.0,
+            "inside_control_zone": true
+          }
+        ]
+      }
+    }
+  ],
+  "live_results": [
+    {
+      "scenario_class": "S1_BALANCED_MIXED_TURN",
+      "scenario_id": "step7_s1_balanced_mixed_turn_v8_seed7",
+      "vehicle_count": 8,
+      "seed": 7,
+      "simulation_step": 24,
+      "request_id": "step7-s1_balanced_mixed_turn-v8-seed7",
+      "provider": "Gemini",
+      "model": "gemini-3.6-flash",
+      "request_success": true,
+      "http_status": 200,
+      "parser_success": true,
+      "fallback_used": false,
+      "fallback_reason": "",
+      "provider_failure_reason": "",
+      "parser_failure_reason": "",
+      "latency_ms": 1664.18,
+      "prompt_tokens": 2622,
+      "completion_tokens": 51,
+      "total_tokens": 2673,
+      "llm_raw_output": "{\"selected_candidate_id\":\"step7_s1_balanced_mixed_turn_v8_seed7_7_5|step7_s1_balanced_mixed_turn_v8_seed7_7_0\"}",
+      "candidate_count": 8,
+      "llm_candidate_id": "step7_s1_balanced_mixed_turn_v8_seed7_7_5|step7_s1_balanced_mixed_turn_v8_seed7_7_0",
+      "deterministic_candidate_id": "step7_s1_balanced_mixed_turn_v8_seed7_7_5|step7_s1_balanced_mixed_turn_v8_seed7_7_0",
+      "candidate_agreement": true,
+      "candidate_disagreement": false,
+      "final_selected_candidate": "step7_s1_balanced_mixed_turn_v8_seed7_7_5|step7_s1_balanced_mixed_turn_v8_seed7_7_0",
+      "safety_intervention_count": 0,
+      "final_actions": {
+        "step7_s1_balanced_mixed_turn_v8_seed7_7_0": "PROCEED",
+        "step7_s1_balanced_mixed_turn_v8_seed7_7_1": "FREE",
+        "step7_s1_balanced_mixed_turn_v8_seed7_7_2": "WAIT",
+        "step7_s1_balanced_mixed_turn_v8_seed7_7_3": "WAIT",
+        "step7_s1_balanced_mixed_turn_v8_seed7_7_4": "WAIT",
+        "step7_s1_balanced_mixed_turn_v8_seed7_7_5": "PROCEED",
+        "step7_s1_balanced_mixed_turn_v8_seed7_7_6": "WAIT",
+        "step7_s1_balanced_mixed_turn_v8_seed7_7_7": "FREE"
+      }
+    },
+    {
+      "scenario_class": "S2_SIMULTANEOUS_CONFLICT",
+      "scenario_id": "step7_s2_simultaneous_conflict_v8_seed7",
+      "vehicle_count": 8,
+      "seed": 7,
+      "simulation_step": 19,
+      "request_id": "step7-s2_simultaneous_conflict-v8-seed7",
+      "provider": "Gemini",
+      "model": "gemini-3.6-flash",
+      "request_success": true,
+      "http_status": 200,
+      "parser_success": true,
+      "fallback_used": false,
+      "fallback_reason": "",
+      "provider_failure_reason": "",
+      "parser_failure_reason": "",
+      "latency_ms": 2459.57,
+      "prompt_tokens": 1949,
+      "completion_tokens": 55,
+      "total_tokens": 2004,
+      "llm_raw_output": "{\n  \"selected_candidate_id\": \"step7_s2_simultaneous_conflict_v8_seed7_7_0|step7_s2_simultaneous_conflict_v8_seed7_7_2\"\n}",
+      "candidate_count": 6,
+      "llm_candidate_id": "step7_s2_simultaneous_conflict_v8_seed7_7_0|step7_s2_simultaneous_conflict_v8_seed7_7_2",
+      "deterministic_candidate_id": "step7_s2_simultaneous_conflict_v8_seed7_7_0|step7_s2_simultaneous_conflict_v8_seed7_7_2",
+      "candidate_agreement": true,
+      "candidate_disagreement": false,
+      "final_selected_candidate": "step7_s2_simultaneous_conflict_v8_seed7_7_0|step7_s2_simultaneous_conflict_v8_seed7_7_2",
+      "safety_intervention_count": 0,
+      "final_actions": {
+        "step7_s2_simultaneous_conflict_v8_seed7_7_0": "PROCEED",
+        "step7_s2_simultaneous_conflict_v8_seed7_7_1": "FREE",
+        "step7_s2_simultaneous_conflict_v8_seed7_7_2": "PROCEED",
+        "step7_s2_simultaneous_conflict_v8_seed7_7_3": "FREE",
+        "step7_s2_simultaneous_conflict_v8_seed7_7_4": "WAIT",
+        "step7_s2_simultaneous_conflict_v8_seed7_7_5": "FREE",
+        "step7_s2_simultaneous_conflict_v8_seed7_7_6": "WAIT",
+        "step7_s2_simultaneous_conflict_v8_seed7_7_7": "FREE"
+      }
+    },
+    {
+      "scenario_class": "S3_COOPERATIVE_OPPORTUNITY",
+      "scenario_id": "step7_s3_cooperative_opportunity_v8_seed7",
+      "vehicle_count": 8,
+      "seed": 7,
+      "simulation_step": 12,
+      "request_id": "step7-s3_cooperative_opportunity-v8-seed7",
+      "provider": "Gemini",
+      "model": "gemini-3.6-flash",
+      "request_success": true,
+      "http_status": 200,
+      "parser_success": true,
+      "fallback_used": false,
+      "fallback_reason": "",
+      "provider_failure_reason": "",
+      "parser_failure_reason": "",
+      "latency_ms": 2250.21,
+      "prompt_tokens": 5364,
+      "completion_tokens": 91,
+      "total_tokens": 5455,
+      "llm_raw_output": "{\"selected_candidate_id\":\"step7_s3_cooperative_opportunity_v8_seed7_7_2|step7_s3_cooperative_opportunity_v8_seed7_7_0|step7_s3_cooperative_opportunity_v8_seed7_7_1|step7_s3_cooperative_opportunity_v8_seed7_7_3\"}",
+      "candidate_count": 16,
+      "llm_candidate_id": "step7_s3_cooperative_opportunity_v8_seed7_7_2|step7_s3_cooperative_opportunity_v8_seed7_7_0|step7_s3_cooperative_opportunity_v8_seed7_7_1|step7_s3_cooperative_opportunity_v8_seed7_7_3",
+      "deterministic_candidate_id": "step7_s3_cooperative_opportunity_v8_seed7_7_2|step7_s3_cooperative_opportunity_v8_seed7_7_0|step7_s3_cooperative_opportunity_v8_seed7_7_1|step7_s3_cooperative_opportunity_v8_seed7_7_3",
+      "candidate_agreement": true,
+      "candidate_disagreement": false,
+      "final_selected_candidate": "step7_s3_cooperative_opportunity_v8_seed7_7_2|step7_s3_cooperative_opportunity_v8_seed7_7_0|step7_s3_cooperative_opportunity_v8_seed7_7_1|step7_s3_cooperative_opportunity_v8_seed7_7_3",
+      "safety_intervention_count": 0,
+      "final_actions": {
+        "step7_s3_cooperative_opportunity_v8_seed7_7_0": "PROCEED",
+        "step7_s3_cooperative_opportunity_v8_seed7_7_1": "PROCEED",
+        "step7_s3_cooperative_opportunity_v8_seed7_7_2": "PROCEED",
+        "step7_s3_cooperative_opportunity_v8_seed7_7_3": "PROCEED",
+        "step7_s3_cooperative_opportunity_v8_seed7_7_4": "WAIT",
+        "step7_s3_cooperative_opportunity_v8_seed7_7_5": "WAIT",
+        "step7_s3_cooperative_opportunity_v8_seed7_7_6": "WAIT",
+        "step7_s3_cooperative_opportunity_v8_seed7_7_7": "FREE"
+      }
+    },
+    {
+      "scenario_class": "S4_FAIRNESS_PRESSURE",
+      "scenario_id": "step7_s4_fairness_pressure_v8_seed7",
+      "vehicle_count": 8,
+      "seed": 7,
+      "simulation_step": 40,
+      "request_id": "step7-s4_fairness_pressure-v8-seed7",
+      "provider": "Gemini",
+      "model": "gemini-3.6-flash",
+      "request_success": true,
+      "http_status": 200,
+      "parser_success": true,
+      "fallback_used": false,
+      "fallback_reason": "",
+      "provider_failure_reason": "",
+      "parser_failure_reason": "",
+      "latency_ms": 1738.4,
+      "prompt_tokens": 1651,
+      "completion_tokens": 49,
+      "total_tokens": 1700,
+      "llm_raw_output": "{\"selected_candidate_id\":\"step7_s4_fairness_pressure_v8_seed7_7_2|step7_s4_fairness_pressure_v8_seed7_7_4\"}",
+      "candidate_count": 5,
+      "llm_candidate_id": "step7_s4_fairness_pressure_v8_seed7_7_2|step7_s4_fairness_pressure_v8_seed7_7_4",
+      "deterministic_candidate_id": "step7_s4_fairness_pressure_v8_seed7_7_2|step7_s4_fairness_pressure_v8_seed7_7_4",
+      "candidate_agreement": true,
+      "candidate_disagreement": false,
+      "final_selected_candidate": "step7_s4_fairness_pressure_v8_seed7_7_2|step7_s4_fairness_pressure_v8_seed7_7_4",
+      "safety_intervention_count": 0,
+      "final_actions": {
+        "step7_s4_fairness_pressure_v8_seed7_7_0": "WAIT",
+        "step7_s4_fairness_pressure_v8_seed7_7_2": "PROCEED",
+        "step7_s4_fairness_pressure_v8_seed7_7_4": "PROCEED",
+        "step7_s4_fairness_pressure_v8_seed7_7_6": "WAIT"
+      }
+    }
+  ],
+  "live_summary": {
+    "request_count": 4,
+    "request_success_count": 4,
+    "parser_success_count": 4,
+    "fallback_count": 0,
+    "comparable_decisions": 4,
+    "agreement_count": 4,
+    "disagreement_count": 0,
+    "safety_intervention_count": 0,
+    "mean_prompt_tokens": 2896.5,
+    "total_prompt_tokens": 11586.0,
+    "mean_completion_tokens": 61.5,
+    "total_completion_tokens": 246.0,
+    "mean_total_tokens": 2958.0,
+    "total_total_tokens": 11832.0,
+    "mean_latency_ms": 2028.0900000000001,
+    "minimum_latency_ms": 1664.18,
+    "maximum_latency_ms": 2459.57
+  }
+}

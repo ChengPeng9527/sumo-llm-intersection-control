@@ -20,6 +20,7 @@ FIELDNAMES = [
     "speed_after_action",
     "distance_to_intersection",
     "time_to_intersection",
+    "waiting_time",
     "inside_control_zone",
     "raw_decision",
     "llm_raw_decision",
