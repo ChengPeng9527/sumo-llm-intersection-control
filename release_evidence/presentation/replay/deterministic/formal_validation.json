@@ -1,0 +1,62 @@
+{
+  "valid": true,
+  "validation_errors": [],
+  "initial_conditions": {
+    "scenario_id": "phase2_s3_cooperative_opportunity_v12_seed1",
+    "scenario_class": "S3_COOPERATIVE_OPPORTUNITY",
+    "vehicle_count": 12,
+    "seed": 1,
+    "route_sequence": [
+      "N_W",
+      "E_N",
+      "W_S",
+      "S_E",
+      "N_S",
+      "S_N",
+      "E_S",
+      "W_N",
+      "N_W",
+      "E_N",
+      "W_S",
+      "S_E"
+    ],
+    "departure_times": [
+      0,
+      0,
+      1,
+      2,
+      4,
+      4,
+      6,
+      6,
+      9,
+      9,
+      10,
+      11
+    ],
+    "movement_sequence": [
+      "RIGHT",
+      "RIGHT",
+      "RIGHT",
+      "RIGHT",
+      "STRAIGHT",
+      "STRAIGHT",
+      "LEFT",
+      "LEFT",
+      "RIGHT",
+      "RIGHT",
+      "RIGHT",
+      "RIGHT"
+    ],
+    "seed_semantics": {
+      "route_assignment_changes": false,
+      "departure_timing_changes": true,
+      "departure_jitter_seconds": 1,
+      "sumo_car_following_changes": true,
+      "sumo_car_following_sigma": 0.5
+    },
+    "initial_demand_signature": "5D226775695E3140809542841ECA62EBE60DDF92BCEA2FB40A6EB2B946CA6039"
+  },
+  "planner_mode": "DETERMINISTIC_CANDIDATE",
+  "source_run_dir": "D:\\Sumo\\sumo_train\\results\\raw\\phase2_formal_batch2_s3_cooperative_opportunity_v12_seed1_deterministic_candidate"
+}

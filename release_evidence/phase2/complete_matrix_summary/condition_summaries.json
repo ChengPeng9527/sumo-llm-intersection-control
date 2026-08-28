@@ -1,0 +1,1478 @@
+[
+  {
+    "scenario_class": "S1_BALANCED_MIXED_TURN",
+    "vehicle_count": 8,
+    "planner": "DETERMINISTIC_CANDIDATE",
+    "seed_count": 3,
+    "seeds": [
+      1,
+      2,
+      3
+    ],
+    "departed": {
+      "n": 3,
+      "mean": 8.0,
+      "standard_deviation": 0.0,
+      "minimum": 8.0,
+      "maximum": 8.0
+    },
+    "arrived": {
+      "n": 3,
+      "mean": 8.0,
+      "standard_deviation": 0.0,
+      "minimum": 8.0,
+      "maximum": 8.0
+    },
+    "completion_rate": {
+      "n": 3,
+      "mean": 1.0,
+      "standard_deviation": 0.0,
+      "minimum": 1.0,
+      "maximum": 1.0
+    },
+    "throughput": {
+      "n": 3,
+      "mean": 8.0,
+      "standard_deviation": 0.0,
+      "minimum": 8.0,
+      "maximum": 8.0
+    },
+    "mean_waiting_time": {
+      "n": 3,
+      "mean": 9.75,
+      "standard_deviation": 0.9921567416492215,
+      "minimum": 8.625,
+      "maximum": 10.5
+    },
+    "maximum_waiting_time": {
+      "n": 3,
+      "mean": 22.333333333333332,
+      "standard_deviation": 3.0550504633038935,
+      "minimum": 19.0,
+      "maximum": 25.0
+    },
+    "mean_speed": {
+      "n": 3,
+      "mean": 7.312641030056643,
+      "standard_deviation": 0.2473736317926391,
+      "minimum": 7.152463235294114,
+      "maximum": 7.597549407114622
+    },
+    "episode_duration_seconds": {
+      "n": 3,
+      "mean": 73.33333333333333,
+      "standard_deviation": 2.0816659994661326,
+      "minimum": 71.0,
+      "maximum": 75.0
+    },
+    "collision_count": {
+      "n": 3,
+      "mean": 0.0,
+      "standard_deviation": 0.0,
+      "minimum": 0.0,
+      "maximum": 0.0
+    },
+    "decision_epoch_count": {
+      "n": 3,
+      "mean": 7.0,
+      "standard_deviation": 0.0,
+      "minimum": 7.0,
+      "maximum": 7.0
+    },
+    "grant_count": {
+      "n": 3,
+      "mean": 7.0,
+      "standard_deviation": 0.0,
+      "minimum": 7.0,
+      "maximum": 7.0
+    },
+    "gemini_request_count": {
+      "n": 3,
+      "mean": 0.0,
+      "standard_deviation": 0.0,
+      "minimum": 0.0,
+      "maximum": 0.0
+    },
+    "fallback_count": {
+      "n": 3,
+      "mean": 0.0,
+      "standard_deviation": 0.0,
+      "minimum": 0.0,
+      "maximum": 0.0
+    },
+    "safety_intervention_count": {
+      "n": 3,
+      "mean": 0.0,
+      "standard_deviation": 0.0,
+      "minimum": 0.0,
+      "maximum": 0.0
+    },
+    "grant_timeout_count": {
+      "n": 3,
+      "mean": 0.0,
+      "standard_deviation": 0.0,
+      "minimum": 0.0,
+      "maximum": 0.0
+    },
+    "total_tokens": {
+      "n": 3,
+      "mean": 0.0,
+      "standard_deviation": 0.0,
+      "minimum": 0.0,
+      "maximum": 0.0
+    }
+  },
+  {
+    "scenario_class": "S1_BALANCED_MIXED_TURN",
+    "vehicle_count": 8,
+    "planner": "GEMINI_CANDIDATE",
+    "seed_count": 3,
+    "seeds": [
+      1,
+      2,
+      3
+    ],
+    "departed": {
+      "n": 3,
+      "mean": 8.0,
+      "standard_deviation": 0.0,
+      "minimum": 8.0,
+      "maximum": 8.0
+    },
+    "arrived": {
+      "n": 3,
+      "mean": 8.0,
+      "standard_deviation": 0.0,
+      "minimum": 8.0,
+      "maximum": 8.0
+    },
+    "completion_rate": {
+      "n": 3,
+      "mean": 1.0,
+      "standard_deviation": 0.0,
+      "minimum": 1.0,
+      "maximum": 1.0
+    },
+    "throughput": {
+      "n": 3,
+      "mean": 8.0,
+      "standard_deviation": 0.0,
+      "minimum": 8.0,
+      "maximum": 8.0
+    },
+    "mean_waiting_time": {
+      "n": 3,
+      "mean": 9.75,
+      "standard_deviation": 0.9921567416492215,
+      "minimum": 8.625,
+      "maximum": 10.5
+    },
+    "maximum_waiting_time": {
+      "n": 3,
+      "mean": 22.333333333333332,
+      "standard_deviation": 3.0550504633038935,
+      "minimum": 19.0,
+      "maximum": 25.0
+    },
+    "mean_speed": {
+      "n": 3,
+      "mean": 7.312641030056643,
+      "standard_deviation": 0.2473736317926391,
+      "minimum": 7.152463235294114,
+      "maximum": 7.597549407114622
+    },
+    "episode_duration_seconds": {
+      "n": 3,
+      "mean": 73.33333333333333,
+      "standard_deviation": 2.0816659994661326,
+      "minimum": 71.0,
+      "maximum": 75.0
+    },
+    "collision_count": {
+      "n": 3,
+      "mean": 0.0,
+      "standard_deviation": 0.0,
+      "minimum": 0.0,
+      "maximum": 0.0
+    },
+    "decision_epoch_count": {
+      "n": 3,
+      "mean": 7.0,
+      "standard_deviation": 0.0,
+      "minimum": 7.0,
+      "maximum": 7.0
+    },
+    "grant_count": {
+      "n": 3,
+      "mean": 7.0,
+      "standard_deviation": 0.0,
+      "minimum": 7.0,
+      "maximum": 7.0
+    },
+    "gemini_request_count": {
+      "n": 3,
+      "mean": 7.0,
+      "standard_deviation": 0.0,
+      "minimum": 7.0,
+      "maximum": 7.0
+    },
+    "fallback_count": {
+      "n": 3,
+      "mean": 0.0,
+      "standard_deviation": 0.0,
+      "minimum": 0.0,
+      "maximum": 0.0
+    },
+    "safety_intervention_count": {
+      "n": 3,
+      "mean": 0.0,
+      "standard_deviation": 0.0,
+      "minimum": 0.0,
+      "maximum": 0.0
+    },
+    "grant_timeout_count": {
+      "n": 3,
+      "mean": 0.0,
+      "standard_deviation": 0.0,
+      "minimum": 0.0,
+      "maximum": 0.0
+    },
+    "total_tokens": {
+      "n": 3,
+      "mean": 6557.666666666667,
+      "standard_deviation": 180.35058451065063,
+      "minimum": 6350.0,
+      "maximum": 6675.0
+    }
+  },
+  {
+    "scenario_class": "S2_SIMULTANEOUS_CONFLICT",
+    "vehicle_count": 8,
+    "planner": "DETERMINISTIC_CANDIDATE",
+    "seed_count": 3,
+    "seeds": [
+      1,
+      2,
+      3
+    ],
+    "departed": {
+      "n": 3,
+      "mean": 8.0,
+      "standard_deviation": 0.0,
+      "minimum": 8.0,
+      "maximum": 8.0
+    },
+    "arrived": {
+      "n": 3,
+      "mean": 8.0,
+      "standard_deviation": 0.0,
+      "minimum": 8.0,
+      "maximum": 8.0
+    },
+    "completion_rate": {
+      "n": 3,
+      "mean": 1.0,
+      "standard_deviation": 0.0,
+      "minimum": 1.0,
+      "maximum": 1.0
+    },
+    "throughput": {
+      "n": 3,
+      "mean": 8.0,
+      "standard_deviation": 0.0,
+      "minimum": 8.0,
+      "maximum": 8.0
+    },
+    "mean_waiting_time": {
+      "n": 3,
+      "mean": 11.166666666666666,
+      "standard_deviation": 0.07216878364870322,
+      "minimum": 11.125,
+      "maximum": 11.25
+    },
+    "maximum_waiting_time": {
+      "n": 3,
+      "mean": 30.666666666666668,
+      "standard_deviation": 1.1547005383792515,
+      "minimum": 30.0,
+      "maximum": 32.0
+    },
+    "mean_speed": {
+      "n": 3,
+      "mean": 7.160696705793259,
+      "standard_deviation": 0.09724125925477203,
+      "minimum": 7.048421052631576,
+      "maximum": 7.218057553956834
+    },
+    "episode_duration_seconds": {
+      "n": 3,
+      "mean": 54.666666666666664,
+      "standard_deviation": 2.0816659994661326,
+      "minimum": 53.0,
+      "maximum": 57.0
+    },
+    "collision_count": {
+      "n": 3,
+      "mean": 0.0,
+      "standard_deviation": 0.0,
+      "minimum": 0.0,
+      "maximum": 0.0
+    },
+    "decision_epoch_count": {
+      "n": 3,
+      "mean": 5.0,
+      "standard_deviation": 0.0,
+      "minimum": 5.0,
+      "maximum": 5.0
+    },
+    "grant_count": {
+      "n": 3,
+      "mean": 5.0,
+      "standard_deviation": 0.0,
+      "minimum": 5.0,
+      "maximum": 5.0
+    },
+    "gemini_request_count": {
+      "n": 3,
+      "mean": 0.0,
+      "standard_deviation": 0.0,
+      "minimum": 0.0,
+      "maximum": 0.0
+    },
+    "fallback_count": {
+      "n": 3,
+      "mean": 0.0,
+      "standard_deviation": 0.0,
+      "minimum": 0.0,
+      "maximum": 0.0
+    },
+    "safety_intervention_count": {
+      "n": 3,
+      "mean": 0.0,
+      "standard_deviation": 0.0,
+      "minimum": 0.0,
+      "maximum": 0.0
+    },
+    "grant_timeout_count": {
+      "n": 3,
+      "mean": 0.0,
+      "standard_deviation": 0.0,
+      "minimum": 0.0,
+      "maximum": 0.0
+    },
+    "total_tokens": {
+      "n": 3,
+      "mean": 0.0,
+      "standard_deviation": 0.0,
+      "minimum": 0.0,
+      "maximum": 0.0
+    }
+  },
+  {
+    "scenario_class": "S2_SIMULTANEOUS_CONFLICT",
+    "vehicle_count": 8,
+    "planner": "GEMINI_CANDIDATE",
+    "seed_count": 3,
+    "seeds": [
+      1,
+      2,
+      3
+    ],
+    "departed": {
+      "n": 3,
+      "mean": 8.0,
+      "standard_deviation": 0.0,
+      "minimum": 8.0,
+      "maximum": 8.0
+    },
+    "arrived": {
+      "n": 3,
+      "mean": 8.0,
+      "standard_deviation": 0.0,
+      "minimum": 8.0,
+      "maximum": 8.0
+    },
+    "completion_rate": {
+      "n": 3,
+      "mean": 1.0,
+      "standard_deviation": 0.0,
+      "minimum": 1.0,
+      "maximum": 1.0
+    },
+    "throughput": {
+      "n": 3,
+      "mean": 8.0,
+      "standard_deviation": 0.0,
+      "minimum": 8.0,
+      "maximum": 8.0
+    },
+    "mean_waiting_time": {
+      "n": 3,
+      "mean": 10.833333333333334,
+      "standard_deviation": 0.6166103577895309,
+      "minimum": 10.125,
+      "maximum": 11.25
+    },
+    "maximum_waiting_time": {
+      "n": 3,
+      "mean": 30.333333333333332,
+      "standard_deviation": 1.5275252316519468,
+      "minimum": 29.0,
+      "maximum": 32.0
+    },
+    "mean_speed": {
+      "n": 3,
+      "mean": 7.298613169614683,
+      "standard_deviation": 0.2987301167120891,
+      "minimum": 7.048421052631576,
+      "maximum": 7.629360902255638
+    },
+    "episode_duration_seconds": {
+      "n": 3,
+      "mean": 54.333333333333336,
+      "standard_deviation": 2.516611478423583,
+      "minimum": 52.0,
+      "maximum": 57.0
+    },
+    "collision_count": {
+      "n": 3,
+      "mean": 0.0,
+      "standard_deviation": 0.0,
+      "minimum": 0.0,
+      "maximum": 0.0
+    },
+    "decision_epoch_count": {
+      "n": 3,
+      "mean": 5.0,
+      "standard_deviation": 0.0,
+      "minimum": 5.0,
+      "maximum": 5.0
+    },
+    "grant_count": {
+      "n": 3,
+      "mean": 5.0,
+      "standard_deviation": 0.0,
+      "minimum": 5.0,
+      "maximum": 5.0
+    },
+    "gemini_request_count": {
+      "n": 3,
+      "mean": 5.0,
+      "standard_deviation": 0.0,
+      "minimum": 5.0,
+      "maximum": 5.0
+    },
+    "fallback_count": {
+      "n": 3,
+      "mean": 0.0,
+      "standard_deviation": 0.0,
+      "minimum": 0.0,
+      "maximum": 0.0
+    },
+    "safety_intervention_count": {
+      "n": 3,
+      "mean": 0.0,
+      "standard_deviation": 0.0,
+      "minimum": 0.0,
+      "maximum": 0.0
+    },
+    "grant_timeout_count": {
+      "n": 3,
+      "mean": 0.0,
+      "standard_deviation": 0.0,
+      "minimum": 0.0,
+      "maximum": 0.0
+    },
+    "total_tokens": {
+      "n": 3,
+      "mean": 7933.666666666667,
+      "standard_deviation": 357.3812156973745,
+      "minimum": 7521.0,
+      "maximum": 8141.0
+    }
+  },
+  {
+    "scenario_class": "S3_COOPERATIVE_OPPORTUNITY",
+    "vehicle_count": 8,
+    "planner": "DETERMINISTIC_CANDIDATE",
+    "seed_count": 3,
+    "seeds": [
+      1,
+      2,
+      3
+    ],
+    "departed": {
+      "n": 3,
+      "mean": 8.0,
+      "standard_deviation": 0.0,
+      "minimum": 8.0,
+      "maximum": 8.0
+    },
+    "arrived": {
+      "n": 3,
+      "mean": 8.0,
+      "standard_deviation": 0.0,
+      "minimum": 8.0,
+      "maximum": 8.0
+    },
+    "completion_rate": {
+      "n": 3,
+      "mean": 1.0,
+      "standard_deviation": 0.0,
+      "minimum": 1.0,
+      "maximum": 1.0
+    },
+    "throughput": {
+      "n": 3,
+      "mean": 8.0,
+      "standard_deviation": 0.0,
+      "minimum": 8.0,
+      "maximum": 8.0
+    },
+    "mean_waiting_time": {
+      "n": 3,
+      "mean": 6.708333333333333,
+      "standard_deviation": 0.7534642216677135,
+      "minimum": 6.0,
+      "maximum": 7.5
+    },
+    "maximum_waiting_time": {
+      "n": 3,
+      "mean": 15.0,
+      "standard_deviation": 2.6457513110645907,
+      "minimum": 13.0,
+      "maximum": 18.0
+    },
+    "mean_speed": {
+      "n": 3,
+      "mean": 7.794729180986984,
+      "standard_deviation": 0.3412356701121644,
+      "minimum": 7.449596774193545,
+      "maximum": 8.131929824561402
+    },
+    "episode_duration_seconds": {
+      "n": 3,
+      "mean": 45.666666666666664,
+      "standard_deviation": 3.0550504633038935,
+      "minimum": 43.0,
+      "maximum": 49.0
+    },
+    "collision_count": {
+      "n": 3,
+      "mean": 0.0,
+      "standard_deviation": 0.0,
+      "minimum": 0.0,
+      "maximum": 0.0
+    },
+    "decision_epoch_count": {
+      "n": 3,
+      "mean": 4.0,
+      "standard_deviation": 0.0,
+      "minimum": 4.0,
+      "maximum": 4.0
+    },
+    "grant_count": {
+      "n": 3,
+      "mean": 4.0,
+      "standard_deviation": 0.0,
+      "minimum": 4.0,
+      "maximum": 4.0
+    },
+    "gemini_request_count": {
+      "n": 3,
+      "mean": 0.0,
+      "standard_deviation": 0.0,
+      "minimum": 0.0,
+      "maximum": 0.0
+    },
+    "fallback_count": {
+      "n": 3,
+      "mean": 0.0,
+      "standard_deviation": 0.0,
+      "minimum": 0.0,
+      "maximum": 0.0
+    },
+    "safety_intervention_count": {
+      "n": 3,
+      "mean": 0.0,
+      "standard_deviation": 0.0,
+      "minimum": 0.0,
+      "maximum": 0.0
+    },
+    "grant_timeout_count": {
+      "n": 3,
+      "mean": 0.0,
+      "standard_deviation": 0.0,
+      "minimum": 0.0,
+      "maximum": 0.0
+    },
+    "total_tokens": {
+      "n": 3,
+      "mean": 0.0,
+      "standard_deviation": 0.0,
+      "minimum": 0.0,
+      "maximum": 0.0
+    }
+  },
+  {
+    "scenario_class": "S3_COOPERATIVE_OPPORTUNITY",
+    "vehicle_count": 8,
+    "planner": "GEMINI_CANDIDATE",
+    "seed_count": 3,
+    "seeds": [
+      1,
+      2,
+      3
+    ],
+    "departed": {
+      "n": 3,
+      "mean": 8.0,
+      "standard_deviation": 0.0,
+      "minimum": 8.0,
+      "maximum": 8.0
+    },
+    "arrived": {
+      "n": 3,
+      "mean": 8.0,
+      "standard_deviation": 0.0,
+      "minimum": 8.0,
+      "maximum": 8.0
+    },
+    "completion_rate": {
+      "n": 3,
+      "mean": 1.0,
+      "standard_deviation": 0.0,
+      "minimum": 1.0,
+      "maximum": 1.0
+    },
+    "throughput": {
+      "n": 3,
+      "mean": 8.0,
+      "standard_deviation": 0.0,
+      "minimum": 8.0,
+      "maximum": 8.0
+    },
+    "mean_waiting_time": {
+      "n": 3,
+      "mean": 6.708333333333333,
+      "standard_deviation": 0.7534642216677135,
+      "minimum": 6.0,
+      "maximum": 7.5
+    },
+    "maximum_waiting_time": {
+      "n": 3,
+      "mean": 15.0,
+      "standard_deviation": 2.6457513110645907,
+      "minimum": 13.0,
+      "maximum": 18.0
+    },
+    "mean_speed": {
+      "n": 3,
+      "mean": 7.794729180986984,
+      "standard_deviation": 0.3412356701121644,
+      "minimum": 7.449596774193545,
+      "maximum": 8.131929824561402
+    },
+    "episode_duration_seconds": {
+      "n": 3,
+      "mean": 45.666666666666664,
+      "standard_deviation": 3.0550504633038935,
+      "minimum": 43.0,
+      "maximum": 49.0
+    },
+    "collision_count": {
+      "n": 3,
+      "mean": 0.0,
+      "standard_deviation": 0.0,
+      "minimum": 0.0,
+      "maximum": 0.0
+    },
+    "decision_epoch_count": {
+      "n": 3,
+      "mean": 4.0,
+      "standard_deviation": 0.0,
+      "minimum": 4.0,
+      "maximum": 4.0
+    },
+    "grant_count": {
+      "n": 3,
+      "mean": 4.0,
+      "standard_deviation": 0.0,
+      "minimum": 4.0,
+      "maximum": 4.0
+    },
+    "gemini_request_count": {
+      "n": 3,
+      "mean": 4.0,
+      "standard_deviation": 0.0,
+      "minimum": 4.0,
+      "maximum": 4.0
+    },
+    "fallback_count": {
+      "n": 3,
+      "mean": 0.0,
+      "standard_deviation": 0.0,
+      "minimum": 0.0,
+      "maximum": 0.0
+    },
+    "safety_intervention_count": {
+      "n": 3,
+      "mean": 0.0,
+      "standard_deviation": 0.0,
+      "minimum": 0.0,
+      "maximum": 0.0
+    },
+    "grant_timeout_count": {
+      "n": 3,
+      "mean": 0.0,
+      "standard_deviation": 0.0,
+      "minimum": 0.0,
+      "maximum": 0.0
+    },
+    "total_tokens": {
+      "n": 3,
+      "mean": 7211.0,
+      "standard_deviation": 200.23236501624805,
+      "minimum": 7087.0,
+      "maximum": 7442.0
+    }
+  },
+  {
+    "scenario_class": "S3_COOPERATIVE_OPPORTUNITY",
+    "vehicle_count": 12,
+    "planner": "DETERMINISTIC_CANDIDATE",
+    "seed_count": 3,
+    "seeds": [
+      1,
+      2,
+      3
+    ],
+    "departed": {
+      "n": 3,
+      "mean": 12.0,
+      "standard_deviation": 0.0,
+      "minimum": 12.0,
+      "maximum": 12.0
+    },
+    "arrived": {
+      "n": 3,
+      "mean": 12.0,
+      "standard_deviation": 0.0,
+      "minimum": 12.0,
+      "maximum": 12.0
+    },
+    "completion_rate": {
+      "n": 3,
+      "mean": 1.0,
+      "standard_deviation": 0.0,
+      "minimum": 1.0,
+      "maximum": 1.0
+    },
+    "throughput": {
+      "n": 3,
+      "mean": 12.0,
+      "standard_deviation": 0.0,
+      "minimum": 12.0,
+      "maximum": 12.0
+    },
+    "mean_waiting_time": {
+      "n": 3,
+      "mean": 8.13888888888889,
+      "standard_deviation": 1.3342011065025365,
+      "minimum": 6.833333333333333,
+      "maximum": 9.5
+    },
+    "maximum_waiting_time": {
+      "n": 3,
+      "mean": 23.333333333333332,
+      "standard_deviation": 3.5118845842842465,
+      "minimum": 20.0,
+      "maximum": 27.0
+    },
+    "mean_speed": {
+      "n": 3,
+      "mean": 7.310541327404846,
+      "standard_deviation": 0.4243587757794499,
+      "minimum": 6.8736868686868675,
+      "maximum": 7.721189801699716
+    },
+    "episode_duration_seconds": {
+      "n": 3,
+      "mean": 54.0,
+      "standard_deviation": 3.4641016151377544,
+      "minimum": 52.0,
+      "maximum": 58.0
+    },
+    "collision_count": {
+      "n": 3,
+      "mean": 0.0,
+      "standard_deviation": 0.0,
+      "minimum": 0.0,
+      "maximum": 0.0
+    },
+    "decision_epoch_count": {
+      "n": 3,
+      "mean": 5.0,
+      "standard_deviation": 0.0,
+      "minimum": 5.0,
+      "maximum": 5.0
+    },
+    "grant_count": {
+      "n": 3,
+      "mean": 5.0,
+      "standard_deviation": 0.0,
+      "minimum": 5.0,
+      "maximum": 5.0
+    },
+    "gemini_request_count": {
+      "n": 3,
+      "mean": 0.0,
+      "standard_deviation": 0.0,
+      "minimum": 0.0,
+      "maximum": 0.0
+    },
+    "fallback_count": {
+      "n": 3,
+      "mean": 0.0,
+      "standard_deviation": 0.0,
+      "minimum": 0.0,
+      "maximum": 0.0
+    },
+    "safety_intervention_count": {
+      "n": 3,
+      "mean": 0.0,
+      "standard_deviation": 0.0,
+      "minimum": 0.0,
+      "maximum": 0.0
+    },
+    "grant_timeout_count": {
+      "n": 3,
+      "mean": 0.0,
+      "standard_deviation": 0.0,
+      "minimum": 0.0,
+      "maximum": 0.0
+    },
+    "total_tokens": {
+      "n": 3,
+      "mean": 0.0,
+      "standard_deviation": 0.0,
+      "minimum": 0.0,
+      "maximum": 0.0
+    }
+  },
+  {
+    "scenario_class": "S3_COOPERATIVE_OPPORTUNITY",
+    "vehicle_count": 12,
+    "planner": "GEMINI_CANDIDATE",
+    "seed_count": 3,
+    "seeds": [
+      1,
+      2,
+      3
+    ],
+    "departed": {
+      "n": 3,
+      "mean": 12.0,
+      "standard_deviation": 0.0,
+      "minimum": 12.0,
+      "maximum": 12.0
+    },
+    "arrived": {
+      "n": 3,
+      "mean": 12.0,
+      "standard_deviation": 0.0,
+      "minimum": 12.0,
+      "maximum": 12.0
+    },
+    "completion_rate": {
+      "n": 3,
+      "mean": 1.0,
+      "standard_deviation": 0.0,
+      "minimum": 1.0,
+      "maximum": 1.0
+    },
+    "throughput": {
+      "n": 3,
+      "mean": 12.0,
+      "standard_deviation": 0.0,
+      "minimum": 12.0,
+      "maximum": 12.0
+    },
+    "mean_waiting_time": {
+      "n": 3,
+      "mean": 9.805555555555555,
+      "standard_deviation": 1.1002945733521308,
+      "minimum": 8.833333333333334,
+      "maximum": 11.0
+    },
+    "maximum_waiting_time": {
+      "n": 3,
+      "mean": 24.333333333333332,
+      "standard_deviation": 2.309401076758503,
+      "minimum": 23.0,
+      "maximum": 27.0
+    },
+    "mean_speed": {
+      "n": 3,
+      "mean": 6.899560517360633,
+      "standard_deviation": 0.31198178468194826,
+      "minimum": 6.5546394230769245,
+      "maximum": 7.1620472440944845
+    },
+    "episode_duration_seconds": {
+      "n": 3,
+      "mean": 55.0,
+      "standard_deviation": 3.0,
+      "minimum": 52.0,
+      "maximum": 58.0
+    },
+    "collision_count": {
+      "n": 3,
+      "mean": 0.0,
+      "standard_deviation": 0.0,
+      "minimum": 0.0,
+      "maximum": 0.0
+    },
+    "decision_epoch_count": {
+      "n": 3,
+      "mean": 5.0,
+      "standard_deviation": 0.0,
+      "minimum": 5.0,
+      "maximum": 5.0
+    },
+    "grant_count": {
+      "n": 3,
+      "mean": 5.0,
+      "standard_deviation": 0.0,
+      "minimum": 5.0,
+      "maximum": 5.0
+    },
+    "gemini_request_count": {
+      "n": 3,
+      "mean": 5.0,
+      "standard_deviation": 0.0,
+      "minimum": 5.0,
+      "maximum": 5.0
+    },
+    "fallback_count": {
+      "n": 3,
+      "mean": 0.0,
+      "standard_deviation": 0.0,
+      "minimum": 0.0,
+      "maximum": 0.0
+    },
+    "safety_intervention_count": {
+      "n": 3,
+      "mean": 0.0,
+      "standard_deviation": 0.0,
+      "minimum": 0.0,
+      "maximum": 0.0
+    },
+    "grant_timeout_count": {
+      "n": 3,
+      "mean": 0.0,
+      "standard_deviation": 0.0,
+      "minimum": 0.0,
+      "maximum": 0.0
+    },
+    "total_tokens": {
+      "n": 3,
+      "mean": 16787.666666666668,
+      "standard_deviation": 185.62686587165484,
+      "minimum": 16663.0,
+      "maximum": 17001.0
+    }
+  },
+  {
+    "scenario_class": "S4_FAIRNESS_PRESSURE",
+    "vehicle_count": 8,
+    "planner": "DETERMINISTIC_CANDIDATE",
+    "seed_count": 3,
+    "seeds": [
+      1,
+      2,
+      3
+    ],
+    "departed": {
+      "n": 3,
+      "mean": 8.0,
+      "standard_deviation": 0.0,
+      "minimum": 8.0,
+      "maximum": 8.0
+    },
+    "arrived": {
+      "n": 3,
+      "mean": 8.0,
+      "standard_deviation": 0.0,
+      "minimum": 8.0,
+      "maximum": 8.0
+    },
+    "completion_rate": {
+      "n": 3,
+      "mean": 1.0,
+      "standard_deviation": 0.0,
+      "minimum": 1.0,
+      "maximum": 1.0
+    },
+    "throughput": {
+      "n": 3,
+      "mean": 8.0,
+      "standard_deviation": 0.0,
+      "minimum": 8.0,
+      "maximum": 8.0
+    },
+    "mean_waiting_time": {
+      "n": 3,
+      "mean": 5.791666666666667,
+      "standard_deviation": 0.4389855730355308,
+      "minimum": 5.375,
+      "maximum": 6.25
+    },
+    "maximum_waiting_time": {
+      "n": 3,
+      "mean": 20.666666666666668,
+      "standard_deviation": 2.0816659994661326,
+      "minimum": 19.0,
+      "maximum": 23.0
+    },
+    "mean_speed": {
+      "n": 3,
+      "mean": 8.207165618239047,
+      "standard_deviation": 0.29383241585375475,
+      "minimum": 7.877368421052626,
+      "maximum": 8.441077586206891
+    },
+    "episode_duration_seconds": {
+      "n": 3,
+      "mean": 44.0,
+      "standard_deviation": 1.7320508075688772,
+      "minimum": 43.0,
+      "maximum": 46.0
+    },
+    "collision_count": {
+      "n": 3,
+      "mean": 0.0,
+      "standard_deviation": 0.0,
+      "minimum": 0.0,
+      "maximum": 0.0
+    },
+    "decision_epoch_count": {
+      "n": 3,
+      "mean": 4.0,
+      "standard_deviation": 0.0,
+      "minimum": 4.0,
+      "maximum": 4.0
+    },
+    "grant_count": {
+      "n": 3,
+      "mean": 4.0,
+      "standard_deviation": 0.0,
+      "minimum": 4.0,
+      "maximum": 4.0
+    },
+    "gemini_request_count": {
+      "n": 3,
+      "mean": 0.0,
+      "standard_deviation": 0.0,
+      "minimum": 0.0,
+      "maximum": 0.0
+    },
+    "fallback_count": {
+      "n": 3,
+      "mean": 0.0,
+      "standard_deviation": 0.0,
+      "minimum": 0.0,
+      "maximum": 0.0
+    },
+    "safety_intervention_count": {
+      "n": 3,
+      "mean": 0.0,
+      "standard_deviation": 0.0,
+      "minimum": 0.0,
+      "maximum": 0.0
+    },
+    "grant_timeout_count": {
+      "n": 3,
+      "mean": 0.0,
+      "standard_deviation": 0.0,
+      "minimum": 0.0,
+      "maximum": 0.0
+    },
+    "total_tokens": {
+      "n": 3,
+      "mean": 0.0,
+      "standard_deviation": 0.0,
+      "minimum": 0.0,
+      "maximum": 0.0
+    }
+  },
+  {
+    "scenario_class": "S4_FAIRNESS_PRESSURE",
+    "vehicle_count": 8,
+    "planner": "GEMINI_CANDIDATE",
+    "seed_count": 3,
+    "seeds": [
+      1,
+      2,
+      3
+    ],
+    "departed": {
+      "n": 3,
+      "mean": 8.0,
+      "standard_deviation": 0.0,
+      "minimum": 8.0,
+      "maximum": 8.0
+    },
+    "arrived": {
+      "n": 3,
+      "mean": 8.0,
+      "standard_deviation": 0.0,
+      "minimum": 8.0,
+      "maximum": 8.0
+    },
+    "completion_rate": {
+      "n": 3,
+      "mean": 1.0,
+      "standard_deviation": 0.0,
+      "minimum": 1.0,
+      "maximum": 1.0
+    },
+    "throughput": {
+      "n": 3,
+      "mean": 8.0,
+      "standard_deviation": 0.0,
+      "minimum": 8.0,
+      "maximum": 8.0
+    },
+    "mean_waiting_time": {
+      "n": 3,
+      "mean": 5.791666666666667,
+      "standard_deviation": 0.4389855730355308,
+      "minimum": 5.375,
+      "maximum": 6.25
+    },
+    "maximum_waiting_time": {
+      "n": 3,
+      "mean": 20.666666666666668,
+      "standard_deviation": 2.0816659994661326,
+      "minimum": 19.0,
+      "maximum": 23.0
+    },
+    "mean_speed": {
+      "n": 3,
+      "mean": 8.207165618239047,
+      "standard_deviation": 0.29383241585375475,
+      "minimum": 7.877368421052626,
+      "maximum": 8.441077586206891
+    },
+    "episode_duration_seconds": {
+      "n": 3,
+      "mean": 44.0,
+      "standard_deviation": 1.7320508075688772,
+      "minimum": 43.0,
+      "maximum": 46.0
+    },
+    "collision_count": {
+      "n": 3,
+      "mean": 0.0,
+      "standard_deviation": 0.0,
+      "minimum": 0.0,
+      "maximum": 0.0
+    },
+    "decision_epoch_count": {
+      "n": 3,
+      "mean": 4.0,
+      "standard_deviation": 0.0,
+      "minimum": 4.0,
+      "maximum": 4.0
+    },
+    "grant_count": {
+      "n": 3,
+      "mean": 4.0,
+      "standard_deviation": 0.0,
+      "minimum": 4.0,
+      "maximum": 4.0
+    },
+    "gemini_request_count": {
+      "n": 3,
+      "mean": 4.0,
+      "standard_deviation": 0.0,
+      "minimum": 4.0,
+      "maximum": 4.0
+    },
+    "fallback_count": {
+      "n": 3,
+      "mean": 0.0,
+      "standard_deviation": 0.0,
+      "minimum": 0.0,
+      "maximum": 0.0
+    },
+    "safety_intervention_count": {
+      "n": 3,
+      "mean": 0.0,
+      "standard_deviation": 0.0,
+      "minimum": 0.0,
+      "maximum": 0.0
+    },
+    "grant_timeout_count": {
+      "n": 3,
+      "mean": 0.0,
+      "standard_deviation": 0.0,
+      "minimum": 0.0,
+      "maximum": 0.0
+    },
+    "total_tokens": {
+      "n": 3,
+      "mean": 7922.0,
+      "standard_deviation": 6.082762530298219,
+      "minimum": 7918.0,
+      "maximum": 7929.0
+    }
+  },
+  {
+    "scenario_class": "S4_FAIRNESS_PRESSURE",
+    "vehicle_count": 16,
+    "planner": "DETERMINISTIC_CANDIDATE",
+    "seed_count": 3,
+    "seeds": [
+      1,
+      2,
+      3
+    ],
+    "departed": {
+      "n": 3,
+      "mean": 16.0,
+      "standard_deviation": 0.0,
+      "minimum": 16.0,
+      "maximum": 16.0
+    },
+    "arrived": {
+      "n": 3,
+      "mean": 16.0,
+      "standard_deviation": 0.0,
+      "minimum": 16.0,
+      "maximum": 16.0
+    },
+    "completion_rate": {
+      "n": 3,
+      "mean": 1.0,
+      "standard_deviation": 0.0,
+      "minimum": 1.0,
+      "maximum": 1.0
+    },
+    "throughput": {
+      "n": 3,
+      "mean": 16.0,
+      "standard_deviation": 0.0,
+      "minimum": 16.0,
+      "maximum": 16.0
+    },
+    "mean_waiting_time": {
+      "n": 3,
+      "mean": 9.604166666666666,
+      "standard_deviation": 1.0103629710818451,
+      "minimum": 8.6875,
+      "maximum": 10.6875
+    },
+    "maximum_waiting_time": {
+      "n": 3,
+      "mean": 33.666666666666664,
+      "standard_deviation": 0.5773502691896257,
+      "minimum": 33.0,
+      "maximum": 34.0
+    },
+    "mean_speed": {
+      "n": 3,
+      "mean": 7.250542190293682,
+      "standard_deviation": 0.28647627488233113,
+      "minimum": 6.935197132616485,
+      "maximum": 7.494740882917467
+    },
+    "episode_duration_seconds": {
+      "n": 3,
+      "mean": 66.33333333333333,
+      "standard_deviation": 1.5275252316519468,
+      "minimum": 65.0,
+      "maximum": 68.0
+    },
+    "collision_count": {
+      "n": 3,
+      "mean": 0.0,
+      "standard_deviation": 0.0,
+      "minimum": 0.0,
+      "maximum": 0.0
+    },
+    "decision_epoch_count": {
+      "n": 3,
+      "mean": 6.0,
+      "standard_deviation": 0.0,
+      "minimum": 6.0,
+      "maximum": 6.0
+    },
+    "grant_count": {
+      "n": 3,
+      "mean": 6.0,
+      "standard_deviation": 0.0,
+      "minimum": 6.0,
+      "maximum": 6.0
+    },
+    "gemini_request_count": {
+      "n": 3,
+      "mean": 0.0,
+      "standard_deviation": 0.0,
+      "minimum": 0.0,
+      "maximum": 0.0
+    },
+    "fallback_count": {
+      "n": 3,
+      "mean": 0.0,
+      "standard_deviation": 0.0,
+      "minimum": 0.0,
+      "maximum": 0.0
+    },
+    "safety_intervention_count": {
+      "n": 3,
+      "mean": 0.0,
+      "standard_deviation": 0.0,
+      "minimum": 0.0,
+      "maximum": 0.0
+    },
+    "grant_timeout_count": {
+      "n": 3,
+      "mean": 0.0,
+      "standard_deviation": 0.0,
+      "minimum": 0.0,
+      "maximum": 0.0
+    },
+    "total_tokens": {
+      "n": 3,
+      "mean": 0.0,
+      "standard_deviation": 0.0,
+      "minimum": 0.0,
+      "maximum": 0.0
+    }
+  },
+  {
+    "scenario_class": "S4_FAIRNESS_PRESSURE",
+    "vehicle_count": 16,
+    "planner": "GEMINI_CANDIDATE",
+    "seed_count": 3,
+    "seeds": [
+      1,
+      2,
+      3
+    ],
+    "departed": {
+      "n": 3,
+      "mean": 16.0,
+      "standard_deviation": 0.0,
+      "minimum": 16.0,
+      "maximum": 16.0
+    },
+    "arrived": {
+      "n": 3,
+      "mean": 16.0,
+      "standard_deviation": 0.0,
+      "minimum": 16.0,
+      "maximum": 16.0
+    },
+    "completion_rate": {
+      "n": 3,
+      "mean": 1.0,
+      "standard_deviation": 0.0,
+      "minimum": 1.0,
+      "maximum": 1.0
+    },
+    "throughput": {
+      "n": 3,
+      "mean": 16.0,
+      "standard_deviation": 0.0,
+      "minimum": 16.0,
+      "maximum": 16.0
+    },
+    "mean_waiting_time": {
+      "n": 3,
+      "mean": 9.604166666666666,
+      "standard_deviation": 1.0103629710818451,
+      "minimum": 8.6875,
+      "maximum": 10.6875
+    },
+    "maximum_waiting_time": {
+      "n": 3,
+      "mean": 33.666666666666664,
+      "standard_deviation": 0.5773502691896257,
+      "minimum": 33.0,
+      "maximum": 34.0
+    },
+    "mean_speed": {
+      "n": 3,
+      "mean": 7.250542190293682,
+      "standard_deviation": 0.28647627488233113,
+      "minimum": 6.935197132616485,
+      "maximum": 7.494740882917467
+    },
+    "episode_duration_seconds": {
+      "n": 3,
+      "mean": 66.33333333333333,
+      "standard_deviation": 1.5275252316519468,
+      "minimum": 65.0,
+      "maximum": 68.0
+    },
+    "collision_count": {
+      "n": 3,
+      "mean": 0.0,
+      "standard_deviation": 0.0,
+      "minimum": 0.0,
+      "maximum": 0.0
+    },
+    "decision_epoch_count": {
+      "n": 3,
+      "mean": 6.0,
+      "standard_deviation": 0.0,
+      "minimum": 6.0,
+      "maximum": 6.0
+    },
+    "grant_count": {
+      "n": 3,
+      "mean": 6.0,
+      "standard_deviation": 0.0,
+      "minimum": 6.0,
+      "maximum": 6.0
+    },
+    "gemini_request_count": {
+      "n": 3,
+      "mean": 6.0,
+      "standard_deviation": 0.0,
+      "minimum": 6.0,
+      "maximum": 6.0
+    },
+    "fallback_count": {
+      "n": 3,
+      "mean": 0.0,
+      "standard_deviation": 0.0,
+      "minimum": 0.0,
+      "maximum": 0.0
+    },
+    "safety_intervention_count": {
+      "n": 3,
+      "mean": 0.0,
+      "standard_deviation": 0.0,
+      "minimum": 0.0,
+      "maximum": 0.0
+    },
+    "grant_timeout_count": {
+      "n": 3,
+      "mean": 0.0,
+      "standard_deviation": 0.0,
+      "minimum": 0.0,
+      "maximum": 0.0
+    },
+    "total_tokens": {
+      "n": 3,
+      "mean": 23585.333333333332,
+      "standard_deviation": 46.70474636836532,
+      "minimum": 23544.0,
+      "maximum": 23636.0
+    }
+  }
+]

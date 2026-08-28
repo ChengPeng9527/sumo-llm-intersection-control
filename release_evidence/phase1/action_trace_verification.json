@@ -1,0 +1,351 @@
+{
+  "kind": "derived_action_trace_verification",
+  "scientific_result_created": false,
+  "normalization": "simulation_step|simulation_time_seconds|vehicle_id|route_id|final_decision in original CSV row order",
+  "source_files": [
+    {
+      "vehicle_count": 4,
+      "seed": 1,
+      "controller": "RawLLM",
+      "source_path": "results/formal_experiment/dissertation_formal_v2/runs/seed1_v4/FE04_RAW_LLM_v4_seed1_real/step_records.csv",
+      "source_sha256": "5668AC19EBD7A962FA48630DEBDA37E3DD66CBDCEF8FF4B2F620D942D128BB99",
+      "projected_row_count": 148,
+      "action_counts": {
+        "WAIT": 16,
+        "PROCEED": 81,
+        "FREE": 51
+      },
+      "normalized_action_trace_sha256": "C7B62733626884286D41BD935CFA1188BF825901B5DC0403B560C24043FF8279"
+    },
+    {
+      "vehicle_count": 4,
+      "seed": 1,
+      "controller": "HybridLLM",
+      "source_path": "results/formal_experiment/dissertation_formal_v2/runs/seed1_v4/FE05_HYBRID_v4_seed1_real/step_records.csv",
+      "source_sha256": "4CCBD0B4D6854E084A6803D1EEEDE310FDDC7574248434FEA4FD725302A50C6F",
+      "projected_row_count": 148,
+      "action_counts": {
+        "WAIT": 16,
+        "PROCEED": 81,
+        "FREE": 51
+      },
+      "normalized_action_trace_sha256": "C7B62733626884286D41BD935CFA1188BF825901B5DC0403B560C24043FF8279"
+    },
+    {
+      "vehicle_count": 4,
+      "seed": 1,
+      "controller": "HybridLLMSafety",
+      "source_path": "results/formal_experiment/dissertation_formal_v2/runs/seed1_v4/FE06_HYBRID_SAFETY_v4_seed1_real/step_records.csv",
+      "source_sha256": "10A2164AB26A259AD4366C74B5F12EA8FC1524342911EAEDF2C64D97EAAAD20E",
+      "projected_row_count": 148,
+      "action_counts": {
+        "WAIT": 16,
+        "PROCEED": 81,
+        "FREE": 51
+      },
+      "normalized_action_trace_sha256": "C7B62733626884286D41BD935CFA1188BF825901B5DC0403B560C24043FF8279"
+    },
+    {
+      "vehicle_count": 4,
+      "seed": 2,
+      "controller": "RawLLM",
+      "source_path": "results/formal_experiment/dissertation_formal_v2/runs/seed2_v4/FE04_RAW_LLM_v4_seed2_real/step_records.csv",
+      "source_sha256": "2ECC10DC08EFDC64CDC4E97E9EDCD0C1CD1946FC8455D1C608E74FB0CED3362C",
+      "projected_row_count": 148,
+      "action_counts": {
+        "WAIT": 16,
+        "PROCEED": 81,
+        "FREE": 51
+      },
+      "normalized_action_trace_sha256": "C7B62733626884286D41BD935CFA1188BF825901B5DC0403B560C24043FF8279"
+    },
+    {
+      "vehicle_count": 4,
+      "seed": 2,
+      "controller": "HybridLLM",
+      "source_path": "results/formal_experiment/dissertation_formal_v2/runs/seed2_v4/FE05_HYBRID_v4_seed2_real/step_records.csv",
+      "source_sha256": "FD3492C960A417E882B47A47390273BC630ADFFECB27813B03861F273FAD062C",
+      "projected_row_count": 148,
+      "action_counts": {
+        "WAIT": 16,
+        "PROCEED": 81,
+        "FREE": 51
+      },
+      "normalized_action_trace_sha256": "C7B62733626884286D41BD935CFA1188BF825901B5DC0403B560C24043FF8279"
+    },
+    {
+      "vehicle_count": 4,
+      "seed": 2,
+      "controller": "HybridLLMSafety",
+      "source_path": "results/formal_experiment/dissertation_formal_v2/runs/seed2_v4/FE06_HYBRID_SAFETY_v4_seed2_real/step_records.csv",
+      "source_sha256": "D0D518872831CA63223D066BEEEEB6A911CC03FC6F15545EDB30C2A87A4DD8AD",
+      "projected_row_count": 148,
+      "action_counts": {
+        "WAIT": 16,
+        "PROCEED": 81,
+        "FREE": 51
+      },
+      "normalized_action_trace_sha256": "C7B62733626884286D41BD935CFA1188BF825901B5DC0403B560C24043FF8279"
+    },
+    {
+      "vehicle_count": 4,
+      "seed": 3,
+      "controller": "RawLLM",
+      "source_path": "results/formal_experiment/dissertation_formal_v2/runs/seed3_v4/FE04_RAW_LLM_v4_seed3_real/step_records.csv",
+      "source_sha256": "DA29800ADC6725044E631B9B1103F022171235256B624F266FA13CB2AA083856",
+      "projected_row_count": 148,
+      "action_counts": {
+        "WAIT": 16,
+        "PROCEED": 81,
+        "FREE": 51
+      },
+      "normalized_action_trace_sha256": "C7B62733626884286D41BD935CFA1188BF825901B5DC0403B560C24043FF8279"
+    },
+    {
+      "vehicle_count": 4,
+      "seed": 3,
+      "controller": "HybridLLM",
+      "source_path": "results/formal_experiment/dissertation_formal_v2/runs/seed3_v4/FE05_HYBRID_v4_seed3_real/step_records.csv",
+      "source_sha256": "B308CA1E0B9B89E6B3192260C4BDF1DAC7294835433B9D177225EBCF3BF583FE",
+      "projected_row_count": 148,
+      "action_counts": {
+        "WAIT": 16,
+        "PROCEED": 81,
+        "FREE": 51
+      },
+      "normalized_action_trace_sha256": "C7B62733626884286D41BD935CFA1188BF825901B5DC0403B560C24043FF8279"
+    },
+    {
+      "vehicle_count": 4,
+      "seed": 3,
+      "controller": "HybridLLMSafety",
+      "source_path": "results/formal_experiment/dissertation_formal_v2/runs/seed3_v4/FE06_HYBRID_SAFETY_v4_seed3_real/step_records.csv",
+      "source_sha256": "C2C0F940E3043DAC609951B3BC36EF31F53270C46764269055331F17E990AE7F",
+      "projected_row_count": 148,
+      "action_counts": {
+        "WAIT": 16,
+        "PROCEED": 81,
+        "FREE": 51
+      },
+      "normalized_action_trace_sha256": "C7B62733626884286D41BD935CFA1188BF825901B5DC0403B560C24043FF8279"
+    },
+    {
+      "vehicle_count": 8,
+      "seed": 1,
+      "controller": "RawLLM",
+      "source_path": "results/formal_experiment/dissertation_formal_v4/runs/seed1_v8/FE04_RAW_LLM_v8_seed1_v4_real/step_records.csv",
+      "source_sha256": "D1A77A987E83DB468F0265F0F142F9BBB7D7E46D0AEEB71CB4CCA958DA11F537",
+      "projected_row_count": 290,
+      "action_counts": {
+        "WAIT": 12,
+        "PROCEED": 172,
+        "FREE": 106
+      },
+      "normalized_action_trace_sha256": "9D01464B96ED018A5995668E1AE2D6E941A9513ACF3996A897790536416585E1"
+    },
+    {
+      "vehicle_count": 8,
+      "seed": 1,
+      "controller": "HybridLLM",
+      "source_path": "results/formal_experiment/dissertation_formal_v4/runs/seed1_v8/FE05_HYBRID_v8_seed1_v4_real/step_records.csv",
+      "source_sha256": "A14692376E09A3A9D9466907AB9CE78AD8B0DE402EAE3CB007E8C24A3C9B4B1D",
+      "projected_row_count": 290,
+      "action_counts": {
+        "WAIT": 12,
+        "PROCEED": 172,
+        "FREE": 106
+      },
+      "normalized_action_trace_sha256": "9D01464B96ED018A5995668E1AE2D6E941A9513ACF3996A897790536416585E1"
+    },
+    {
+      "vehicle_count": 8,
+      "seed": 1,
+      "controller": "HybridLLMSafety",
+      "source_path": "results/formal_experiment/dissertation_formal_v4/runs/seed1_v8/FE06_HYBRID_SAFETY_v8_seed1_v4_real/step_records.csv",
+      "source_sha256": "B0EBA4BBDC965CCB3B8205CE0C22B62F0381727CAA758F5F9DF55340DC4E8745",
+      "projected_row_count": 290,
+      "action_counts": {
+        "WAIT": 12,
+        "PROCEED": 172,
+        "FREE": 106
+      },
+      "normalized_action_trace_sha256": "9D01464B96ED018A5995668E1AE2D6E941A9513ACF3996A897790536416585E1"
+    },
+    {
+      "vehicle_count": 8,
+      "seed": 2,
+      "controller": "RawLLM",
+      "source_path": "results/formal_experiment/dissertation_formal_v4/runs/seed2_v8/FE04_RAW_LLM_v8_seed2_v4_real/step_records.csv",
+      "source_sha256": "232FDD439644C980689D692FBB9ACA867BF82A8BC82E39F22E262DBBC9BA8A49",
+      "projected_row_count": 335,
+      "action_counts": {
+        "WAIT": 58,
+        "PROCEED": 167,
+        "FREE": 110
+      },
+      "normalized_action_trace_sha256": "9B13216D7977DA279AF21C08F7F1EB2787C8B941466568B1E1A384219F396CFB"
+    },
+    {
+      "vehicle_count": 8,
+      "seed": 2,
+      "controller": "HybridLLM",
+      "source_path": "results/formal_experiment/dissertation_formal_v4/runs/seed2_v8/FE05_HYBRID_v8_seed2_v4_real/step_records.csv",
+      "source_sha256": "C95A6F62EB6577EBAAD9F50DFD8D21BDEA0A759AF768437CFC5E678D49ECB04E",
+      "projected_row_count": 335,
+      "action_counts": {
+        "WAIT": 58,
+        "PROCEED": 167,
+        "FREE": 110
+      },
+      "normalized_action_trace_sha256": "9B13216D7977DA279AF21C08F7F1EB2787C8B941466568B1E1A384219F396CFB"
+    },
+    {
+      "vehicle_count": 8,
+      "seed": 2,
+      "controller": "HybridLLMSafety",
+      "source_path": "results/formal_experiment/dissertation_formal_v4/runs/seed2_v8/FE06_HYBRID_SAFETY_v8_seed2_v4_real/step_records.csv",
+      "source_sha256": "A0524B66936C41328A4764C9F45CC223D4E6BE2908E41AA683B4B631D9541010",
+      "projected_row_count": 335,
+      "action_counts": {
+        "WAIT": 58,
+        "PROCEED": 167,
+        "FREE": 110
+      },
+      "normalized_action_trace_sha256": "9B13216D7977DA279AF21C08F7F1EB2787C8B941466568B1E1A384219F396CFB"
+    },
+    {
+      "vehicle_count": 8,
+      "seed": 3,
+      "controller": "RawLLM",
+      "source_path": "results/formal_experiment/dissertation_formal_v4/runs/seed3_v8/FE04_RAW_LLM_v8_seed3_v4_real/step_records.csv",
+      "source_sha256": "4EF4B04BF0A6CCED7E271E0474878B4EC427685871246601E4E406A134D7BA29",
+      "projected_row_count": 303,
+      "action_counts": {
+        "WAIT": 45,
+        "PROCEED": 154,
+        "FREE": 104
+      },
+      "normalized_action_trace_sha256": "5EA56AB752E98210D72D5069224EC469D13A239B8650FE4C8A5EFE7A838EF1AD"
+    },
+    {
+      "vehicle_count": 8,
+      "seed": 3,
+      "controller": "HybridLLM",
+      "source_path": "results/formal_experiment/dissertation_formal_v4/runs/seed3_v8/FE05_HYBRID_v8_seed3_v4_real/step_records.csv",
+      "source_sha256": "20285AA20CDC49D4A26C49635585D2C9AAD587891A1D7F2B8788E422DD247017",
+      "projected_row_count": 303,
+      "action_counts": {
+        "WAIT": 45,
+        "PROCEED": 154,
+        "FREE": 104
+      },
+      "normalized_action_trace_sha256": "5EA56AB752E98210D72D5069224EC469D13A239B8650FE4C8A5EFE7A838EF1AD"
+    },
+    {
+      "vehicle_count": 8,
+      "seed": 3,
+      "controller": "HybridLLMSafety",
+      "source_path": "results/formal_experiment/dissertation_formal_v4/runs/seed3_v8/FE06_HYBRID_SAFETY_v8_seed3_v4_real/step_records.csv",
+      "source_sha256": "425C8835C9211BF408A5983D01F33005BDCFCAADC6FFD611FDC16C5E36BC1E09",
+      "projected_row_count": 303,
+      "action_counts": {
+        "WAIT": 45,
+        "PROCEED": 154,
+        "FREE": 104
+      },
+      "normalized_action_trace_sha256": "5EA56AB752E98210D72D5069224EC469D13A239B8650FE4C8A5EFE7A838EF1AD"
+    }
+  ],
+  "scale_seed_comparisons": [
+    {
+      "vehicle_count": 4,
+      "seed": 1,
+      "controllers": [
+        "RawLLM",
+        "HybridLLM",
+        "HybridLLMSafety"
+      ],
+      "identical_effective_action_trace": true,
+      "normalized_action_trace_sha256": "C7B62733626884286D41BD935CFA1188BF825901B5DC0403B560C24043FF8279"
+    },
+    {
+      "vehicle_count": 4,
+      "seed": 2,
+      "controllers": [
+        "RawLLM",
+        "HybridLLM",
+        "HybridLLMSafety"
+      ],
+      "identical_effective_action_trace": true,
+      "normalized_action_trace_sha256": "C7B62733626884286D41BD935CFA1188BF825901B5DC0403B560C24043FF8279"
+    },
+    {
+      "vehicle_count": 4,
+      "seed": 3,
+      "controllers": [
+        "RawLLM",
+        "HybridLLM",
+        "HybridLLMSafety"
+      ],
+      "identical_effective_action_trace": true,
+      "normalized_action_trace_sha256": "C7B62733626884286D41BD935CFA1188BF825901B5DC0403B560C24043FF8279"
+    },
+    {
+      "vehicle_count": 8,
+      "seed": 1,
+      "controllers": [
+        "RawLLM",
+        "HybridLLM",
+        "HybridLLMSafety"
+      ],
+      "identical_effective_action_trace": true,
+      "normalized_action_trace_sha256": "9D01464B96ED018A5995668E1AE2D6E941A9513ACF3996A897790536416585E1"
+    },
+    {
+      "vehicle_count": 8,
+      "seed": 2,
+      "controllers": [
+        "RawLLM",
+        "HybridLLM",
+        "HybridLLMSafety"
+      ],
+      "identical_effective_action_trace": true,
+      "normalized_action_trace_sha256": "9B13216D7977DA279AF21C08F7F1EB2787C8B941466568B1E1A384219F396CFB"
+    },
+    {
+      "vehicle_count": 8,
+      "seed": 3,
+      "controllers": [
+        "RawLLM",
+        "HybridLLM",
+        "HybridLLMSafety"
+      ],
+      "identical_effective_action_trace": true,
+      "normalized_action_trace_sha256": "5EA56AB752E98210D72D5069224EC469D13A239B8650FE4C8A5EFE7A838EF1AD"
+    }
+  ],
+  "all_scale_seed_comparisons_identical": true,
+  "controller_totals": [
+    {
+      "controller": "HybridLLM",
+      "projected_row_count": 1372.0,
+      "FREE": 473.0,
+      "PROCEED": 736.0,
+      "WAIT": 163.0
+    },
+    {
+      "controller": "HybridLLMSafety",
+      "projected_row_count": 1372.0,
+      "FREE": 473.0,
+      "PROCEED": 736.0,
+      "WAIT": 163.0
+    },
+    {
+      "controller": "RawLLM",
+      "projected_row_count": 1372.0,
+      "FREE": 473.0,
+      "PROCEED": 736.0,
+      "WAIT": 163.0
+    }
+  ]
+}

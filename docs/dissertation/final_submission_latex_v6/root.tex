@@ -124,7 +124,7 @@ A Structured LLM-Assisted Decision Pipeline for Unsignalised Intersection Contro
 
 \begin{abstract}
 
-Large language models (LLMs) offer a potential mechanism for context-aware decision making in autonomous traffic systems, but evaluating their contribution is difficult when they operate within pipelines that also contain deterministic fallback, post-processing, and safety mechanisms. This work develops and evaluates a modular LLM-assisted control framework for cooperative decision making at an unsignalised intersection using the SUMO microscopic traffic simulator. Four controller configurations are considered: a standalone rule-based baseline, Raw LLM, Hybrid, and Hybrid with deterministic safety verification. The formal evaluation comprises 24 valid runs across four- and eight-vehicle scenarios and three random seeds. Across the retained experiments, the three LLM-assisted pipelines achieved substantially lower operational waiting and higher mean speed than the rule-based baseline while maintaining 100\% completion and zero recorded collisions. However, live-provider success during the formal experiment was low, meaning that these traffic improvements cannot be attributed independently to successful LLM reasoning. A subsequent post-hoc diagnostic using a reliable Gemini configuration achieved 53/53 successful provider requests with no fallback, but produced the same traffic outcome as deterministic fallback-only control and matched its decisions on all 132 comparable vehicle-level records. These findings demonstrate a distinction between pipeline-level performance and model-level attribution. The principal contribution of this work is therefore an attribution-aware evaluation framework that combines traffic performance, provider reliability, decision provenance, deterministic fallback analysis, and decision-level comparison to expose both the capabilities and identifiability limitations of LLM-assisted traffic control.
+Large language models (LLMs) offer flexible high-level reasoning for autonomous systems, but their contribution is difficult to identify when deterministic fallback, validation, and safety mechanisms can also determine the executed action. This dissertation develops a structured LLM-assisted decision pipeline for unsignalised intersection control in SUMO and evaluates both complete-system performance and model-specific contribution. Phase~1 compared Rule-Based, Raw LLM, Hybrid, and Hybrid + Safety pipelines over 24 formal 4V and 8V runs. The fallback-capable LLM-assisted pipelines achieved lower operational waiting and higher mean speed than the selected Rule-Based baseline, but fallback dominated provider operation, so the advantage could not be attributed independently to successful live-LLM reasoning. Phase~2 addressed this limitation by constraining planning to deterministic safe candidate groups and comparing a Gemini candidate selector with a strong deterministic cooperative comparator in 36 valid matched closed-loop runs. Across 93 Gemini decisions, 89 matched the comparator, four were identifiable legal disagreements, and no fallback occurred. The repeated S3 12V disagreement involved Gemini selecting smaller legal groups and was associated with less efficient descriptive outcomes in that condition; no general Gemini traffic-performance advantage was demonstrated. All formal Phase~2 episodes were collision-free, although no safety-verifier intervention was observed. Synchronous Gemini latency remained high and variable, limiting practical deployment. The principal contribution is an attribution-aware and deterministic-safety-constrained method that separates provider reliability, parsing, fallback, candidate feasibility, planner choice, safety intervention, and closed-loop traffic consequence when evaluating LLM-assisted autonomous decision pipelines.
 
 \end{abstract}
 
@@ -142,7 +142,7 @@ Traditional approaches to autonomous intersection management generally rely on p
 
 
 
-Large language models (LLMs) provide one possible mechanism for such context-sensitive reasoning. Recent work has demonstrated the use of language models for planning, embodied reasoning, and decision support in autonomous systems \cite{Huang2022,Driess2023,Wen2023,Jin2023,Cui2024,Yang2024,Hou2025,Yang2024,Li2024}. In principle, an LLM can receive a structured representation of an intersection state and produce high-level actions for multiple vehicles. This makes LLMs attractive as a flexible reasoning component within a modular traffic-control pipeline.
+Large language models (LLMs) provide one possible mechanism for such context-sensitive reasoning. Recent work has demonstrated the use of language models for planning, embodied reasoning, and decision support in autonomous systems \cite{Huang2022,Driess2023,Wen2023,Jin2023,Cui2024,Yang2024,Hou2025,Li2024}. In principle, an LLM can receive a structured representation of an intersection state and produce high-level actions for multiple vehicles. This makes LLMs attractive as a flexible reasoning component within a modular traffic-control pipeline.
 
 
 
@@ -201,6 +201,10 @@ In this study, a \emph{safe candidate group} is a passage group admitted by the 
 
 
 The contributions are organised into four classes. The \emph{research contribution} is a two-phase empirical investigation separating complete-pipeline performance from identifiable live-LLM decision contribution. The \emph{methodological and evaluation contribution} is an attribution-aware method using matched independent closed-loop episodes, a deterministic counterfactual planner, provider, parser, and fallback diagnostics, and decision-level provenance. The \emph{engineering and system contribution} is a modular architecture in which the LLM receives privacy-minimised local traffic state and selects only among deterministically compatible passage groups, with deterministic fallback, grant lifecycle management, and final safety authority. The \emph{empirical contribution} is bounded: the Phase~1 LLM-assisted pipelines outperform the selected Rule-Based baseline at pipeline level, but that effect cannot be attributed independently to the LLM; in Phase~2 the Gemini candidate selector is reliable and mostly agrees with the deterministic cooperative comparator, with four identifiable disagreements and no demonstrated general performance advantage.
+
+
+
+The remainder of the dissertation reviews cooperative intersection control and LLM-assisted autonomy, defines the shared architecture and two-phase methodology, presents the matched experimental designs and formal results, and then answers the research questions through an integrated discussion of attribution, safety, latency, and bounded scenario behaviour.
 
 
 
@@ -302,10 +306,19 @@ The principal additions in Phase~2 are the mixed-turn route model, conservative 
 
 This decomposition supports both robustness and attribution. Provider or parser failure does not terminate an episode because a deterministic policy remains available. At the same time, the trace distinguishes model output, fallback, cooperative processing, safety intervention, and the final executed action. Phase~2 strengthens the counterfactual comparison by recording what the deterministic comparator selected from the same state and candidates presented to Gemini.
 
-% Deferred visual plan: a publication-quality unified architecture figure will
-% show shared SUMO/state extraction, the Phase 1 action path, the Phase 2 safe-
-% candidate path, Gemini/comparator selection, grant lifecycle, final safety,
-% action execution, and provenance. Proposed label: fig:architecture.
+Figure~\ref{fig:architecture} summarises the shared execution environment and the distinct Phase~1 and Phase~2 decision paths. It emphasises that Gemini selects only among deterministic safe candidates, that both Phase~2 planners receive the same action space, and that final safety authority and provenance remain outside the model.
+
+\begin{figure*}[t]
+
+\centering
+
+\includegraphics[width=0.98\textwidth]{figures/unified_architecture.pdf}
+
+\caption{Unified attribution-aware architecture. Phase~1 evaluates complete action pipelines, whereas Phase~2 compares two selectors over identical deterministic safe candidate groups. Decision provenance records the path to executed actions and closed-loop outcomes.}
+
+\label{fig:architecture}
+
+\end{figure*}
 
 
 
@@ -350,6 +363,10 @@ Candidate generation runs before either Phase~2 planner. It considers only vehic
 
 
 Candidate identifiers are stable concatenations of their vehicle identifiers. Candidate features include group size, aggregate waiting time, maximum individual waiting time, minimum time to intersection, and a movement summary. Candidate generation is a deterministic constraint on the planner's action space rather than a request for Gemini to calculate geometry. Both planners receive the same candidate set, and neither can authorize a group that the compatibility model did not admit.
+
+
+
+Table~\ref{tab:controllers} locates the six evaluated controller and planner configurations within this shared architecture.
 
 \begin{table}[t]
 
@@ -425,7 +442,7 @@ The live-provider interface records provider and model identity, request status,
 
 
 
-Both phases retain deterministic recovery for provider failure, timeout, or invalid output. In Phase~1, fallback applies a priority-and-compatibility policy over the current traffic state and can produce meaningful \texttt{PROCEED}, \texttt{WAIT}, and \texttt{FREE} actions. It is not an all-\texttt{WAIT} emergency behavior and is not the standalone Rule-Based baseline. The baseline is an independently evaluated controller; fallback is an internal mechanism within the model-facing pipeline.
+Both phases retain deterministic recovery for provider failure, timeout, or invalid output. In Phase~1, fallback applies a priority-and-compatibility policy over the current traffic state and can produce meaningful \texttt{PROCEED}, \texttt{WAIT}, and \texttt{FREE} actions. It is not an all-\texttt{WAIT} emergency behaviour and is not the standalone Rule-Based baseline. The baseline is an independently evaluated controller; fallback is an internal mechanism within the model-facing pipeline.
 
 
 
@@ -434,6 +451,62 @@ In Phase~2, the deterministic cooperative comparator is also the fallback for fa
 
 
 Fallback is consequently both an operational safeguard and an attribution variable. Traffic outcomes from a fallback-capable pipeline are not credited to live-LLM reasoning unless provider, parser, and selection provenance establish that the model produced the executed choice.
+
+
+
+Table~\ref{tab:phase1_semantic_overlap} compares the frozen Phase~1 prompt and fallback. The prompt did not reproduce the complete fallback algorithm, but exposed substantial deterministic structure.
+
+\begin{table*}[t]
+
+\centering
+
+\caption{Semantic overlap between the frozen Phase~1 prompt interface and deterministic control stages.}
+
+\label{tab:phase1_semantic_overlap}
+
+\renewcommand{\arraystretch}{1.07}
+
+\scriptsize
+
+\begin{tabular}{p{1.9cm} p{3.5cm} p{3.6cm} p{3.2cm}}
+
+\toprule
+
+\textbf{Policy element} & \textbf{Prompt/model information} & \textbf{Deterministic fallback behaviour} & \textbf{Attribution implication} \\
+
+\midrule
+
+Control-zone gating & Requires vehicles outside the control zone to be \texttt{FREE}. & Assigns \texttt{FREE} outside the zone. & High overlap; this action is fixed deterministically. \\
+
+Priority vehicle & Receives a policy hint identifying the minimum-time-to-intersection vehicle and route. & Computes the controlled vehicle with minimum time to intersection. & High overlap in priority information. \\
+
+Waiting-time priority & Contains no explicit waiting-time priority rule. & Does not rank vehicles by waiting time; priority uses time to intersection. & Low overlap on waiting-based fairness. \\
+
+Route conflict and compatibility & Receives the deterministic conflict matrix and routes compatible with the priority route. & Applies the same deterministic compatibility predicate to the priority route. & High overlap in feasibility structure. \\
+
+Cooperation & May return multiple simultaneous actions but is not instructed with the full fallback loop. & Allows the priority vehicle and compatible controlled vehicles to \texttt{PROCEED}. & Partial overlap; implementation remains distinct. \\
+
+Action semantics & Is restricted to \texttt{PROCEED}, \texttt{WAIT}, and \texttt{FREE}. & Emits the same three actions. & High overlap in the executable action space. \\
+
+Safety constraints & Receives conflict information but not the complete verifier algorithm. & Uses route compatibility; final verification is a separate stage. & Partial overlap, not algorithmic identity. \\
+
+Tie-breaking & Receives the already computed priority identifier; no explicit tie rule is requested. & Stable input order resolves equal minimum-time values. & Deterministic choice is exposed without teaching the tie mechanism. \\
+
+Provider/parser failure & The prompt does not define recovery behaviour. & Failure or invalid output invokes fallback. & No semantic overlap; this is runtime recovery. \\
+
+Cooperative postprocessor & Has no authority over the later Hybrid stage. & Can promote compatible \texttt{WAIT} actions to \texttt{PROCEED}. & A separate deterministic contribution. \\
+
+Final safety authority & Does not execute or verify simulator actions. & Hybrid + Safety can downgrade unsafe simultaneous passage. & A separate deterministic authority. \\
+
+\bottomrule
+
+\end{tabular}
+
+\end{table*}
+
+
+
+This overlap plausibly contributed to behavioural similarity, but Phase~1 cannot establish it as the sole cause; fallback dominance and absent downstream intervention also weaken attribution. Phase~2 responds by giving Gemini and the comparator identical safe candidates and comparing their identifiers in independent matched episodes. Because candidate construction remains deterministic, it improves rather than eliminates attribution.
 
 
 
@@ -526,6 +599,10 @@ Phase~2 additionally stores a deterministic initial-demand signature over scenar
 
 
 The evidence hierarchy separates formal closed-loop traffic outcomes, offline decision analysis, integration smoke evidence, and software validation. This prevents supporting diagnostics from being retroactively counted as formal episodes or observer-trajectory metrics from being interpreted as planner-controlled traffic effects.
+
+
+
+The preserved local experiment environment identifies SUMO 1.27.0. The Phase~2 formal workflow used the canonical Python 3.10.11 environment and the frozen Google Gemini \texttt{gemini-3.6-flash} configuration. The network is defined by \texttt{net.net.xml}; the targeted generator derives route and \texttt{simulation.sumocfg} files from the declared scenario, scale, and seed. Appendix Table~\ref{tab:repro_summary} consolidates the minimum reproduction contract without exposing credentials or machine-specific secret locations.
 
 
 
@@ -710,7 +787,7 @@ The formal conditions are S1 8V, S2 8V, S3 8V, S4 8V, S3 12V, and S4 16V. Each c
 = 36\ \text{independent closed-loop episodes}.
 \]
 
-This gives 18 matched scenario--seed pairs and 18 episodes per planner. The matrix is a targeted small-sample comparison rather than a large-sample traffic study. Native static signal control is neutralised during candidate-controlled episodes so that the reported behavior is produced by the candidate planner, grant execution, and retained deterministic safety layer rather than an unreported third controller.
+This gives 18 matched scenario--seed pairs and 18 episodes per planner. The matrix is a targeted small-sample comparison rather than a large-sample traffic study. Native static signal control is neutralised during candidate-controlled episodes so that the reported behaviour is produced by the candidate planner, grant execution, and retained deterministic safety layer rather than an unreported third controller.
 
 
 
@@ -718,7 +795,7 @@ This gives 18 matched scenario--seed pairs and 18 episodes per planner. The matr
 
 
 
-Targeted route assignment is fixed within each scenario. In S1 and S3, the seed controls a bounded zero-to-one-second departure jitter and SUMO's stochastic car-following behavior with \(\sigma=0.5\). In S2 and S4, routes and departure offsets remain exact; seed variation comes from SUMO car-following behavior rather than redrawn traffic demand. The three seeds are therefore trajectory replicates under the declared scenario semantics, not three fully independent samples from an unrestricted demand population.
+Targeted route assignment is fixed within each scenario. In S1 and S3, the seed controls a bounded zero-to-one-second departure jitter and SUMO's stochastic car-following behaviour with \(\sigma=0.5\). In S2 and S4, routes and departure offsets remain exact; seed variation comes from SUMO car-following behaviour rather than redrawn traffic demand. The three seeds are therefore trajectory replicates under the declared scenario semantics, not three fully independent samples from an unrestricted demand population.
 
 
 
@@ -773,7 +850,7 @@ These observations establish a descriptive advantage for the complete fallback-c
 
 \centering
 
-\caption{Formal traffic performance in the retained evidence boundary.}
+\caption{Formal traffic performance in the retained evidence boundary. Waiting and speed are mean $\pm$ sample standard deviation across the three retained seeds; completion and collisions are the common per-run outcomes.}
 
 \label{tab:formal_traffic}
 
@@ -789,19 +866,19 @@ These observations establish a descriptive advantage for the complete fallback-c
 
 Rule-Based & 4V & 82.0 $\pm$ 0.0 & 2.3098 $\pm$ 0.0000 m/s & 100\% & 0 \\
 
-Rule-Based & 8V & 242.0417 $\pm$ 110.5860 & 1.1895 $\pm$ 0.7540 m/s & 100\% & 0 \\
+Rule-Based & 8V & 242.0417 $\pm$ 135.4396 & 1.1895 $\pm$ 0.9230 m/s & 100\% & 0 \\
 
 Raw LLM & 4V & 15.0 $\pm$ 0.0 & 6.8026 $\pm$ 0.0000 m/s & 100\% & 0 \\
 
-Raw LLM & 8V & 15.2917 $\pm$ 2.0450 & 6.5991 $\pm$ 0.2540 m/s & 100\% & 0 \\
+Raw LLM & 8V & 15.2917 $\pm$ 2.5042 & 6.5991 $\pm$ 0.3111 m/s & 100\% & 0 \\
 
 Hybrid & 4V & 15.0 $\pm$ 0.0 & 6.8026 $\pm$ 0.0000 m/s & 100\% & 0 \\
 
-Hybrid & 8V & 15.2917 $\pm$ 2.0450 & 6.5991 $\pm$ 0.2540 m/s & 100\% & 0 \\
+Hybrid & 8V & 15.2917 $\pm$ 2.5042 & 6.5991 $\pm$ 0.3111 m/s & 100\% & 0 \\
 
 Hybrid + Safety & 4V & 15.0 $\pm$ 0.0 & 6.8026 $\pm$ 0.0000 m/s & 100\% & 0 \\
 
-Hybrid + Safety & 8V & 15.2917 $\pm$ 2.0450 & 6.5991 $\pm$ 0.2540 m/s & 100\% & 0 \\
+Hybrid + Safety & 8V & 15.2917 $\pm$ 2.5042 & 6.5991 $\pm$ 0.3111 m/s & 100\% & 0 \\
 
 \bottomrule
 
@@ -811,22 +888,48 @@ Hybrid + Safety & 8V & 15.2917 $\pm$ 2.0450 & 6.5991 $\pm$ 0.2540 m/s & 100\% & 
 
 
 
+Episode duration showed the same pattern. Rule-Based recorded 114.000 $\pm$ 0.000~s at 4V and 344.000 $\pm$ 150.9006~s at 8V. Each LLM-assisted pipeline recorded 52.000 $\pm$ 0.000~s at 4V and 105.333 $\pm$ 0.577~s at 8V, using sample standard deviations across seeds.
+
+
+
 \subsubsection{Provider Reliability and Fallback Dependence}
 
 
 
-The Phase~1 formal provider sweep recorded 2,664 provider attempts, 109 provider successes, 109 parser successes, and 2,555 fallback events. Fallback therefore dominated the provider-attribution record. These request diagnostics are reported separately from the retained traffic boundary because the invalid nominal 8V traces are not used as eight-vehicle traffic evidence.
+Table~\ref{tab:provider_reliability} reports provider reliability for the retained Phase~1 traffic boundary. Counts are logical provider requests, not replicated vehicle-level trace rows; one provider response may appear in multiple vehicle records.
+
+\begin{table*}[t]
+\centering
+\caption{Logical-request provider reliability in the retained Phase~1 formal traffic boundary. Parser success is conditional on provider success.}
+\label{tab:provider_reliability}
+\scriptsize
+\renewcommand{\arraystretch}{1.08}
+\begin{tabular}{p{2.2cm} p{0.7cm} p{1.6cm} p{1.6cm} p{1.45cm} p{1.25cm} p{2.25cm}}
+\toprule
+Controller & Scale & Logical requests & Provider success & Parser success & Fallback & Success / fallback rate \\
+\midrule
+Raw LLM & 4V & 159 & 10 & 10/10 & 149 & 6.29\% / 93.71\% \\
+Raw LLM & 8V & 319 & 2 & 2/2 & 317 & 0.63\% / 99.37\% \\
+Hybrid & 4V & 159 & 9 & 9/9 & 150 & 5.66\% / 94.34\% \\
+Hybrid & 8V & 319 & 1 & 1/1 & 318 & 0.31\% / 99.69\% \\
+Hybrid + Safety & 4V & 159 & 9 & 9/9 & 150 & 5.66\% / 94.34\% \\
+Hybrid + Safety & 8V & 319 & 1 & 1/1 & 318 & 0.31\% / 99.69\% \\
+\bottomrule
+\end{tabular}
+\end{table*}
+
+Separately, the broader Phase~1 provider sweep contained 2,664 replicated vehicle-level trace rows marked as provider attempts, including nominal 8V traces excluded from retained eight-vehicle traffic evidence. Of those rows, 109 recorded provider and parser success and 2,555 recorded fallback. These row-level diagnostics are not the denominator used in Table~\ref{tab:provider_reliability}.
 
 
 
 
 
 
-The high fallback count explains how traffic completion could remain high despite poor provider operation. It also fixes the attribution boundary: the Phase~1 traffic advantage characterises the complete fallback-capable architecture and cannot be assigned independently to successful live-model reasoning.
+Both populations show fallback dominance, explaining how traffic completion could remain high despite poor provider operation. This also fixes the attribution boundary: the Phase~1 traffic advantage characterises the complete fallback-capable architecture and cannot be assigned independently to successful live-model reasoning.
 
 
 
-No cooperative intervention or safety override was observed in the valid retained Phase~1 traffic evidence. The identical aggregate outcomes for Raw LLM, Hybrid, and Hybrid + Safety therefore provide no observed incremental separation for those deterministic stages. Zero recorded collisions likewise cannot identify a safety-verifier effect.
+Log-level comparison confirmed that Raw LLM, Hybrid, and Hybrid + Safety produced identical effective vehicle-action traces in every retained Phase~1 scale--seed condition, rather than merely equal rounded aggregates. For each controller, the 1,372 vehicle-step records contained identical totals of 473 \texttt{FREE}, 736 \texttt{PROCEED}, and 163 \texttt{WAIT} actions. Provider and fallback provenance differed in some records, but zero cooperative post-processing interventions and zero safety overrides meant that those upstream differences did not change executed actions. Fallback dominance, deterministic policy hints, and absent downstream intervention jointly limit attribution; the evidence does not isolate semantic overlap as the sole cause. Zero recorded collisions likewise cannot identify a safety-verifier effect.
 
 
 
@@ -834,7 +937,7 @@ No cooperative intervention or safety override was observed in the valid retaine
 
 
 
-A post-hoc Raw LLM 4V seed-1 diagnostic tested whether reliable inference produced behaviour distinct from Phase~1 fallback. All 53 provider requests and parsers succeeded, no fallback occurred, all four vehicles completed, and no collision was recorded. This diagnostic remains outside the 24-run formal traffic matrix.
+A post-hoc Raw LLM 4V seed-1 diagnostic tested whether reliable inference produced behaviour distinct from Phase~1 fallback. All 53 provider requests and parsers succeeded, no fallback occurred, all four vehicles completed, and no collision was recorded. This diagnostic remains outside the 24-run formal traffic matrix and is summarised in Table~\ref{tab:posthoc_attribution}.
 
 
 
@@ -850,9 +953,9 @@ A post-hoc Raw LLM 4V seed-1 diagnostic tested whether reliable inference produc
 
 \renewcommand{\arraystretch}{1.08}
 
-\footnotesize
+\scriptsize
 
-\begin{tabular}{p{1.9cm} p{1.55cm} p{1.1cm} p{1.2cm} p{1.9cm}}
+\begin{tabular}{p{1.4cm} p{1.3cm} p{0.9cm} p{1.0cm} p{1.5cm}}
 
 \toprule
 
@@ -884,7 +987,7 @@ Reliable Gemini and fallback-only control both recorded 11.0 waiting steps and 7
 
 
 
-Phase~1 established complete-pipeline traffic behaviour but left live-model attribution unresolved. Phase~2 therefore evaluates model-specific candidate selection under reliable Gemini operation and an explicit deterministic counterfactual. The formal matrix contains 36 independent closed-loop episodes: 18 deterministic-comparator episodes and 18 Gemini episodes, forming 18 matched scenario--seed pairs. All 36 runs were valid, every paired initial-demand signature matched, and no run was invalidated or retried.
+Phase~1 produced strong pipeline outcomes but identical assisted-pipeline traces under fallback-dominated operation and substantial prompt--fallback overlap. Phase~2 directly compares candidate identifiers under reliable Gemini operation. Across seeds 1--3 and bounded 8V, 12V, and 16V conditions, 36 independent episodes and 93 Gemini epochs yielded 89 agreements and four differences. This exposes attributable planner divergence without claiming broad generalisation; all paired demand signatures matched, with no invalidation or retry.
 
 
 
@@ -1070,7 +1173,7 @@ The two experimental phases answer different but connected questions. Phase~1 ev
 
 
 
-The provider evidence prevents this traffic advantage from being assigned independently to live-model reasoning. Phase~1 recorded 2,664 provider attempts and 2,555 fallback events, so deterministic recovery supplied most model-facing pipeline behaviour. A fallback-heavy architecture can therefore perform well and remain operational while providing weak evidence about the value added by the live model. Phase~1 did not fail; it exposed the distinction between pipeline performance and model contribution and thereby identified the attribution problem that the second phase was designed to resolve.
+The provider evidence prevents this traffic advantage from being assigned independently to live-model reasoning. In the broader replicated-row provider sweep, 2,664 vehicle-level trace rows were marked as provider attempts and 2,555 as fallback, so deterministic recovery supplied most model-facing pipeline behaviour. A fallback-heavy architecture can therefore perform well and remain operational while providing weak evidence about the value added by the live model. Phase~1 did not fail; it exposed the distinction between pipeline performance and model contribution and thereby identified the attribution problem that the second phase was designed to resolve.
 
 
 
@@ -1222,7 +1325,7 @@ Safety evaluation should add intervention-rich scenarios that deliberately exerc
 
 
 
-Practical model integration requires asynchronous or otherwise latency-tolerant decision making with explicit deadlines and deterministic behavior when responses arrive late. Alternative LLMs, prompts, and strong deterministic comparators should be evaluated under the same attribution protocol, not selected to seek a favourable model result. Hardware-in-the-loop and, eventually, controlled real-world studies would be needed to assess timing and execution beyond SUMO.
+Practical model integration requires asynchronous or otherwise latency-tolerant decision making with explicit deadlines and deterministic behaviour when responses arrive late. Alternative LLMs, prompts, and strong deterministic comparators should be evaluated under the same attribution protocol, not selected to seek a favourable model result. Hardware-in-the-loop and, eventually, controlled real-world studies would be needed to assess timing and execution beyond SUMO.
 
 
 
@@ -1238,7 +1341,7 @@ This dissertation investigated structured LLM-assisted decision making for an un
 
 
 
-Phase~1 showed that the complete fallback-capable Raw LLM, Hybrid, and Hybrid + Safety pipelines performed better than the selected Rule-Based baseline on waiting and mean speed in the evaluated 4V and corrected 8V traffic conditions. Provider failure and 2,555 fallback events, however, prevented that advantage from being attributed independently to successful live-model reasoning. This established pipeline performance while exposing attribution as a separate research problem.
+Phase~1 showed that the complete fallback-capable Raw LLM, Hybrid, and Hybrid + Safety pipelines performed better than the selected Rule-Based baseline on waiting and mean speed in the evaluated 4V and corrected 8V traffic conditions. Provider failure and the broader replicated-row sweep's 2,555 fallback records, however, prevented that advantage from being attributed independently to successful live-model reasoning. This established pipeline performance while exposing attribution as a separate research problem.
 
 
 
@@ -1256,9 +1359,53 @@ The strongest outcome is an attribution-aware, deterministic-safety-constrained 
 
 \appendix
 
-\section{Supporting Validation Evidence}
+\section{Reproducibility and Supporting Evidence}
 
-Supporting route-model, candidate-generation, provider-integration, closed-loop smoke-test, and software-validation evidence is kept distinct from the formal closed-loop results reported in the main text. Detailed appendix integration is deferred to a subsequent controlled dissertation edit.
+Table~\ref{tab:repro_summary} records the compact reproduction contract for the formal evidence. The relative project files identify the network and generator without embedding a personal machine path. Credentials are supplied only through the runtime environment and are neither part of the planner input nor preserved in provenance.
+
+\begin{table*}[t]
+
+\centering
+
+\caption{Compact reproduction and evidence contract.}
+
+\label{tab:repro_summary}
+
+\renewcommand{\arraystretch}{1.08}
+
+\footnotesize
+
+\begin{tabular}{p{2.6cm} p{11.5cm}}
+
+\toprule
+
+\textbf{Element} & \textbf{Frozen configuration or evidence rule} \\
+
+\midrule
+
+Simulation & SUMO 1.27.0; shared \texttt{net.net.xml} topology and TraCI execution; native static signal control neutralised for candidate-controlled episodes. \\
+
+Runtime and model & Canonical Python 3.10.11 for the Phase~2 formal workflow; Google Gemini \texttt{gemini-3.6-flash}; structured candidate-ID output; no persisted credential. \\
+
+Phase~1 matrix & Rule-Based, Raw LLM, Hybrid, and Hybrid + Safety; 4V and corrected 8V; seeds 1--3; 24 retained runs. \\
+
+Phase~2 matrix & S1--S4 at 8V, S3 at 12V, and S4 at 16V; seeds 1--3; deterministic cooperative comparator and Gemini candidate selector; 36 independent episodes forming 18 matched pairs. \\
+
+Decision cadence & One selection at each decision epoch when no grant is active; the passage grant persists until clearance or the fixed timeout; safety verification remains active during the grant. \\
+
+Recovery and safety & Provider, timeout, parser, or candidate-ID failure invokes the deterministic comparator; all selected actions remain subject to final deterministic safety verification. \\
+
+Metrics and provenance & Completion, throughput, waiting, speed, duration, collisions, grant and safety events, provider/parser/fallback status, candidate agreement, latency, token use, and reconstructed decision provenance. \\
+
+\bottomrule
+
+\end{tabular}
+
+\end{table*}
+
+
+
+The Phase~2 prompt exposes only privacy-minimised local state and the deterministic candidate list. Its response contract accepts exactly one supplied candidate identifier. Formal traffic claims come only from independent planner-controlled closed-loop episodes; offline paired analysis, provider integration checks, smoke runs, and software tests remain supporting evidence. Complete raw logs and source listings are deliberately excluded from the dissertation because they do not improve the main academic argument.
 
 
 

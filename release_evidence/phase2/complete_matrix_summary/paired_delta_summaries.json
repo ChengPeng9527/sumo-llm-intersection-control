@@ -1,0 +1,404 @@
+[
+  {
+    "scenario_class": "S1_BALANCED_MIXED_TURN",
+    "vehicle_count": 8,
+    "seed_count": 3,
+    "seeds": [
+      1,
+      2,
+      3
+    ],
+    "initial_demand_signature_matches": true,
+    "completion_rate_delta": {
+      "n": 3,
+      "mean": 0.0,
+      "standard_deviation": 0.0,
+      "minimum": 0.0,
+      "maximum": 0.0
+    },
+    "throughput_delta": {
+      "n": 3,
+      "mean": 0.0,
+      "standard_deviation": 0.0,
+      "minimum": 0.0,
+      "maximum": 0.0
+    },
+    "mean_waiting_time_delta": {
+      "n": 3,
+      "mean": 0.0,
+      "standard_deviation": 0.0,
+      "minimum": 0.0,
+      "maximum": 0.0
+    },
+    "maximum_waiting_time_delta": {
+      "n": 3,
+      "mean": 0.0,
+      "standard_deviation": 0.0,
+      "minimum": 0.0,
+      "maximum": 0.0
+    },
+    "mean_speed_delta": {
+      "n": 3,
+      "mean": 0.0,
+      "standard_deviation": 0.0,
+      "minimum": 0.0,
+      "maximum": 0.0
+    },
+    "episode_duration_delta_seconds": {
+      "n": 3,
+      "mean": 0.0,
+      "standard_deviation": 0.0,
+      "minimum": 0.0,
+      "maximum": 0.0
+    },
+    "collision_delta": {
+      "n": 3,
+      "mean": 0.0,
+      "standard_deviation": 0.0,
+      "minimum": 0.0,
+      "maximum": 0.0
+    },
+    "safety_intervention_delta": {
+      "n": 3,
+      "mean": 0.0,
+      "standard_deviation": 0.0,
+      "minimum": 0.0,
+      "maximum": 0.0
+    }
+  },
+  {
+    "scenario_class": "S2_SIMULTANEOUS_CONFLICT",
+    "vehicle_count": 8,
+    "seed_count": 3,
+    "seeds": [
+      1,
+      2,
+      3
+    ],
+    "initial_demand_signature_matches": true,
+    "completion_rate_delta": {
+      "n": 3,
+      "mean": 0.0,
+      "standard_deviation": 0.0,
+      "minimum": 0.0,
+      "maximum": 0.0
+    },
+    "throughput_delta": {
+      "n": 3,
+      "mean": 0.0,
+      "standard_deviation": 0.0,
+      "minimum": 0.0,
+      "maximum": 0.0
+    },
+    "mean_waiting_time_delta": {
+      "n": 3,
+      "mean": -0.3333333333333333,
+      "standard_deviation": 0.5773502691896257,
+      "minimum": -1.0,
+      "maximum": 0.0
+    },
+    "maximum_waiting_time_delta": {
+      "n": 3,
+      "mean": -0.3333333333333333,
+      "standard_deviation": 0.5773502691896257,
+      "minimum": -1.0,
+      "maximum": 0.0
+    },
+    "mean_speed_delta": {
+      "n": 3,
+      "mean": 0.13791646382142364,
+      "standard_deviation": 0.23887832253894067,
+      "minimum": 0.0,
+      "maximum": 0.4137493914642709
+    },
+    "episode_duration_delta_seconds": {
+      "n": 3,
+      "mean": -0.3333333333333333,
+      "standard_deviation": 0.5773502691896257,
+      "minimum": -1.0,
+      "maximum": 0.0
+    },
+    "collision_delta": {
+      "n": 3,
+      "mean": 0.0,
+      "standard_deviation": 0.0,
+      "minimum": 0.0,
+      "maximum": 0.0
+    },
+    "safety_intervention_delta": {
+      "n": 3,
+      "mean": 0.0,
+      "standard_deviation": 0.0,
+      "minimum": 0.0,
+      "maximum": 0.0
+    }
+  },
+  {
+    "scenario_class": "S3_COOPERATIVE_OPPORTUNITY",
+    "vehicle_count": 8,
+    "seed_count": 3,
+    "seeds": [
+      1,
+      2,
+      3
+    ],
+    "initial_demand_signature_matches": true,
+    "completion_rate_delta": {
+      "n": 3,
+      "mean": 0.0,
+      "standard_deviation": 0.0,
+      "minimum": 0.0,
+      "maximum": 0.0
+    },
+    "throughput_delta": {
+      "n": 3,
+      "mean": 0.0,
+      "standard_deviation": 0.0,
+      "minimum": 0.0,
+      "maximum": 0.0
+    },
+    "mean_waiting_time_delta": {
+      "n": 3,
+      "mean": 0.0,
+      "standard_deviation": 0.0,
+      "minimum": 0.0,
+      "maximum": 0.0
+    },
+    "maximum_waiting_time_delta": {
+      "n": 3,
+      "mean": 0.0,
+      "standard_deviation": 0.0,
+      "minimum": 0.0,
+      "maximum": 0.0
+    },
+    "mean_speed_delta": {
+      "n": 3,
+      "mean": 0.0,
+      "standard_deviation": 0.0,
+      "minimum": 0.0,
+      "maximum": 0.0
+    },
+    "episode_duration_delta_seconds": {
+      "n": 3,
+      "mean": 0.0,
+      "standard_deviation": 0.0,
+      "minimum": 0.0,
+      "maximum": 0.0
+    },
+    "collision_delta": {
+      "n": 3,
+      "mean": 0.0,
+      "standard_deviation": 0.0,
+      "minimum": 0.0,
+      "maximum": 0.0
+    },
+    "safety_intervention_delta": {
+      "n": 3,
+      "mean": 0.0,
+      "standard_deviation": 0.0,
+      "minimum": 0.0,
+      "maximum": 0.0
+    }
+  },
+  {
+    "scenario_class": "S3_COOPERATIVE_OPPORTUNITY",
+    "vehicle_count": 12,
+    "seed_count": 3,
+    "seeds": [
+      1,
+      2,
+      3
+    ],
+    "initial_demand_signature_matches": true,
+    "completion_rate_delta": {
+      "n": 3,
+      "mean": 0.0,
+      "standard_deviation": 0.0,
+      "minimum": 0.0,
+      "maximum": 0.0
+    },
+    "throughput_delta": {
+      "n": 3,
+      "mean": 0.0,
+      "standard_deviation": 0.0,
+      "minimum": 0.0,
+      "maximum": 0.0
+    },
+    "mean_waiting_time_delta": {
+      "n": 3,
+      "mean": 1.666666666666667,
+      "standard_deviation": 0.2886751345948134,
+      "minimum": 1.5,
+      "maximum": 2.000000000000001
+    },
+    "maximum_waiting_time_delta": {
+      "n": 3,
+      "mean": 1.0,
+      "standard_deviation": 1.7320508075688772,
+      "minimum": 0.0,
+      "maximum": 3.0
+    },
+    "mean_speed_delta": {
+      "n": 3,
+      "mean": -0.410980810044214,
+      "standard_deviation": 0.12954782515655652,
+      "minimum": -0.5591425576052318,
+      "maximum": -0.319047445609943
+    },
+    "episode_duration_delta_seconds": {
+      "n": 3,
+      "mean": 1.0,
+      "standard_deviation": 1.7320508075688772,
+      "minimum": 0.0,
+      "maximum": 3.0
+    },
+    "collision_delta": {
+      "n": 3,
+      "mean": 0.0,
+      "standard_deviation": 0.0,
+      "minimum": 0.0,
+      "maximum": 0.0
+    },
+    "safety_intervention_delta": {
+      "n": 3,
+      "mean": 0.0,
+      "standard_deviation": 0.0,
+      "minimum": 0.0,
+      "maximum": 0.0
+    }
+  },
+  {
+    "scenario_class": "S4_FAIRNESS_PRESSURE",
+    "vehicle_count": 8,
+    "seed_count": 3,
+    "seeds": [
+      1,
+      2,
+      3
+    ],
+    "initial_demand_signature_matches": true,
+    "completion_rate_delta": {
+      "n": 3,
+      "mean": 0.0,
+      "standard_deviation": 0.0,
+      "minimum": 0.0,
+      "maximum": 0.0
+    },
+    "throughput_delta": {
+      "n": 3,
+      "mean": 0.0,
+      "standard_deviation": 0.0,
+      "minimum": 0.0,
+      "maximum": 0.0
+    },
+    "mean_waiting_time_delta": {
+      "n": 3,
+      "mean": 0.0,
+      "standard_deviation": 0.0,
+      "minimum": 0.0,
+      "maximum": 0.0
+    },
+    "maximum_waiting_time_delta": {
+      "n": 3,
+      "mean": 0.0,
+      "standard_deviation": 0.0,
+      "minimum": 0.0,
+      "maximum": 0.0
+    },
+    "mean_speed_delta": {
+      "n": 3,
+      "mean": 0.0,
+      "standard_deviation": 0.0,
+      "minimum": 0.0,
+      "maximum": 0.0
+    },
+    "episode_duration_delta_seconds": {
+      "n": 3,
+      "mean": 0.0,
+      "standard_deviation": 0.0,
+      "minimum": 0.0,
+      "maximum": 0.0
+    },
+    "collision_delta": {
+      "n": 3,
+      "mean": 0.0,
+      "standard_deviation": 0.0,
+      "minimum": 0.0,
+      "maximum": 0.0
+    },
+    "safety_intervention_delta": {
+      "n": 3,
+      "mean": 0.0,
+      "standard_deviation": 0.0,
+      "minimum": 0.0,
+      "maximum": 0.0
+    }
+  },
+  {
+    "scenario_class": "S4_FAIRNESS_PRESSURE",
+    "vehicle_count": 16,
+    "seed_count": 3,
+    "seeds": [
+      1,
+      2,
+      3
+    ],
+    "initial_demand_signature_matches": true,
+    "completion_rate_delta": {
+      "n": 3,
+      "mean": 0.0,
+      "standard_deviation": 0.0,
+      "minimum": 0.0,
+      "maximum": 0.0
+    },
+    "throughput_delta": {
+      "n": 3,
+      "mean": 0.0,
+      "standard_deviation": 0.0,
+      "minimum": 0.0,
+      "maximum": 0.0
+    },
+    "mean_waiting_time_delta": {
+      "n": 3,
+      "mean": 0.0,
+      "standard_deviation": 0.0,
+      "minimum": 0.0,
+      "maximum": 0.0
+    },
+    "maximum_waiting_time_delta": {
+      "n": 3,
+      "mean": 0.0,
+      "standard_deviation": 0.0,
+      "minimum": 0.0,
+      "maximum": 0.0
+    },
+    "mean_speed_delta": {
+      "n": 3,
+      "mean": 0.0,
+      "standard_deviation": 0.0,
+      "minimum": 0.0,
+      "maximum": 0.0
+    },
+    "episode_duration_delta_seconds": {
+      "n": 3,
+      "mean": 0.0,
+      "standard_deviation": 0.0,
+      "minimum": 0.0,
+      "maximum": 0.0
+    },
+    "collision_delta": {
+      "n": 3,
+      "mean": 0.0,
+      "standard_deviation": 0.0,
+      "minimum": 0.0,
+      "maximum": 0.0
+    },
+    "safety_intervention_delta": {
+      "n": 3,
+      "mean": 0.0,
+      "standard_deviation": 0.0,
+      "minimum": 0.0,
+      "maximum": 0.0
+    }
+  }
+]

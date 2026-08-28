@@ -1,0 +1,3840 @@
+{
+  "project_root": "D:\\Sumo\\sumo_train",
+  "branch": "phase-18-decision-pipeline-separation",
+  "head": "b27052bdf2521fdfc710a3b3c7b9710396f59ebe",
+  "config": {
+    "stop_speed": 0.1,
+    "simulation_step_length": 1.0
+  },
+  "datasets": {
+    "dissertation_formal_v2": {
+      "manifest_count": 24,
+      "controllers": [
+        "BaselineRule",
+        "HybridLLMController",
+        "HybridLLMSafetyController",
+        "RawLLMController"
+      ],
+      "vehicle_counts": [
+        4,
+        8
+      ],
+      "seeds": [
+        1,
+        2,
+        3
+      ],
+      "run_validation": {
+        "all_observed_match_config": false,
+        "all_departed_eq_config": false,
+        "all_arrived_eq_config": false,
+        "all_collision_zero": true
+      },
+      "runs": [
+        {
+          "run_id": "FE01_RULE_BASED_v4_seed1",
+          "controller": "BaselineRule",
+          "scenario_id": "formal_low_v4_seed1",
+          "configured_vehicle_count": 4,
+          "observed_vehicle_count": 4,
+          "observed_vehicle_ids": [
+            "car0",
+            "car1",
+            "car2",
+            "car3"
+          ],
+          "departed_count": 4,
+          "arrived_count": 4,
+          "collision_count": 0,
+          "completion_rate": 1.0,
+          "throughput": 4,
+          "mean_waiting_time": 82.0,
+          "mean_speed": 2.3097622930423896,
+          "episode_duration_seconds": 114.0,
+          "provider_attempt_steps": 0,
+          "provider_success_steps": 0,
+          "provider_failure_steps": 0,
+          "provider_success_rate": null,
+          "parser_success_steps": 0,
+          "parser_success_given_provider_success": null,
+          "fallback_steps": 0,
+          "latency_ms_mean": 0.0,
+          "safety_override_count": 0,
+          "postprocess_applied_count": 0,
+          "finish_reason_distribution": {
+            "NOT_AVAILABLE": 115
+          },
+          "exception_type_distribution": {
+            "NONE": 115
+          },
+          "parser_failure_reason_distribution": {
+            "NONE": 115
+          },
+          "reasoning_tokens_available_steps": 0,
+          "reasoning_tokens_sample": [],
+          "prompt_tokens_sample": [],
+          "completion_tokens_sample": [],
+          "total_tokens_sample": [],
+          "run_dir": "D:\\Sumo\\sumo_train\\results\\formal_experiment\\dissertation_formal_v2\\runs\\seed1_v4\\FE01_RULE_BASED_v4_seed1",
+          "step_records": "D:\\Sumo\\sumo_train\\results\\formal_experiment\\dissertation_formal_v2\\runs\\seed1_v4\\FE01_RULE_BASED_v4_seed1\\step_records.csv",
+          "run_metadata": "D:\\Sumo\\sumo_train\\results\\formal_experiment\\dissertation_formal_v2\\runs\\seed1_v4\\FE01_RULE_BASED_v4_seed1\\run_metadata.json",
+          "events": "D:\\Sumo\\sumo_train\\results\\formal_experiment\\dissertation_formal_v2\\runs\\seed1_v4\\FE01_RULE_BASED_v4_seed1\\events.jsonl"
+        },
+        {
+          "run_id": "FE04_RAW_LLM_v4_seed1_real",
+          "controller": "RawLLMController",
+          "scenario_id": "formal_low_v4_seed1",
+          "configured_vehicle_count": 4,
+          "observed_vehicle_count": 4,
+          "observed_vehicle_ids": [
+            "car0",
+            "car1",
+            "car2",
+            "car3"
+          ],
+          "departed_count": 4,
+          "arrived_count": 4,
+          "collision_count": 0,
+          "completion_rate": 1.0,
+          "throughput": 4,
+          "mean_waiting_time": 15.0,
+          "mean_speed": 6.802589217604805,
+          "episode_duration_seconds": 52.0,
+          "provider_attempt_steps": 53,
+          "provider_success_steps": 10,
+          "provider_failure_steps": 43,
+          "provider_success_rate": 0.18867924528301888,
+          "parser_success_steps": 10,
+          "parser_success_given_provider_success": 1.0,
+          "fallback_steps": 43,
+          "latency_ms_mean": 143.3843396226415,
+          "safety_override_count": 0,
+          "postprocess_applied_count": 0,
+          "finish_reason_distribution": {
+            "stop": 10,
+            "NOT_AVAILABLE": 43
+          },
+          "exception_type_distribution": {
+            "NONE": 10,
+            "RateLimitError": 43
+          },
+          "parser_failure_reason_distribution": {
+            "NONE": 10,
+            "PROVIDER_REQUEST_EXCEPTION": 43
+          },
+          "reasoning_tokens_available_steps": 10,
+          "reasoning_tokens_sample": [
+            9,
+            11,
+            10,
+            20,
+            8,
+            26,
+            13,
+            11,
+            51,
+            11
+          ],
+          "prompt_tokens_sample": [
+            535,
+            535,
+            598,
+            598,
+            661,
+            674,
+            737,
+            737,
+            739,
+            598
+          ],
+          "completion_tokens_sample": [
+            28,
+            29,
+            33,
+            44,
+            36,
+            56,
+            48,
+            46,
+            89,
+            34
+          ],
+          "total_tokens_sample": [
+            563,
+            564,
+            631,
+            642,
+            697,
+            730,
+            785,
+            783,
+            828,
+            632
+          ],
+          "run_dir": "D:\\Sumo\\sumo_train\\results\\formal_experiment\\dissertation_formal_v2\\runs\\seed1_v4\\FE04_RAW_LLM_v4_seed1_real",
+          "step_records": "D:\\Sumo\\sumo_train\\results\\formal_experiment\\dissertation_formal_v2\\runs\\seed1_v4\\FE04_RAW_LLM_v4_seed1_real\\step_records.csv",
+          "run_metadata": "D:\\Sumo\\sumo_train\\results\\formal_experiment\\dissertation_formal_v2\\runs\\seed1_v4\\FE04_RAW_LLM_v4_seed1_real\\run_metadata.json",
+          "events": "D:\\Sumo\\sumo_train\\results\\formal_experiment\\dissertation_formal_v2\\runs\\seed1_v4\\FE04_RAW_LLM_v4_seed1_real\\events.jsonl"
+        },
+        {
+          "run_id": "FE05_HYBRID_v4_seed1_real",
+          "controller": "HybridLLMController",
+          "scenario_id": "formal_low_v4_seed1",
+          "configured_vehicle_count": 4,
+          "observed_vehicle_count": 4,
+          "observed_vehicle_ids": [
+            "car0",
+            "car1",
+            "car2",
+            "car3"
+          ],
+          "departed_count": 4,
+          "arrived_count": 4,
+          "collision_count": 0,
+          "completion_rate": 1.0,
+          "throughput": 4,
+          "mean_waiting_time": 15.0,
+          "mean_speed": 6.802589217604805,
+          "episode_duration_seconds": 52.0,
+          "provider_attempt_steps": 53,
+          "provider_success_steps": 9,
+          "provider_failure_steps": 44,
+          "provider_success_rate": 0.16981132075471697,
+          "parser_success_steps": 9,
+          "parser_success_given_provider_success": 1.0,
+          "fallback_steps": 44,
+          "latency_ms_mean": 139.38735849056604,
+          "safety_override_count": 0,
+          "postprocess_applied_count": 0,
+          "finish_reason_distribution": {
+            "stop": 9,
+            "NOT_AVAILABLE": 44
+          },
+          "exception_type_distribution": {
+            "NONE": 9,
+            "RateLimitError": 44
+          },
+          "parser_failure_reason_distribution": {
+            "NONE": 9,
+            "PROVIDER_REQUEST_EXCEPTION": 44
+          },
+          "reasoning_tokens_available_steps": 9,
+          "reasoning_tokens_sample": [
+            15,
+            9,
+            14,
+            16,
+            7,
+            15,
+            17,
+            13,
+            69
+          ],
+          "prompt_tokens_sample": [
+            535,
+            535,
+            598,
+            598,
+            661,
+            674,
+            737,
+            737,
+            610
+          ],
+          "completion_tokens_sample": [
+            33,
+            27,
+            37,
+            39,
+            35,
+            45,
+            53,
+            49,
+            97
+          ],
+          "total_tokens_sample": [
+            568,
+            562,
+            635,
+            637,
+            696,
+            719,
+            790,
+            786,
+            707
+          ],
+          "run_dir": "D:\\Sumo\\sumo_train\\results\\formal_experiment\\dissertation_formal_v2\\runs\\seed1_v4\\FE05_HYBRID_v4_seed1_real",
+          "step_records": "D:\\Sumo\\sumo_train\\results\\formal_experiment\\dissertation_formal_v2\\runs\\seed1_v4\\FE05_HYBRID_v4_seed1_real\\step_records.csv",
+          "run_metadata": "D:\\Sumo\\sumo_train\\results\\formal_experiment\\dissertation_formal_v2\\runs\\seed1_v4\\FE05_HYBRID_v4_seed1_real\\run_metadata.json",
+          "events": "D:\\Sumo\\sumo_train\\results\\formal_experiment\\dissertation_formal_v2\\runs\\seed1_v4\\FE05_HYBRID_v4_seed1_real\\events.jsonl"
+        },
+        {
+          "run_id": "FE06_HYBRID_SAFETY_v4_seed1_real",
+          "controller": "HybridLLMSafetyController",
+          "scenario_id": "formal_low_v4_seed1",
+          "configured_vehicle_count": 4,
+          "observed_vehicle_count": 4,
+          "observed_vehicle_ids": [
+            "car0",
+            "car1",
+            "car2",
+            "car3"
+          ],
+          "departed_count": 4,
+          "arrived_count": 4,
+          "collision_count": 0,
+          "completion_rate": 1.0,
+          "throughput": 4,
+          "mean_waiting_time": 15.0,
+          "mean_speed": 6.802589217604805,
+          "episode_duration_seconds": 52.0,
+          "provider_attempt_steps": 53,
+          "provider_success_steps": 9,
+          "provider_failure_steps": 44,
+          "provider_success_rate": 0.16981132075471697,
+          "parser_success_steps": 9,
+          "parser_success_given_provider_success": 1.0,
+          "fallback_steps": 44,
+          "latency_ms_mean": 128.53735849056602,
+          "safety_override_count": 0,
+          "postprocess_applied_count": 0,
+          "finish_reason_distribution": {
+            "stop": 9,
+            "NOT_AVAILABLE": 44
+          },
+          "exception_type_distribution": {
+            "NONE": 9,
+            "RateLimitError": 44
+          },
+          "parser_failure_reason_distribution": {
+            "NONE": 9,
+            "PROVIDER_REQUEST_EXCEPTION": 44
+          },
+          "reasoning_tokens_available_steps": 9,
+          "reasoning_tokens_sample": [
+            10,
+            11,
+            12,
+            15,
+            8,
+            20,
+            13,
+            11,
+            93
+          ],
+          "prompt_tokens_sample": [
+            535,
+            535,
+            598,
+            598,
+            661,
+            674,
+            737,
+            737,
+            610
+          ],
+          "completion_tokens_sample": [
+            28,
+            29,
+            35,
+            39,
+            36,
+            50,
+            49,
+            46,
+            121
+          ],
+          "total_tokens_sample": [
+            563,
+            564,
+            633,
+            637,
+            697,
+            724,
+            786,
+            783,
+            731
+          ],
+          "run_dir": "D:\\Sumo\\sumo_train\\results\\formal_experiment\\dissertation_formal_v2\\runs\\seed1_v4\\FE06_HYBRID_SAFETY_v4_seed1_real",
+          "step_records": "D:\\Sumo\\sumo_train\\results\\formal_experiment\\dissertation_formal_v2\\runs\\seed1_v4\\FE06_HYBRID_SAFETY_v4_seed1_real\\step_records.csv",
+          "run_metadata": "D:\\Sumo\\sumo_train\\results\\formal_experiment\\dissertation_formal_v2\\runs\\seed1_v4\\FE06_HYBRID_SAFETY_v4_seed1_real\\run_metadata.json",
+          "events": "D:\\Sumo\\sumo_train\\results\\formal_experiment\\dissertation_formal_v2\\runs\\seed1_v4\\FE06_HYBRID_SAFETY_v4_seed1_real\\events.jsonl"
+        },
+        {
+          "run_id": "FE05_HYBRID_v8_seed2_real",
+          "controller": "HybridLLMController",
+          "scenario_id": "formal_low_v8_seed2",
+          "configured_vehicle_count": 8,
+          "observed_vehicle_count": 4,
+          "observed_vehicle_ids": [
+            "car0",
+            "car1",
+            "car2",
+            "car3"
+          ],
+          "departed_count": 4,
+          "arrived_count": 4,
+          "collision_count": 0,
+          "completion_rate": 1.0,
+          "throughput": 4,
+          "mean_waiting_time": 15.0,
+          "mean_speed": 6.802589217604805,
+          "episode_duration_seconds": 52.0,
+          "provider_attempt_steps": 53,
+          "provider_success_steps": 8,
+          "provider_failure_steps": 45,
+          "provider_success_rate": 0.1509433962264151,
+          "parser_success_steps": 8,
+          "parser_success_given_provider_success": 1.0,
+          "fallback_steps": 45,
+          "latency_ms_mean": 131.1664150943396,
+          "safety_override_count": 0,
+          "postprocess_applied_count": 1,
+          "finish_reason_distribution": {
+            "stop": 8,
+            "NOT_AVAILABLE": 45
+          },
+          "exception_type_distribution": {
+            "NONE": 8,
+            "RateLimitError": 45
+          },
+          "parser_failure_reason_distribution": {
+            "NONE": 8,
+            "PROVIDER_REQUEST_EXCEPTION": 45
+          },
+          "reasoning_tokens_available_steps": 8,
+          "reasoning_tokens_sample": [
+            9,
+            11,
+            11,
+            7,
+            8,
+            32,
+            17,
+            35
+          ],
+          "prompt_tokens_sample": [
+            535,
+            535,
+            598,
+            598,
+            661,
+            674,
+            737,
+            610
+          ],
+          "completion_tokens_sample": [
+            27,
+            30,
+            34,
+            30,
+            36,
+            62,
+            52,
+            60
+          ],
+          "total_tokens_sample": [
+            562,
+            565,
+            632,
+            628,
+            697,
+            736,
+            789,
+            670
+          ],
+          "run_dir": "D:\\Sumo\\sumo_train\\results\\formal_experiment\\dissertation_formal_v2\\runs\\seed2_v8\\FE05_HYBRID_v8_seed2_real",
+          "step_records": "D:\\Sumo\\sumo_train\\results\\formal_experiment\\dissertation_formal_v2\\runs\\seed2_v8\\FE05_HYBRID_v8_seed2_real\\step_records.csv",
+          "run_metadata": "D:\\Sumo\\sumo_train\\results\\formal_experiment\\dissertation_formal_v2\\runs\\seed2_v8\\FE05_HYBRID_v8_seed2_real\\run_metadata.json",
+          "events": "D:\\Sumo\\sumo_train\\results\\formal_experiment\\dissertation_formal_v2\\runs\\seed2_v8\\FE05_HYBRID_v8_seed2_real\\events.jsonl"
+        },
+        {
+          "run_id": "FE06_HYBRID_SAFETY_v8_seed2_real",
+          "controller": "HybridLLMSafetyController",
+          "scenario_id": "formal_low_v8_seed2",
+          "configured_vehicle_count": 8,
+          "observed_vehicle_count": 4,
+          "observed_vehicle_ids": [
+            "car0",
+            "car1",
+            "car2",
+            "car3"
+          ],
+          "departed_count": 4,
+          "arrived_count": 4,
+          "collision_count": 0,
+          "completion_rate": 1.0,
+          "throughput": 4,
+          "mean_waiting_time": 15.0,
+          "mean_speed": 6.802589217604805,
+          "episode_duration_seconds": 52.0,
+          "provider_attempt_steps": 53,
+          "provider_success_steps": 8,
+          "provider_failure_steps": 45,
+          "provider_success_rate": 0.1509433962264151,
+          "parser_success_steps": 8,
+          "parser_success_given_provider_success": 1.0,
+          "fallback_steps": 45,
+          "latency_ms_mean": 112.29509433962265,
+          "safety_override_count": 0,
+          "postprocess_applied_count": 0,
+          "finish_reason_distribution": {
+            "stop": 8,
+            "NOT_AVAILABLE": 45
+          },
+          "exception_type_distribution": {
+            "NONE": 8,
+            "RateLimitError": 45
+          },
+          "parser_failure_reason_distribution": {
+            "NONE": 8,
+            "PROVIDER_REQUEST_EXCEPTION": 45
+          },
+          "reasoning_tokens_available_steps": 8,
+          "reasoning_tokens_sample": [
+            12,
+            10,
+            11,
+            14,
+            8,
+            42,
+            45,
+            89
+          ],
+          "prompt_tokens_sample": [
+            535,
+            535,
+            598,
+            598,
+            661,
+            674,
+            739,
+            616
+          ],
+          "completion_tokens_sample": [
+            30,
+            28,
+            34,
+            38,
+            36,
+            72,
+            82,
+            116
+          ],
+          "total_tokens_sample": [
+            565,
+            563,
+            632,
+            636,
+            697,
+            746,
+            821,
+            732
+          ],
+          "run_dir": "D:\\Sumo\\sumo_train\\results\\formal_experiment\\dissertation_formal_v2\\runs\\seed2_v8\\FE06_HYBRID_SAFETY_v8_seed2_real",
+          "step_records": "D:\\Sumo\\sumo_train\\results\\formal_experiment\\dissertation_formal_v2\\runs\\seed2_v8\\FE06_HYBRID_SAFETY_v8_seed2_real\\step_records.csv",
+          "run_metadata": "D:\\Sumo\\sumo_train\\results\\formal_experiment\\dissertation_formal_v2\\runs\\seed2_v8\\FE06_HYBRID_SAFETY_v8_seed2_real\\run_metadata.json",
+          "events": "D:\\Sumo\\sumo_train\\results\\formal_experiment\\dissertation_formal_v2\\runs\\seed2_v8\\FE06_HYBRID_SAFETY_v8_seed2_real\\events.jsonl"
+        },
+        {
+          "run_id": "FE01_RULE_BASED_v8_seed2",
+          "controller": "BaselineRule",
+          "scenario_id": "formal_low_v8_seed2",
+          "configured_vehicle_count": 8,
+          "observed_vehicle_count": 4,
+          "observed_vehicle_ids": [
+            "car0",
+            "car1",
+            "car2",
+            "car3"
+          ],
+          "departed_count": 4,
+          "arrived_count": 4,
+          "collision_count": 0,
+          "completion_rate": 1.0,
+          "throughput": 4,
+          "mean_waiting_time": 82.0,
+          "mean_speed": 2.3097622930423896,
+          "episode_duration_seconds": 114.0,
+          "provider_attempt_steps": 0,
+          "provider_success_steps": 0,
+          "provider_failure_steps": 0,
+          "provider_success_rate": null,
+          "parser_success_steps": 0,
+          "parser_success_given_provider_success": null,
+          "fallback_steps": 0,
+          "latency_ms_mean": 0.0,
+          "safety_override_count": 0,
+          "postprocess_applied_count": 0,
+          "finish_reason_distribution": {
+            "NOT_AVAILABLE": 115
+          },
+          "exception_type_distribution": {
+            "NONE": 115
+          },
+          "parser_failure_reason_distribution": {
+            "NONE": 115
+          },
+          "reasoning_tokens_available_steps": 0,
+          "reasoning_tokens_sample": [],
+          "prompt_tokens_sample": [],
+          "completion_tokens_sample": [],
+          "total_tokens_sample": [],
+          "run_dir": "D:\\Sumo\\sumo_train\\results\\formal_experiment\\dissertation_formal_v2\\runs\\seed2_v8\\FE01_RULE_BASED_v8_seed2",
+          "step_records": "D:\\Sumo\\sumo_train\\results\\formal_experiment\\dissertation_formal_v2\\runs\\seed2_v8\\FE01_RULE_BASED_v8_seed2\\step_records.csv",
+          "run_metadata": "D:\\Sumo\\sumo_train\\results\\formal_experiment\\dissertation_formal_v2\\runs\\seed2_v8\\FE01_RULE_BASED_v8_seed2\\run_metadata.json",
+          "events": "D:\\Sumo\\sumo_train\\results\\formal_experiment\\dissertation_formal_v2\\runs\\seed2_v8\\FE01_RULE_BASED_v8_seed2\\events.jsonl"
+        },
+        {
+          "run_id": "FE04_RAW_LLM_v8_seed2_real",
+          "controller": "RawLLMController",
+          "scenario_id": "formal_low_v8_seed2",
+          "configured_vehicle_count": 8,
+          "observed_vehicle_count": 4,
+          "observed_vehicle_ids": [
+            "car0",
+            "car1",
+            "car2",
+            "car3"
+          ],
+          "departed_count": 4,
+          "arrived_count": 4,
+          "collision_count": 0,
+          "completion_rate": 1.0,
+          "throughput": 4,
+          "mean_waiting_time": 15.0,
+          "mean_speed": 6.802589217604805,
+          "episode_duration_seconds": 52.0,
+          "provider_attempt_steps": 53,
+          "provider_success_steps": 1,
+          "provider_failure_steps": 52,
+          "provider_success_rate": 0.018867924528301886,
+          "parser_success_steps": 1,
+          "parser_success_given_provider_success": 1.0,
+          "fallback_steps": 52,
+          "latency_ms_mean": 86.99584905660377,
+          "safety_override_count": 0,
+          "postprocess_applied_count": 0,
+          "finish_reason_distribution": {
+            "stop": 1,
+            "NOT_AVAILABLE": 52
+          },
+          "exception_type_distribution": {
+            "NONE": 1,
+            "RateLimitError": 52
+          },
+          "parser_failure_reason_distribution": {
+            "NONE": 1,
+            "PROVIDER_REQUEST_EXCEPTION": 52
+          },
+          "reasoning_tokens_available_steps": 1,
+          "reasoning_tokens_sample": [
+            11
+          ],
+          "prompt_tokens_sample": [
+            535
+          ],
+          "completion_tokens_sample": [
+            29
+          ],
+          "total_tokens_sample": [
+            564
+          ],
+          "run_dir": "D:\\Sumo\\sumo_train\\results\\formal_experiment\\dissertation_formal_v2\\runs\\seed2_v8\\FE04_RAW_LLM_v8_seed2_real",
+          "step_records": "D:\\Sumo\\sumo_train\\results\\formal_experiment\\dissertation_formal_v2\\runs\\seed2_v8\\FE04_RAW_LLM_v8_seed2_real\\step_records.csv",
+          "run_metadata": "D:\\Sumo\\sumo_train\\results\\formal_experiment\\dissertation_formal_v2\\runs\\seed2_v8\\FE04_RAW_LLM_v8_seed2_real\\run_metadata.json",
+          "events": "D:\\Sumo\\sumo_train\\results\\formal_experiment\\dissertation_formal_v2\\runs\\seed2_v8\\FE04_RAW_LLM_v8_seed2_real\\events.jsonl"
+        },
+        {
+          "run_id": "FE06_HYBRID_SAFETY_v4_seed3_real",
+          "controller": "HybridLLMSafetyController",
+          "scenario_id": "formal_low_v4_seed3",
+          "configured_vehicle_count": 4,
+          "observed_vehicle_count": 4,
+          "observed_vehicle_ids": [
+            "car0",
+            "car1",
+            "car2",
+            "car3"
+          ],
+          "departed_count": 4,
+          "arrived_count": 4,
+          "collision_count": 0,
+          "completion_rate": 1.0,
+          "throughput": 4,
+          "mean_waiting_time": 15.0,
+          "mean_speed": 6.802589217604805,
+          "episode_duration_seconds": 52.0,
+          "provider_attempt_steps": 53,
+          "provider_success_steps": 0,
+          "provider_failure_steps": 53,
+          "provider_success_rate": 0.0,
+          "parser_success_steps": 0,
+          "parser_success_given_provider_success": null,
+          "fallback_steps": 53,
+          "latency_ms_mean": 78.78264150943396,
+          "safety_override_count": 0,
+          "postprocess_applied_count": 0,
+          "finish_reason_distribution": {
+            "NOT_AVAILABLE": 53
+          },
+          "exception_type_distribution": {
+            "RateLimitError": 53
+          },
+          "parser_failure_reason_distribution": {
+            "PROVIDER_REQUEST_EXCEPTION": 53
+          },
+          "reasoning_tokens_available_steps": 0,
+          "reasoning_tokens_sample": [],
+          "prompt_tokens_sample": [],
+          "completion_tokens_sample": [],
+          "total_tokens_sample": [],
+          "run_dir": "D:\\Sumo\\sumo_train\\results\\formal_experiment\\dissertation_formal_v2\\runs\\seed3_v4\\FE06_HYBRID_SAFETY_v4_seed3_real",
+          "step_records": "D:\\Sumo\\sumo_train\\results\\formal_experiment\\dissertation_formal_v2\\runs\\seed3_v4\\FE06_HYBRID_SAFETY_v4_seed3_real\\step_records.csv",
+          "run_metadata": "D:\\Sumo\\sumo_train\\results\\formal_experiment\\dissertation_formal_v2\\runs\\seed3_v4\\FE06_HYBRID_SAFETY_v4_seed3_real\\run_metadata.json",
+          "events": "D:\\Sumo\\sumo_train\\results\\formal_experiment\\dissertation_formal_v2\\runs\\seed3_v4\\FE06_HYBRID_SAFETY_v4_seed3_real\\events.jsonl"
+        },
+        {
+          "run_id": "FE01_RULE_BASED_v4_seed3",
+          "controller": "BaselineRule",
+          "scenario_id": "formal_low_v4_seed3",
+          "configured_vehicle_count": 4,
+          "observed_vehicle_count": 4,
+          "observed_vehicle_ids": [
+            "car0",
+            "car1",
+            "car2",
+            "car3"
+          ],
+          "departed_count": 4,
+          "arrived_count": 4,
+          "collision_count": 0,
+          "completion_rate": 1.0,
+          "throughput": 4,
+          "mean_waiting_time": 82.0,
+          "mean_speed": 2.3097622930423896,
+          "episode_duration_seconds": 114.0,
+          "provider_attempt_steps": 0,
+          "provider_success_steps": 0,
+          "provider_failure_steps": 0,
+          "provider_success_rate": null,
+          "parser_success_steps": 0,
+          "parser_success_given_provider_success": null,
+          "fallback_steps": 0,
+          "latency_ms_mean": 0.0,
+          "safety_override_count": 0,
+          "postprocess_applied_count": 0,
+          "finish_reason_distribution": {
+            "NOT_AVAILABLE": 115
+          },
+          "exception_type_distribution": {
+            "NONE": 115
+          },
+          "parser_failure_reason_distribution": {
+            "NONE": 115
+          },
+          "reasoning_tokens_available_steps": 0,
+          "reasoning_tokens_sample": [],
+          "prompt_tokens_sample": [],
+          "completion_tokens_sample": [],
+          "total_tokens_sample": [],
+          "run_dir": "D:\\Sumo\\sumo_train\\results\\formal_experiment\\dissertation_formal_v2\\runs\\seed3_v4\\FE01_RULE_BASED_v4_seed3",
+          "step_records": "D:\\Sumo\\sumo_train\\results\\formal_experiment\\dissertation_formal_v2\\runs\\seed3_v4\\FE01_RULE_BASED_v4_seed3\\step_records.csv",
+          "run_metadata": "D:\\Sumo\\sumo_train\\results\\formal_experiment\\dissertation_formal_v2\\runs\\seed3_v4\\FE01_RULE_BASED_v4_seed3\\run_metadata.json",
+          "events": "D:\\Sumo\\sumo_train\\results\\formal_experiment\\dissertation_formal_v2\\runs\\seed3_v4\\FE01_RULE_BASED_v4_seed3\\events.jsonl"
+        },
+        {
+          "run_id": "FE04_RAW_LLM_v4_seed3_real",
+          "controller": "RawLLMController",
+          "scenario_id": "formal_low_v4_seed3",
+          "configured_vehicle_count": 4,
+          "observed_vehicle_count": 4,
+          "observed_vehicle_ids": [
+            "car0",
+            "car1",
+            "car2",
+            "car3"
+          ],
+          "departed_count": 4,
+          "arrived_count": 4,
+          "collision_count": 0,
+          "completion_rate": 1.0,
+          "throughput": 4,
+          "mean_waiting_time": 15.0,
+          "mean_speed": 6.802589217604805,
+          "episode_duration_seconds": 52.0,
+          "provider_attempt_steps": 53,
+          "provider_success_steps": 0,
+          "provider_failure_steps": 53,
+          "provider_success_rate": 0.0,
+          "parser_success_steps": 0,
+          "parser_success_given_provider_success": null,
+          "fallback_steps": 53,
+          "latency_ms_mean": 79.20528301886793,
+          "safety_override_count": 0,
+          "postprocess_applied_count": 0,
+          "finish_reason_distribution": {
+            "NOT_AVAILABLE": 53
+          },
+          "exception_type_distribution": {
+            "RateLimitError": 53
+          },
+          "parser_failure_reason_distribution": {
+            "PROVIDER_REQUEST_EXCEPTION": 53
+          },
+          "reasoning_tokens_available_steps": 0,
+          "reasoning_tokens_sample": [],
+          "prompt_tokens_sample": [],
+          "completion_tokens_sample": [],
+          "total_tokens_sample": [],
+          "run_dir": "D:\\Sumo\\sumo_train\\results\\formal_experiment\\dissertation_formal_v2\\runs\\seed3_v4\\FE04_RAW_LLM_v4_seed3_real",
+          "step_records": "D:\\Sumo\\sumo_train\\results\\formal_experiment\\dissertation_formal_v2\\runs\\seed3_v4\\FE04_RAW_LLM_v4_seed3_real\\step_records.csv",
+          "run_metadata": "D:\\Sumo\\sumo_train\\results\\formal_experiment\\dissertation_formal_v2\\runs\\seed3_v4\\FE04_RAW_LLM_v4_seed3_real\\run_metadata.json",
+          "events": "D:\\Sumo\\sumo_train\\results\\formal_experiment\\dissertation_formal_v2\\runs\\seed3_v4\\FE04_RAW_LLM_v4_seed3_real\\events.jsonl"
+        },
+        {
+          "run_id": "FE05_HYBRID_v4_seed3_real",
+          "controller": "HybridLLMController",
+          "scenario_id": "formal_low_v4_seed3",
+          "configured_vehicle_count": 4,
+          "observed_vehicle_count": 4,
+          "observed_vehicle_ids": [
+            "car0",
+            "car1",
+            "car2",
+            "car3"
+          ],
+          "departed_count": 4,
+          "arrived_count": 4,
+          "collision_count": 0,
+          "completion_rate": 1.0,
+          "throughput": 4,
+          "mean_waiting_time": 15.0,
+          "mean_speed": 6.802589217604805,
+          "episode_duration_seconds": 52.0,
+          "provider_attempt_steps": 53,
+          "provider_success_steps": 0,
+          "provider_failure_steps": 53,
+          "provider_success_rate": 0.0,
+          "parser_success_steps": 0,
+          "parser_success_given_provider_success": null,
+          "fallback_steps": 53,
+          "latency_ms_mean": 81.57452830188679,
+          "safety_override_count": 0,
+          "postprocess_applied_count": 0,
+          "finish_reason_distribution": {
+            "NOT_AVAILABLE": 53
+          },
+          "exception_type_distribution": {
+            "RateLimitError": 53
+          },
+          "parser_failure_reason_distribution": {
+            "PROVIDER_REQUEST_EXCEPTION": 53
+          },
+          "reasoning_tokens_available_steps": 0,
+          "reasoning_tokens_sample": [],
+          "prompt_tokens_sample": [],
+          "completion_tokens_sample": [],
+          "total_tokens_sample": [],
+          "run_dir": "D:\\Sumo\\sumo_train\\results\\formal_experiment\\dissertation_formal_v2\\runs\\seed3_v4\\FE05_HYBRID_v4_seed3_real",
+          "step_records": "D:\\Sumo\\sumo_train\\results\\formal_experiment\\dissertation_formal_v2\\runs\\seed3_v4\\FE05_HYBRID_v4_seed3_real\\step_records.csv",
+          "run_metadata": "D:\\Sumo\\sumo_train\\results\\formal_experiment\\dissertation_formal_v2\\runs\\seed3_v4\\FE05_HYBRID_v4_seed3_real\\run_metadata.json",
+          "events": "D:\\Sumo\\sumo_train\\results\\formal_experiment\\dissertation_formal_v2\\runs\\seed3_v4\\FE05_HYBRID_v4_seed3_real\\events.jsonl"
+        },
+        {
+          "run_id": "FE01_RULE_BASED_v8_seed1",
+          "controller": "BaselineRule",
+          "scenario_id": "formal_low_v8_seed1",
+          "configured_vehicle_count": 8,
+          "observed_vehicle_count": 4,
+          "observed_vehicle_ids": [
+            "car0",
+            "car1",
+            "car2",
+            "car3"
+          ],
+          "departed_count": 4,
+          "arrived_count": 4,
+          "collision_count": 0,
+          "completion_rate": 1.0,
+          "throughput": 4,
+          "mean_waiting_time": 82.0,
+          "mean_speed": 2.3097622930423896,
+          "episode_duration_seconds": 114.0,
+          "provider_attempt_steps": 0,
+          "provider_success_steps": 0,
+          "provider_failure_steps": 0,
+          "provider_success_rate": null,
+          "parser_success_steps": 0,
+          "parser_success_given_provider_success": null,
+          "fallback_steps": 0,
+          "latency_ms_mean": 0.0,
+          "safety_override_count": 0,
+          "postprocess_applied_count": 0,
+          "finish_reason_distribution": {
+            "NOT_AVAILABLE": 115
+          },
+          "exception_type_distribution": {
+            "NONE": 115
+          },
+          "parser_failure_reason_distribution": {
+            "NONE": 115
+          },
+          "reasoning_tokens_available_steps": 0,
+          "reasoning_tokens_sample": [],
+          "prompt_tokens_sample": [],
+          "completion_tokens_sample": [],
+          "total_tokens_sample": [],
+          "run_dir": "D:\\Sumo\\sumo_train\\results\\formal_experiment\\dissertation_formal_v2\\runs\\seed1_v8\\FE01_RULE_BASED_v8_seed1",
+          "step_records": "D:\\Sumo\\sumo_train\\results\\formal_experiment\\dissertation_formal_v2\\runs\\seed1_v8\\FE01_RULE_BASED_v8_seed1\\step_records.csv",
+          "run_metadata": "D:\\Sumo\\sumo_train\\results\\formal_experiment\\dissertation_formal_v2\\runs\\seed1_v8\\FE01_RULE_BASED_v8_seed1\\run_metadata.json",
+          "events": "D:\\Sumo\\sumo_train\\results\\formal_experiment\\dissertation_formal_v2\\runs\\seed1_v8\\FE01_RULE_BASED_v8_seed1\\events.jsonl"
+        },
+        {
+          "run_id": "FE04_RAW_LLM_v8_seed1_real",
+          "controller": "RawLLMController",
+          "scenario_id": "formal_low_v8_seed1",
+          "configured_vehicle_count": 8,
+          "observed_vehicle_count": 4,
+          "observed_vehicle_ids": [
+            "car0",
+            "car1",
+            "car2",
+            "car3"
+          ],
+          "departed_count": 4,
+          "arrived_count": 4,
+          "collision_count": 0,
+          "completion_rate": 1.0,
+          "throughput": 4,
+          "mean_waiting_time": 15.0,
+          "mean_speed": 6.802589217604805,
+          "episode_duration_seconds": 52.0,
+          "provider_attempt_steps": 53,
+          "provider_success_steps": 2,
+          "provider_failure_steps": 51,
+          "provider_success_rate": 0.03773584905660377,
+          "parser_success_steps": 2,
+          "parser_success_given_provider_success": 1.0,
+          "fallback_steps": 51,
+          "latency_ms_mean": 92.27188679245283,
+          "safety_override_count": 0,
+          "postprocess_applied_count": 0,
+          "finish_reason_distribution": {
+            "stop": 2,
+            "NOT_AVAILABLE": 51
+          },
+          "exception_type_distribution": {
+            "NONE": 2,
+            "RateLimitError": 51
+          },
+          "parser_failure_reason_distribution": {
+            "NONE": 2,
+            "PROVIDER_REQUEST_EXCEPTION": 51
+          },
+          "reasoning_tokens_available_steps": 2,
+          "reasoning_tokens_sample": [
+            14,
+            9
+          ],
+          "prompt_tokens_sample": [
+            535,
+            535
+          ],
+          "completion_tokens_sample": [
+            32,
+            27
+          ],
+          "total_tokens_sample": [
+            567,
+            562
+          ],
+          "run_dir": "D:\\Sumo\\sumo_train\\results\\formal_experiment\\dissertation_formal_v2\\runs\\seed1_v8\\FE04_RAW_LLM_v8_seed1_real",
+          "step_records": "D:\\Sumo\\sumo_train\\results\\formal_experiment\\dissertation_formal_v2\\runs\\seed1_v8\\FE04_RAW_LLM_v8_seed1_real\\step_records.csv",
+          "run_metadata": "D:\\Sumo\\sumo_train\\results\\formal_experiment\\dissertation_formal_v2\\runs\\seed1_v8\\FE04_RAW_LLM_v8_seed1_real\\run_metadata.json",
+          "events": "D:\\Sumo\\sumo_train\\results\\formal_experiment\\dissertation_formal_v2\\runs\\seed1_v8\\FE04_RAW_LLM_v8_seed1_real\\events.jsonl"
+        },
+        {
+          "run_id": "FE05_HYBRID_v8_seed1_real",
+          "controller": "HybridLLMController",
+          "scenario_id": "formal_low_v8_seed1",
+          "configured_vehicle_count": 8,
+          "observed_vehicle_count": 4,
+          "observed_vehicle_ids": [
+            "car0",
+            "car1",
+            "car2",
+            "car3"
+          ],
+          "departed_count": 4,
+          "arrived_count": 4,
+          "collision_count": 0,
+          "completion_rate": 1.0,
+          "throughput": 4,
+          "mean_waiting_time": 15.0,
+          "mean_speed": 6.802589217604805,
+          "episode_duration_seconds": 52.0,
+          "provider_attempt_steps": 53,
+          "provider_success_steps": 0,
+          "provider_failure_steps": 53,
+          "provider_success_rate": 0.0,
+          "parser_success_steps": 0,
+          "parser_success_given_provider_success": null,
+          "fallback_steps": 53,
+          "latency_ms_mean": 79.13566037735848,
+          "safety_override_count": 0,
+          "postprocess_applied_count": 0,
+          "finish_reason_distribution": {
+            "NOT_AVAILABLE": 53
+          },
+          "exception_type_distribution": {
+            "RateLimitError": 53
+          },
+          "parser_failure_reason_distribution": {
+            "PROVIDER_REQUEST_EXCEPTION": 53
+          },
+          "reasoning_tokens_available_steps": 0,
+          "reasoning_tokens_sample": [],
+          "prompt_tokens_sample": [],
+          "completion_tokens_sample": [],
+          "total_tokens_sample": [],
+          "run_dir": "D:\\Sumo\\sumo_train\\results\\formal_experiment\\dissertation_formal_v2\\runs\\seed1_v8\\FE05_HYBRID_v8_seed1_real",
+          "step_records": "D:\\Sumo\\sumo_train\\results\\formal_experiment\\dissertation_formal_v2\\runs\\seed1_v8\\FE05_HYBRID_v8_seed1_real\\step_records.csv",
+          "run_metadata": "D:\\Sumo\\sumo_train\\results\\formal_experiment\\dissertation_formal_v2\\runs\\seed1_v8\\FE05_HYBRID_v8_seed1_real\\run_metadata.json",
+          "events": "D:\\Sumo\\sumo_train\\results\\formal_experiment\\dissertation_formal_v2\\runs\\seed1_v8\\FE05_HYBRID_v8_seed1_real\\events.jsonl"
+        },
+        {
+          "run_id": "FE06_HYBRID_SAFETY_v8_seed1_real",
+          "controller": "HybridLLMSafetyController",
+          "scenario_id": "formal_low_v8_seed1",
+          "configured_vehicle_count": 8,
+          "observed_vehicle_count": 4,
+          "observed_vehicle_ids": [
+            "car0",
+            "car1",
+            "car2",
+            "car3"
+          ],
+          "departed_count": 4,
+          "arrived_count": 4,
+          "collision_count": 0,
+          "completion_rate": 1.0,
+          "throughput": 4,
+          "mean_waiting_time": 15.0,
+          "mean_speed": 6.802589217604805,
+          "episode_duration_seconds": 52.0,
+          "provider_attempt_steps": 53,
+          "provider_success_steps": 0,
+          "provider_failure_steps": 53,
+          "provider_success_rate": 0.0,
+          "parser_success_steps": 0,
+          "parser_success_given_provider_success": null,
+          "fallback_steps": 53,
+          "latency_ms_mean": 84.03056603773585,
+          "safety_override_count": 0,
+          "postprocess_applied_count": 0,
+          "finish_reason_distribution": {
+            "NOT_AVAILABLE": 53
+          },
+          "exception_type_distribution": {
+            "RateLimitError": 53
+          },
+          "parser_failure_reason_distribution": {
+            "PROVIDER_REQUEST_EXCEPTION": 53
+          },
+          "reasoning_tokens_available_steps": 0,
+          "reasoning_tokens_sample": [],
+          "prompt_tokens_sample": [],
+          "completion_tokens_sample": [],
+          "total_tokens_sample": [],
+          "run_dir": "D:\\Sumo\\sumo_train\\results\\formal_experiment\\dissertation_formal_v2\\runs\\seed1_v8\\FE06_HYBRID_SAFETY_v8_seed1_real",
+          "step_records": "D:\\Sumo\\sumo_train\\results\\formal_experiment\\dissertation_formal_v2\\runs\\seed1_v8\\FE06_HYBRID_SAFETY_v8_seed1_real\\step_records.csv",
+          "run_metadata": "D:\\Sumo\\sumo_train\\results\\formal_experiment\\dissertation_formal_v2\\runs\\seed1_v8\\FE06_HYBRID_SAFETY_v8_seed1_real\\run_metadata.json",
+          "events": "D:\\Sumo\\sumo_train\\results\\formal_experiment\\dissertation_formal_v2\\runs\\seed1_v8\\FE06_HYBRID_SAFETY_v8_seed1_real\\events.jsonl"
+        },
+        {
+          "run_id": "FE05_HYBRID_v4_seed2_real",
+          "controller": "HybridLLMController",
+          "scenario_id": "formal_low_v4_seed2",
+          "configured_vehicle_count": 4,
+          "observed_vehicle_count": 4,
+          "observed_vehicle_ids": [
+            "car0",
+            "car1",
+            "car2",
+            "car3"
+          ],
+          "departed_count": 4,
+          "arrived_count": 4,
+          "collision_count": 0,
+          "completion_rate": 1.0,
+          "throughput": 4,
+          "mean_waiting_time": 15.0,
+          "mean_speed": 6.802589217604805,
+          "episode_duration_seconds": 52.0,
+          "provider_attempt_steps": 53,
+          "provider_success_steps": 0,
+          "provider_failure_steps": 53,
+          "provider_success_rate": 0.0,
+          "parser_success_steps": 0,
+          "parser_success_given_provider_success": null,
+          "fallback_steps": 53,
+          "latency_ms_mean": 112.10094339622643,
+          "safety_override_count": 0,
+          "postprocess_applied_count": 0,
+          "finish_reason_distribution": {
+            "NOT_AVAILABLE": 53
+          },
+          "exception_type_distribution": {
+            "RateLimitError": 53
+          },
+          "parser_failure_reason_distribution": {
+            "PROVIDER_REQUEST_EXCEPTION": 53
+          },
+          "reasoning_tokens_available_steps": 0,
+          "reasoning_tokens_sample": [],
+          "prompt_tokens_sample": [],
+          "completion_tokens_sample": [],
+          "total_tokens_sample": [],
+          "run_dir": "D:\\Sumo\\sumo_train\\results\\formal_experiment\\dissertation_formal_v2\\runs\\seed2_v4\\FE05_HYBRID_v4_seed2_real",
+          "step_records": "D:\\Sumo\\sumo_train\\results\\formal_experiment\\dissertation_formal_v2\\runs\\seed2_v4\\FE05_HYBRID_v4_seed2_real\\step_records.csv",
+          "run_metadata": "D:\\Sumo\\sumo_train\\results\\formal_experiment\\dissertation_formal_v2\\runs\\seed2_v4\\FE05_HYBRID_v4_seed2_real\\run_metadata.json",
+          "events": "D:\\Sumo\\sumo_train\\results\\formal_experiment\\dissertation_formal_v2\\runs\\seed2_v4\\FE05_HYBRID_v4_seed2_real\\events.jsonl"
+        },
+        {
+          "run_id": "FE06_HYBRID_SAFETY_v4_seed2_real",
+          "controller": "HybridLLMSafetyController",
+          "scenario_id": "formal_low_v4_seed2",
+          "configured_vehicle_count": 4,
+          "observed_vehicle_count": 4,
+          "observed_vehicle_ids": [
+            "car0",
+            "car1",
+            "car2",
+            "car3"
+          ],
+          "departed_count": 4,
+          "arrived_count": 4,
+          "collision_count": 0,
+          "completion_rate": 1.0,
+          "throughput": 4,
+          "mean_waiting_time": 15.0,
+          "mean_speed": 6.802589217604805,
+          "episode_duration_seconds": 52.0,
+          "provider_attempt_steps": 53,
+          "provider_success_steps": 0,
+          "provider_failure_steps": 53,
+          "provider_success_rate": 0.0,
+          "parser_success_steps": 0,
+          "parser_success_given_provider_success": null,
+          "fallback_steps": 53,
+          "latency_ms_mean": 81.13716981132076,
+          "safety_override_count": 0,
+          "postprocess_applied_count": 0,
+          "finish_reason_distribution": {
+            "NOT_AVAILABLE": 53
+          },
+          "exception_type_distribution": {
+            "RateLimitError": 53
+          },
+          "parser_failure_reason_distribution": {
+            "PROVIDER_REQUEST_EXCEPTION": 53
+          },
+          "reasoning_tokens_available_steps": 0,
+          "reasoning_tokens_sample": [],
+          "prompt_tokens_sample": [],
+          "completion_tokens_sample": [],
+          "total_tokens_sample": [],
+          "run_dir": "D:\\Sumo\\sumo_train\\results\\formal_experiment\\dissertation_formal_v2\\runs\\seed2_v4\\FE06_HYBRID_SAFETY_v4_seed2_real",
+          "step_records": "D:\\Sumo\\sumo_train\\results\\formal_experiment\\dissertation_formal_v2\\runs\\seed2_v4\\FE06_HYBRID_SAFETY_v4_seed2_real\\step_records.csv",
+          "run_metadata": "D:\\Sumo\\sumo_train\\results\\formal_experiment\\dissertation_formal_v2\\runs\\seed2_v4\\FE06_HYBRID_SAFETY_v4_seed2_real\\run_metadata.json",
+          "events": "D:\\Sumo\\sumo_train\\results\\formal_experiment\\dissertation_formal_v2\\runs\\seed2_v4\\FE06_HYBRID_SAFETY_v4_seed2_real\\events.jsonl"
+        },
+        {
+          "run_id": "FE01_RULE_BASED_v4_seed2",
+          "controller": "BaselineRule",
+          "scenario_id": "formal_low_v4_seed2",
+          "configured_vehicle_count": 4,
+          "observed_vehicle_count": 4,
+          "observed_vehicle_ids": [
+            "car0",
+            "car1",
+            "car2",
+            "car3"
+          ],
+          "departed_count": 4,
+          "arrived_count": 4,
+          "collision_count": 0,
+          "completion_rate": 1.0,
+          "throughput": 4,
+          "mean_waiting_time": 82.0,
+          "mean_speed": 2.3097622930423896,
+          "episode_duration_seconds": 114.0,
+          "provider_attempt_steps": 0,
+          "provider_success_steps": 0,
+          "provider_failure_steps": 0,
+          "provider_success_rate": null,
+          "parser_success_steps": 0,
+          "parser_success_given_provider_success": null,
+          "fallback_steps": 0,
+          "latency_ms_mean": 0.0,
+          "safety_override_count": 0,
+          "postprocess_applied_count": 0,
+          "finish_reason_distribution": {
+            "NOT_AVAILABLE": 115
+          },
+          "exception_type_distribution": {
+            "NONE": 115
+          },
+          "parser_failure_reason_distribution": {
+            "NONE": 115
+          },
+          "reasoning_tokens_available_steps": 0,
+          "reasoning_tokens_sample": [],
+          "prompt_tokens_sample": [],
+          "completion_tokens_sample": [],
+          "total_tokens_sample": [],
+          "run_dir": "D:\\Sumo\\sumo_train\\results\\formal_experiment\\dissertation_formal_v2\\runs\\seed2_v4\\FE01_RULE_BASED_v4_seed2",
+          "step_records": "D:\\Sumo\\sumo_train\\results\\formal_experiment\\dissertation_formal_v2\\runs\\seed2_v4\\FE01_RULE_BASED_v4_seed2\\step_records.csv",
+          "run_metadata": "D:\\Sumo\\sumo_train\\results\\formal_experiment\\dissertation_formal_v2\\runs\\seed2_v4\\FE01_RULE_BASED_v4_seed2\\run_metadata.json",
+          "events": "D:\\Sumo\\sumo_train\\results\\formal_experiment\\dissertation_formal_v2\\runs\\seed2_v4\\FE01_RULE_BASED_v4_seed2\\events.jsonl"
+        },
+        {
+          "run_id": "FE04_RAW_LLM_v4_seed2_real",
+          "controller": "RawLLMController",
+          "scenario_id": "formal_low_v4_seed2",
+          "configured_vehicle_count": 4,
+          "observed_vehicle_count": 4,
+          "observed_vehicle_ids": [
+            "car0",
+            "car1",
+            "car2",
+            "car3"
+          ],
+          "departed_count": 4,
+          "arrived_count": 4,
+          "collision_count": 0,
+          "completion_rate": 1.0,
+          "throughput": 4,
+          "mean_waiting_time": 15.0,
+          "mean_speed": 6.802589217604805,
+          "episode_duration_seconds": 52.0,
+          "provider_attempt_steps": 53,
+          "provider_success_steps": 0,
+          "provider_failure_steps": 53,
+          "provider_success_rate": 0.0,
+          "parser_success_steps": 0,
+          "parser_success_given_provider_success": null,
+          "fallback_steps": 53,
+          "latency_ms_mean": 81.64735849056605,
+          "safety_override_count": 0,
+          "postprocess_applied_count": 0,
+          "finish_reason_distribution": {
+            "NOT_AVAILABLE": 53
+          },
+          "exception_type_distribution": {
+            "RateLimitError": 53
+          },
+          "parser_failure_reason_distribution": {
+            "PROVIDER_REQUEST_EXCEPTION": 53
+          },
+          "reasoning_tokens_available_steps": 0,
+          "reasoning_tokens_sample": [],
+          "prompt_tokens_sample": [],
+          "completion_tokens_sample": [],
+          "total_tokens_sample": [],
+          "run_dir": "D:\\Sumo\\sumo_train\\results\\formal_experiment\\dissertation_formal_v2\\runs\\seed2_v4\\FE04_RAW_LLM_v4_seed2_real",
+          "step_records": "D:\\Sumo\\sumo_train\\results\\formal_experiment\\dissertation_formal_v2\\runs\\seed2_v4\\FE04_RAW_LLM_v4_seed2_real\\step_records.csv",
+          "run_metadata": "D:\\Sumo\\sumo_train\\results\\formal_experiment\\dissertation_formal_v2\\runs\\seed2_v4\\FE04_RAW_LLM_v4_seed2_real\\run_metadata.json",
+          "events": "D:\\Sumo\\sumo_train\\results\\formal_experiment\\dissertation_formal_v2\\runs\\seed2_v4\\FE04_RAW_LLM_v4_seed2_real\\events.jsonl"
+        },
+        {
+          "run_id": "FE06_HYBRID_SAFETY_v8_seed3_real",
+          "controller": "HybridLLMSafetyController",
+          "scenario_id": "formal_low_v8_seed3",
+          "configured_vehicle_count": 8,
+          "observed_vehicle_count": 4,
+          "observed_vehicle_ids": [
+            "car0",
+            "car1",
+            "car2",
+            "car3"
+          ],
+          "departed_count": 4,
+          "arrived_count": 4,
+          "collision_count": 0,
+          "completion_rate": 1.0,
+          "throughput": 4,
+          "mean_waiting_time": 15.0,
+          "mean_speed": 6.802589217604805,
+          "episode_duration_seconds": 52.0,
+          "provider_attempt_steps": 53,
+          "provider_success_steps": 0,
+          "provider_failure_steps": 53,
+          "provider_success_rate": 0.0,
+          "parser_success_steps": 0,
+          "parser_success_given_provider_success": null,
+          "fallback_steps": 53,
+          "latency_ms_mean": 81.67754716981132,
+          "safety_override_count": 0,
+          "postprocess_applied_count": 0,
+          "finish_reason_distribution": {
+            "NOT_AVAILABLE": 53
+          },
+          "exception_type_distribution": {
+            "RateLimitError": 53
+          },
+          "parser_failure_reason_distribution": {
+            "PROVIDER_REQUEST_EXCEPTION": 53
+          },
+          "reasoning_tokens_available_steps": 0,
+          "reasoning_tokens_sample": [],
+          "prompt_tokens_sample": [],
+          "completion_tokens_sample": [],
+          "total_tokens_sample": [],
+          "run_dir": "D:\\Sumo\\sumo_train\\results\\formal_experiment\\dissertation_formal_v2\\runs\\seed3_v8\\FE06_HYBRID_SAFETY_v8_seed3_real",
+          "step_records": "D:\\Sumo\\sumo_train\\results\\formal_experiment\\dissertation_formal_v2\\runs\\seed3_v8\\FE06_HYBRID_SAFETY_v8_seed3_real\\step_records.csv",
+          "run_metadata": "D:\\Sumo\\sumo_train\\results\\formal_experiment\\dissertation_formal_v2\\runs\\seed3_v8\\FE06_HYBRID_SAFETY_v8_seed3_real\\run_metadata.json",
+          "events": "D:\\Sumo\\sumo_train\\results\\formal_experiment\\dissertation_formal_v2\\runs\\seed3_v8\\FE06_HYBRID_SAFETY_v8_seed3_real\\events.jsonl"
+        },
+        {
+          "run_id": "FE01_RULE_BASED_v8_seed3",
+          "controller": "BaselineRule",
+          "scenario_id": "formal_low_v8_seed3",
+          "configured_vehicle_count": 8,
+          "observed_vehicle_count": 4,
+          "observed_vehicle_ids": [
+            "car0",
+            "car1",
+            "car2",
+            "car3"
+          ],
+          "departed_count": 4,
+          "arrived_count": 4,
+          "collision_count": 0,
+          "completion_rate": 1.0,
+          "throughput": 4,
+          "mean_waiting_time": 82.0,
+          "mean_speed": 2.3097622930423896,
+          "episode_duration_seconds": 114.0,
+          "provider_attempt_steps": 0,
+          "provider_success_steps": 0,
+          "provider_failure_steps": 0,
+          "provider_success_rate": null,
+          "parser_success_steps": 0,
+          "parser_success_given_provider_success": null,
+          "fallback_steps": 0,
+          "latency_ms_mean": 0.0,
+          "safety_override_count": 0,
+          "postprocess_applied_count": 0,
+          "finish_reason_distribution": {
+            "NOT_AVAILABLE": 115
+          },
+          "exception_type_distribution": {
+            "NONE": 115
+          },
+          "parser_failure_reason_distribution": {
+            "NONE": 115
+          },
+          "reasoning_tokens_available_steps": 0,
+          "reasoning_tokens_sample": [],
+          "prompt_tokens_sample": [],
+          "completion_tokens_sample": [],
+          "total_tokens_sample": [],
+          "run_dir": "D:\\Sumo\\sumo_train\\results\\formal_experiment\\dissertation_formal_v2\\runs\\seed3_v8\\FE01_RULE_BASED_v8_seed3",
+          "step_records": "D:\\Sumo\\sumo_train\\results\\formal_experiment\\dissertation_formal_v2\\runs\\seed3_v8\\FE01_RULE_BASED_v8_seed3\\step_records.csv",
+          "run_metadata": "D:\\Sumo\\sumo_train\\results\\formal_experiment\\dissertation_formal_v2\\runs\\seed3_v8\\FE01_RULE_BASED_v8_seed3\\run_metadata.json",
+          "events": "D:\\Sumo\\sumo_train\\results\\formal_experiment\\dissertation_formal_v2\\runs\\seed3_v8\\FE01_RULE_BASED_v8_seed3\\events.jsonl"
+        },
+        {
+          "run_id": "FE04_RAW_LLM_v8_seed3_real",
+          "controller": "RawLLMController",
+          "scenario_id": "formal_low_v8_seed3",
+          "configured_vehicle_count": 8,
+          "observed_vehicle_count": 4,
+          "observed_vehicle_ids": [
+            "car0",
+            "car1",
+            "car2",
+            "car3"
+          ],
+          "departed_count": 4,
+          "arrived_count": 4,
+          "collision_count": 0,
+          "completion_rate": 1.0,
+          "throughput": 4,
+          "mean_waiting_time": 15.0,
+          "mean_speed": 6.802589217604805,
+          "episode_duration_seconds": 52.0,
+          "provider_attempt_steps": 53,
+          "provider_success_steps": 0,
+          "provider_failure_steps": 53,
+          "provider_success_rate": 0.0,
+          "parser_success_steps": 0,
+          "parser_success_given_provider_success": null,
+          "fallback_steps": 53,
+          "latency_ms_mean": 80.3677358490566,
+          "safety_override_count": 0,
+          "postprocess_applied_count": 0,
+          "finish_reason_distribution": {
+            "NOT_AVAILABLE": 53
+          },
+          "exception_type_distribution": {
+            "RateLimitError": 53
+          },
+          "parser_failure_reason_distribution": {
+            "PROVIDER_REQUEST_EXCEPTION": 53
+          },
+          "reasoning_tokens_available_steps": 0,
+          "reasoning_tokens_sample": [],
+          "prompt_tokens_sample": [],
+          "completion_tokens_sample": [],
+          "total_tokens_sample": [],
+          "run_dir": "D:\\Sumo\\sumo_train\\results\\formal_experiment\\dissertation_formal_v2\\runs\\seed3_v8\\FE04_RAW_LLM_v8_seed3_real",
+          "step_records": "D:\\Sumo\\sumo_train\\results\\formal_experiment\\dissertation_formal_v2\\runs\\seed3_v8\\FE04_RAW_LLM_v8_seed3_real\\step_records.csv",
+          "run_metadata": "D:\\Sumo\\sumo_train\\results\\formal_experiment\\dissertation_formal_v2\\runs\\seed3_v8\\FE04_RAW_LLM_v8_seed3_real\\run_metadata.json",
+          "events": "D:\\Sumo\\sumo_train\\results\\formal_experiment\\dissertation_formal_v2\\runs\\seed3_v8\\FE04_RAW_LLM_v8_seed3_real\\events.jsonl"
+        },
+        {
+          "run_id": "FE05_HYBRID_v8_seed3_real",
+          "controller": "HybridLLMController",
+          "scenario_id": "formal_low_v8_seed3",
+          "configured_vehicle_count": 8,
+          "observed_vehicle_count": 4,
+          "observed_vehicle_ids": [
+            "car0",
+            "car1",
+            "car2",
+            "car3"
+          ],
+          "departed_count": 4,
+          "arrived_count": 4,
+          "collision_count": 0,
+          "completion_rate": 1.0,
+          "throughput": 4,
+          "mean_waiting_time": 15.0,
+          "mean_speed": 6.802589217604805,
+          "episode_duration_seconds": 52.0,
+          "provider_attempt_steps": 53,
+          "provider_success_steps": 0,
+          "provider_failure_steps": 53,
+          "provider_success_rate": 0.0,
+          "parser_success_steps": 0,
+          "parser_success_given_provider_success": null,
+          "fallback_steps": 53,
+          "latency_ms_mean": 83.21622641509434,
+          "safety_override_count": 0,
+          "postprocess_applied_count": 0,
+          "finish_reason_distribution": {
+            "NOT_AVAILABLE": 53
+          },
+          "exception_type_distribution": {
+            "RateLimitError": 53
+          },
+          "parser_failure_reason_distribution": {
+            "PROVIDER_REQUEST_EXCEPTION": 53
+          },
+          "reasoning_tokens_available_steps": 0,
+          "reasoning_tokens_sample": [],
+          "prompt_tokens_sample": [],
+          "completion_tokens_sample": [],
+          "total_tokens_sample": [],
+          "run_dir": "D:\\Sumo\\sumo_train\\results\\formal_experiment\\dissertation_formal_v2\\runs\\seed3_v8\\FE05_HYBRID_v8_seed3_real",
+          "step_records": "D:\\Sumo\\sumo_train\\results\\formal_experiment\\dissertation_formal_v2\\runs\\seed3_v8\\FE05_HYBRID_v8_seed3_real\\step_records.csv",
+          "run_metadata": "D:\\Sumo\\sumo_train\\results\\formal_experiment\\dissertation_formal_v2\\runs\\seed3_v8\\FE05_HYBRID_v8_seed3_real\\run_metadata.json",
+          "events": "D:\\Sumo\\sumo_train\\results\\formal_experiment\\dissertation_formal_v2\\runs\\seed3_v8\\FE05_HYBRID_v8_seed3_real\\events.jsonl"
+        }
+      ],
+      "aggregate": {
+        "BaselineRule|4": {
+          "n_runs": 3,
+          "completion_rate": {
+            "mean": 1.0,
+            "sd": 0.0,
+            "values": [
+              1.0,
+              1.0,
+              1.0
+            ]
+          },
+          "throughput": {
+            "mean": 4.0,
+            "sd": 0.0,
+            "values": [
+              4,
+              4,
+              4
+            ]
+          },
+          "mean_waiting_time": {
+            "mean": 82.0,
+            "sd": 0.0,
+            "values": [
+              82.0,
+              82.0,
+              82.0
+            ]
+          },
+          "mean_speed": {
+            "mean": 2.3097622930423896,
+            "sd": 0.0,
+            "values": [
+              2.3097622930423896,
+              2.3097622930423896,
+              2.3097622930423896
+            ]
+          },
+          "episode_duration_seconds": {
+            "mean": 114.0,
+            "sd": 0.0,
+            "values": [
+              114.0,
+              114.0,
+              114.0
+            ]
+          },
+          "provider_attempt_steps": {
+            "mean": 0.0,
+            "sd": 0.0,
+            "values": [
+              0,
+              0,
+              0
+            ]
+          },
+          "provider_success_steps": {
+            "mean": 0.0,
+            "sd": 0.0,
+            "values": [
+              0,
+              0,
+              0
+            ]
+          },
+          "provider_failure_steps": {
+            "mean": 0.0,
+            "sd": 0.0,
+            "values": [
+              0,
+              0,
+              0
+            ]
+          },
+          "provider_success_rate": {
+            "mean": null,
+            "sd": null,
+            "values": []
+          },
+          "parser_success_steps": {
+            "mean": 0.0,
+            "sd": 0.0,
+            "values": [
+              0,
+              0,
+              0
+            ]
+          },
+          "fallback_steps": {
+            "mean": 0.0,
+            "sd": 0.0,
+            "values": [
+              0,
+              0,
+              0
+            ]
+          },
+          "latency_ms_mean": {
+            "mean": 0.0,
+            "sd": 0.0,
+            "values": [
+              0.0,
+              0.0,
+              0.0
+            ]
+          },
+          "collision_count": {
+            "mean": 0.0,
+            "sd": 0.0,
+            "values": [
+              0,
+              0,
+              0
+            ]
+          },
+          "safety_override_count": {
+            "mean": 0.0,
+            "sd": 0.0,
+            "values": [
+              0,
+              0,
+              0
+            ]
+          },
+          "postprocess_applied_count": {
+            "mean": 0.0,
+            "sd": 0.0,
+            "values": [
+              0,
+              0,
+              0
+            ]
+          }
+        },
+        "RawLLMController|4": {
+          "n_runs": 3,
+          "completion_rate": {
+            "mean": 1.0,
+            "sd": 0.0,
+            "values": [
+              1.0,
+              1.0,
+              1.0
+            ]
+          },
+          "throughput": {
+            "mean": 4.0,
+            "sd": 0.0,
+            "values": [
+              4,
+              4,
+              4
+            ]
+          },
+          "mean_waiting_time": {
+            "mean": 15.0,
+            "sd": 0.0,
+            "values": [
+              15.0,
+              15.0,
+              15.0
+            ]
+          },
+          "mean_speed": {
+            "mean": 6.802589217604805,
+            "sd": 0.0,
+            "values": [
+              6.802589217604805,
+              6.802589217604805,
+              6.802589217604805
+            ]
+          },
+          "episode_duration_seconds": {
+            "mean": 52.0,
+            "sd": 0.0,
+            "values": [
+              52.0,
+              52.0,
+              52.0
+            ]
+          },
+          "provider_attempt_steps": {
+            "mean": 53.0,
+            "sd": 0.0,
+            "values": [
+              53,
+              53,
+              53
+            ]
+          },
+          "provider_success_steps": {
+            "mean": 3.3333333333333335,
+            "sd": 4.714045207910317,
+            "values": [
+              10,
+              0,
+              0
+            ]
+          },
+          "provider_failure_steps": {
+            "mean": 49.666666666666664,
+            "sd": 4.714045207910317,
+            "values": [
+              43,
+              53,
+              53
+            ]
+          },
+          "provider_success_rate": {
+            "mean": 0.06289308176100629,
+            "sd": 0.08894424920585504,
+            "values": [
+              0.18867924528301888,
+              0.0,
+              0.0
+            ]
+          },
+          "parser_success_steps": {
+            "mean": 3.3333333333333335,
+            "sd": 4.714045207910317,
+            "values": [
+              10,
+              0,
+              0
+            ]
+          },
+          "fallback_steps": {
+            "mean": 49.666666666666664,
+            "sd": 4.714045207910317,
+            "values": [
+              43,
+              53,
+              53
+            ]
+          },
+          "latency_ms_mean": {
+            "mean": 101.41232704402516,
+            "sd": 29.69543526174816,
+            "values": [
+              143.3843396226415,
+              79.20528301886793,
+              81.64735849056605
+            ]
+          },
+          "collision_count": {
+            "mean": 0.0,
+            "sd": 0.0,
+            "values": [
+              0,
+              0,
+              0
+            ]
+          },
+          "safety_override_count": {
+            "mean": 0.0,
+            "sd": 0.0,
+            "values": [
+              0,
+              0,
+              0
+            ]
+          },
+          "postprocess_applied_count": {
+            "mean": 0.0,
+            "sd": 0.0,
+            "values": [
+              0,
+              0,
+              0
+            ]
+          }
+        },
+        "HybridLLMController|4": {
+          "n_runs": 3,
+          "completion_rate": {
+            "mean": 1.0,
+            "sd": 0.0,
+            "values": [
+              1.0,
+              1.0,
+              1.0
+            ]
+          },
+          "throughput": {
+            "mean": 4.0,
+            "sd": 0.0,
+            "values": [
+              4,
+              4,
+              4
+            ]
+          },
+          "mean_waiting_time": {
+            "mean": 15.0,
+            "sd": 0.0,
+            "values": [
+              15.0,
+              15.0,
+              15.0
+            ]
+          },
+          "mean_speed": {
+            "mean": 6.802589217604805,
+            "sd": 0.0,
+            "values": [
+              6.802589217604805,
+              6.802589217604805,
+              6.802589217604805
+            ]
+          },
+          "episode_duration_seconds": {
+            "mean": 52.0,
+            "sd": 0.0,
+            "values": [
+              52.0,
+              52.0,
+              52.0
+            ]
+          },
+          "provider_attempt_steps": {
+            "mean": 53.0,
+            "sd": 0.0,
+            "values": [
+              53,
+              53,
+              53
+            ]
+          },
+          "provider_success_steps": {
+            "mean": 3.0,
+            "sd": 4.242640687119285,
+            "values": [
+              9,
+              0,
+              0
+            ]
+          },
+          "provider_failure_steps": {
+            "mean": 50.0,
+            "sd": 4.242640687119285,
+            "values": [
+              44,
+              53,
+              53
+            ]
+          },
+          "provider_success_rate": {
+            "mean": 0.056603773584905655,
+            "sd": 0.08004982428526952,
+            "values": [
+              0.16981132075471697,
+              0.0,
+              0.0
+            ]
+          },
+          "parser_success_steps": {
+            "mean": 3.0,
+            "sd": 4.242640687119285,
+            "values": [
+              9,
+              0,
+              0
+            ]
+          },
+          "fallback_steps": {
+            "mean": 50.0,
+            "sd": 4.242640687119285,
+            "values": [
+              44,
+              53,
+              53
+            ]
+          },
+          "latency_ms_mean": {
+            "mean": 111.02094339622641,
+            "sd": 23.614340750290786,
+            "values": [
+              139.38735849056604,
+              81.57452830188679,
+              112.10094339622643
+            ]
+          },
+          "collision_count": {
+            "mean": 0.0,
+            "sd": 0.0,
+            "values": [
+              0,
+              0,
+              0
+            ]
+          },
+          "safety_override_count": {
+            "mean": 0.0,
+            "sd": 0.0,
+            "values": [
+              0,
+              0,
+              0
+            ]
+          },
+          "postprocess_applied_count": {
+            "mean": 0.0,
+            "sd": 0.0,
+            "values": [
+              0,
+              0,
+              0
+            ]
+          }
+        },
+        "HybridLLMSafetyController|4": {
+          "n_runs": 3,
+          "completion_rate": {
+            "mean": 1.0,
+            "sd": 0.0,
+            "values": [
+              1.0,
+              1.0,
+              1.0
+            ]
+          },
+          "throughput": {
+            "mean": 4.0,
+            "sd": 0.0,
+            "values": [
+              4,
+              4,
+              4
+            ]
+          },
+          "mean_waiting_time": {
+            "mean": 15.0,
+            "sd": 0.0,
+            "values": [
+              15.0,
+              15.0,
+              15.0
+            ]
+          },
+          "mean_speed": {
+            "mean": 6.802589217604805,
+            "sd": 0.0,
+            "values": [
+              6.802589217604805,
+              6.802589217604805,
+              6.802589217604805
+            ]
+          },
+          "episode_duration_seconds": {
+            "mean": 52.0,
+            "sd": 0.0,
+            "values": [
+              52.0,
+              52.0,
+              52.0
+            ]
+          },
+          "provider_attempt_steps": {
+            "mean": 53.0,
+            "sd": 0.0,
+            "values": [
+              53,
+              53,
+              53
+            ]
+          },
+          "provider_success_steps": {
+            "mean": 3.0,
+            "sd": 4.242640687119285,
+            "values": [
+              9,
+              0,
+              0
+            ]
+          },
+          "provider_failure_steps": {
+            "mean": 50.0,
+            "sd": 4.242640687119285,
+            "values": [
+              44,
+              53,
+              53
+            ]
+          },
+          "provider_success_rate": {
+            "mean": 0.056603773584905655,
+            "sd": 0.08004982428526952,
+            "values": [
+              0.16981132075471697,
+              0.0,
+              0.0
+            ]
+          },
+          "parser_success_steps": {
+            "mean": 3.0,
+            "sd": 4.242640687119285,
+            "values": [
+              9,
+              0,
+              0
+            ]
+          },
+          "fallback_steps": {
+            "mean": 50.0,
+            "sd": 4.242640687119285,
+            "values": [
+              44,
+              53,
+              53
+            ]
+          },
+          "latency_ms_mean": {
+            "mean": 96.15238993710692,
+            "sd": 22.919796276545128,
+            "values": [
+              128.53735849056602,
+              78.78264150943396,
+              81.13716981132076
+            ]
+          },
+          "collision_count": {
+            "mean": 0.0,
+            "sd": 0.0,
+            "values": [
+              0,
+              0,
+              0
+            ]
+          },
+          "safety_override_count": {
+            "mean": 0.0,
+            "sd": 0.0,
+            "values": [
+              0,
+              0,
+              0
+            ]
+          },
+          "postprocess_applied_count": {
+            "mean": 0.0,
+            "sd": 0.0,
+            "values": [
+              0,
+              0,
+              0
+            ]
+          }
+        },
+        "HybridLLMController|8": {
+          "n_runs": 3,
+          "completion_rate": {
+            "mean": 1.0,
+            "sd": 0.0,
+            "values": [
+              1.0,
+              1.0,
+              1.0
+            ]
+          },
+          "throughput": {
+            "mean": 4.0,
+            "sd": 0.0,
+            "values": [
+              4,
+              4,
+              4
+            ]
+          },
+          "mean_waiting_time": {
+            "mean": 15.0,
+            "sd": 0.0,
+            "values": [
+              15.0,
+              15.0,
+              15.0
+            ]
+          },
+          "mean_speed": {
+            "mean": 6.802589217604805,
+            "sd": 0.0,
+            "values": [
+              6.802589217604805,
+              6.802589217604805,
+              6.802589217604805
+            ]
+          },
+          "episode_duration_seconds": {
+            "mean": 52.0,
+            "sd": 0.0,
+            "values": [
+              52.0,
+              52.0,
+              52.0
+            ]
+          },
+          "provider_attempt_steps": {
+            "mean": 53.0,
+            "sd": 0.0,
+            "values": [
+              53,
+              53,
+              53
+            ]
+          },
+          "provider_success_steps": {
+            "mean": 2.6666666666666665,
+            "sd": 3.7712361663282534,
+            "values": [
+              8,
+              0,
+              0
+            ]
+          },
+          "provider_failure_steps": {
+            "mean": 50.333333333333336,
+            "sd": 3.7712361663282534,
+            "values": [
+              45,
+              53,
+              53
+            ]
+          },
+          "provider_success_rate": {
+            "mean": 0.05031446540880503,
+            "sd": 0.07115539936468403,
+            "values": [
+              0.1509433962264151,
+              0.0,
+              0.0
+            ]
+          },
+          "parser_success_steps": {
+            "mean": 2.6666666666666665,
+            "sd": 3.7712361663282534,
+            "values": [
+              8,
+              0,
+              0
+            ]
+          },
+          "fallback_steps": {
+            "mean": 50.333333333333336,
+            "sd": 3.7712361663282534,
+            "values": [
+              45,
+              53,
+              53
+            ]
+          },
+          "latency_ms_mean": {
+            "mean": 97.83943396226414,
+            "sd": 23.62454244114746,
+            "values": [
+              131.1664150943396,
+              79.13566037735848,
+              83.21622641509434
+            ]
+          },
+          "collision_count": {
+            "mean": 0.0,
+            "sd": 0.0,
+            "values": [
+              0,
+              0,
+              0
+            ]
+          },
+          "safety_override_count": {
+            "mean": 0.0,
+            "sd": 0.0,
+            "values": [
+              0,
+              0,
+              0
+            ]
+          },
+          "postprocess_applied_count": {
+            "mean": 0.3333333333333333,
+            "sd": 0.4714045207910317,
+            "values": [
+              1,
+              0,
+              0
+            ]
+          }
+        },
+        "HybridLLMSafetyController|8": {
+          "n_runs": 3,
+          "completion_rate": {
+            "mean": 1.0,
+            "sd": 0.0,
+            "values": [
+              1.0,
+              1.0,
+              1.0
+            ]
+          },
+          "throughput": {
+            "mean": 4.0,
+            "sd": 0.0,
+            "values": [
+              4,
+              4,
+              4
+            ]
+          },
+          "mean_waiting_time": {
+            "mean": 15.0,
+            "sd": 0.0,
+            "values": [
+              15.0,
+              15.0,
+              15.0
+            ]
+          },
+          "mean_speed": {
+            "mean": 6.802589217604805,
+            "sd": 0.0,
+            "values": [
+              6.802589217604805,
+              6.802589217604805,
+              6.802589217604805
+            ]
+          },
+          "episode_duration_seconds": {
+            "mean": 52.0,
+            "sd": 0.0,
+            "values": [
+              52.0,
+              52.0,
+              52.0
+            ]
+          },
+          "provider_attempt_steps": {
+            "mean": 53.0,
+            "sd": 0.0,
+            "values": [
+              53,
+              53,
+              53
+            ]
+          },
+          "provider_success_steps": {
+            "mean": 2.6666666666666665,
+            "sd": 3.7712361663282534,
+            "values": [
+              8,
+              0,
+              0
+            ]
+          },
+          "provider_failure_steps": {
+            "mean": 50.333333333333336,
+            "sd": 3.7712361663282534,
+            "values": [
+              45,
+              53,
+              53
+            ]
+          },
+          "provider_success_rate": {
+            "mean": 0.05031446540880503,
+            "sd": 0.07115539936468403,
+            "values": [
+              0.1509433962264151,
+              0.0,
+              0.0
+            ]
+          },
+          "parser_success_steps": {
+            "mean": 2.6666666666666665,
+            "sd": 3.7712361663282534,
+            "values": [
+              8,
+              0,
+              0
+            ]
+          },
+          "fallback_steps": {
+            "mean": 50.333333333333336,
+            "sd": 3.7712361663282534,
+            "values": [
+              45,
+              53,
+              53
+            ]
+          },
+          "latency_ms_mean": {
+            "mean": 92.66773584905661,
+            "sd": 13.91184328635374,
+            "values": [
+              112.29509433962265,
+              84.03056603773585,
+              81.67754716981132
+            ]
+          },
+          "collision_count": {
+            "mean": 0.0,
+            "sd": 0.0,
+            "values": [
+              0,
+              0,
+              0
+            ]
+          },
+          "safety_override_count": {
+            "mean": 0.0,
+            "sd": 0.0,
+            "values": [
+              0,
+              0,
+              0
+            ]
+          },
+          "postprocess_applied_count": {
+            "mean": 0.0,
+            "sd": 0.0,
+            "values": [
+              0,
+              0,
+              0
+            ]
+          }
+        },
+        "BaselineRule|8": {
+          "n_runs": 3,
+          "completion_rate": {
+            "mean": 1.0,
+            "sd": 0.0,
+            "values": [
+              1.0,
+              1.0,
+              1.0
+            ]
+          },
+          "throughput": {
+            "mean": 4.0,
+            "sd": 0.0,
+            "values": [
+              4,
+              4,
+              4
+            ]
+          },
+          "mean_waiting_time": {
+            "mean": 82.0,
+            "sd": 0.0,
+            "values": [
+              82.0,
+              82.0,
+              82.0
+            ]
+          },
+          "mean_speed": {
+            "mean": 2.3097622930423896,
+            "sd": 0.0,
+            "values": [
+              2.3097622930423896,
+              2.3097622930423896,
+              2.3097622930423896
+            ]
+          },
+          "episode_duration_seconds": {
+            "mean": 114.0,
+            "sd": 0.0,
+            "values": [
+              114.0,
+              114.0,
+              114.0
+            ]
+          },
+          "provider_attempt_steps": {
+            "mean": 0.0,
+            "sd": 0.0,
+            "values": [
+              0,
+              0,
+              0
+            ]
+          },
+          "provider_success_steps": {
+            "mean": 0.0,
+            "sd": 0.0,
+            "values": [
+              0,
+              0,
+              0
+            ]
+          },
+          "provider_failure_steps": {
+            "mean": 0.0,
+            "sd": 0.0,
+            "values": [
+              0,
+              0,
+              0
+            ]
+          },
+          "provider_success_rate": {
+            "mean": null,
+            "sd": null,
+            "values": []
+          },
+          "parser_success_steps": {
+            "mean": 0.0,
+            "sd": 0.0,
+            "values": [
+              0,
+              0,
+              0
+            ]
+          },
+          "fallback_steps": {
+            "mean": 0.0,
+            "sd": 0.0,
+            "values": [
+              0,
+              0,
+              0
+            ]
+          },
+          "latency_ms_mean": {
+            "mean": 0.0,
+            "sd": 0.0,
+            "values": [
+              0.0,
+              0.0,
+              0.0
+            ]
+          },
+          "collision_count": {
+            "mean": 0.0,
+            "sd": 0.0,
+            "values": [
+              0,
+              0,
+              0
+            ]
+          },
+          "safety_override_count": {
+            "mean": 0.0,
+            "sd": 0.0,
+            "values": [
+              0,
+              0,
+              0
+            ]
+          },
+          "postprocess_applied_count": {
+            "mean": 0.0,
+            "sd": 0.0,
+            "values": [
+              0,
+              0,
+              0
+            ]
+          }
+        },
+        "RawLLMController|8": {
+          "n_runs": 3,
+          "completion_rate": {
+            "mean": 1.0,
+            "sd": 0.0,
+            "values": [
+              1.0,
+              1.0,
+              1.0
+            ]
+          },
+          "throughput": {
+            "mean": 4.0,
+            "sd": 0.0,
+            "values": [
+              4,
+              4,
+              4
+            ]
+          },
+          "mean_waiting_time": {
+            "mean": 15.0,
+            "sd": 0.0,
+            "values": [
+              15.0,
+              15.0,
+              15.0
+            ]
+          },
+          "mean_speed": {
+            "mean": 6.802589217604805,
+            "sd": 0.0,
+            "values": [
+              6.802589217604805,
+              6.802589217604805,
+              6.802589217604805
+            ]
+          },
+          "episode_duration_seconds": {
+            "mean": 52.0,
+            "sd": 0.0,
+            "values": [
+              52.0,
+              52.0,
+              52.0
+            ]
+          },
+          "provider_attempt_steps": {
+            "mean": 53.0,
+            "sd": 0.0,
+            "values": [
+              53,
+              53,
+              53
+            ]
+          },
+          "provider_success_steps": {
+            "mean": 1.0,
+            "sd": 0.816496580927726,
+            "values": [
+              1,
+              2,
+              0
+            ]
+          },
+          "provider_failure_steps": {
+            "mean": 52.0,
+            "sd": 0.816496580927726,
+            "values": [
+              52,
+              51,
+              53
+            ]
+          },
+          "provider_success_rate": {
+            "mean": 0.018867924528301886,
+            "sd": 0.015405595866560868,
+            "values": [
+              0.018867924528301886,
+              0.03773584905660377,
+              0.0
+            ]
+          },
+          "parser_success_steps": {
+            "mean": 1.0,
+            "sd": 0.816496580927726,
+            "values": [
+              1,
+              2,
+              0
+            ]
+          },
+          "fallback_steps": {
+            "mean": 52.0,
+            "sd": 0.816496580927726,
+            "values": [
+              52,
+              51,
+              53
+            ]
+          },
+          "latency_ms_mean": {
+            "mean": 86.5451572327044,
+            "sd": 4.870287107271853,
+            "values": [
+              86.99584905660377,
+              92.27188679245283,
+              80.3677358490566
+            ]
+          },
+          "collision_count": {
+            "mean": 0.0,
+            "sd": 0.0,
+            "values": [
+              0,
+              0,
+              0
+            ]
+          },
+          "safety_override_count": {
+            "mean": 0.0,
+            "sd": 0.0,
+            "values": [
+              0,
+              0,
+              0
+            ]
+          },
+          "postprocess_applied_count": {
+            "mean": 0.0,
+            "sd": 0.0,
+            "values": [
+              0,
+              0,
+              0
+            ]
+          }
+        }
+      }
+    },
+    "dissertation_formal_v4": {
+      "manifest_count": 12,
+      "controllers": [
+        "BaselineRule",
+        "HybridLLMController",
+        "HybridLLMSafetyController",
+        "RawLLMController"
+      ],
+      "vehicle_counts": [
+        8
+      ],
+      "seeds": [
+        1,
+        2,
+        3
+      ],
+      "run_validation": {
+        "all_observed_match_config": true,
+        "all_departed_eq_config": true,
+        "all_arrived_eq_config": true,
+        "all_collision_zero": true
+      },
+      "runs": [
+        {
+          "run_id": "FE05_HYBRID_v8_seed2_v4_real",
+          "controller": "HybridLLMController",
+          "scenario_id": "formal_low_v8_seed2",
+          "configured_vehicle_count": 8,
+          "observed_vehicle_count": 8,
+          "observed_vehicle_ids": [
+            "formal_low_v8_seed2_2_0",
+            "formal_low_v8_seed2_2_1",
+            "formal_low_v8_seed2_2_2",
+            "formal_low_v8_seed2_2_3",
+            "formal_low_v8_seed2_2_4",
+            "formal_low_v8_seed2_2_5",
+            "formal_low_v8_seed2_2_6",
+            "formal_low_v8_seed2_2_7"
+          ],
+          "departed_count": 8,
+          "arrived_count": 8,
+          "collision_count": 0,
+          "completion_rate": 1.0,
+          "throughput": 8,
+          "mean_waiting_time": 17.875,
+          "mean_speed": 6.2648633165096275,
+          "episode_duration_seconds": 106.0,
+          "provider_attempt_steps": 107,
+          "provider_success_steps": 1,
+          "provider_failure_steps": 106,
+          "provider_success_rate": 0.009345794392523364,
+          "parser_success_steps": 1,
+          "parser_success_given_provider_success": 1.0,
+          "fallback_steps": 106,
+          "latency_ms_mean": 84.48700934579439,
+          "safety_override_count": 0,
+          "postprocess_applied_count": 0,
+          "finish_reason_distribution": {
+            "stop": 1,
+            "NOT_AVAILABLE": 106
+          },
+          "exception_type_distribution": {
+            "NONE": 1,
+            "RateLimitError": 106
+          },
+          "parser_failure_reason_distribution": {
+            "NONE": 1,
+            "PROVIDER_REQUEST_EXCEPTION": 106
+          },
+          "reasoning_tokens_available_steps": 1,
+          "reasoning_tokens_sample": [
+            10
+          ],
+          "prompt_tokens_sample": [
+            543
+          ],
+          "completion_tokens_sample": [
+            37
+          ],
+          "total_tokens_sample": [
+            580
+          ],
+          "run_dir": "D:\\Sumo\\sumo_train\\results\\formal_experiment\\dissertation_formal_v4\\runs\\seed2_v8\\FE05_HYBRID_v8_seed2_v4_real",
+          "step_records": "D:\\Sumo\\sumo_train\\results\\formal_experiment\\dissertation_formal_v4\\runs\\seed2_v8\\FE05_HYBRID_v8_seed2_v4_real\\step_records.csv",
+          "run_metadata": "D:\\Sumo\\sumo_train\\results\\formal_experiment\\dissertation_formal_v4\\runs\\seed2_v8\\FE05_HYBRID_v8_seed2_v4_real\\run_metadata.json",
+          "events": "D:\\Sumo\\sumo_train\\results\\formal_experiment\\dissertation_formal_v4\\runs\\seed2_v8\\FE05_HYBRID_v8_seed2_v4_real\\events.jsonl"
+        },
+        {
+          "run_id": "FE06_HYBRID_SAFETY_v8_seed2_v4_real",
+          "controller": "HybridLLMSafetyController",
+          "scenario_id": "formal_low_v8_seed2",
+          "configured_vehicle_count": 8,
+          "observed_vehicle_count": 8,
+          "observed_vehicle_ids": [
+            "formal_low_v8_seed2_2_0",
+            "formal_low_v8_seed2_2_1",
+            "formal_low_v8_seed2_2_2",
+            "formal_low_v8_seed2_2_3",
+            "formal_low_v8_seed2_2_4",
+            "formal_low_v8_seed2_2_5",
+            "formal_low_v8_seed2_2_6",
+            "formal_low_v8_seed2_2_7"
+          ],
+          "departed_count": 8,
+          "arrived_count": 8,
+          "collision_count": 0,
+          "completion_rate": 1.0,
+          "throughput": 8,
+          "mean_waiting_time": 17.875,
+          "mean_speed": 6.2648633165096275,
+          "episode_duration_seconds": 106.0,
+          "provider_attempt_steps": 107,
+          "provider_success_steps": 0,
+          "provider_failure_steps": 107,
+          "provider_success_rate": 0.0,
+          "parser_success_steps": 0,
+          "parser_success_given_provider_success": null,
+          "fallback_steps": 107,
+          "latency_ms_mean": 74.89355140186916,
+          "safety_override_count": 0,
+          "postprocess_applied_count": 0,
+          "finish_reason_distribution": {
+            "NOT_AVAILABLE": 107
+          },
+          "exception_type_distribution": {
+            "RateLimitError": 107
+          },
+          "parser_failure_reason_distribution": {
+            "PROVIDER_REQUEST_EXCEPTION": 107
+          },
+          "reasoning_tokens_available_steps": 0,
+          "reasoning_tokens_sample": [],
+          "prompt_tokens_sample": [],
+          "completion_tokens_sample": [],
+          "total_tokens_sample": [],
+          "run_dir": "D:\\Sumo\\sumo_train\\results\\formal_experiment\\dissertation_formal_v4\\runs\\seed2_v8\\FE06_HYBRID_SAFETY_v8_seed2_v4_real",
+          "step_records": "D:\\Sumo\\sumo_train\\results\\formal_experiment\\dissertation_formal_v4\\runs\\seed2_v8\\FE06_HYBRID_SAFETY_v8_seed2_v4_real\\step_records.csv",
+          "run_metadata": "D:\\Sumo\\sumo_train\\results\\formal_experiment\\dissertation_formal_v4\\runs\\seed2_v8\\FE06_HYBRID_SAFETY_v8_seed2_v4_real\\run_metadata.json",
+          "events": "D:\\Sumo\\sumo_train\\results\\formal_experiment\\dissertation_formal_v4\\runs\\seed2_v8\\FE06_HYBRID_SAFETY_v8_seed2_v4_real\\events.jsonl"
+        },
+        {
+          "run_id": "FE01_RULE_BASED_v8_seed2_v4",
+          "controller": "BaselineRule",
+          "scenario_id": "formal_low_v8_seed2",
+          "configured_vehicle_count": 8,
+          "observed_vehicle_count": 8,
+          "observed_vehicle_ids": [
+            "formal_low_v8_seed2_2_0",
+            "formal_low_v8_seed2_2_1",
+            "formal_low_v8_seed2_2_2",
+            "formal_low_v8_seed2_2_3",
+            "formal_low_v8_seed2_2_4",
+            "formal_low_v8_seed2_2_5",
+            "formal_low_v8_seed2_2_6",
+            "formal_low_v8_seed2_2_7"
+          ],
+          "departed_count": 8,
+          "arrived_count": 8,
+          "collision_count": 0,
+          "completion_rate": 1.0,
+          "throughput": 8,
+          "mean_waiting_time": 86.0,
+          "mean_speed": 2.2552510688695557,
+          "episode_duration_seconds": 170.0,
+          "provider_attempt_steps": 0,
+          "provider_success_steps": 0,
+          "provider_failure_steps": 0,
+          "provider_success_rate": null,
+          "parser_success_steps": 0,
+          "parser_success_given_provider_success": null,
+          "fallback_steps": 0,
+          "latency_ms_mean": 0.0,
+          "safety_override_count": 0,
+          "postprocess_applied_count": 0,
+          "finish_reason_distribution": {
+            "NOT_AVAILABLE": 171
+          },
+          "exception_type_distribution": {
+            "NONE": 171
+          },
+          "parser_failure_reason_distribution": {
+            "NONE": 171
+          },
+          "reasoning_tokens_available_steps": 0,
+          "reasoning_tokens_sample": [],
+          "prompt_tokens_sample": [],
+          "completion_tokens_sample": [],
+          "total_tokens_sample": [],
+          "run_dir": "D:\\Sumo\\sumo_train\\results\\formal_experiment\\dissertation_formal_v4\\runs\\seed2_v8\\FE01_RULE_BASED_v8_seed2_v4",
+          "step_records": "D:\\Sumo\\sumo_train\\results\\formal_experiment\\dissertation_formal_v4\\runs\\seed2_v8\\FE01_RULE_BASED_v8_seed2_v4\\step_records.csv",
+          "run_metadata": "D:\\Sumo\\sumo_train\\results\\formal_experiment\\dissertation_formal_v4\\runs\\seed2_v8\\FE01_RULE_BASED_v8_seed2_v4\\run_metadata.json",
+          "events": "D:\\Sumo\\sumo_train\\results\\formal_experiment\\dissertation_formal_v4\\runs\\seed2_v8\\FE01_RULE_BASED_v8_seed2_v4\\events.jsonl"
+        },
+        {
+          "run_id": "FE04_RAW_LLM_v8_seed2_v4_real",
+          "controller": "RawLLMController",
+          "scenario_id": "formal_low_v8_seed2",
+          "configured_vehicle_count": 8,
+          "observed_vehicle_count": 8,
+          "observed_vehicle_ids": [
+            "formal_low_v8_seed2_2_0",
+            "formal_low_v8_seed2_2_1",
+            "formal_low_v8_seed2_2_2",
+            "formal_low_v8_seed2_2_3",
+            "formal_low_v8_seed2_2_4",
+            "formal_low_v8_seed2_2_5",
+            "formal_low_v8_seed2_2_6",
+            "formal_low_v8_seed2_2_7"
+          ],
+          "departed_count": 8,
+          "arrived_count": 8,
+          "collision_count": 0,
+          "completion_rate": 1.0,
+          "throughput": 8,
+          "mean_waiting_time": 17.875,
+          "mean_speed": 6.2648633165096275,
+          "episode_duration_seconds": 106.0,
+          "provider_attempt_steps": 107,
+          "provider_success_steps": 1,
+          "provider_failure_steps": 106,
+          "provider_success_rate": 0.009345794392523364,
+          "parser_success_steps": 1,
+          "parser_success_given_provider_success": 1.0,
+          "fallback_steps": 106,
+          "latency_ms_mean": 78.64177570093457,
+          "safety_override_count": 0,
+          "postprocess_applied_count": 0,
+          "finish_reason_distribution": {
+            "NOT_AVAILABLE": 106,
+            "stop": 1
+          },
+          "exception_type_distribution": {
+            "RateLimitError": 106,
+            "NONE": 1
+          },
+          "parser_failure_reason_distribution": {
+            "PROVIDER_REQUEST_EXCEPTION": 106,
+            "NONE": 1
+          },
+          "reasoning_tokens_available_steps": 1,
+          "reasoning_tokens_sample": [
+            11
+          ],
+          "prompt_tokens_sample": [
+            543
+          ],
+          "completion_tokens_sample": [
+            37
+          ],
+          "total_tokens_sample": [
+            580
+          ],
+          "run_dir": "D:\\Sumo\\sumo_train\\results\\formal_experiment\\dissertation_formal_v4\\runs\\seed2_v8\\FE04_RAW_LLM_v8_seed2_v4_real",
+          "step_records": "D:\\Sumo\\sumo_train\\results\\formal_experiment\\dissertation_formal_v4\\runs\\seed2_v8\\FE04_RAW_LLM_v8_seed2_v4_real\\step_records.csv",
+          "run_metadata": "D:\\Sumo\\sumo_train\\results\\formal_experiment\\dissertation_formal_v4\\runs\\seed2_v8\\FE04_RAW_LLM_v8_seed2_v4_real\\run_metadata.json",
+          "events": "D:\\Sumo\\sumo_train\\results\\formal_experiment\\dissertation_formal_v4\\runs\\seed2_v8\\FE04_RAW_LLM_v8_seed2_v4_real\\events.jsonl"
+        },
+        {
+          "run_id": "FE01_RULE_BASED_v8_seed1_v4",
+          "controller": "BaselineRule",
+          "scenario_id": "formal_low_v8_seed1",
+          "configured_vehicle_count": 8,
+          "observed_vehicle_count": 8,
+          "observed_vehicle_ids": [
+            "formal_low_v8_seed1_1_0",
+            "formal_low_v8_seed1_1_1",
+            "formal_low_v8_seed1_1_2",
+            "formal_low_v8_seed1_1_3",
+            "formal_low_v8_seed1_1_4",
+            "formal_low_v8_seed1_1_5",
+            "formal_low_v8_seed1_1_6",
+            "formal_low_v8_seed1_1_7"
+          ],
+          "departed_count": 8,
+          "arrived_count": 8,
+          "collision_count": 0,
+          "completion_rate": 1.0,
+          "throughput": 8,
+          "mean_waiting_time": 311.0,
+          "mean_speed": 0.654805928007573,
+          "episode_duration_seconds": 423.0,
+          "provider_attempt_steps": 0,
+          "provider_success_steps": 0,
+          "provider_failure_steps": 0,
+          "provider_success_rate": null,
+          "parser_success_steps": 0,
+          "parser_success_given_provider_success": null,
+          "fallback_steps": 0,
+          "latency_ms_mean": 0.0,
+          "safety_override_count": 0,
+          "postprocess_applied_count": 0,
+          "finish_reason_distribution": {
+            "NOT_AVAILABLE": 424
+          },
+          "exception_type_distribution": {
+            "NONE": 424
+          },
+          "parser_failure_reason_distribution": {
+            "NONE": 424
+          },
+          "reasoning_tokens_available_steps": 0,
+          "reasoning_tokens_sample": [],
+          "prompt_tokens_sample": [],
+          "completion_tokens_sample": [],
+          "total_tokens_sample": [],
+          "run_dir": "D:\\Sumo\\sumo_train\\results\\formal_experiment\\dissertation_formal_v4\\runs\\seed1_v8\\FE01_RULE_BASED_v8_seed1_v4",
+          "step_records": "D:\\Sumo\\sumo_train\\results\\formal_experiment\\dissertation_formal_v4\\runs\\seed1_v8\\FE01_RULE_BASED_v8_seed1_v4\\step_records.csv",
+          "run_metadata": "D:\\Sumo\\sumo_train\\results\\formal_experiment\\dissertation_formal_v4\\runs\\seed1_v8\\FE01_RULE_BASED_v8_seed1_v4\\run_metadata.json",
+          "events": "D:\\Sumo\\sumo_train\\results\\formal_experiment\\dissertation_formal_v4\\runs\\seed1_v8\\FE01_RULE_BASED_v8_seed1_v4\\events.jsonl"
+        },
+        {
+          "run_id": "FE04_RAW_LLM_v8_seed1_v4_real",
+          "controller": "RawLLMController",
+          "scenario_id": "formal_low_v8_seed1",
+          "configured_vehicle_count": 8,
+          "observed_vehicle_count": 8,
+          "observed_vehicle_ids": [
+            "formal_low_v8_seed1_1_0",
+            "formal_low_v8_seed1_1_1",
+            "formal_low_v8_seed1_1_2",
+            "formal_low_v8_seed1_1_3",
+            "formal_low_v8_seed1_1_4",
+            "formal_low_v8_seed1_1_5",
+            "formal_low_v8_seed1_1_6",
+            "formal_low_v8_seed1_1_7"
+          ],
+          "departed_count": 8,
+          "arrived_count": 8,
+          "collision_count": 0,
+          "completion_rate": 1.0,
+          "throughput": 8,
+          "mean_waiting_time": 12.875,
+          "mean_speed": 6.880360772144653,
+          "episode_duration_seconds": 105.0,
+          "provider_attempt_steps": 106,
+          "provider_success_steps": 1,
+          "provider_failure_steps": 105,
+          "provider_success_rate": 0.009433962264150943,
+          "parser_success_steps": 1,
+          "parser_success_given_provider_success": 1.0,
+          "fallback_steps": 105,
+          "latency_ms_mean": 77.03915094339622,
+          "safety_override_count": 0,
+          "postprocess_applied_count": 0,
+          "finish_reason_distribution": {
+            "NOT_AVAILABLE": 105,
+            "stop": 1
+          },
+          "exception_type_distribution": {
+            "RateLimitError": 105,
+            "NONE": 1
+          },
+          "parser_failure_reason_distribution": {
+            "PROVIDER_REQUEST_EXCEPTION": 105,
+            "NONE": 1
+          },
+          "reasoning_tokens_available_steps": 1,
+          "reasoning_tokens_sample": [
+            9
+          ],
+          "prompt_tokens_sample": [
+            543
+          ],
+          "completion_tokens_sample": [
+            35
+          ],
+          "total_tokens_sample": [
+            578
+          ],
+          "run_dir": "D:\\Sumo\\sumo_train\\results\\formal_experiment\\dissertation_formal_v4\\runs\\seed1_v8\\FE04_RAW_LLM_v8_seed1_v4_real",
+          "step_records": "D:\\Sumo\\sumo_train\\results\\formal_experiment\\dissertation_formal_v4\\runs\\seed1_v8\\FE04_RAW_LLM_v8_seed1_v4_real\\step_records.csv",
+          "run_metadata": "D:\\Sumo\\sumo_train\\results\\formal_experiment\\dissertation_formal_v4\\runs\\seed1_v8\\FE04_RAW_LLM_v8_seed1_v4_real\\run_metadata.json",
+          "events": "D:\\Sumo\\sumo_train\\results\\formal_experiment\\dissertation_formal_v4\\runs\\seed1_v8\\FE04_RAW_LLM_v8_seed1_v4_real\\events.jsonl"
+        },
+        {
+          "run_id": "FE05_HYBRID_v8_seed1_v4_real",
+          "controller": "HybridLLMController",
+          "scenario_id": "formal_low_v8_seed1",
+          "configured_vehicle_count": 8,
+          "observed_vehicle_count": 8,
+          "observed_vehicle_ids": [
+            "formal_low_v8_seed1_1_0",
+            "formal_low_v8_seed1_1_1",
+            "formal_low_v8_seed1_1_2",
+            "formal_low_v8_seed1_1_3",
+            "formal_low_v8_seed1_1_4",
+            "formal_low_v8_seed1_1_5",
+            "formal_low_v8_seed1_1_6",
+            "formal_low_v8_seed1_1_7"
+          ],
+          "departed_count": 8,
+          "arrived_count": 8,
+          "collision_count": 0,
+          "completion_rate": 1.0,
+          "throughput": 8,
+          "mean_waiting_time": 12.875,
+          "mean_speed": 6.880360772144653,
+          "episode_duration_seconds": 105.0,
+          "provider_attempt_steps": 106,
+          "provider_success_steps": 0,
+          "provider_failure_steps": 106,
+          "provider_success_rate": 0.0,
+          "parser_success_steps": 0,
+          "parser_success_given_provider_success": null,
+          "fallback_steps": 106,
+          "latency_ms_mean": 77.92443396226415,
+          "safety_override_count": 0,
+          "postprocess_applied_count": 0,
+          "finish_reason_distribution": {
+            "NOT_AVAILABLE": 106
+          },
+          "exception_type_distribution": {
+            "RateLimitError": 106
+          },
+          "parser_failure_reason_distribution": {
+            "PROVIDER_REQUEST_EXCEPTION": 106
+          },
+          "reasoning_tokens_available_steps": 0,
+          "reasoning_tokens_sample": [],
+          "prompt_tokens_sample": [],
+          "completion_tokens_sample": [],
+          "total_tokens_sample": [],
+          "run_dir": "D:\\Sumo\\sumo_train\\results\\formal_experiment\\dissertation_formal_v4\\runs\\seed1_v8\\FE05_HYBRID_v8_seed1_v4_real",
+          "step_records": "D:\\Sumo\\sumo_train\\results\\formal_experiment\\dissertation_formal_v4\\runs\\seed1_v8\\FE05_HYBRID_v8_seed1_v4_real\\step_records.csv",
+          "run_metadata": "D:\\Sumo\\sumo_train\\results\\formal_experiment\\dissertation_formal_v4\\runs\\seed1_v8\\FE05_HYBRID_v8_seed1_v4_real\\run_metadata.json",
+          "events": "D:\\Sumo\\sumo_train\\results\\formal_experiment\\dissertation_formal_v4\\runs\\seed1_v8\\FE05_HYBRID_v8_seed1_v4_real\\events.jsonl"
+        },
+        {
+          "run_id": "FE06_HYBRID_SAFETY_v8_seed1_v4_real",
+          "controller": "HybridLLMSafetyController",
+          "scenario_id": "formal_low_v8_seed1",
+          "configured_vehicle_count": 8,
+          "observed_vehicle_count": 8,
+          "observed_vehicle_ids": [
+            "formal_low_v8_seed1_1_0",
+            "formal_low_v8_seed1_1_1",
+            "formal_low_v8_seed1_1_2",
+            "formal_low_v8_seed1_1_3",
+            "formal_low_v8_seed1_1_4",
+            "formal_low_v8_seed1_1_5",
+            "formal_low_v8_seed1_1_6",
+            "formal_low_v8_seed1_1_7"
+          ],
+          "departed_count": 8,
+          "arrived_count": 8,
+          "collision_count": 0,
+          "completion_rate": 1.0,
+          "throughput": 8,
+          "mean_waiting_time": 12.875,
+          "mean_speed": 6.880360772144653,
+          "episode_duration_seconds": 105.0,
+          "provider_attempt_steps": 106,
+          "provider_success_steps": 0,
+          "provider_failure_steps": 106,
+          "provider_success_rate": 0.0,
+          "parser_success_steps": 0,
+          "parser_success_given_provider_success": null,
+          "fallback_steps": 106,
+          "latency_ms_mean": 76.20707547169812,
+          "safety_override_count": 0,
+          "postprocess_applied_count": 0,
+          "finish_reason_distribution": {
+            "NOT_AVAILABLE": 106
+          },
+          "exception_type_distribution": {
+            "RateLimitError": 106
+          },
+          "parser_failure_reason_distribution": {
+            "PROVIDER_REQUEST_EXCEPTION": 106
+          },
+          "reasoning_tokens_available_steps": 0,
+          "reasoning_tokens_sample": [],
+          "prompt_tokens_sample": [],
+          "completion_tokens_sample": [],
+          "total_tokens_sample": [],
+          "run_dir": "D:\\Sumo\\sumo_train\\results\\formal_experiment\\dissertation_formal_v4\\runs\\seed1_v8\\FE06_HYBRID_SAFETY_v8_seed1_v4_real",
+          "step_records": "D:\\Sumo\\sumo_train\\results\\formal_experiment\\dissertation_formal_v4\\runs\\seed1_v8\\FE06_HYBRID_SAFETY_v8_seed1_v4_real\\step_records.csv",
+          "run_metadata": "D:\\Sumo\\sumo_train\\results\\formal_experiment\\dissertation_formal_v4\\runs\\seed1_v8\\FE06_HYBRID_SAFETY_v8_seed1_v4_real\\run_metadata.json",
+          "events": "D:\\Sumo\\sumo_train\\results\\formal_experiment\\dissertation_formal_v4\\runs\\seed1_v8\\FE06_HYBRID_SAFETY_v8_seed1_v4_real\\events.jsonl"
+        },
+        {
+          "run_id": "FE06_HYBRID_SAFETY_v8_seed3_v4_real",
+          "controller": "HybridLLMSafetyController",
+          "scenario_id": "formal_low_v8_seed3",
+          "configured_vehicle_count": 8,
+          "observed_vehicle_count": 8,
+          "observed_vehicle_ids": [
+            "formal_low_v8_seed3_3_0",
+            "formal_low_v8_seed3_3_1",
+            "formal_low_v8_seed3_3_2",
+            "formal_low_v8_seed3_3_3",
+            "formal_low_v8_seed3_3_4",
+            "formal_low_v8_seed3_3_5",
+            "formal_low_v8_seed3_3_6",
+            "formal_low_v8_seed3_3_7"
+          ],
+          "departed_count": 8,
+          "arrived_count": 8,
+          "collision_count": 0,
+          "completion_rate": 1.0,
+          "throughput": 8,
+          "mean_waiting_time": 15.125,
+          "mean_speed": 6.65200275535317,
+          "episode_duration_seconds": 105.0,
+          "provider_attempt_steps": 106,
+          "provider_success_steps": 1,
+          "provider_failure_steps": 105,
+          "provider_success_rate": 0.009433962264150943,
+          "parser_success_steps": 1,
+          "parser_success_given_provider_success": 1.0,
+          "fallback_steps": 105,
+          "latency_ms_mean": 78.09094339622641,
+          "safety_override_count": 0,
+          "postprocess_applied_count": 0,
+          "finish_reason_distribution": {
+            "NOT_AVAILABLE": 105,
+            "stop": 1
+          },
+          "exception_type_distribution": {
+            "RateLimitError": 105,
+            "NONE": 1
+          },
+          "parser_failure_reason_distribution": {
+            "PROVIDER_REQUEST_EXCEPTION": 105,
+            "NONE": 1
+          },
+          "reasoning_tokens_available_steps": 1,
+          "reasoning_tokens_sample": [
+            10
+          ],
+          "prompt_tokens_sample": [
+            543
+          ],
+          "completion_tokens_sample": [
+            36
+          ],
+          "total_tokens_sample": [
+            579
+          ],
+          "run_dir": "D:\\Sumo\\sumo_train\\results\\formal_experiment\\dissertation_formal_v4\\runs\\seed3_v8\\FE06_HYBRID_SAFETY_v8_seed3_v4_real",
+          "step_records": "D:\\Sumo\\sumo_train\\results\\formal_experiment\\dissertation_formal_v4\\runs\\seed3_v8\\FE06_HYBRID_SAFETY_v8_seed3_v4_real\\step_records.csv",
+          "run_metadata": "D:\\Sumo\\sumo_train\\results\\formal_experiment\\dissertation_formal_v4\\runs\\seed3_v8\\FE06_HYBRID_SAFETY_v8_seed3_v4_real\\run_metadata.json",
+          "events": "D:\\Sumo\\sumo_train\\results\\formal_experiment\\dissertation_formal_v4\\runs\\seed3_v8\\FE06_HYBRID_SAFETY_v8_seed3_v4_real\\events.jsonl"
+        },
+        {
+          "run_id": "FE01_RULE_BASED_v8_seed3_v4",
+          "controller": "BaselineRule",
+          "scenario_id": "formal_low_v8_seed3",
+          "configured_vehicle_count": 8,
+          "observed_vehicle_count": 8,
+          "observed_vehicle_ids": [
+            "formal_low_v8_seed3_3_0",
+            "formal_low_v8_seed3_3_1",
+            "formal_low_v8_seed3_3_2",
+            "formal_low_v8_seed3_3_3",
+            "formal_low_v8_seed3_3_4",
+            "formal_low_v8_seed3_3_5",
+            "formal_low_v8_seed3_3_6",
+            "formal_low_v8_seed3_3_7"
+          ],
+          "departed_count": 8,
+          "arrived_count": 8,
+          "collision_count": 0,
+          "completion_rate": 1.0,
+          "throughput": 8,
+          "mean_waiting_time": 329.125,
+          "mean_speed": 0.6584154336809727,
+          "episode_duration_seconds": 439.0,
+          "provider_attempt_steps": 0,
+          "provider_success_steps": 0,
+          "provider_failure_steps": 0,
+          "provider_success_rate": null,
+          "parser_success_steps": 0,
+          "parser_success_given_provider_success": null,
+          "fallback_steps": 0,
+          "latency_ms_mean": 0.0,
+          "safety_override_count": 0,
+          "postprocess_applied_count": 0,
+          "finish_reason_distribution": {
+            "NOT_AVAILABLE": 440
+          },
+          "exception_type_distribution": {
+            "NONE": 440
+          },
+          "parser_failure_reason_distribution": {
+            "NONE": 440
+          },
+          "reasoning_tokens_available_steps": 0,
+          "reasoning_tokens_sample": [],
+          "prompt_tokens_sample": [],
+          "completion_tokens_sample": [],
+          "total_tokens_sample": [],
+          "run_dir": "D:\\Sumo\\sumo_train\\results\\formal_experiment\\dissertation_formal_v4\\runs\\seed3_v8\\FE01_RULE_BASED_v8_seed3_v4",
+          "step_records": "D:\\Sumo\\sumo_train\\results\\formal_experiment\\dissertation_formal_v4\\runs\\seed3_v8\\FE01_RULE_BASED_v8_seed3_v4\\step_records.csv",
+          "run_metadata": "D:\\Sumo\\sumo_train\\results\\formal_experiment\\dissertation_formal_v4\\runs\\seed3_v8\\FE01_RULE_BASED_v8_seed3_v4\\run_metadata.json",
+          "events": "D:\\Sumo\\sumo_train\\results\\formal_experiment\\dissertation_formal_v4\\runs\\seed3_v8\\FE01_RULE_BASED_v8_seed3_v4\\events.jsonl"
+        },
+        {
+          "run_id": "FE04_RAW_LLM_v8_seed3_v4_real",
+          "controller": "RawLLMController",
+          "scenario_id": "formal_low_v8_seed3",
+          "configured_vehicle_count": 8,
+          "observed_vehicle_count": 8,
+          "observed_vehicle_ids": [
+            "formal_low_v8_seed3_3_0",
+            "formal_low_v8_seed3_3_1",
+            "formal_low_v8_seed3_3_2",
+            "formal_low_v8_seed3_3_3",
+            "formal_low_v8_seed3_3_4",
+            "formal_low_v8_seed3_3_5",
+            "formal_low_v8_seed3_3_6",
+            "formal_low_v8_seed3_3_7"
+          ],
+          "departed_count": 8,
+          "arrived_count": 8,
+          "collision_count": 0,
+          "completion_rate": 1.0,
+          "throughput": 8,
+          "mean_waiting_time": 15.125,
+          "mean_speed": 6.65200275535317,
+          "episode_duration_seconds": 105.0,
+          "provider_attempt_steps": 106,
+          "provider_success_steps": 0,
+          "provider_failure_steps": 106,
+          "provider_success_rate": 0.0,
+          "parser_success_steps": 0,
+          "parser_success_given_provider_success": null,
+          "fallback_steps": 106,
+          "latency_ms_mean": 74.85424528301887,
+          "safety_override_count": 0,
+          "postprocess_applied_count": 0,
+          "finish_reason_distribution": {
+            "NOT_AVAILABLE": 106
+          },
+          "exception_type_distribution": {
+            "RateLimitError": 106
+          },
+          "parser_failure_reason_distribution": {
+            "PROVIDER_REQUEST_EXCEPTION": 106
+          },
+          "reasoning_tokens_available_steps": 0,
+          "reasoning_tokens_sample": [],
+          "prompt_tokens_sample": [],
+          "completion_tokens_sample": [],
+          "total_tokens_sample": [],
+          "run_dir": "D:\\Sumo\\sumo_train\\results\\formal_experiment\\dissertation_formal_v4\\runs\\seed3_v8\\FE04_RAW_LLM_v8_seed3_v4_real",
+          "step_records": "D:\\Sumo\\sumo_train\\results\\formal_experiment\\dissertation_formal_v4\\runs\\seed3_v8\\FE04_RAW_LLM_v8_seed3_v4_real\\step_records.csv",
+          "run_metadata": "D:\\Sumo\\sumo_train\\results\\formal_experiment\\dissertation_formal_v4\\runs\\seed3_v8\\FE04_RAW_LLM_v8_seed3_v4_real\\run_metadata.json",
+          "events": "D:\\Sumo\\sumo_train\\results\\formal_experiment\\dissertation_formal_v4\\runs\\seed3_v8\\FE04_RAW_LLM_v8_seed3_v4_real\\events.jsonl"
+        },
+        {
+          "run_id": "FE05_HYBRID_v8_seed3_v4_real",
+          "controller": "HybridLLMController",
+          "scenario_id": "formal_low_v8_seed3",
+          "configured_vehicle_count": 8,
+          "observed_vehicle_count": 8,
+          "observed_vehicle_ids": [
+            "formal_low_v8_seed3_3_0",
+            "formal_low_v8_seed3_3_1",
+            "formal_low_v8_seed3_3_2",
+            "formal_low_v8_seed3_3_3",
+            "formal_low_v8_seed3_3_4",
+            "formal_low_v8_seed3_3_5",
+            "formal_low_v8_seed3_3_6",
+            "formal_low_v8_seed3_3_7"
+          ],
+          "departed_count": 8,
+          "arrived_count": 8,
+          "collision_count": 0,
+          "completion_rate": 1.0,
+          "throughput": 8,
+          "mean_waiting_time": 15.125,
+          "mean_speed": 6.65200275535317,
+          "episode_duration_seconds": 105.0,
+          "provider_attempt_steps": 106,
+          "provider_success_steps": 0,
+          "provider_failure_steps": 106,
+          "provider_success_rate": 0.0,
+          "parser_success_steps": 0,
+          "parser_success_given_provider_success": null,
+          "fallback_steps": 106,
+          "latency_ms_mean": 74.69405660377359,
+          "safety_override_count": 0,
+          "postprocess_applied_count": 0,
+          "finish_reason_distribution": {
+            "NOT_AVAILABLE": 106
+          },
+          "exception_type_distribution": {
+            "RateLimitError": 106
+          },
+          "parser_failure_reason_distribution": {
+            "PROVIDER_REQUEST_EXCEPTION": 106
+          },
+          "reasoning_tokens_available_steps": 0,
+          "reasoning_tokens_sample": [],
+          "prompt_tokens_sample": [],
+          "completion_tokens_sample": [],
+          "total_tokens_sample": [],
+          "run_dir": "D:\\Sumo\\sumo_train\\results\\formal_experiment\\dissertation_formal_v4\\runs\\seed3_v8\\FE05_HYBRID_v8_seed3_v4_real",
+          "step_records": "D:\\Sumo\\sumo_train\\results\\formal_experiment\\dissertation_formal_v4\\runs\\seed3_v8\\FE05_HYBRID_v8_seed3_v4_real\\step_records.csv",
+          "run_metadata": "D:\\Sumo\\sumo_train\\results\\formal_experiment\\dissertation_formal_v4\\runs\\seed3_v8\\FE05_HYBRID_v8_seed3_v4_real\\run_metadata.json",
+          "events": "D:\\Sumo\\sumo_train\\results\\formal_experiment\\dissertation_formal_v4\\runs\\seed3_v8\\FE05_HYBRID_v8_seed3_v4_real\\events.jsonl"
+        }
+      ],
+      "aggregate": {
+        "HybridLLMController|8": {
+          "n_runs": 3,
+          "completion_rate": {
+            "mean": 1.0,
+            "sd": 0.0,
+            "values": [
+              1.0,
+              1.0,
+              1.0
+            ]
+          },
+          "throughput": {
+            "mean": 8.0,
+            "sd": 0.0,
+            "values": [
+              8,
+              8,
+              8
+            ]
+          },
+          "mean_waiting_time": {
+            "mean": 15.291666666666666,
+            "sd": 2.0446406910642163,
+            "values": [
+              17.875,
+              12.875,
+              15.125
+            ]
+          },
+          "mean_speed": {
+            "mean": 6.59907561466915,
+            "sd": 0.25404755609798335,
+            "values": [
+              6.2648633165096275,
+              6.880360772144653,
+              6.65200275535317
+            ]
+          },
+          "episode_duration_seconds": {
+            "mean": 105.33333333333333,
+            "sd": 0.4714045207910317,
+            "values": [
+              106.0,
+              105.0,
+              105.0
+            ]
+          },
+          "provider_attempt_steps": {
+            "mean": 106.33333333333333,
+            "sd": 0.4714045207910317,
+            "values": [
+              107,
+              106,
+              106
+            ]
+          },
+          "provider_success_steps": {
+            "mean": 0.3333333333333333,
+            "sd": 0.4714045207910317,
+            "values": [
+              1,
+              0,
+              0
+            ]
+          },
+          "provider_failure_steps": {
+            "mean": 106.0,
+            "sd": 0.0,
+            "values": [
+              106,
+              106,
+              106
+            ]
+          },
+          "provider_success_rate": {
+            "mean": 0.003115264797507788,
+            "sd": 0.004405649727018988,
+            "values": [
+              0.009345794392523364,
+              0.0,
+              0.0
+            ]
+          },
+          "parser_success_steps": {
+            "mean": 0.3333333333333333,
+            "sd": 0.4714045207910317,
+            "values": [
+              1,
+              0,
+              0
+            ]
+          },
+          "fallback_steps": {
+            "mean": 106.0,
+            "sd": 0.0,
+            "values": [
+              106,
+              106,
+              106
+            ]
+          },
+          "latency_ms_mean": {
+            "mean": 79.03516663727737,
+            "sd": 4.074373257190993,
+            "values": [
+              84.48700934579439,
+              77.92443396226415,
+              74.69405660377359
+            ]
+          },
+          "collision_count": {
+            "mean": 0.0,
+            "sd": 0.0,
+            "values": [
+              0,
+              0,
+              0
+            ]
+          },
+          "safety_override_count": {
+            "mean": 0.0,
+            "sd": 0.0,
+            "values": [
+              0,
+              0,
+              0
+            ]
+          },
+          "postprocess_applied_count": {
+            "mean": 0.0,
+            "sd": 0.0,
+            "values": [
+              0,
+              0,
+              0
+            ]
+          }
+        },
+        "HybridLLMSafetyController|8": {
+          "n_runs": 3,
+          "completion_rate": {
+            "mean": 1.0,
+            "sd": 0.0,
+            "values": [
+              1.0,
+              1.0,
+              1.0
+            ]
+          },
+          "throughput": {
+            "mean": 8.0,
+            "sd": 0.0,
+            "values": [
+              8,
+              8,
+              8
+            ]
+          },
+          "mean_waiting_time": {
+            "mean": 15.291666666666666,
+            "sd": 2.0446406910642163,
+            "values": [
+              17.875,
+              12.875,
+              15.125
+            ]
+          },
+          "mean_speed": {
+            "mean": 6.59907561466915,
+            "sd": 0.25404755609798335,
+            "values": [
+              6.2648633165096275,
+              6.880360772144653,
+              6.65200275535317
+            ]
+          },
+          "episode_duration_seconds": {
+            "mean": 105.33333333333333,
+            "sd": 0.4714045207910317,
+            "values": [
+              106.0,
+              105.0,
+              105.0
+            ]
+          },
+          "provider_attempt_steps": {
+            "mean": 106.33333333333333,
+            "sd": 0.4714045207910317,
+            "values": [
+              107,
+              106,
+              106
+            ]
+          },
+          "provider_success_steps": {
+            "mean": 0.3333333333333333,
+            "sd": 0.4714045207910317,
+            "values": [
+              0,
+              0,
+              1
+            ]
+          },
+          "provider_failure_steps": {
+            "mean": 106.0,
+            "sd": 0.816496580927726,
+            "values": [
+              107,
+              106,
+              105
+            ]
+          },
+          "provider_success_rate": {
+            "mean": 0.003144654088050314,
+            "sd": 0.004447212460292752,
+            "values": [
+              0.0,
+              0.0,
+              0.009433962264150943
+            ]
+          },
+          "parser_success_steps": {
+            "mean": 0.3333333333333333,
+            "sd": 0.4714045207910317,
+            "values": [
+              0,
+              0,
+              1
+            ]
+          },
+          "fallback_steps": {
+            "mean": 106.0,
+            "sd": 0.816496580927726,
+            "values": [
+              107,
+              106,
+              105
+            ]
+          },
+          "latency_ms_mean": {
+            "mean": 76.39719008993123,
+            "sd": 1.3122338631622017,
+            "values": [
+              74.89355140186916,
+              76.20707547169812,
+              78.09094339622641
+            ]
+          },
+          "collision_count": {
+            "mean": 0.0,
+            "sd": 0.0,
+            "values": [
+              0,
+              0,
+              0
+            ]
+          },
+          "safety_override_count": {
+            "mean": 0.0,
+            "sd": 0.0,
+            "values": [
+              0,
+              0,
+              0
+            ]
+          },
+          "postprocess_applied_count": {
+            "mean": 0.0,
+            "sd": 0.0,
+            "values": [
+              0,
+              0,
+              0
+            ]
+          }
+        },
+        "BaselineRule|8": {
+          "n_runs": 3,
+          "completion_rate": {
+            "mean": 1.0,
+            "sd": 0.0,
+            "values": [
+              1.0,
+              1.0,
+              1.0
+            ]
+          },
+          "throughput": {
+            "mean": 8.0,
+            "sd": 0.0,
+            "values": [
+              8,
+              8,
+              8
+            ]
+          },
+          "mean_waiting_time": {
+            "mean": 242.04166666666666,
+            "sd": 110.58595513093977,
+            "values": [
+              86.0,
+              311.0,
+              329.125
+            ]
+          },
+          "mean_speed": {
+            "mean": 1.1894908101860338,
+            "sd": 0.753607746720037,
+            "values": [
+              2.2552510688695557,
+              0.654805928007573,
+              0.6584154336809727
+            ]
+          },
+          "episode_duration_seconds": {
+            "mean": 344.0,
+            "sd": 123.20984809124093,
+            "values": [
+              170.0,
+              423.0,
+              439.0
+            ]
+          },
+          "provider_attempt_steps": {
+            "mean": 0.0,
+            "sd": 0.0,
+            "values": [
+              0,
+              0,
+              0
+            ]
+          },
+          "provider_success_steps": {
+            "mean": 0.0,
+            "sd": 0.0,
+            "values": [
+              0,
+              0,
+              0
+            ]
+          },
+          "provider_failure_steps": {
+            "mean": 0.0,
+            "sd": 0.0,
+            "values": [
+              0,
+              0,
+              0
+            ]
+          },
+          "provider_success_rate": {
+            "mean": null,
+            "sd": null,
+            "values": []
+          },
+          "parser_success_steps": {
+            "mean": 0.0,
+            "sd": 0.0,
+            "values": [
+              0,
+              0,
+              0
+            ]
+          },
+          "fallback_steps": {
+            "mean": 0.0,
+            "sd": 0.0,
+            "values": [
+              0,
+              0,
+              0
+            ]
+          },
+          "latency_ms_mean": {
+            "mean": 0.0,
+            "sd": 0.0,
+            "values": [
+              0.0,
+              0.0,
+              0.0
+            ]
+          },
+          "collision_count": {
+            "mean": 0.0,
+            "sd": 0.0,
+            "values": [
+              0,
+              0,
+              0
+            ]
+          },
+          "safety_override_count": {
+            "mean": 0.0,
+            "sd": 0.0,
+            "values": [
+              0,
+              0,
+              0
+            ]
+          },
+          "postprocess_applied_count": {
+            "mean": 0.0,
+            "sd": 0.0,
+            "values": [
+              0,
+              0,
+              0
+            ]
+          }
+        },
+        "RawLLMController|8": {
+          "n_runs": 3,
+          "completion_rate": {
+            "mean": 1.0,
+            "sd": 0.0,
+            "values": [
+              1.0,
+              1.0,
+              1.0
+            ]
+          },
+          "throughput": {
+            "mean": 8.0,
+            "sd": 0.0,
+            "values": [
+              8,
+              8,
+              8
+            ]
+          },
+          "mean_waiting_time": {
+            "mean": 15.291666666666666,
+            "sd": 2.0446406910642163,
+            "values": [
+              17.875,
+              12.875,
+              15.125
+            ]
+          },
+          "mean_speed": {
+            "mean": 6.59907561466915,
+            "sd": 0.25404755609798335,
+            "values": [
+              6.2648633165096275,
+              6.880360772144653,
+              6.65200275535317
+            ]
+          },
+          "episode_duration_seconds": {
+            "mean": 105.33333333333333,
+            "sd": 0.4714045207910317,
+            "values": [
+              106.0,
+              105.0,
+              105.0
+            ]
+          },
+          "provider_attempt_steps": {
+            "mean": 106.33333333333333,
+            "sd": 0.4714045207910317,
+            "values": [
+              107,
+              106,
+              106
+            ]
+          },
+          "provider_success_steps": {
+            "mean": 0.6666666666666666,
+            "sd": 0.4714045207910317,
+            "values": [
+              1,
+              1,
+              0
+            ]
+          },
+          "provider_failure_steps": {
+            "mean": 105.66666666666667,
+            "sd": 0.4714045207910317,
+            "values": [
+              106,
+              105,
+              106
+            ]
+          },
+          "provider_success_rate": {
+            "mean": 0.006259918885558102,
+            "sd": 0.004426577438889033,
+            "values": [
+              0.009345794392523364,
+              0.009433962264150943,
+              0.0
+            ]
+          },
+          "parser_success_steps": {
+            "mean": 0.6666666666666666,
+            "sd": 0.4714045207910317,
+            "values": [
+              1,
+              1,
+              0
+            ]
+          },
+          "fallback_steps": {
+            "mean": 105.66666666666667,
+            "sd": 0.4714045207910317,
+            "values": [
+              106,
+              105,
+              106
+            ]
+          },
+          "latency_ms_mean": {
+            "mean": 76.84505730911656,
+            "sd": 1.5523317774260532,
+            "values": [
+              78.64177570093457,
+              77.03915094339622,
+              74.85424528301887
+            ]
+          },
+          "collision_count": {
+            "mean": 0.0,
+            "sd": 0.0,
+            "values": [
+              0,
+              0,
+              0
+            ]
+          },
+          "safety_override_count": {
+            "mean": 0.0,
+            "sd": 0.0,
+            "values": [
+              0,
+              0,
+              0
+            ]
+          },
+          "postprocess_applied_count": {
+            "mean": 0.0,
+            "sd": 0.0,
+            "values": [
+              0,
+              0,
+              0
+            ]
+          }
+        }
+      }
+    }
+  },
+  "comparisons": {
+    "formal_v2_4v_validity": {
+      "runs": 12,
+      "all_vehicles_observed_4": true,
+      "all_departed_4": true,
+      "all_arrived_4": true,
+      "all_collision_zero": true
+    },
+    "formal_v2_8v_invalidity": {
+      "runs": 12,
+      "configured_vehicle_count": 8,
+      "observed_vehicle_count_set": [
+        4
+      ],
+      "observed_vehicle_ids_examples": [
+        "car0",
+        "car1",
+        "car2",
+        "car3"
+      ],
+      "all_departed_count_set": [
+        4
+      ],
+      "all_arrived_count_set": [
+        4
+      ],
+      "all_collision_zero": true,
+      "invalid_reason": "configured 8V but only 4 vehicles observed/departed/arrived in raw traces"
+    },
+    "formal_v4_8v_validity": {
+      "runs": 12,
+      "all_vehicles_observed_8": true,
+      "all_departed_8": true,
+      "all_arrived_8": true,
+      "all_collision_zero": true
+    }
+  }
+}

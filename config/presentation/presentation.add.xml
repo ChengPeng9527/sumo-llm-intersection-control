@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<additional xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xsi:noNamespaceSchemaLocation="http://sumo.dlr.de/xsd/additional_file.xsd">
+    <poi id="NORTH" type="presentation.label" color="221,228,232" layer="30" x="-43.65" y="69.00"/>
+    <poi id="EAST" type="presentation.label" color="221,228,232" layer="30" x="31.00" y="11.26"/>
+    <poi id="SOUTH" type="presentation.label" color="221,228,232" layer="30" x="-43.65" y="-48.00"/>
+    <poi id="WEST" type="presentation.label" color="221,228,232" layer="30" x="-117.00" y="11.26"/>
+    <poi id="S3_12V_CANDIDATE_CONTROL" type="presentation.title" color="87,199,255"
+         layer="30" x="-111.00" y="76.00"/>
+</additional>

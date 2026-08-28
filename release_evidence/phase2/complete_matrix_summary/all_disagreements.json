@@ -1,0 +1,2197 @@
+[
+  {
+    "run_id": "phase2_formal_batch2_s2_simultaneous_conflict_v8_seed1_gemini_candidate",
+    "scenario_class": "S2_SIMULTANEOUS_CONFLICT",
+    "vehicle_count": 8,
+    "seed": 1,
+    "simulation_time": 11.0,
+    "candidate_set": [
+      {
+        "candidate_id": "phase2_s2_simultaneous_conflict_v8_seed1_1_1",
+        "vehicle_ids": [
+          "phase2_s2_simultaneous_conflict_v8_seed1_1_1"
+        ]
+      },
+      {
+        "candidate_id": "phase2_s2_simultaneous_conflict_v8_seed1_1_2",
+        "vehicle_ids": [
+          "phase2_s2_simultaneous_conflict_v8_seed1_1_2"
+        ]
+      },
+      {
+        "candidate_id": "phase2_s2_simultaneous_conflict_v8_seed1_1_3",
+        "vehicle_ids": [
+          "phase2_s2_simultaneous_conflict_v8_seed1_1_3"
+        ]
+      },
+      {
+        "candidate_id": "phase2_s2_simultaneous_conflict_v8_seed1_1_4",
+        "vehicle_ids": [
+          "phase2_s2_simultaneous_conflict_v8_seed1_1_4"
+        ]
+      },
+      {
+        "candidate_id": "phase2_s2_simultaneous_conflict_v8_seed1_1_5",
+        "vehicle_ids": [
+          "phase2_s2_simultaneous_conflict_v8_seed1_1_5"
+        ]
+      },
+      {
+        "candidate_id": "phase2_s2_simultaneous_conflict_v8_seed1_1_6",
+        "vehicle_ids": [
+          "phase2_s2_simultaneous_conflict_v8_seed1_1_6"
+        ]
+      },
+      {
+        "candidate_id": "phase2_s2_simultaneous_conflict_v8_seed1_1_7",
+        "vehicle_ids": [
+          "phase2_s2_simultaneous_conflict_v8_seed1_1_7"
+        ]
+      },
+      {
+        "candidate_id": "phase2_s2_simultaneous_conflict_v8_seed1_1_3|phase2_s2_simultaneous_conflict_v8_seed1_1_1",
+        "vehicle_ids": [
+          "phase2_s2_simultaneous_conflict_v8_seed1_1_3",
+          "phase2_s2_simultaneous_conflict_v8_seed1_1_1"
+        ]
+      },
+      {
+        "candidate_id": "phase2_s2_simultaneous_conflict_v8_seed1_1_4|phase2_s2_simultaneous_conflict_v8_seed1_1_6",
+        "vehicle_ids": [
+          "phase2_s2_simultaneous_conflict_v8_seed1_1_4",
+          "phase2_s2_simultaneous_conflict_v8_seed1_1_6"
+        ]
+      },
+      {
+        "candidate_id": "phase2_s2_simultaneous_conflict_v8_seed1_1_7|phase2_s2_simultaneous_conflict_v8_seed1_1_5",
+        "vehicle_ids": [
+          "phase2_s2_simultaneous_conflict_v8_seed1_1_7",
+          "phase2_s2_simultaneous_conflict_v8_seed1_1_5"
+        ]
+      }
+    ],
+    "candidate_features": [
+      {
+        "candidate_id": "phase2_s2_simultaneous_conflict_v8_seed1_1_1",
+        "vehicle_ids": [
+          "phase2_s2_simultaneous_conflict_v8_seed1_1_1"
+        ],
+        "movement_summary": [
+          {
+            "vehicle_id": "phase2_s2_simultaneous_conflict_v8_seed1_1_1",
+            "incoming_edge": "E",
+            "outgoing_edge": "-W",
+            "movement": "STRAIGHT"
+          }
+        ],
+        "group_size": 1,
+        "aggregate_waiting_time": 1.0,
+        "maximum_waiting_time": 1.0,
+        "minimum_time_to_intersection": null
+      },
+      {
+        "candidate_id": "phase2_s2_simultaneous_conflict_v8_seed1_1_2",
+        "vehicle_ids": [
+          "phase2_s2_simultaneous_conflict_v8_seed1_1_2"
+        ],
+        "movement_summary": [
+          {
+            "vehicle_id": "phase2_s2_simultaneous_conflict_v8_seed1_1_2",
+            "incoming_edge": "S",
+            "outgoing_edge": "-N",
+            "movement": "STRAIGHT"
+          }
+        ],
+        "group_size": 1,
+        "aggregate_waiting_time": 2.0,
+        "maximum_waiting_time": 2.0,
+        "minimum_time_to_intersection": null
+      },
+      {
+        "candidate_id": "phase2_s2_simultaneous_conflict_v8_seed1_1_3",
+        "vehicle_ids": [
+          "phase2_s2_simultaneous_conflict_v8_seed1_1_3"
+        ],
+        "movement_summary": [
+          {
+            "vehicle_id": "phase2_s2_simultaneous_conflict_v8_seed1_1_3",
+            "incoming_edge": "W",
+            "outgoing_edge": "-E",
+            "movement": "STRAIGHT"
+          }
+        ],
+        "group_size": 1,
+        "aggregate_waiting_time": 0.0,
+        "maximum_waiting_time": 0.0,
+        "minimum_time_to_intersection": 15.0
+      },
+      {
+        "candidate_id": "phase2_s2_simultaneous_conflict_v8_seed1_1_4",
+        "vehicle_ids": [
+          "phase2_s2_simultaneous_conflict_v8_seed1_1_4"
+        ],
+        "movement_summary": [
+          {
+            "vehicle_id": "phase2_s2_simultaneous_conflict_v8_seed1_1_4",
+            "incoming_edge": "N",
+            "outgoing_edge": "-E",
+            "movement": "LEFT"
+          }
+        ],
+        "group_size": 1,
+        "aggregate_waiting_time": 2.0,
+        "maximum_waiting_time": 2.0,
+        "minimum_time_to_intersection": null
+      },
+      {
+        "candidate_id": "phase2_s2_simultaneous_conflict_v8_seed1_1_5",
+        "vehicle_ids": [
+          "phase2_s2_simultaneous_conflict_v8_seed1_1_5"
+        ],
+        "movement_summary": [
+          {
+            "vehicle_id": "phase2_s2_simultaneous_conflict_v8_seed1_1_5",
+            "incoming_edge": "E",
+            "outgoing_edge": "-S",
+            "movement": "LEFT"
+          }
+        ],
+        "group_size": 1,
+        "aggregate_waiting_time": 0.0,
+        "maximum_waiting_time": 0.0,
+        "minimum_time_to_intersection": 3.22
+      },
+      {
+        "candidate_id": "phase2_s2_simultaneous_conflict_v8_seed1_1_6",
+        "vehicle_ids": [
+          "phase2_s2_simultaneous_conflict_v8_seed1_1_6"
+        ],
+        "movement_summary": [
+          {
+            "vehicle_id": "phase2_s2_simultaneous_conflict_v8_seed1_1_6",
+            "incoming_edge": "S",
+            "outgoing_edge": "-W",
+            "movement": "LEFT"
+          }
+        ],
+        "group_size": 1,
+        "aggregate_waiting_time": 1.0,
+        "maximum_waiting_time": 1.0,
+        "minimum_time_to_intersection": null
+      },
+      {
+        "candidate_id": "phase2_s2_simultaneous_conflict_v8_seed1_1_7",
+        "vehicle_ids": [
+          "phase2_s2_simultaneous_conflict_v8_seed1_1_7"
+        ],
+        "movement_summary": [
+          {
+            "vehicle_id": "phase2_s2_simultaneous_conflict_v8_seed1_1_7",
+            "incoming_edge": "W",
+            "outgoing_edge": "-N",
+            "movement": "LEFT"
+          }
+        ],
+        "group_size": 1,
+        "aggregate_waiting_time": 0.0,
+        "maximum_waiting_time": 0.0,
+        "minimum_time_to_intersection": 2.91
+      },
+      {
+        "candidate_id": "phase2_s2_simultaneous_conflict_v8_seed1_1_3|phase2_s2_simultaneous_conflict_v8_seed1_1_1",
+        "vehicle_ids": [
+          "phase2_s2_simultaneous_conflict_v8_seed1_1_3",
+          "phase2_s2_simultaneous_conflict_v8_seed1_1_1"
+        ],
+        "movement_summary": [
+          {
+            "vehicle_id": "phase2_s2_simultaneous_conflict_v8_seed1_1_3",
+            "incoming_edge": "W",
+            "outgoing_edge": "-E",
+            "movement": "STRAIGHT"
+          },
+          {
+            "vehicle_id": "phase2_s2_simultaneous_conflict_v8_seed1_1_1",
+            "incoming_edge": "E",
+            "outgoing_edge": "-W",
+            "movement": "STRAIGHT"
+          }
+        ],
+        "group_size": 2,
+        "aggregate_waiting_time": 1.0,
+        "maximum_waiting_time": 1.0,
+        "minimum_time_to_intersection": 15.0
+      },
+      {
+        "candidate_id": "phase2_s2_simultaneous_conflict_v8_seed1_1_4|phase2_s2_simultaneous_conflict_v8_seed1_1_6",
+        "vehicle_ids": [
+          "phase2_s2_simultaneous_conflict_v8_seed1_1_4",
+          "phase2_s2_simultaneous_conflict_v8_seed1_1_6"
+        ],
+        "movement_summary": [
+          {
+            "vehicle_id": "phase2_s2_simultaneous_conflict_v8_seed1_1_4",
+            "incoming_edge": "N",
+            "outgoing_edge": "-E",
+            "movement": "LEFT"
+          },
+          {
+            "vehicle_id": "phase2_s2_simultaneous_conflict_v8_seed1_1_6",
+            "incoming_edge": "S",
+            "outgoing_edge": "-W",
+            "movement": "LEFT"
+          }
+        ],
+        "group_size": 2,
+        "aggregate_waiting_time": 3.0,
+        "maximum_waiting_time": 2.0,
+        "minimum_time_to_intersection": null
+      },
+      {
+        "candidate_id": "phase2_s2_simultaneous_conflict_v8_seed1_1_7|phase2_s2_simultaneous_conflict_v8_seed1_1_5",
+        "vehicle_ids": [
+          "phase2_s2_simultaneous_conflict_v8_seed1_1_7",
+          "phase2_s2_simultaneous_conflict_v8_seed1_1_5"
+        ],
+        "movement_summary": [
+          {
+            "vehicle_id": "phase2_s2_simultaneous_conflict_v8_seed1_1_7",
+            "incoming_edge": "W",
+            "outgoing_edge": "-N",
+            "movement": "LEFT"
+          },
+          {
+            "vehicle_id": "phase2_s2_simultaneous_conflict_v8_seed1_1_5",
+            "incoming_edge": "E",
+            "outgoing_edge": "-S",
+            "movement": "LEFT"
+          }
+        ],
+        "group_size": 2,
+        "aggregate_waiting_time": 0.0,
+        "maximum_waiting_time": 0.0,
+        "minimum_time_to_intersection": 2.91
+      }
+    ],
+    "candidate_group_sizes": [
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      2,
+      2,
+      2
+    ],
+    "deterministic_candidate_id": "phase2_s2_simultaneous_conflict_v8_seed1_1_4|phase2_s2_simultaneous_conflict_v8_seed1_1_6",
+    "gemini_candidate_id": "phase2_s2_simultaneous_conflict_v8_seed1_1_7|phase2_s2_simultaneous_conflict_v8_seed1_1_5",
+    "gemini_selected_features": [
+      {
+        "candidate_id": "phase2_s2_simultaneous_conflict_v8_seed1_1_7|phase2_s2_simultaneous_conflict_v8_seed1_1_5",
+        "vehicle_ids": [
+          "phase2_s2_simultaneous_conflict_v8_seed1_1_7",
+          "phase2_s2_simultaneous_conflict_v8_seed1_1_5"
+        ],
+        "movement_summary": [
+          {
+            "vehicle_id": "phase2_s2_simultaneous_conflict_v8_seed1_1_7",
+            "incoming_edge": "W",
+            "outgoing_edge": "-N",
+            "movement": "LEFT"
+          },
+          {
+            "vehicle_id": "phase2_s2_simultaneous_conflict_v8_seed1_1_5",
+            "incoming_edge": "E",
+            "outgoing_edge": "-S",
+            "movement": "LEFT"
+          }
+        ],
+        "group_size": 2,
+        "aggregate_waiting_time": 0.0,
+        "maximum_waiting_time": 0.0,
+        "minimum_time_to_intersection": 2.91
+      }
+    ],
+    "aggregate_waiting_time": 6.0,
+    "maximum_waiting_time": 2.0,
+    "eta_features": [
+      null,
+      null,
+      15.0,
+      null,
+      3.22,
+      null,
+      2.91
+    ],
+    "fallback_used": false,
+    "fallback_reason": "",
+    "safety_interventions": 0,
+    "actual_granted_group": [
+      "phase2_s2_simultaneous_conflict_v8_seed1_1_7",
+      "phase2_s2_simultaneous_conflict_v8_seed1_1_5"
+    ],
+    "grant_clearance_reason": "ALL_GRANTED_VEHICLES_LEFT_CONTROL_SCOPE",
+    "grant_duration_seconds": 7.0,
+    "fairness_pressure_context": false,
+    "fairness_target_waiting_time": null
+  },
+  {
+    "run_id": "phase2_formal_batch2_s3_cooperative_opportunity_v12_seed1_gemini_candidate",
+    "scenario_class": "S3_COOPERATIVE_OPPORTUNITY",
+    "vehicle_count": 12,
+    "seed": 1,
+    "simulation_time": 21.0,
+    "candidate_set": [
+      {
+        "candidate_id": "phase2_s3_cooperative_opportunity_v12_seed1_1_10",
+        "vehicle_ids": [
+          "phase2_s3_cooperative_opportunity_v12_seed1_1_10"
+        ]
+      },
+      {
+        "candidate_id": "phase2_s3_cooperative_opportunity_v12_seed1_1_11",
+        "vehicle_ids": [
+          "phase2_s3_cooperative_opportunity_v12_seed1_1_11"
+        ]
+      },
+      {
+        "candidate_id": "phase2_s3_cooperative_opportunity_v12_seed1_1_4",
+        "vehicle_ids": [
+          "phase2_s3_cooperative_opportunity_v12_seed1_1_4"
+        ]
+      },
+      {
+        "candidate_id": "phase2_s3_cooperative_opportunity_v12_seed1_1_5",
+        "vehicle_ids": [
+          "phase2_s3_cooperative_opportunity_v12_seed1_1_5"
+        ]
+      },
+      {
+        "candidate_id": "phase2_s3_cooperative_opportunity_v12_seed1_1_6",
+        "vehicle_ids": [
+          "phase2_s3_cooperative_opportunity_v12_seed1_1_6"
+        ]
+      },
+      {
+        "candidate_id": "phase2_s3_cooperative_opportunity_v12_seed1_1_7",
+        "vehicle_ids": [
+          "phase2_s3_cooperative_opportunity_v12_seed1_1_7"
+        ]
+      },
+      {
+        "candidate_id": "phase2_s3_cooperative_opportunity_v12_seed1_1_8",
+        "vehicle_ids": [
+          "phase2_s3_cooperative_opportunity_v12_seed1_1_8"
+        ]
+      },
+      {
+        "candidate_id": "phase2_s3_cooperative_opportunity_v12_seed1_1_9",
+        "vehicle_ids": [
+          "phase2_s3_cooperative_opportunity_v12_seed1_1_9"
+        ]
+      },
+      {
+        "candidate_id": "phase2_s3_cooperative_opportunity_v12_seed1_1_10|phase2_s3_cooperative_opportunity_v12_seed1_1_11",
+        "vehicle_ids": [
+          "phase2_s3_cooperative_opportunity_v12_seed1_1_10",
+          "phase2_s3_cooperative_opportunity_v12_seed1_1_11"
+        ]
+      },
+      {
+        "candidate_id": "phase2_s3_cooperative_opportunity_v12_seed1_1_10|phase2_s3_cooperative_opportunity_v12_seed1_1_8",
+        "vehicle_ids": [
+          "phase2_s3_cooperative_opportunity_v12_seed1_1_10",
+          "phase2_s3_cooperative_opportunity_v12_seed1_1_8"
+        ]
+      },
+      {
+        "candidate_id": "phase2_s3_cooperative_opportunity_v12_seed1_1_10|phase2_s3_cooperative_opportunity_v12_seed1_1_9",
+        "vehicle_ids": [
+          "phase2_s3_cooperative_opportunity_v12_seed1_1_10",
+          "phase2_s3_cooperative_opportunity_v12_seed1_1_9"
+        ]
+      },
+      {
+        "candidate_id": "phase2_s3_cooperative_opportunity_v12_seed1_1_11|phase2_s3_cooperative_opportunity_v12_seed1_1_8",
+        "vehicle_ids": [
+          "phase2_s3_cooperative_opportunity_v12_seed1_1_11",
+          "phase2_s3_cooperative_opportunity_v12_seed1_1_8"
+        ]
+      },
+      {
+        "candidate_id": "phase2_s3_cooperative_opportunity_v12_seed1_1_11|phase2_s3_cooperative_opportunity_v12_seed1_1_9",
+        "vehicle_ids": [
+          "phase2_s3_cooperative_opportunity_v12_seed1_1_11",
+          "phase2_s3_cooperative_opportunity_v12_seed1_1_9"
+        ]
+      },
+      {
+        "candidate_id": "phase2_s3_cooperative_opportunity_v12_seed1_1_4|phase2_s3_cooperative_opportunity_v12_seed1_1_5",
+        "vehicle_ids": [
+          "phase2_s3_cooperative_opportunity_v12_seed1_1_4",
+          "phase2_s3_cooperative_opportunity_v12_seed1_1_5"
+        ]
+      },
+      {
+        "candidate_id": "phase2_s3_cooperative_opportunity_v12_seed1_1_6|phase2_s3_cooperative_opportunity_v12_seed1_1_7",
+        "vehicle_ids": [
+          "phase2_s3_cooperative_opportunity_v12_seed1_1_6",
+          "phase2_s3_cooperative_opportunity_v12_seed1_1_7"
+        ]
+      },
+      {
+        "candidate_id": "phase2_s3_cooperative_opportunity_v12_seed1_1_8|phase2_s3_cooperative_opportunity_v12_seed1_1_9",
+        "vehicle_ids": [
+          "phase2_s3_cooperative_opportunity_v12_seed1_1_8",
+          "phase2_s3_cooperative_opportunity_v12_seed1_1_9"
+        ]
+      },
+      {
+        "candidate_id": "phase2_s3_cooperative_opportunity_v12_seed1_1_11|phase2_s3_cooperative_opportunity_v12_seed1_1_8|phase2_s3_cooperative_opportunity_v12_seed1_1_9",
+        "vehicle_ids": [
+          "phase2_s3_cooperative_opportunity_v12_seed1_1_11",
+          "phase2_s3_cooperative_opportunity_v12_seed1_1_8",
+          "phase2_s3_cooperative_opportunity_v12_seed1_1_9"
+        ]
+      },
+      {
+        "candidate_id": "phase2_s3_cooperative_opportunity_v12_seed1_1_10|phase2_s3_cooperative_opportunity_v12_seed1_1_11|phase2_s3_cooperative_opportunity_v12_seed1_1_8|phase2_s3_cooperative_opportunity_v12_seed1_1_9",
+        "vehicle_ids": [
+          "phase2_s3_cooperative_opportunity_v12_seed1_1_10",
+          "phase2_s3_cooperative_opportunity_v12_seed1_1_11",
+          "phase2_s3_cooperative_opportunity_v12_seed1_1_8",
+          "phase2_s3_cooperative_opportunity_v12_seed1_1_9"
+        ]
+      }
+    ],
+    "candidate_features": [
+      {
+        "candidate_id": "phase2_s3_cooperative_opportunity_v12_seed1_1_10",
+        "vehicle_ids": [
+          "phase2_s3_cooperative_opportunity_v12_seed1_1_10"
+        ],
+        "movement_summary": [
+          {
+            "vehicle_id": "phase2_s3_cooperative_opportunity_v12_seed1_1_10",
+            "incoming_edge": "W",
+            "outgoing_edge": "-S",
+            "movement": "RIGHT"
+          }
+        ],
+        "group_size": 1,
+        "aggregate_waiting_time": 0.0,
+        "maximum_waiting_time": 0.0,
+        "minimum_time_to_intersection": 74.21
+      },
+      {
+        "candidate_id": "phase2_s3_cooperative_opportunity_v12_seed1_1_11",
+        "vehicle_ids": [
+          "phase2_s3_cooperative_opportunity_v12_seed1_1_11"
+        ],
+        "movement_summary": [
+          {
+            "vehicle_id": "phase2_s3_cooperative_opportunity_v12_seed1_1_11",
+            "incoming_edge": "S",
+            "outgoing_edge": "-E",
+            "movement": "RIGHT"
+          }
+        ],
+        "group_size": 1,
+        "aggregate_waiting_time": 2.0,
+        "maximum_waiting_time": 2.0,
+        "minimum_time_to_intersection": null
+      },
+      {
+        "candidate_id": "phase2_s3_cooperative_opportunity_v12_seed1_1_4",
+        "vehicle_ids": [
+          "phase2_s3_cooperative_opportunity_v12_seed1_1_4"
+        ],
+        "movement_summary": [
+          {
+            "vehicle_id": "phase2_s3_cooperative_opportunity_v12_seed1_1_4",
+            "incoming_edge": "N",
+            "outgoing_edge": "-S",
+            "movement": "STRAIGHT"
+          }
+        ],
+        "group_size": 1,
+        "aggregate_waiting_time": 10.0,
+        "maximum_waiting_time": 10.0,
+        "minimum_time_to_intersection": null
+      },
+      {
+        "candidate_id": "phase2_s3_cooperative_opportunity_v12_seed1_1_5",
+        "vehicle_ids": [
+          "phase2_s3_cooperative_opportunity_v12_seed1_1_5"
+        ],
+        "movement_summary": [
+          {
+            "vehicle_id": "phase2_s3_cooperative_opportunity_v12_seed1_1_5",
+            "incoming_edge": "S",
+            "outgoing_edge": "-N",
+            "movement": "STRAIGHT"
+          }
+        ],
+        "group_size": 1,
+        "aggregate_waiting_time": 10.0,
+        "maximum_waiting_time": 10.0,
+        "minimum_time_to_intersection": null
+      },
+      {
+        "candidate_id": "phase2_s3_cooperative_opportunity_v12_seed1_1_6",
+        "vehicle_ids": [
+          "phase2_s3_cooperative_opportunity_v12_seed1_1_6"
+        ],
+        "movement_summary": [
+          {
+            "vehicle_id": "phase2_s3_cooperative_opportunity_v12_seed1_1_6",
+            "incoming_edge": "E",
+            "outgoing_edge": "-S",
+            "movement": "LEFT"
+          }
+        ],
+        "group_size": 1,
+        "aggregate_waiting_time": 5.0,
+        "maximum_waiting_time": 5.0,
+        "minimum_time_to_intersection": null
+      },
+      {
+        "candidate_id": "phase2_s3_cooperative_opportunity_v12_seed1_1_7",
+        "vehicle_ids": [
+          "phase2_s3_cooperative_opportunity_v12_seed1_1_7"
+        ],
+        "movement_summary": [
+          {
+            "vehicle_id": "phase2_s3_cooperative_opportunity_v12_seed1_1_7",
+            "incoming_edge": "W",
+            "outgoing_edge": "-N",
+            "movement": "LEFT"
+          }
+        ],
+        "group_size": 1,
+        "aggregate_waiting_time": 5.0,
+        "maximum_waiting_time": 5.0,
+        "minimum_time_to_intersection": null
+      },
+      {
+        "candidate_id": "phase2_s3_cooperative_opportunity_v12_seed1_1_8",
+        "vehicle_ids": [
+          "phase2_s3_cooperative_opportunity_v12_seed1_1_8"
+        ],
+        "movement_summary": [
+          {
+            "vehicle_id": "phase2_s3_cooperative_opportunity_v12_seed1_1_8",
+            "incoming_edge": "N",
+            "outgoing_edge": "-W",
+            "movement": "RIGHT"
+          }
+        ],
+        "group_size": 1,
+        "aggregate_waiting_time": 5.0,
+        "maximum_waiting_time": 5.0,
+        "minimum_time_to_intersection": null
+      },
+      {
+        "candidate_id": "phase2_s3_cooperative_opportunity_v12_seed1_1_9",
+        "vehicle_ids": [
+          "phase2_s3_cooperative_opportunity_v12_seed1_1_9"
+        ],
+        "movement_summary": [
+          {
+            "vehicle_id": "phase2_s3_cooperative_opportunity_v12_seed1_1_9",
+            "incoming_edge": "E",
+            "outgoing_edge": "-N",
+            "movement": "RIGHT"
+          }
+        ],
+        "group_size": 1,
+        "aggregate_waiting_time": 1.0,
+        "maximum_waiting_time": 1.0,
+        "minimum_time_to_intersection": null
+      },
+      {
+        "candidate_id": "phase2_s3_cooperative_opportunity_v12_seed1_1_10|phase2_s3_cooperative_opportunity_v12_seed1_1_11",
+        "vehicle_ids": [
+          "phase2_s3_cooperative_opportunity_v12_seed1_1_10",
+          "phase2_s3_cooperative_opportunity_v12_seed1_1_11"
+        ],
+        "movement_summary": [
+          {
+            "vehicle_id": "phase2_s3_cooperative_opportunity_v12_seed1_1_10",
+            "incoming_edge": "W",
+            "outgoing_edge": "-S",
+            "movement": "RIGHT"
+          },
+          {
+            "vehicle_id": "phase2_s3_cooperative_opportunity_v12_seed1_1_11",
+            "incoming_edge": "S",
+            "outgoing_edge": "-E",
+            "movement": "RIGHT"
+          }
+        ],
+        "group_size": 2,
+        "aggregate_waiting_time": 2.0,
+        "maximum_waiting_time": 2.0,
+        "minimum_time_to_intersection": 74.21
+      },
+      {
+        "candidate_id": "phase2_s3_cooperative_opportunity_v12_seed1_1_10|phase2_s3_cooperative_opportunity_v12_seed1_1_8",
+        "vehicle_ids": [
+          "phase2_s3_cooperative_opportunity_v12_seed1_1_10",
+          "phase2_s3_cooperative_opportunity_v12_seed1_1_8"
+        ],
+        "movement_summary": [
+          {
+            "vehicle_id": "phase2_s3_cooperative_opportunity_v12_seed1_1_10",
+            "incoming_edge": "W",
+            "outgoing_edge": "-S",
+            "movement": "RIGHT"
+          },
+          {
+            "vehicle_id": "phase2_s3_cooperative_opportunity_v12_seed1_1_8",
+            "incoming_edge": "N",
+            "outgoing_edge": "-W",
+            "movement": "RIGHT"
+          }
+        ],
+        "group_size": 2,
+        "aggregate_waiting_time": 5.0,
+        "maximum_waiting_time": 5.0,
+        "minimum_time_to_intersection": 74.21
+      },
+      {
+        "candidate_id": "phase2_s3_cooperative_opportunity_v12_seed1_1_10|phase2_s3_cooperative_opportunity_v12_seed1_1_9",
+        "vehicle_ids": [
+          "phase2_s3_cooperative_opportunity_v12_seed1_1_10",
+          "phase2_s3_cooperative_opportunity_v12_seed1_1_9"
+        ],
+        "movement_summary": [
+          {
+            "vehicle_id": "phase2_s3_cooperative_opportunity_v12_seed1_1_10",
+            "incoming_edge": "W",
+            "outgoing_edge": "-S",
+            "movement": "RIGHT"
+          },
+          {
+            "vehicle_id": "phase2_s3_cooperative_opportunity_v12_seed1_1_9",
+            "incoming_edge": "E",
+            "outgoing_edge": "-N",
+            "movement": "RIGHT"
+          }
+        ],
+        "group_size": 2,
+        "aggregate_waiting_time": 1.0,
+        "maximum_waiting_time": 1.0,
+        "minimum_time_to_intersection": 74.21
+      },
+      {
+        "candidate_id": "phase2_s3_cooperative_opportunity_v12_seed1_1_11|phase2_s3_cooperative_opportunity_v12_seed1_1_8",
+        "vehicle_ids": [
+          "phase2_s3_cooperative_opportunity_v12_seed1_1_11",
+          "phase2_s3_cooperative_opportunity_v12_seed1_1_8"
+        ],
+        "movement_summary": [
+          {
+            "vehicle_id": "phase2_s3_cooperative_opportunity_v12_seed1_1_11",
+            "incoming_edge": "S",
+            "outgoing_edge": "-E",
+            "movement": "RIGHT"
+          },
+          {
+            "vehicle_id": "phase2_s3_cooperative_opportunity_v12_seed1_1_8",
+            "incoming_edge": "N",
+            "outgoing_edge": "-W",
+            "movement": "RIGHT"
+          }
+        ],
+        "group_size": 2,
+        "aggregate_waiting_time": 7.0,
+        "maximum_waiting_time": 5.0,
+        "minimum_time_to_intersection": null
+      },
+      {
+        "candidate_id": "phase2_s3_cooperative_opportunity_v12_seed1_1_11|phase2_s3_cooperative_opportunity_v12_seed1_1_9",
+        "vehicle_ids": [
+          "phase2_s3_cooperative_opportunity_v12_seed1_1_11",
+          "phase2_s3_cooperative_opportunity_v12_seed1_1_9"
+        ],
+        "movement_summary": [
+          {
+            "vehicle_id": "phase2_s3_cooperative_opportunity_v12_seed1_1_11",
+            "incoming_edge": "S",
+            "outgoing_edge": "-E",
+            "movement": "RIGHT"
+          },
+          {
+            "vehicle_id": "phase2_s3_cooperative_opportunity_v12_seed1_1_9",
+            "incoming_edge": "E",
+            "outgoing_edge": "-N",
+            "movement": "RIGHT"
+          }
+        ],
+        "group_size": 2,
+        "aggregate_waiting_time": 3.0,
+        "maximum_waiting_time": 2.0,
+        "minimum_time_to_intersection": null
+      },
+      {
+        "candidate_id": "phase2_s3_cooperative_opportunity_v12_seed1_1_4|phase2_s3_cooperative_opportunity_v12_seed1_1_5",
+        "vehicle_ids": [
+          "phase2_s3_cooperative_opportunity_v12_seed1_1_4",
+          "phase2_s3_cooperative_opportunity_v12_seed1_1_5"
+        ],
+        "movement_summary": [
+          {
+            "vehicle_id": "phase2_s3_cooperative_opportunity_v12_seed1_1_4",
+            "incoming_edge": "N",
+            "outgoing_edge": "-S",
+            "movement": "STRAIGHT"
+          },
+          {
+            "vehicle_id": "phase2_s3_cooperative_opportunity_v12_seed1_1_5",
+            "incoming_edge": "S",
+            "outgoing_edge": "-N",
+            "movement": "STRAIGHT"
+          }
+        ],
+        "group_size": 2,
+        "aggregate_waiting_time": 20.0,
+        "maximum_waiting_time": 10.0,
+        "minimum_time_to_intersection": null
+      },
+      {
+        "candidate_id": "phase2_s3_cooperative_opportunity_v12_seed1_1_6|phase2_s3_cooperative_opportunity_v12_seed1_1_7",
+        "vehicle_ids": [
+          "phase2_s3_cooperative_opportunity_v12_seed1_1_6",
+          "phase2_s3_cooperative_opportunity_v12_seed1_1_7"
+        ],
+        "movement_summary": [
+          {
+            "vehicle_id": "phase2_s3_cooperative_opportunity_v12_seed1_1_6",
+            "incoming_edge": "E",
+            "outgoing_edge": "-S",
+            "movement": "LEFT"
+          },
+          {
+            "vehicle_id": "phase2_s3_cooperative_opportunity_v12_seed1_1_7",
+            "incoming_edge": "W",
+            "outgoing_edge": "-N",
+            "movement": "LEFT"
+          }
+        ],
+        "group_size": 2,
+        "aggregate_waiting_time": 10.0,
+        "maximum_waiting_time": 5.0,
+        "minimum_time_to_intersection": null
+      },
+      {
+        "candidate_id": "phase2_s3_cooperative_opportunity_v12_seed1_1_8|phase2_s3_cooperative_opportunity_v12_seed1_1_9",
+        "vehicle_ids": [
+          "phase2_s3_cooperative_opportunity_v12_seed1_1_8",
+          "phase2_s3_cooperative_opportunity_v12_seed1_1_9"
+        ],
+        "movement_summary": [
+          {
+            "vehicle_id": "phase2_s3_cooperative_opportunity_v12_seed1_1_8",
+            "incoming_edge": "N",
+            "outgoing_edge": "-W",
+            "movement": "RIGHT"
+          },
+          {
+            "vehicle_id": "phase2_s3_cooperative_opportunity_v12_seed1_1_9",
+            "incoming_edge": "E",
+            "outgoing_edge": "-N",
+            "movement": "RIGHT"
+          }
+        ],
+        "group_size": 2,
+        "aggregate_waiting_time": 6.0,
+        "maximum_waiting_time": 5.0,
+        "minimum_time_to_intersection": null
+      },
+      {
+        "candidate_id": "phase2_s3_cooperative_opportunity_v12_seed1_1_11|phase2_s3_cooperative_opportunity_v12_seed1_1_8|phase2_s3_cooperative_opportunity_v12_seed1_1_9",
+        "vehicle_ids": [
+          "phase2_s3_cooperative_opportunity_v12_seed1_1_11",
+          "phase2_s3_cooperative_opportunity_v12_seed1_1_8",
+          "phase2_s3_cooperative_opportunity_v12_seed1_1_9"
+        ],
+        "movement_summary": [
+          {
+            "vehicle_id": "phase2_s3_cooperative_opportunity_v12_seed1_1_11",
+            "incoming_edge": "S",
+            "outgoing_edge": "-E",
+            "movement": "RIGHT"
+          },
+          {
+            "vehicle_id": "phase2_s3_cooperative_opportunity_v12_seed1_1_8",
+            "incoming_edge": "N",
+            "outgoing_edge": "-W",
+            "movement": "RIGHT"
+          },
+          {
+            "vehicle_id": "phase2_s3_cooperative_opportunity_v12_seed1_1_9",
+            "incoming_edge": "E",
+            "outgoing_edge": "-N",
+            "movement": "RIGHT"
+          }
+        ],
+        "group_size": 3,
+        "aggregate_waiting_time": 8.0,
+        "maximum_waiting_time": 5.0,
+        "minimum_time_to_intersection": null
+      },
+      {
+        "candidate_id": "phase2_s3_cooperative_opportunity_v12_seed1_1_10|phase2_s3_cooperative_opportunity_v12_seed1_1_11|phase2_s3_cooperative_opportunity_v12_seed1_1_8|phase2_s3_cooperative_opportunity_v12_seed1_1_9",
+        "vehicle_ids": [
+          "phase2_s3_cooperative_opportunity_v12_seed1_1_10",
+          "phase2_s3_cooperative_opportunity_v12_seed1_1_11",
+          "phase2_s3_cooperative_opportunity_v12_seed1_1_8",
+          "phase2_s3_cooperative_opportunity_v12_seed1_1_9"
+        ],
+        "movement_summary": [
+          {
+            "vehicle_id": "phase2_s3_cooperative_opportunity_v12_seed1_1_10",
+            "incoming_edge": "W",
+            "outgoing_edge": "-S",
+            "movement": "RIGHT"
+          },
+          {
+            "vehicle_id": "phase2_s3_cooperative_opportunity_v12_seed1_1_11",
+            "incoming_edge": "S",
+            "outgoing_edge": "-E",
+            "movement": "RIGHT"
+          },
+          {
+            "vehicle_id": "phase2_s3_cooperative_opportunity_v12_seed1_1_8",
+            "incoming_edge": "N",
+            "outgoing_edge": "-W",
+            "movement": "RIGHT"
+          },
+          {
+            "vehicle_id": "phase2_s3_cooperative_opportunity_v12_seed1_1_9",
+            "incoming_edge": "E",
+            "outgoing_edge": "-N",
+            "movement": "RIGHT"
+          }
+        ],
+        "group_size": 4,
+        "aggregate_waiting_time": 8.0,
+        "maximum_waiting_time": 5.0,
+        "minimum_time_to_intersection": 74.21
+      }
+    ],
+    "candidate_group_sizes": [
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      2,
+      2,
+      2,
+      2,
+      2,
+      2,
+      2,
+      2,
+      3,
+      4
+    ],
+    "deterministic_candidate_id": "phase2_s3_cooperative_opportunity_v12_seed1_1_10|phase2_s3_cooperative_opportunity_v12_seed1_1_11|phase2_s3_cooperative_opportunity_v12_seed1_1_8|phase2_s3_cooperative_opportunity_v12_seed1_1_9",
+    "gemini_candidate_id": "phase2_s3_cooperative_opportunity_v12_seed1_1_4|phase2_s3_cooperative_opportunity_v12_seed1_1_5",
+    "gemini_selected_features": [
+      {
+        "candidate_id": "phase2_s3_cooperative_opportunity_v12_seed1_1_4|phase2_s3_cooperative_opportunity_v12_seed1_1_5",
+        "vehicle_ids": [
+          "phase2_s3_cooperative_opportunity_v12_seed1_1_4",
+          "phase2_s3_cooperative_opportunity_v12_seed1_1_5"
+        ],
+        "movement_summary": [
+          {
+            "vehicle_id": "phase2_s3_cooperative_opportunity_v12_seed1_1_4",
+            "incoming_edge": "N",
+            "outgoing_edge": "-S",
+            "movement": "STRAIGHT"
+          },
+          {
+            "vehicle_id": "phase2_s3_cooperative_opportunity_v12_seed1_1_5",
+            "incoming_edge": "S",
+            "outgoing_edge": "-N",
+            "movement": "STRAIGHT"
+          }
+        ],
+        "group_size": 2,
+        "aggregate_waiting_time": 20.0,
+        "maximum_waiting_time": 10.0,
+        "minimum_time_to_intersection": null
+      }
+    ],
+    "aggregate_waiting_time": 38.0,
+    "maximum_waiting_time": 10.0,
+    "eta_features": [
+      74.21,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null
+    ],
+    "fallback_used": false,
+    "fallback_reason": "",
+    "safety_interventions": 0,
+    "actual_granted_group": [
+      "phase2_s3_cooperative_opportunity_v12_seed1_1_4",
+      "phase2_s3_cooperative_opportunity_v12_seed1_1_5"
+    ],
+    "grant_clearance_reason": "ALL_GRANTED_VEHICLES_LEFT_CONTROL_SCOPE",
+    "grant_duration_seconds": 9.0,
+    "fairness_pressure_context": false,
+    "fairness_target_waiting_time": null
+  },
+  {
+    "run_id": "phase2_formal_batch2_s3_cooperative_opportunity_v12_seed2_gemini_candidate",
+    "scenario_class": "S3_COOPERATIVE_OPPORTUNITY",
+    "vehicle_count": 12,
+    "seed": 2,
+    "simulation_time": 23.0,
+    "candidate_set": [
+      {
+        "candidate_id": "phase2_s3_cooperative_opportunity_v12_seed2_2_10",
+        "vehicle_ids": [
+          "phase2_s3_cooperative_opportunity_v12_seed2_2_10"
+        ]
+      },
+      {
+        "candidate_id": "phase2_s3_cooperative_opportunity_v12_seed2_2_11",
+        "vehicle_ids": [
+          "phase2_s3_cooperative_opportunity_v12_seed2_2_11"
+        ]
+      },
+      {
+        "candidate_id": "phase2_s3_cooperative_opportunity_v12_seed2_2_4",
+        "vehicle_ids": [
+          "phase2_s3_cooperative_opportunity_v12_seed2_2_4"
+        ]
+      },
+      {
+        "candidate_id": "phase2_s3_cooperative_opportunity_v12_seed2_2_5",
+        "vehicle_ids": [
+          "phase2_s3_cooperative_opportunity_v12_seed2_2_5"
+        ]
+      },
+      {
+        "candidate_id": "phase2_s3_cooperative_opportunity_v12_seed2_2_6",
+        "vehicle_ids": [
+          "phase2_s3_cooperative_opportunity_v12_seed2_2_6"
+        ]
+      },
+      {
+        "candidate_id": "phase2_s3_cooperative_opportunity_v12_seed2_2_7",
+        "vehicle_ids": [
+          "phase2_s3_cooperative_opportunity_v12_seed2_2_7"
+        ]
+      },
+      {
+        "candidate_id": "phase2_s3_cooperative_opportunity_v12_seed2_2_8",
+        "vehicle_ids": [
+          "phase2_s3_cooperative_opportunity_v12_seed2_2_8"
+        ]
+      },
+      {
+        "candidate_id": "phase2_s3_cooperative_opportunity_v12_seed2_2_9",
+        "vehicle_ids": [
+          "phase2_s3_cooperative_opportunity_v12_seed2_2_9"
+        ]
+      },
+      {
+        "candidate_id": "phase2_s3_cooperative_opportunity_v12_seed2_2_10|phase2_s3_cooperative_opportunity_v12_seed2_2_11",
+        "vehicle_ids": [
+          "phase2_s3_cooperative_opportunity_v12_seed2_2_10",
+          "phase2_s3_cooperative_opportunity_v12_seed2_2_11"
+        ]
+      },
+      {
+        "candidate_id": "phase2_s3_cooperative_opportunity_v12_seed2_2_10|phase2_s3_cooperative_opportunity_v12_seed2_2_8",
+        "vehicle_ids": [
+          "phase2_s3_cooperative_opportunity_v12_seed2_2_10",
+          "phase2_s3_cooperative_opportunity_v12_seed2_2_8"
+        ]
+      },
+      {
+        "candidate_id": "phase2_s3_cooperative_opportunity_v12_seed2_2_10|phase2_s3_cooperative_opportunity_v12_seed2_2_9",
+        "vehicle_ids": [
+          "phase2_s3_cooperative_opportunity_v12_seed2_2_10",
+          "phase2_s3_cooperative_opportunity_v12_seed2_2_9"
+        ]
+      },
+      {
+        "candidate_id": "phase2_s3_cooperative_opportunity_v12_seed2_2_11|phase2_s3_cooperative_opportunity_v12_seed2_2_8",
+        "vehicle_ids": [
+          "phase2_s3_cooperative_opportunity_v12_seed2_2_11",
+          "phase2_s3_cooperative_opportunity_v12_seed2_2_8"
+        ]
+      },
+      {
+        "candidate_id": "phase2_s3_cooperative_opportunity_v12_seed2_2_11|phase2_s3_cooperative_opportunity_v12_seed2_2_9",
+        "vehicle_ids": [
+          "phase2_s3_cooperative_opportunity_v12_seed2_2_11",
+          "phase2_s3_cooperative_opportunity_v12_seed2_2_9"
+        ]
+      },
+      {
+        "candidate_id": "phase2_s3_cooperative_opportunity_v12_seed2_2_4|phase2_s3_cooperative_opportunity_v12_seed2_2_5",
+        "vehicle_ids": [
+          "phase2_s3_cooperative_opportunity_v12_seed2_2_4",
+          "phase2_s3_cooperative_opportunity_v12_seed2_2_5"
+        ]
+      },
+      {
+        "candidate_id": "phase2_s3_cooperative_opportunity_v12_seed2_2_6|phase2_s3_cooperative_opportunity_v12_seed2_2_7",
+        "vehicle_ids": [
+          "phase2_s3_cooperative_opportunity_v12_seed2_2_6",
+          "phase2_s3_cooperative_opportunity_v12_seed2_2_7"
+        ]
+      },
+      {
+        "candidate_id": "phase2_s3_cooperative_opportunity_v12_seed2_2_8|phase2_s3_cooperative_opportunity_v12_seed2_2_9",
+        "vehicle_ids": [
+          "phase2_s3_cooperative_opportunity_v12_seed2_2_8",
+          "phase2_s3_cooperative_opportunity_v12_seed2_2_9"
+        ]
+      },
+      {
+        "candidate_id": "phase2_s3_cooperative_opportunity_v12_seed2_2_11|phase2_s3_cooperative_opportunity_v12_seed2_2_8|phase2_s3_cooperative_opportunity_v12_seed2_2_9",
+        "vehicle_ids": [
+          "phase2_s3_cooperative_opportunity_v12_seed2_2_11",
+          "phase2_s3_cooperative_opportunity_v12_seed2_2_8",
+          "phase2_s3_cooperative_opportunity_v12_seed2_2_9"
+        ]
+      },
+      {
+        "candidate_id": "phase2_s3_cooperative_opportunity_v12_seed2_2_10|phase2_s3_cooperative_opportunity_v12_seed2_2_11|phase2_s3_cooperative_opportunity_v12_seed2_2_8|phase2_s3_cooperative_opportunity_v12_seed2_2_9",
+        "vehicle_ids": [
+          "phase2_s3_cooperative_opportunity_v12_seed2_2_10",
+          "phase2_s3_cooperative_opportunity_v12_seed2_2_11",
+          "phase2_s3_cooperative_opportunity_v12_seed2_2_8",
+          "phase2_s3_cooperative_opportunity_v12_seed2_2_9"
+        ]
+      }
+    ],
+    "candidate_features": [
+      {
+        "candidate_id": "phase2_s3_cooperative_opportunity_v12_seed2_2_10",
+        "vehicle_ids": [
+          "phase2_s3_cooperative_opportunity_v12_seed2_2_10"
+        ],
+        "movement_summary": [
+          {
+            "vehicle_id": "phase2_s3_cooperative_opportunity_v12_seed2_2_10",
+            "incoming_edge": "S",
+            "outgoing_edge": "-E",
+            "movement": "RIGHT"
+          }
+        ],
+        "group_size": 1,
+        "aggregate_waiting_time": 5.0,
+        "maximum_waiting_time": 5.0,
+        "minimum_time_to_intersection": null
+      },
+      {
+        "candidate_id": "phase2_s3_cooperative_opportunity_v12_seed2_2_11",
+        "vehicle_ids": [
+          "phase2_s3_cooperative_opportunity_v12_seed2_2_11"
+        ],
+        "movement_summary": [
+          {
+            "vehicle_id": "phase2_s3_cooperative_opportunity_v12_seed2_2_11",
+            "incoming_edge": "W",
+            "outgoing_edge": "-S",
+            "movement": "RIGHT"
+          }
+        ],
+        "group_size": 1,
+        "aggregate_waiting_time": 2.0,
+        "maximum_waiting_time": 2.0,
+        "minimum_time_to_intersection": null
+      },
+      {
+        "candidate_id": "phase2_s3_cooperative_opportunity_v12_seed2_2_4",
+        "vehicle_ids": [
+          "phase2_s3_cooperative_opportunity_v12_seed2_2_4"
+        ],
+        "movement_summary": [
+          {
+            "vehicle_id": "phase2_s3_cooperative_opportunity_v12_seed2_2_4",
+            "incoming_edge": "N",
+            "outgoing_edge": "-S",
+            "movement": "STRAIGHT"
+          }
+        ],
+        "group_size": 1,
+        "aggregate_waiting_time": 13.0,
+        "maximum_waiting_time": 13.0,
+        "minimum_time_to_intersection": null
+      },
+      {
+        "candidate_id": "phase2_s3_cooperative_opportunity_v12_seed2_2_5",
+        "vehicle_ids": [
+          "phase2_s3_cooperative_opportunity_v12_seed2_2_5"
+        ],
+        "movement_summary": [
+          {
+            "vehicle_id": "phase2_s3_cooperative_opportunity_v12_seed2_2_5",
+            "incoming_edge": "S",
+            "outgoing_edge": "-N",
+            "movement": "STRAIGHT"
+          }
+        ],
+        "group_size": 1,
+        "aggregate_waiting_time": 11.0,
+        "maximum_waiting_time": 11.0,
+        "minimum_time_to_intersection": null
+      },
+      {
+        "candidate_id": "phase2_s3_cooperative_opportunity_v12_seed2_2_6",
+        "vehicle_ids": [
+          "phase2_s3_cooperative_opportunity_v12_seed2_2_6"
+        ],
+        "movement_summary": [
+          {
+            "vehicle_id": "phase2_s3_cooperative_opportunity_v12_seed2_2_6",
+            "incoming_edge": "W",
+            "outgoing_edge": "-N",
+            "movement": "LEFT"
+          }
+        ],
+        "group_size": 1,
+        "aggregate_waiting_time": 9.0,
+        "maximum_waiting_time": 9.0,
+        "minimum_time_to_intersection": null
+      },
+      {
+        "candidate_id": "phase2_s3_cooperative_opportunity_v12_seed2_2_7",
+        "vehicle_ids": [
+          "phase2_s3_cooperative_opportunity_v12_seed2_2_7"
+        ],
+        "movement_summary": [
+          {
+            "vehicle_id": "phase2_s3_cooperative_opportunity_v12_seed2_2_7",
+            "incoming_edge": "E",
+            "outgoing_edge": "-S",
+            "movement": "LEFT"
+          }
+        ],
+        "group_size": 1,
+        "aggregate_waiting_time": 5.0,
+        "maximum_waiting_time": 5.0,
+        "minimum_time_to_intersection": null
+      },
+      {
+        "candidate_id": "phase2_s3_cooperative_opportunity_v12_seed2_2_8",
+        "vehicle_ids": [
+          "phase2_s3_cooperative_opportunity_v12_seed2_2_8"
+        ],
+        "movement_summary": [
+          {
+            "vehicle_id": "phase2_s3_cooperative_opportunity_v12_seed2_2_8",
+            "incoming_edge": "N",
+            "outgoing_edge": "-W",
+            "movement": "RIGHT"
+          }
+        ],
+        "group_size": 1,
+        "aggregate_waiting_time": 7.0,
+        "maximum_waiting_time": 7.0,
+        "minimum_time_to_intersection": null
+      },
+      {
+        "candidate_id": "phase2_s3_cooperative_opportunity_v12_seed2_2_9",
+        "vehicle_ids": [
+          "phase2_s3_cooperative_opportunity_v12_seed2_2_9"
+        ],
+        "movement_summary": [
+          {
+            "vehicle_id": "phase2_s3_cooperative_opportunity_v12_seed2_2_9",
+            "incoming_edge": "E",
+            "outgoing_edge": "-N",
+            "movement": "RIGHT"
+          }
+        ],
+        "group_size": 1,
+        "aggregate_waiting_time": 4.0,
+        "maximum_waiting_time": 4.0,
+        "minimum_time_to_intersection": null
+      },
+      {
+        "candidate_id": "phase2_s3_cooperative_opportunity_v12_seed2_2_10|phase2_s3_cooperative_opportunity_v12_seed2_2_11",
+        "vehicle_ids": [
+          "phase2_s3_cooperative_opportunity_v12_seed2_2_10",
+          "phase2_s3_cooperative_opportunity_v12_seed2_2_11"
+        ],
+        "movement_summary": [
+          {
+            "vehicle_id": "phase2_s3_cooperative_opportunity_v12_seed2_2_10",
+            "incoming_edge": "S",
+            "outgoing_edge": "-E",
+            "movement": "RIGHT"
+          },
+          {
+            "vehicle_id": "phase2_s3_cooperative_opportunity_v12_seed2_2_11",
+            "incoming_edge": "W",
+            "outgoing_edge": "-S",
+            "movement": "RIGHT"
+          }
+        ],
+        "group_size": 2,
+        "aggregate_waiting_time": 7.0,
+        "maximum_waiting_time": 5.0,
+        "minimum_time_to_intersection": null
+      },
+      {
+        "candidate_id": "phase2_s3_cooperative_opportunity_v12_seed2_2_10|phase2_s3_cooperative_opportunity_v12_seed2_2_8",
+        "vehicle_ids": [
+          "phase2_s3_cooperative_opportunity_v12_seed2_2_10",
+          "phase2_s3_cooperative_opportunity_v12_seed2_2_8"
+        ],
+        "movement_summary": [
+          {
+            "vehicle_id": "phase2_s3_cooperative_opportunity_v12_seed2_2_10",
+            "incoming_edge": "S",
+            "outgoing_edge": "-E",
+            "movement": "RIGHT"
+          },
+          {
+            "vehicle_id": "phase2_s3_cooperative_opportunity_v12_seed2_2_8",
+            "incoming_edge": "N",
+            "outgoing_edge": "-W",
+            "movement": "RIGHT"
+          }
+        ],
+        "group_size": 2,
+        "aggregate_waiting_time": 12.0,
+        "maximum_waiting_time": 7.0,
+        "minimum_time_to_intersection": null
+      },
+      {
+        "candidate_id": "phase2_s3_cooperative_opportunity_v12_seed2_2_10|phase2_s3_cooperative_opportunity_v12_seed2_2_9",
+        "vehicle_ids": [
+          "phase2_s3_cooperative_opportunity_v12_seed2_2_10",
+          "phase2_s3_cooperative_opportunity_v12_seed2_2_9"
+        ],
+        "movement_summary": [
+          {
+            "vehicle_id": "phase2_s3_cooperative_opportunity_v12_seed2_2_10",
+            "incoming_edge": "S",
+            "outgoing_edge": "-E",
+            "movement": "RIGHT"
+          },
+          {
+            "vehicle_id": "phase2_s3_cooperative_opportunity_v12_seed2_2_9",
+            "incoming_edge": "E",
+            "outgoing_edge": "-N",
+            "movement": "RIGHT"
+          }
+        ],
+        "group_size": 2,
+        "aggregate_waiting_time": 9.0,
+        "maximum_waiting_time": 5.0,
+        "minimum_time_to_intersection": null
+      },
+      {
+        "candidate_id": "phase2_s3_cooperative_opportunity_v12_seed2_2_11|phase2_s3_cooperative_opportunity_v12_seed2_2_8",
+        "vehicle_ids": [
+          "phase2_s3_cooperative_opportunity_v12_seed2_2_11",
+          "phase2_s3_cooperative_opportunity_v12_seed2_2_8"
+        ],
+        "movement_summary": [
+          {
+            "vehicle_id": "phase2_s3_cooperative_opportunity_v12_seed2_2_11",
+            "incoming_edge": "W",
+            "outgoing_edge": "-S",
+            "movement": "RIGHT"
+          },
+          {
+            "vehicle_id": "phase2_s3_cooperative_opportunity_v12_seed2_2_8",
+            "incoming_edge": "N",
+            "outgoing_edge": "-W",
+            "movement": "RIGHT"
+          }
+        ],
+        "group_size": 2,
+        "aggregate_waiting_time": 9.0,
+        "maximum_waiting_time": 7.0,
+        "minimum_time_to_intersection": null
+      },
+      {
+        "candidate_id": "phase2_s3_cooperative_opportunity_v12_seed2_2_11|phase2_s3_cooperative_opportunity_v12_seed2_2_9",
+        "vehicle_ids": [
+          "phase2_s3_cooperative_opportunity_v12_seed2_2_11",
+          "phase2_s3_cooperative_opportunity_v12_seed2_2_9"
+        ],
+        "movement_summary": [
+          {
+            "vehicle_id": "phase2_s3_cooperative_opportunity_v12_seed2_2_11",
+            "incoming_edge": "W",
+            "outgoing_edge": "-S",
+            "movement": "RIGHT"
+          },
+          {
+            "vehicle_id": "phase2_s3_cooperative_opportunity_v12_seed2_2_9",
+            "incoming_edge": "E",
+            "outgoing_edge": "-N",
+            "movement": "RIGHT"
+          }
+        ],
+        "group_size": 2,
+        "aggregate_waiting_time": 6.0,
+        "maximum_waiting_time": 4.0,
+        "minimum_time_to_intersection": null
+      },
+      {
+        "candidate_id": "phase2_s3_cooperative_opportunity_v12_seed2_2_4|phase2_s3_cooperative_opportunity_v12_seed2_2_5",
+        "vehicle_ids": [
+          "phase2_s3_cooperative_opportunity_v12_seed2_2_4",
+          "phase2_s3_cooperative_opportunity_v12_seed2_2_5"
+        ],
+        "movement_summary": [
+          {
+            "vehicle_id": "phase2_s3_cooperative_opportunity_v12_seed2_2_4",
+            "incoming_edge": "N",
+            "outgoing_edge": "-S",
+            "movement": "STRAIGHT"
+          },
+          {
+            "vehicle_id": "phase2_s3_cooperative_opportunity_v12_seed2_2_5",
+            "incoming_edge": "S",
+            "outgoing_edge": "-N",
+            "movement": "STRAIGHT"
+          }
+        ],
+        "group_size": 2,
+        "aggregate_waiting_time": 24.0,
+        "maximum_waiting_time": 13.0,
+        "minimum_time_to_intersection": null
+      },
+      {
+        "candidate_id": "phase2_s3_cooperative_opportunity_v12_seed2_2_6|phase2_s3_cooperative_opportunity_v12_seed2_2_7",
+        "vehicle_ids": [
+          "phase2_s3_cooperative_opportunity_v12_seed2_2_6",
+          "phase2_s3_cooperative_opportunity_v12_seed2_2_7"
+        ],
+        "movement_summary": [
+          {
+            "vehicle_id": "phase2_s3_cooperative_opportunity_v12_seed2_2_6",
+            "incoming_edge": "W",
+            "outgoing_edge": "-N",
+            "movement": "LEFT"
+          },
+          {
+            "vehicle_id": "phase2_s3_cooperative_opportunity_v12_seed2_2_7",
+            "incoming_edge": "E",
+            "outgoing_edge": "-S",
+            "movement": "LEFT"
+          }
+        ],
+        "group_size": 2,
+        "aggregate_waiting_time": 14.0,
+        "maximum_waiting_time": 9.0,
+        "minimum_time_to_intersection": null
+      },
+      {
+        "candidate_id": "phase2_s3_cooperative_opportunity_v12_seed2_2_8|phase2_s3_cooperative_opportunity_v12_seed2_2_9",
+        "vehicle_ids": [
+          "phase2_s3_cooperative_opportunity_v12_seed2_2_8",
+          "phase2_s3_cooperative_opportunity_v12_seed2_2_9"
+        ],
+        "movement_summary": [
+          {
+            "vehicle_id": "phase2_s3_cooperative_opportunity_v12_seed2_2_8",
+            "incoming_edge": "N",
+            "outgoing_edge": "-W",
+            "movement": "RIGHT"
+          },
+          {
+            "vehicle_id": "phase2_s3_cooperative_opportunity_v12_seed2_2_9",
+            "incoming_edge": "E",
+            "outgoing_edge": "-N",
+            "movement": "RIGHT"
+          }
+        ],
+        "group_size": 2,
+        "aggregate_waiting_time": 11.0,
+        "maximum_waiting_time": 7.0,
+        "minimum_time_to_intersection": null
+      },
+      {
+        "candidate_id": "phase2_s3_cooperative_opportunity_v12_seed2_2_11|phase2_s3_cooperative_opportunity_v12_seed2_2_8|phase2_s3_cooperative_opportunity_v12_seed2_2_9",
+        "vehicle_ids": [
+          "phase2_s3_cooperative_opportunity_v12_seed2_2_11",
+          "phase2_s3_cooperative_opportunity_v12_seed2_2_8",
+          "phase2_s3_cooperative_opportunity_v12_seed2_2_9"
+        ],
+        "movement_summary": [
+          {
+            "vehicle_id": "phase2_s3_cooperative_opportunity_v12_seed2_2_11",
+            "incoming_edge": "W",
+            "outgoing_edge": "-S",
+            "movement": "RIGHT"
+          },
+          {
+            "vehicle_id": "phase2_s3_cooperative_opportunity_v12_seed2_2_8",
+            "incoming_edge": "N",
+            "outgoing_edge": "-W",
+            "movement": "RIGHT"
+          },
+          {
+            "vehicle_id": "phase2_s3_cooperative_opportunity_v12_seed2_2_9",
+            "incoming_edge": "E",
+            "outgoing_edge": "-N",
+            "movement": "RIGHT"
+          }
+        ],
+        "group_size": 3,
+        "aggregate_waiting_time": 13.0,
+        "maximum_waiting_time": 7.0,
+        "minimum_time_to_intersection": null
+      },
+      {
+        "candidate_id": "phase2_s3_cooperative_opportunity_v12_seed2_2_10|phase2_s3_cooperative_opportunity_v12_seed2_2_11|phase2_s3_cooperative_opportunity_v12_seed2_2_8|phase2_s3_cooperative_opportunity_v12_seed2_2_9",
+        "vehicle_ids": [
+          "phase2_s3_cooperative_opportunity_v12_seed2_2_10",
+          "phase2_s3_cooperative_opportunity_v12_seed2_2_11",
+          "phase2_s3_cooperative_opportunity_v12_seed2_2_8",
+          "phase2_s3_cooperative_opportunity_v12_seed2_2_9"
+        ],
+        "movement_summary": [
+          {
+            "vehicle_id": "phase2_s3_cooperative_opportunity_v12_seed2_2_10",
+            "incoming_edge": "S",
+            "outgoing_edge": "-E",
+            "movement": "RIGHT"
+          },
+          {
+            "vehicle_id": "phase2_s3_cooperative_opportunity_v12_seed2_2_11",
+            "incoming_edge": "W",
+            "outgoing_edge": "-S",
+            "movement": "RIGHT"
+          },
+          {
+            "vehicle_id": "phase2_s3_cooperative_opportunity_v12_seed2_2_8",
+            "incoming_edge": "N",
+            "outgoing_edge": "-W",
+            "movement": "RIGHT"
+          },
+          {
+            "vehicle_id": "phase2_s3_cooperative_opportunity_v12_seed2_2_9",
+            "incoming_edge": "E",
+            "outgoing_edge": "-N",
+            "movement": "RIGHT"
+          }
+        ],
+        "group_size": 4,
+        "aggregate_waiting_time": 18.0,
+        "maximum_waiting_time": 7.0,
+        "minimum_time_to_intersection": null
+      }
+    ],
+    "candidate_group_sizes": [
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      2,
+      2,
+      2,
+      2,
+      2,
+      2,
+      2,
+      2,
+      3,
+      4
+    ],
+    "deterministic_candidate_id": "phase2_s3_cooperative_opportunity_v12_seed2_2_10|phase2_s3_cooperative_opportunity_v12_seed2_2_11|phase2_s3_cooperative_opportunity_v12_seed2_2_8|phase2_s3_cooperative_opportunity_v12_seed2_2_9",
+    "gemini_candidate_id": "phase2_s3_cooperative_opportunity_v12_seed2_2_4|phase2_s3_cooperative_opportunity_v12_seed2_2_5",
+    "gemini_selected_features": [
+      {
+        "candidate_id": "phase2_s3_cooperative_opportunity_v12_seed2_2_4|phase2_s3_cooperative_opportunity_v12_seed2_2_5",
+        "vehicle_ids": [
+          "phase2_s3_cooperative_opportunity_v12_seed2_2_4",
+          "phase2_s3_cooperative_opportunity_v12_seed2_2_5"
+        ],
+        "movement_summary": [
+          {
+            "vehicle_id": "phase2_s3_cooperative_opportunity_v12_seed2_2_4",
+            "incoming_edge": "N",
+            "outgoing_edge": "-S",
+            "movement": "STRAIGHT"
+          },
+          {
+            "vehicle_id": "phase2_s3_cooperative_opportunity_v12_seed2_2_5",
+            "incoming_edge": "S",
+            "outgoing_edge": "-N",
+            "movement": "STRAIGHT"
+          }
+        ],
+        "group_size": 2,
+        "aggregate_waiting_time": 24.0,
+        "maximum_waiting_time": 13.0,
+        "minimum_time_to_intersection": null
+      }
+    ],
+    "aggregate_waiting_time": 56.0,
+    "maximum_waiting_time": 13.0,
+    "eta_features": [
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null
+    ],
+    "fallback_used": false,
+    "fallback_reason": "",
+    "safety_interventions": 0,
+    "actual_granted_group": [
+      "phase2_s3_cooperative_opportunity_v12_seed2_2_4",
+      "phase2_s3_cooperative_opportunity_v12_seed2_2_5"
+    ],
+    "grant_clearance_reason": "ALL_GRANTED_VEHICLES_LEFT_CONTROL_SCOPE",
+    "grant_duration_seconds": 9.0,
+    "fairness_pressure_context": false,
+    "fairness_target_waiting_time": null
+  },
+  {
+    "run_id": "phase2_formal_batch2_s3_cooperative_opportunity_v12_seed3_gemini_candidate",
+    "scenario_class": "S3_COOPERATIVE_OPPORTUNITY",
+    "vehicle_count": 12,
+    "seed": 3,
+    "simulation_time": 20.0,
+    "candidate_set": [
+      {
+        "candidate_id": "phase2_s3_cooperative_opportunity_v12_seed3_3_10",
+        "vehicle_ids": [
+          "phase2_s3_cooperative_opportunity_v12_seed3_3_10"
+        ]
+      },
+      {
+        "candidate_id": "phase2_s3_cooperative_opportunity_v12_seed3_3_11",
+        "vehicle_ids": [
+          "phase2_s3_cooperative_opportunity_v12_seed3_3_11"
+        ]
+      },
+      {
+        "candidate_id": "phase2_s3_cooperative_opportunity_v12_seed3_3_4",
+        "vehicle_ids": [
+          "phase2_s3_cooperative_opportunity_v12_seed3_3_4"
+        ]
+      },
+      {
+        "candidate_id": "phase2_s3_cooperative_opportunity_v12_seed3_3_5",
+        "vehicle_ids": [
+          "phase2_s3_cooperative_opportunity_v12_seed3_3_5"
+        ]
+      },
+      {
+        "candidate_id": "phase2_s3_cooperative_opportunity_v12_seed3_3_6",
+        "vehicle_ids": [
+          "phase2_s3_cooperative_opportunity_v12_seed3_3_6"
+        ]
+      },
+      {
+        "candidate_id": "phase2_s3_cooperative_opportunity_v12_seed3_3_7",
+        "vehicle_ids": [
+          "phase2_s3_cooperative_opportunity_v12_seed3_3_7"
+        ]
+      },
+      {
+        "candidate_id": "phase2_s3_cooperative_opportunity_v12_seed3_3_8",
+        "vehicle_ids": [
+          "phase2_s3_cooperative_opportunity_v12_seed3_3_8"
+        ]
+      },
+      {
+        "candidate_id": "phase2_s3_cooperative_opportunity_v12_seed3_3_9",
+        "vehicle_ids": [
+          "phase2_s3_cooperative_opportunity_v12_seed3_3_9"
+        ]
+      },
+      {
+        "candidate_id": "phase2_s3_cooperative_opportunity_v12_seed3_3_10|phase2_s3_cooperative_opportunity_v12_seed3_3_8",
+        "vehicle_ids": [
+          "phase2_s3_cooperative_opportunity_v12_seed3_3_10",
+          "phase2_s3_cooperative_opportunity_v12_seed3_3_8"
+        ]
+      },
+      {
+        "candidate_id": "phase2_s3_cooperative_opportunity_v12_seed3_3_10|phase2_s3_cooperative_opportunity_v12_seed3_3_9",
+        "vehicle_ids": [
+          "phase2_s3_cooperative_opportunity_v12_seed3_3_10",
+          "phase2_s3_cooperative_opportunity_v12_seed3_3_9"
+        ]
+      },
+      {
+        "candidate_id": "phase2_s3_cooperative_opportunity_v12_seed3_3_11|phase2_s3_cooperative_opportunity_v12_seed3_3_10",
+        "vehicle_ids": [
+          "phase2_s3_cooperative_opportunity_v12_seed3_3_11",
+          "phase2_s3_cooperative_opportunity_v12_seed3_3_10"
+        ]
+      },
+      {
+        "candidate_id": "phase2_s3_cooperative_opportunity_v12_seed3_3_11|phase2_s3_cooperative_opportunity_v12_seed3_3_8",
+        "vehicle_ids": [
+          "phase2_s3_cooperative_opportunity_v12_seed3_3_11",
+          "phase2_s3_cooperative_opportunity_v12_seed3_3_8"
+        ]
+      },
+      {
+        "candidate_id": "phase2_s3_cooperative_opportunity_v12_seed3_3_11|phase2_s3_cooperative_opportunity_v12_seed3_3_9",
+        "vehicle_ids": [
+          "phase2_s3_cooperative_opportunity_v12_seed3_3_11",
+          "phase2_s3_cooperative_opportunity_v12_seed3_3_9"
+        ]
+      },
+      {
+        "candidate_id": "phase2_s3_cooperative_opportunity_v12_seed3_3_4|phase2_s3_cooperative_opportunity_v12_seed3_3_5",
+        "vehicle_ids": [
+          "phase2_s3_cooperative_opportunity_v12_seed3_3_4",
+          "phase2_s3_cooperative_opportunity_v12_seed3_3_5"
+        ]
+      },
+      {
+        "candidate_id": "phase2_s3_cooperative_opportunity_v12_seed3_3_6|phase2_s3_cooperative_opportunity_v12_seed3_3_7",
+        "vehicle_ids": [
+          "phase2_s3_cooperative_opportunity_v12_seed3_3_6",
+          "phase2_s3_cooperative_opportunity_v12_seed3_3_7"
+        ]
+      },
+      {
+        "candidate_id": "phase2_s3_cooperative_opportunity_v12_seed3_3_9|phase2_s3_cooperative_opportunity_v12_seed3_3_8",
+        "vehicle_ids": [
+          "phase2_s3_cooperative_opportunity_v12_seed3_3_9",
+          "phase2_s3_cooperative_opportunity_v12_seed3_3_8"
+        ]
+      },
+      {
+        "candidate_id": "phase2_s3_cooperative_opportunity_v12_seed3_3_10|phase2_s3_cooperative_opportunity_v12_seed3_3_9|phase2_s3_cooperative_opportunity_v12_seed3_3_8",
+        "vehicle_ids": [
+          "phase2_s3_cooperative_opportunity_v12_seed3_3_10",
+          "phase2_s3_cooperative_opportunity_v12_seed3_3_9",
+          "phase2_s3_cooperative_opportunity_v12_seed3_3_8"
+        ]
+      },
+      {
+        "candidate_id": "phase2_s3_cooperative_opportunity_v12_seed3_3_11|phase2_s3_cooperative_opportunity_v12_seed3_3_10|phase2_s3_cooperative_opportunity_v12_seed3_3_9|phase2_s3_cooperative_opportunity_v12_seed3_3_8",
+        "vehicle_ids": [
+          "phase2_s3_cooperative_opportunity_v12_seed3_3_11",
+          "phase2_s3_cooperative_opportunity_v12_seed3_3_10",
+          "phase2_s3_cooperative_opportunity_v12_seed3_3_9",
+          "phase2_s3_cooperative_opportunity_v12_seed3_3_8"
+        ]
+      }
+    ],
+    "candidate_features": [
+      {
+        "candidate_id": "phase2_s3_cooperative_opportunity_v12_seed3_3_10",
+        "vehicle_ids": [
+          "phase2_s3_cooperative_opportunity_v12_seed3_3_10"
+        ],
+        "movement_summary": [
+          {
+            "vehicle_id": "phase2_s3_cooperative_opportunity_v12_seed3_3_10",
+            "incoming_edge": "S",
+            "outgoing_edge": "-E",
+            "movement": "RIGHT"
+          }
+        ],
+        "group_size": 1,
+        "aggregate_waiting_time": 0.0,
+        "maximum_waiting_time": 0.0,
+        "minimum_time_to_intersection": 4.26
+      },
+      {
+        "candidate_id": "phase2_s3_cooperative_opportunity_v12_seed3_3_11",
+        "vehicle_ids": [
+          "phase2_s3_cooperative_opportunity_v12_seed3_3_11"
+        ],
+        "movement_summary": [
+          {
+            "vehicle_id": "phase2_s3_cooperative_opportunity_v12_seed3_3_11",
+            "incoming_edge": "W",
+            "outgoing_edge": "-S",
+            "movement": "RIGHT"
+          }
+        ],
+        "group_size": 1,
+        "aggregate_waiting_time": 0.0,
+        "maximum_waiting_time": 0.0,
+        "minimum_time_to_intersection": 3.76
+      },
+      {
+        "candidate_id": "phase2_s3_cooperative_opportunity_v12_seed3_3_4",
+        "vehicle_ids": [
+          "phase2_s3_cooperative_opportunity_v12_seed3_3_4"
+        ],
+        "movement_summary": [
+          {
+            "vehicle_id": "phase2_s3_cooperative_opportunity_v12_seed3_3_4",
+            "incoming_edge": "N",
+            "outgoing_edge": "-S",
+            "movement": "STRAIGHT"
+          }
+        ],
+        "group_size": 1,
+        "aggregate_waiting_time": 10.0,
+        "maximum_waiting_time": 10.0,
+        "minimum_time_to_intersection": null
+      },
+      {
+        "candidate_id": "phase2_s3_cooperative_opportunity_v12_seed3_3_5",
+        "vehicle_ids": [
+          "phase2_s3_cooperative_opportunity_v12_seed3_3_5"
+        ],
+        "movement_summary": [
+          {
+            "vehicle_id": "phase2_s3_cooperative_opportunity_v12_seed3_3_5",
+            "incoming_edge": "S",
+            "outgoing_edge": "-N",
+            "movement": "STRAIGHT"
+          }
+        ],
+        "group_size": 1,
+        "aggregate_waiting_time": 9.0,
+        "maximum_waiting_time": 9.0,
+        "minimum_time_to_intersection": null
+      },
+      {
+        "candidate_id": "phase2_s3_cooperative_opportunity_v12_seed3_3_6",
+        "vehicle_ids": [
+          "phase2_s3_cooperative_opportunity_v12_seed3_3_6"
+        ],
+        "movement_summary": [
+          {
+            "vehicle_id": "phase2_s3_cooperative_opportunity_v12_seed3_3_6",
+            "incoming_edge": "E",
+            "outgoing_edge": "-S",
+            "movement": "LEFT"
+          }
+        ],
+        "group_size": 1,
+        "aggregate_waiting_time": 4.0,
+        "maximum_waiting_time": 4.0,
+        "minimum_time_to_intersection": null
+      },
+      {
+        "candidate_id": "phase2_s3_cooperative_opportunity_v12_seed3_3_7",
+        "vehicle_ids": [
+          "phase2_s3_cooperative_opportunity_v12_seed3_3_7"
+        ],
+        "movement_summary": [
+          {
+            "vehicle_id": "phase2_s3_cooperative_opportunity_v12_seed3_3_7",
+            "incoming_edge": "W",
+            "outgoing_edge": "-N",
+            "movement": "LEFT"
+          }
+        ],
+        "group_size": 1,
+        "aggregate_waiting_time": 3.0,
+        "maximum_waiting_time": 3.0,
+        "minimum_time_to_intersection": null
+      },
+      {
+        "candidate_id": "phase2_s3_cooperative_opportunity_v12_seed3_3_8",
+        "vehicle_ids": [
+          "phase2_s3_cooperative_opportunity_v12_seed3_3_8"
+        ],
+        "movement_summary": [
+          {
+            "vehicle_id": "phase2_s3_cooperative_opportunity_v12_seed3_3_8",
+            "incoming_edge": "N",
+            "outgoing_edge": "-W",
+            "movement": "RIGHT"
+          }
+        ],
+        "group_size": 1,
+        "aggregate_waiting_time": 4.0,
+        "maximum_waiting_time": 4.0,
+        "minimum_time_to_intersection": null
+      },
+      {
+        "candidate_id": "phase2_s3_cooperative_opportunity_v12_seed3_3_9",
+        "vehicle_ids": [
+          "phase2_s3_cooperative_opportunity_v12_seed3_3_9"
+        ],
+        "movement_summary": [
+          {
+            "vehicle_id": "phase2_s3_cooperative_opportunity_v12_seed3_3_9",
+            "incoming_edge": "E",
+            "outgoing_edge": "-N",
+            "movement": "RIGHT"
+          }
+        ],
+        "group_size": 1,
+        "aggregate_waiting_time": 0.0,
+        "maximum_waiting_time": 0.0,
+        "minimum_time_to_intersection": 12.42
+      },
+      {
+        "candidate_id": "phase2_s3_cooperative_opportunity_v12_seed3_3_10|phase2_s3_cooperative_opportunity_v12_seed3_3_8",
+        "vehicle_ids": [
+          "phase2_s3_cooperative_opportunity_v12_seed3_3_10",
+          "phase2_s3_cooperative_opportunity_v12_seed3_3_8"
+        ],
+        "movement_summary": [
+          {
+            "vehicle_id": "phase2_s3_cooperative_opportunity_v12_seed3_3_10",
+            "incoming_edge": "S",
+            "outgoing_edge": "-E",
+            "movement": "RIGHT"
+          },
+          {
+            "vehicle_id": "phase2_s3_cooperative_opportunity_v12_seed3_3_8",
+            "incoming_edge": "N",
+            "outgoing_edge": "-W",
+            "movement": "RIGHT"
+          }
+        ],
+        "group_size": 2,
+        "aggregate_waiting_time": 4.0,
+        "maximum_waiting_time": 4.0,
+        "minimum_time_to_intersection": 4.26
+      },
+      {
+        "candidate_id": "phase2_s3_cooperative_opportunity_v12_seed3_3_10|phase2_s3_cooperative_opportunity_v12_seed3_3_9",
+        "vehicle_ids": [
+          "phase2_s3_cooperative_opportunity_v12_seed3_3_10",
+          "phase2_s3_cooperative_opportunity_v12_seed3_3_9"
+        ],
+        "movement_summary": [
+          {
+            "vehicle_id": "phase2_s3_cooperative_opportunity_v12_seed3_3_10",
+            "incoming_edge": "S",
+            "outgoing_edge": "-E",
+            "movement": "RIGHT"
+          },
+          {
+            "vehicle_id": "phase2_s3_cooperative_opportunity_v12_seed3_3_9",
+            "incoming_edge": "E",
+            "outgoing_edge": "-N",
+            "movement": "RIGHT"
+          }
+        ],
+        "group_size": 2,
+        "aggregate_waiting_time": 0.0,
+        "maximum_waiting_time": 0.0,
+        "minimum_time_to_intersection": 4.26
+      },
+      {
+        "candidate_id": "phase2_s3_cooperative_opportunity_v12_seed3_3_11|phase2_s3_cooperative_opportunity_v12_seed3_3_10",
+        "vehicle_ids": [
+          "phase2_s3_cooperative_opportunity_v12_seed3_3_11",
+          "phase2_s3_cooperative_opportunity_v12_seed3_3_10"
+        ],
+        "movement_summary": [
+          {
+            "vehicle_id": "phase2_s3_cooperative_opportunity_v12_seed3_3_11",
+            "incoming_edge": "W",
+            "outgoing_edge": "-S",
+            "movement": "RIGHT"
+          },
+          {
+            "vehicle_id": "phase2_s3_cooperative_opportunity_v12_seed3_3_10",
+            "incoming_edge": "S",
+            "outgoing_edge": "-E",
+            "movement": "RIGHT"
+          }
+        ],
+        "group_size": 2,
+        "aggregate_waiting_time": 0.0,
+        "maximum_waiting_time": 0.0,
+        "minimum_time_to_intersection": 3.76
+      },
+      {
+        "candidate_id": "phase2_s3_cooperative_opportunity_v12_seed3_3_11|phase2_s3_cooperative_opportunity_v12_seed3_3_8",
+        "vehicle_ids": [
+          "phase2_s3_cooperative_opportunity_v12_seed3_3_11",
+          "phase2_s3_cooperative_opportunity_v12_seed3_3_8"
+        ],
+        "movement_summary": [
+          {
+            "vehicle_id": "phase2_s3_cooperative_opportunity_v12_seed3_3_11",
+            "incoming_edge": "W",
+            "outgoing_edge": "-S",
+            "movement": "RIGHT"
+          },
+          {
+            "vehicle_id": "phase2_s3_cooperative_opportunity_v12_seed3_3_8",
+            "incoming_edge": "N",
+            "outgoing_edge": "-W",
+            "movement": "RIGHT"
+          }
+        ],
+        "group_size": 2,
+        "aggregate_waiting_time": 4.0,
+        "maximum_waiting_time": 4.0,
+        "minimum_time_to_intersection": 3.76
+      },
+      {
+        "candidate_id": "phase2_s3_cooperative_opportunity_v12_seed3_3_11|phase2_s3_cooperative_opportunity_v12_seed3_3_9",
+        "vehicle_ids": [
+          "phase2_s3_cooperative_opportunity_v12_seed3_3_11",
+          "phase2_s3_cooperative_opportunity_v12_seed3_3_9"
+        ],
+        "movement_summary": [
+          {
+            "vehicle_id": "phase2_s3_cooperative_opportunity_v12_seed3_3_11",
+            "incoming_edge": "W",
+            "outgoing_edge": "-S",
+            "movement": "RIGHT"
+          },
+          {
+            "vehicle_id": "phase2_s3_cooperative_opportunity_v12_seed3_3_9",
+            "incoming_edge": "E",
+            "outgoing_edge": "-N",
+            "movement": "RIGHT"
+          }
+        ],
+        "group_size": 2,
+        "aggregate_waiting_time": 0.0,
+        "maximum_waiting_time": 0.0,
+        "minimum_time_to_intersection": 3.76
+      },
+      {
+        "candidate_id": "phase2_s3_cooperative_opportunity_v12_seed3_3_4|phase2_s3_cooperative_opportunity_v12_seed3_3_5",
+        "vehicle_ids": [
+          "phase2_s3_cooperative_opportunity_v12_seed3_3_4",
+          "phase2_s3_cooperative_opportunity_v12_seed3_3_5"
+        ],
+        "movement_summary": [
+          {
+            "vehicle_id": "phase2_s3_cooperative_opportunity_v12_seed3_3_4",
+            "incoming_edge": "N",
+            "outgoing_edge": "-S",
+            "movement": "STRAIGHT"
+          },
+          {
+            "vehicle_id": "phase2_s3_cooperative_opportunity_v12_seed3_3_5",
+            "incoming_edge": "S",
+            "outgoing_edge": "-N",
+            "movement": "STRAIGHT"
+          }
+        ],
+        "group_size": 2,
+        "aggregate_waiting_time": 19.0,
+        "maximum_waiting_time": 10.0,
+        "minimum_time_to_intersection": null
+      },
+      {
+        "candidate_id": "phase2_s3_cooperative_opportunity_v12_seed3_3_6|phase2_s3_cooperative_opportunity_v12_seed3_3_7",
+        "vehicle_ids": [
+          "phase2_s3_cooperative_opportunity_v12_seed3_3_6",
+          "phase2_s3_cooperative_opportunity_v12_seed3_3_7"
+        ],
+        "movement_summary": [
+          {
+            "vehicle_id": "phase2_s3_cooperative_opportunity_v12_seed3_3_6",
+            "incoming_edge": "E",
+            "outgoing_edge": "-S",
+            "movement": "LEFT"
+          },
+          {
+            "vehicle_id": "phase2_s3_cooperative_opportunity_v12_seed3_3_7",
+            "incoming_edge": "W",
+            "outgoing_edge": "-N",
+            "movement": "LEFT"
+          }
+        ],
+        "group_size": 2,
+        "aggregate_waiting_time": 7.0,
+        "maximum_waiting_time": 4.0,
+        "minimum_time_to_intersection": null
+      },
+      {
+        "candidate_id": "phase2_s3_cooperative_opportunity_v12_seed3_3_9|phase2_s3_cooperative_opportunity_v12_seed3_3_8",
+        "vehicle_ids": [
+          "phase2_s3_cooperative_opportunity_v12_seed3_3_9",
+          "phase2_s3_cooperative_opportunity_v12_seed3_3_8"
+        ],
+        "movement_summary": [
+          {
+            "vehicle_id": "phase2_s3_cooperative_opportunity_v12_seed3_3_9",
+            "incoming_edge": "E",
+            "outgoing_edge": "-N",
+            "movement": "RIGHT"
+          },
+          {
+            "vehicle_id": "phase2_s3_cooperative_opportunity_v12_seed3_3_8",
+            "incoming_edge": "N",
+            "outgoing_edge": "-W",
+            "movement": "RIGHT"
+          }
+        ],
+        "group_size": 2,
+        "aggregate_waiting_time": 4.0,
+        "maximum_waiting_time": 4.0,
+        "minimum_time_to_intersection": 12.42
+      },
+      {
+        "candidate_id": "phase2_s3_cooperative_opportunity_v12_seed3_3_10|phase2_s3_cooperative_opportunity_v12_seed3_3_9|phase2_s3_cooperative_opportunity_v12_seed3_3_8",
+        "vehicle_ids": [
+          "phase2_s3_cooperative_opportunity_v12_seed3_3_10",
+          "phase2_s3_cooperative_opportunity_v12_seed3_3_9",
+          "phase2_s3_cooperative_opportunity_v12_seed3_3_8"
+        ],
+        "movement_summary": [
+          {
+            "vehicle_id": "phase2_s3_cooperative_opportunity_v12_seed3_3_10",
+            "incoming_edge": "S",
+            "outgoing_edge": "-E",
+            "movement": "RIGHT"
+          },
+          {
+            "vehicle_id": "phase2_s3_cooperative_opportunity_v12_seed3_3_9",
+            "incoming_edge": "E",
+            "outgoing_edge": "-N",
+            "movement": "RIGHT"
+          },
+          {
+            "vehicle_id": "phase2_s3_cooperative_opportunity_v12_seed3_3_8",
+            "incoming_edge": "N",
+            "outgoing_edge": "-W",
+            "movement": "RIGHT"
+          }
+        ],
+        "group_size": 3,
+        "aggregate_waiting_time": 4.0,
+        "maximum_waiting_time": 4.0,
+        "minimum_time_to_intersection": 4.26
+      },
+      {
+        "candidate_id": "phase2_s3_cooperative_opportunity_v12_seed3_3_11|phase2_s3_cooperative_opportunity_v12_seed3_3_10|phase2_s3_cooperative_opportunity_v12_seed3_3_9|phase2_s3_cooperative_opportunity_v12_seed3_3_8",
+        "vehicle_ids": [
+          "phase2_s3_cooperative_opportunity_v12_seed3_3_11",
+          "phase2_s3_cooperative_opportunity_v12_seed3_3_10",
+          "phase2_s3_cooperative_opportunity_v12_seed3_3_9",
+          "phase2_s3_cooperative_opportunity_v12_seed3_3_8"
+        ],
+        "movement_summary": [
+          {
+            "vehicle_id": "phase2_s3_cooperative_opportunity_v12_seed3_3_11",
+            "incoming_edge": "W",
+            "outgoing_edge": "-S",
+            "movement": "RIGHT"
+          },
+          {
+            "vehicle_id": "phase2_s3_cooperative_opportunity_v12_seed3_3_10",
+            "incoming_edge": "S",
+            "outgoing_edge": "-E",
+            "movement": "RIGHT"
+          },
+          {
+            "vehicle_id": "phase2_s3_cooperative_opportunity_v12_seed3_3_9",
+            "incoming_edge": "E",
+            "outgoing_edge": "-N",
+            "movement": "RIGHT"
+          },
+          {
+            "vehicle_id": "phase2_s3_cooperative_opportunity_v12_seed3_3_8",
+            "incoming_edge": "N",
+            "outgoing_edge": "-W",
+            "movement": "RIGHT"
+          }
+        ],
+        "group_size": 4,
+        "aggregate_waiting_time": 4.0,
+        "maximum_waiting_time": 4.0,
+        "minimum_time_to_intersection": 3.76
+      }
+    ],
+    "candidate_group_sizes": [
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      2,
+      2,
+      2,
+      2,
+      2,
+      2,
+      2,
+      2,
+      3,
+      4
+    ],
+    "deterministic_candidate_id": "phase2_s3_cooperative_opportunity_v12_seed3_3_11|phase2_s3_cooperative_opportunity_v12_seed3_3_10|phase2_s3_cooperative_opportunity_v12_seed3_3_9|phase2_s3_cooperative_opportunity_v12_seed3_3_8",
+    "gemini_candidate_id": "phase2_s3_cooperative_opportunity_v12_seed3_3_4|phase2_s3_cooperative_opportunity_v12_seed3_3_5",
+    "gemini_selected_features": [
+      {
+        "candidate_id": "phase2_s3_cooperative_opportunity_v12_seed3_3_4|phase2_s3_cooperative_opportunity_v12_seed3_3_5",
+        "vehicle_ids": [
+          "phase2_s3_cooperative_opportunity_v12_seed3_3_4",
+          "phase2_s3_cooperative_opportunity_v12_seed3_3_5"
+        ],
+        "movement_summary": [
+          {
+            "vehicle_id": "phase2_s3_cooperative_opportunity_v12_seed3_3_4",
+            "incoming_edge": "N",
+            "outgoing_edge": "-S",
+            "movement": "STRAIGHT"
+          },
+          {
+            "vehicle_id": "phase2_s3_cooperative_opportunity_v12_seed3_3_5",
+            "incoming_edge": "S",
+            "outgoing_edge": "-N",
+            "movement": "STRAIGHT"
+          }
+        ],
+        "group_size": 2,
+        "aggregate_waiting_time": 19.0,
+        "maximum_waiting_time": 10.0,
+        "minimum_time_to_intersection": null
+      }
+    ],
+    "aggregate_waiting_time": 30.0,
+    "maximum_waiting_time": 10.0,
+    "eta_features": [
+      4.26,
+      3.76,
+      null,
+      null,
+      null,
+      null,
+      null,
+      12.42
+    ],
+    "fallback_used": false,
+    "fallback_reason": "",
+    "safety_interventions": 0,
+    "actual_granted_group": [
+      "phase2_s3_cooperative_opportunity_v12_seed3_3_4",
+      "phase2_s3_cooperative_opportunity_v12_seed3_3_5"
+    ],
+    "grant_clearance_reason": "ALL_GRANTED_VEHICLES_LEFT_CONTROL_SCOPE",
+    "grant_duration_seconds": 9.0,
+    "fairness_pressure_context": false,
+    "fairness_target_waiting_time": null
+  }
+]

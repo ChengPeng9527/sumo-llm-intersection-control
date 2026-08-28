@@ -1,0 +1,1005 @@
+{
+  "repository": "D:\\Sumo\\sumo_train",
+  "branch": "phase-18-decision-pipeline-separation",
+  "head": "b27052bdf2521fdfc710a3b3c7b9710396f59ebe",
+  "experiment_id": "dissertation_formal_v4",
+  "vehicle_count": 8,
+  "planned_runs": 12,
+  "completed_runs": 12,
+  "valid_runs": 12,
+  "invalid_runs": 0,
+  "overall": {
+    "provider_attempt_rows": 2784,
+    "provider_success_rows": 4,
+    "provider_failure_rows": 2780,
+    "parser_success_rows": 4,
+    "fallback_rows": 2780,
+    "safety_override_rows": 0,
+    "postprocess_rows": 0
+  },
+  "controllers": {
+    "BaselineRule": {
+      "runs": 3,
+      "traffic_metrics": {
+        "mean_waiting_time": {
+          "mean": 242.04166666666666,
+          "std": 135.43958139455884,
+          "min": 86.0,
+          "max": 329.125,
+          "values": [
+            311.0,
+            86.0,
+            329.125
+          ]
+        },
+        "mean_speed": {
+          "mean": 1.1894908101860338,
+          "std": 0.922977222836337,
+          "min": 0.654805928007573,
+          "max": 2.2552510688695557,
+          "values": [
+            0.654805928007573,
+            2.2552510688695557,
+            0.6584154336809727
+          ]
+        },
+        "throughput": {
+          "mean": 8.0,
+          "std": 0.0,
+          "min": 8,
+          "max": 8,
+          "values": [
+            8,
+            8,
+            8
+          ]
+        },
+        "completion_rate": {
+          "mean": 1.0,
+          "std": 0.0,
+          "min": 1.0,
+          "max": 1.0,
+          "values": [
+            1.0,
+            1.0,
+            1.0
+          ]
+        }
+      },
+      "llm_metrics": {
+        "provider_attempt_rows": 0,
+        "provider_success_rows": 0,
+        "provider_failure_rows": 0,
+        "provider_success_rate": null,
+        "parser_success_rows": 0,
+        "parser_success_given_provider_success": null,
+        "fallback_rows": 0,
+        "fallback_rate": null,
+        "safety_override_rows": 0,
+        "postprocess_rows": 0,
+        "finish_reason_counts": {},
+        "prompt_tokens": {
+          "mean": null,
+          "std": null,
+          "min": null,
+          "max": null,
+          "values": []
+        },
+        "completion_tokens": {
+          "mean": null,
+          "std": null,
+          "min": null,
+          "max": null,
+          "values": []
+        },
+        "total_tokens": {
+          "mean": null,
+          "std": null,
+          "min": null,
+          "max": null,
+          "values": []
+        },
+        "reasoning_tokens": {
+          "mean": null,
+          "std": null,
+          "min": null,
+          "max": null,
+          "values": []
+        },
+        "latency_ms_success": {
+          "mean": null,
+          "std": null,
+          "min": null,
+          "max": null,
+          "values": []
+        }
+      }
+    },
+    "RawLLMController": {
+      "runs": 3,
+      "traffic_metrics": {
+        "mean_waiting_time": {
+          "mean": 15.291666666666666,
+          "std": 2.504163200219453,
+          "min": 12.875,
+          "max": 17.875,
+          "values": [
+            12.875,
+            17.875,
+            15.125
+          ]
+        },
+        "mean_speed": {
+          "mean": 6.59907561466915,
+          "std": 0.3111434414205721,
+          "min": 6.2648633165096275,
+          "max": 6.880360772144653,
+          "values": [
+            6.880360772144653,
+            6.2648633165096275,
+            6.65200275535317
+          ]
+        },
+        "throughput": {
+          "mean": 8.0,
+          "std": 0.0,
+          "min": 8,
+          "max": 8,
+          "values": [
+            8,
+            8,
+            8
+          ]
+        },
+        "completion_rate": {
+          "mean": 1.0,
+          "std": 0.0,
+          "min": 1.0,
+          "max": 1.0,
+          "values": [
+            1.0,
+            1.0,
+            1.0
+          ]
+        }
+      },
+      "llm_metrics": {
+        "provider_attempt_rows": 928,
+        "provider_success_rows": 2,
+        "provider_failure_rows": 926,
+        "provider_success_rate": 0.0021551724137931034,
+        "parser_success_rows": 2,
+        "parser_success_given_provider_success": 1.0,
+        "fallback_rows": 926,
+        "fallback_rate": 0.9978448275862069,
+        "safety_override_rows": 0,
+        "postprocess_rows": 0,
+        "finish_reason_counts": {
+          "stop": 2
+        },
+        "prompt_tokens": {
+          "mean": 543.0,
+          "std": 0.0,
+          "min": 543,
+          "max": 543,
+          "values": [
+            543,
+            543
+          ]
+        },
+        "completion_tokens": {
+          "mean": 36.0,
+          "std": 1.4142135623730951,
+          "min": 35,
+          "max": 37,
+          "values": [
+            35,
+            37
+          ]
+        },
+        "total_tokens": {
+          "mean": 579.0,
+          "std": 1.4142135623730951,
+          "min": 578,
+          "max": 580,
+          "values": [
+            578,
+            580
+          ]
+        },
+        "reasoning_tokens": {
+          "mean": 10.0,
+          "std": 1.4142135623730951,
+          "min": 9,
+          "max": 11,
+          "values": [
+            9,
+            11
+          ]
+        },
+        "latency_ms_success": {
+          "mean": 494.35,
+          "std": 69.5651651331325,
+          "min": 445.16,
+          "max": 543.54,
+          "values": [
+            445.16,
+            543.54
+          ]
+        }
+      }
+    },
+    "HybridLLMController": {
+      "runs": 3,
+      "traffic_metrics": {
+        "mean_waiting_time": {
+          "mean": 15.291666666666666,
+          "std": 2.504163200219453,
+          "min": 12.875,
+          "max": 17.875,
+          "values": [
+            12.875,
+            17.875,
+            15.125
+          ]
+        },
+        "mean_speed": {
+          "mean": 6.59907561466915,
+          "std": 0.3111434414205721,
+          "min": 6.2648633165096275,
+          "max": 6.880360772144653,
+          "values": [
+            6.880360772144653,
+            6.2648633165096275,
+            6.65200275535317
+          ]
+        },
+        "throughput": {
+          "mean": 8.0,
+          "std": 0.0,
+          "min": 8,
+          "max": 8,
+          "values": [
+            8,
+            8,
+            8
+          ]
+        },
+        "completion_rate": {
+          "mean": 1.0,
+          "std": 0.0,
+          "min": 1.0,
+          "max": 1.0,
+          "values": [
+            1.0,
+            1.0,
+            1.0
+          ]
+        }
+      },
+      "llm_metrics": {
+        "provider_attempt_rows": 928,
+        "provider_success_rows": 1,
+        "provider_failure_rows": 927,
+        "provider_success_rate": 0.0010775862068965517,
+        "parser_success_rows": 1,
+        "parser_success_given_provider_success": 1.0,
+        "fallback_rows": 927,
+        "fallback_rate": 0.9989224137931034,
+        "safety_override_rows": 0,
+        "postprocess_rows": 0,
+        "finish_reason_counts": {
+          "stop": 1
+        },
+        "prompt_tokens": {
+          "mean": 543.0,
+          "std": 0.0,
+          "min": 543,
+          "max": 543,
+          "values": [
+            543
+          ]
+        },
+        "completion_tokens": {
+          "mean": 37.0,
+          "std": 0.0,
+          "min": 37,
+          "max": 37,
+          "values": [
+            37
+          ]
+        },
+        "total_tokens": {
+          "mean": 580.0,
+          "std": 0.0,
+          "min": 580,
+          "max": 580,
+          "values": [
+            580
+          ]
+        },
+        "reasoning_tokens": {
+          "mean": 10.0,
+          "std": 0.0,
+          "min": 10,
+          "max": 10,
+          "values": [
+            10
+          ]
+        },
+        "latency_ms_success": {
+          "mean": 1952.86,
+          "std": 0.0,
+          "min": 1952.86,
+          "max": 1952.86,
+          "values": [
+            1952.86
+          ]
+        }
+      }
+    },
+    "HybridLLMSafetyController": {
+      "runs": 3,
+      "traffic_metrics": {
+        "mean_waiting_time": {
+          "mean": 15.291666666666666,
+          "std": 2.504163200219453,
+          "min": 12.875,
+          "max": 17.875,
+          "values": [
+            12.875,
+            17.875,
+            15.125
+          ]
+        },
+        "mean_speed": {
+          "mean": 6.59907561466915,
+          "std": 0.3111434414205721,
+          "min": 6.2648633165096275,
+          "max": 6.880360772144653,
+          "values": [
+            6.880360772144653,
+            6.2648633165096275,
+            6.65200275535317
+          ]
+        },
+        "throughput": {
+          "mean": 8.0,
+          "std": 0.0,
+          "min": 8,
+          "max": 8,
+          "values": [
+            8,
+            8,
+            8
+          ]
+        },
+        "completion_rate": {
+          "mean": 1.0,
+          "std": 0.0,
+          "min": 1.0,
+          "max": 1.0,
+          "values": [
+            1.0,
+            1.0,
+            1.0
+          ]
+        }
+      },
+      "llm_metrics": {
+        "provider_attempt_rows": 928,
+        "provider_success_rows": 1,
+        "provider_failure_rows": 927,
+        "provider_success_rate": 0.0010775862068965517,
+        "parser_success_rows": 1,
+        "parser_success_given_provider_success": 1.0,
+        "fallback_rows": 927,
+        "fallback_rate": 0.9989224137931034,
+        "safety_override_rows": 0,
+        "postprocess_rows": 0,
+        "finish_reason_counts": {
+          "stop": 1
+        },
+        "prompt_tokens": {
+          "mean": 543.0,
+          "std": 0.0,
+          "min": 543,
+          "max": 543,
+          "values": [
+            543
+          ]
+        },
+        "completion_tokens": {
+          "mean": 36.0,
+          "std": 0.0,
+          "min": 36,
+          "max": 36,
+          "values": [
+            36
+          ]
+        },
+        "total_tokens": {
+          "mean": 579.0,
+          "std": 0.0,
+          "min": 579,
+          "max": 579,
+          "values": [
+            579
+          ]
+        },
+        "reasoning_tokens": {
+          "mean": 10.0,
+          "std": 0.0,
+          "min": 10,
+          "max": 10,
+          "values": [
+            10
+          ]
+        },
+        "latency_ms_success": {
+          "mean": 381.07,
+          "std": 0.0,
+          "min": 381.07,
+          "max": 381.07,
+          "values": [
+            381.07
+          ]
+        }
+      }
+    }
+  },
+  "runs": [
+    {
+      "run_id": "FE01_RULE_BASED_v8_seed1_v4",
+      "controller": "BaselineRule",
+      "seed": 1,
+      "vehicle_count": 8,
+      "scenario_id": "formal_low_v8_seed1",
+      "observed_unique_vehicle_count": 8,
+      "observed_vehicle_ids": [
+        "formal_low_v8_seed1_1_0",
+        "formal_low_v8_seed1_1_1",
+        "formal_low_v8_seed1_1_2",
+        "formal_low_v8_seed1_1_3",
+        "formal_low_v8_seed1_1_4",
+        "formal_low_v8_seed1_1_5",
+        "formal_low_v8_seed1_1_6",
+        "formal_low_v8_seed1_1_7"
+      ],
+      "departed_count": 8,
+      "arrived_count": 8,
+      "collision_count": 0,
+      "traffic_metrics": {
+        "mean_waiting_time": 311.0,
+        "mean_speed": 0.654805928007573,
+        "throughput": 8,
+        "completion_rate": 1.0
+      },
+      "llm_metrics": {
+        "provider_attempt_rows": 0,
+        "provider_success_rows": 0,
+        "provider_failure_rows": 0,
+        "parser_success_rows": 0,
+        "fallback_rows": 0,
+        "safety_override_rows": 0,
+        "postprocess_rows": 0,
+        "finish_reason_counts": {},
+        "prompt_tokens": [],
+        "completion_tokens": [],
+        "total_tokens": [],
+        "reasoning_tokens": [],
+        "latency_ms_success": []
+      }
+    },
+    {
+      "run_id": "FE04_RAW_LLM_v8_seed1_v4_real",
+      "controller": "RawLLMController",
+      "seed": 1,
+      "vehicle_count": 8,
+      "scenario_id": "formal_low_v8_seed1",
+      "observed_unique_vehicle_count": 8,
+      "observed_vehicle_ids": [
+        "formal_low_v8_seed1_1_0",
+        "formal_low_v8_seed1_1_1",
+        "formal_low_v8_seed1_1_2",
+        "formal_low_v8_seed1_1_3",
+        "formal_low_v8_seed1_1_4",
+        "formal_low_v8_seed1_1_5",
+        "formal_low_v8_seed1_1_6",
+        "formal_low_v8_seed1_1_7"
+      ],
+      "departed_count": 8,
+      "arrived_count": 8,
+      "collision_count": 0,
+      "traffic_metrics": {
+        "mean_waiting_time": 12.875,
+        "mean_speed": 6.880360772144653,
+        "throughput": 8,
+        "completion_rate": 1.0
+      },
+      "llm_metrics": {
+        "provider_attempt_rows": 290,
+        "provider_success_rows": 1,
+        "provider_failure_rows": 289,
+        "parser_success_rows": 1,
+        "fallback_rows": 289,
+        "safety_override_rows": 0,
+        "postprocess_rows": 0,
+        "finish_reason_counts": {
+          "stop": 1
+        },
+        "prompt_tokens": [
+          543
+        ],
+        "completion_tokens": [
+          35
+        ],
+        "total_tokens": [
+          578
+        ],
+        "reasoning_tokens": [
+          9
+        ],
+        "latency_ms_success": [
+          445.16
+        ]
+      }
+    },
+    {
+      "run_id": "FE05_HYBRID_v8_seed1_v4_real",
+      "controller": "HybridLLMController",
+      "seed": 1,
+      "vehicle_count": 8,
+      "scenario_id": "formal_low_v8_seed1",
+      "observed_unique_vehicle_count": 8,
+      "observed_vehicle_ids": [
+        "formal_low_v8_seed1_1_0",
+        "formal_low_v8_seed1_1_1",
+        "formal_low_v8_seed1_1_2",
+        "formal_low_v8_seed1_1_3",
+        "formal_low_v8_seed1_1_4",
+        "formal_low_v8_seed1_1_5",
+        "formal_low_v8_seed1_1_6",
+        "formal_low_v8_seed1_1_7"
+      ],
+      "departed_count": 8,
+      "arrived_count": 8,
+      "collision_count": 0,
+      "traffic_metrics": {
+        "mean_waiting_time": 12.875,
+        "mean_speed": 6.880360772144653,
+        "throughput": 8,
+        "completion_rate": 1.0
+      },
+      "llm_metrics": {
+        "provider_attempt_rows": 290,
+        "provider_success_rows": 0,
+        "provider_failure_rows": 290,
+        "parser_success_rows": 0,
+        "fallback_rows": 290,
+        "safety_override_rows": 0,
+        "postprocess_rows": 0,
+        "finish_reason_counts": {},
+        "prompt_tokens": [],
+        "completion_tokens": [],
+        "total_tokens": [],
+        "reasoning_tokens": [],
+        "latency_ms_success": []
+      }
+    },
+    {
+      "run_id": "FE06_HYBRID_SAFETY_v8_seed1_v4_real",
+      "controller": "HybridLLMSafetyController",
+      "seed": 1,
+      "vehicle_count": 8,
+      "scenario_id": "formal_low_v8_seed1",
+      "observed_unique_vehicle_count": 8,
+      "observed_vehicle_ids": [
+        "formal_low_v8_seed1_1_0",
+        "formal_low_v8_seed1_1_1",
+        "formal_low_v8_seed1_1_2",
+        "formal_low_v8_seed1_1_3",
+        "formal_low_v8_seed1_1_4",
+        "formal_low_v8_seed1_1_5",
+        "formal_low_v8_seed1_1_6",
+        "formal_low_v8_seed1_1_7"
+      ],
+      "departed_count": 8,
+      "arrived_count": 8,
+      "collision_count": 0,
+      "traffic_metrics": {
+        "mean_waiting_time": 12.875,
+        "mean_speed": 6.880360772144653,
+        "throughput": 8,
+        "completion_rate": 1.0
+      },
+      "llm_metrics": {
+        "provider_attempt_rows": 290,
+        "provider_success_rows": 0,
+        "provider_failure_rows": 290,
+        "parser_success_rows": 0,
+        "fallback_rows": 290,
+        "safety_override_rows": 0,
+        "postprocess_rows": 0,
+        "finish_reason_counts": {},
+        "prompt_tokens": [],
+        "completion_tokens": [],
+        "total_tokens": [],
+        "reasoning_tokens": [],
+        "latency_ms_success": []
+      }
+    },
+    {
+      "run_id": "FE01_RULE_BASED_v8_seed2_v4",
+      "controller": "BaselineRule",
+      "seed": 2,
+      "vehicle_count": 8,
+      "scenario_id": "formal_low_v8_seed2",
+      "observed_unique_vehicle_count": 8,
+      "observed_vehicle_ids": [
+        "formal_low_v8_seed2_2_0",
+        "formal_low_v8_seed2_2_1",
+        "formal_low_v8_seed2_2_2",
+        "formal_low_v8_seed2_2_3",
+        "formal_low_v8_seed2_2_4",
+        "formal_low_v8_seed2_2_5",
+        "formal_low_v8_seed2_2_6",
+        "formal_low_v8_seed2_2_7"
+      ],
+      "departed_count": 8,
+      "arrived_count": 8,
+      "collision_count": 0,
+      "traffic_metrics": {
+        "mean_waiting_time": 86.0,
+        "mean_speed": 2.2552510688695557,
+        "throughput": 8,
+        "completion_rate": 1.0
+      },
+      "llm_metrics": {
+        "provider_attempt_rows": 0,
+        "provider_success_rows": 0,
+        "provider_failure_rows": 0,
+        "parser_success_rows": 0,
+        "fallback_rows": 0,
+        "safety_override_rows": 0,
+        "postprocess_rows": 0,
+        "finish_reason_counts": {},
+        "prompt_tokens": [],
+        "completion_tokens": [],
+        "total_tokens": [],
+        "reasoning_tokens": [],
+        "latency_ms_success": []
+      }
+    },
+    {
+      "run_id": "FE04_RAW_LLM_v8_seed2_v4_real",
+      "controller": "RawLLMController",
+      "seed": 2,
+      "vehicle_count": 8,
+      "scenario_id": "formal_low_v8_seed2",
+      "observed_unique_vehicle_count": 8,
+      "observed_vehicle_ids": [
+        "formal_low_v8_seed2_2_0",
+        "formal_low_v8_seed2_2_1",
+        "formal_low_v8_seed2_2_2",
+        "formal_low_v8_seed2_2_3",
+        "formal_low_v8_seed2_2_4",
+        "formal_low_v8_seed2_2_5",
+        "formal_low_v8_seed2_2_6",
+        "formal_low_v8_seed2_2_7"
+      ],
+      "departed_count": 8,
+      "arrived_count": 8,
+      "collision_count": 0,
+      "traffic_metrics": {
+        "mean_waiting_time": 17.875,
+        "mean_speed": 6.2648633165096275,
+        "throughput": 8,
+        "completion_rate": 1.0
+      },
+      "llm_metrics": {
+        "provider_attempt_rows": 335,
+        "provider_success_rows": 1,
+        "provider_failure_rows": 334,
+        "parser_success_rows": 1,
+        "fallback_rows": 334,
+        "safety_override_rows": 0,
+        "postprocess_rows": 0,
+        "finish_reason_counts": {
+          "stop": 1
+        },
+        "prompt_tokens": [
+          543
+        ],
+        "completion_tokens": [
+          37
+        ],
+        "total_tokens": [
+          580
+        ],
+        "reasoning_tokens": [
+          11
+        ],
+        "latency_ms_success": [
+          543.54
+        ]
+      }
+    },
+    {
+      "run_id": "FE05_HYBRID_v8_seed2_v4_real",
+      "controller": "HybridLLMController",
+      "seed": 2,
+      "vehicle_count": 8,
+      "scenario_id": "formal_low_v8_seed2",
+      "observed_unique_vehicle_count": 8,
+      "observed_vehicle_ids": [
+        "formal_low_v8_seed2_2_0",
+        "formal_low_v8_seed2_2_1",
+        "formal_low_v8_seed2_2_2",
+        "formal_low_v8_seed2_2_3",
+        "formal_low_v8_seed2_2_4",
+        "formal_low_v8_seed2_2_5",
+        "formal_low_v8_seed2_2_6",
+        "formal_low_v8_seed2_2_7"
+      ],
+      "departed_count": 8,
+      "arrived_count": 8,
+      "collision_count": 0,
+      "traffic_metrics": {
+        "mean_waiting_time": 17.875,
+        "mean_speed": 6.2648633165096275,
+        "throughput": 8,
+        "completion_rate": 1.0
+      },
+      "llm_metrics": {
+        "provider_attempt_rows": 335,
+        "provider_success_rows": 1,
+        "provider_failure_rows": 334,
+        "parser_success_rows": 1,
+        "fallback_rows": 334,
+        "safety_override_rows": 0,
+        "postprocess_rows": 0,
+        "finish_reason_counts": {
+          "stop": 1
+        },
+        "prompt_tokens": [
+          543
+        ],
+        "completion_tokens": [
+          37
+        ],
+        "total_tokens": [
+          580
+        ],
+        "reasoning_tokens": [
+          10
+        ],
+        "latency_ms_success": [
+          1952.86
+        ]
+      }
+    },
+    {
+      "run_id": "FE06_HYBRID_SAFETY_v8_seed2_v4_real",
+      "controller": "HybridLLMSafetyController",
+      "seed": 2,
+      "vehicle_count": 8,
+      "scenario_id": "formal_low_v8_seed2",
+      "observed_unique_vehicle_count": 8,
+      "observed_vehicle_ids": [
+        "formal_low_v8_seed2_2_0",
+        "formal_low_v8_seed2_2_1",
+        "formal_low_v8_seed2_2_2",
+        "formal_low_v8_seed2_2_3",
+        "formal_low_v8_seed2_2_4",
+        "formal_low_v8_seed2_2_5",
+        "formal_low_v8_seed2_2_6",
+        "formal_low_v8_seed2_2_7"
+      ],
+      "departed_count": 8,
+      "arrived_count": 8,
+      "collision_count": 0,
+      "traffic_metrics": {
+        "mean_waiting_time": 17.875,
+        "mean_speed": 6.2648633165096275,
+        "throughput": 8,
+        "completion_rate": 1.0
+      },
+      "llm_metrics": {
+        "provider_attempt_rows": 335,
+        "provider_success_rows": 0,
+        "provider_failure_rows": 335,
+        "parser_success_rows": 0,
+        "fallback_rows": 335,
+        "safety_override_rows": 0,
+        "postprocess_rows": 0,
+        "finish_reason_counts": {},
+        "prompt_tokens": [],
+        "completion_tokens": [],
+        "total_tokens": [],
+        "reasoning_tokens": [],
+        "latency_ms_success": []
+      }
+    },
+    {
+      "run_id": "FE01_RULE_BASED_v8_seed3_v4",
+      "controller": "BaselineRule",
+      "seed": 3,
+      "vehicle_count": 8,
+      "scenario_id": "formal_low_v8_seed3",
+      "observed_unique_vehicle_count": 8,
+      "observed_vehicle_ids": [
+        "formal_low_v8_seed3_3_0",
+        "formal_low_v8_seed3_3_1",
+        "formal_low_v8_seed3_3_2",
+        "formal_low_v8_seed3_3_3",
+        "formal_low_v8_seed3_3_4",
+        "formal_low_v8_seed3_3_5",
+        "formal_low_v8_seed3_3_6",
+        "formal_low_v8_seed3_3_7"
+      ],
+      "departed_count": 8,
+      "arrived_count": 8,
+      "collision_count": 0,
+      "traffic_metrics": {
+        "mean_waiting_time": 329.125,
+        "mean_speed": 0.6584154336809727,
+        "throughput": 8,
+        "completion_rate": 1.0
+      },
+      "llm_metrics": {
+        "provider_attempt_rows": 0,
+        "provider_success_rows": 0,
+        "provider_failure_rows": 0,
+        "parser_success_rows": 0,
+        "fallback_rows": 0,
+        "safety_override_rows": 0,
+        "postprocess_rows": 0,
+        "finish_reason_counts": {},
+        "prompt_tokens": [],
+        "completion_tokens": [],
+        "total_tokens": [],
+        "reasoning_tokens": [],
+        "latency_ms_success": []
+      }
+    },
+    {
+      "run_id": "FE04_RAW_LLM_v8_seed3_v4_real",
+      "controller": "RawLLMController",
+      "seed": 3,
+      "vehicle_count": 8,
+      "scenario_id": "formal_low_v8_seed3",
+      "observed_unique_vehicle_count": 8,
+      "observed_vehicle_ids": [
+        "formal_low_v8_seed3_3_0",
+        "formal_low_v8_seed3_3_1",
+        "formal_low_v8_seed3_3_2",
+        "formal_low_v8_seed3_3_3",
+        "formal_low_v8_seed3_3_4",
+        "formal_low_v8_seed3_3_5",
+        "formal_low_v8_seed3_3_6",
+        "formal_low_v8_seed3_3_7"
+      ],
+      "departed_count": 8,
+      "arrived_count": 8,
+      "collision_count": 0,
+      "traffic_metrics": {
+        "mean_waiting_time": 15.125,
+        "mean_speed": 6.65200275535317,
+        "throughput": 8,
+        "completion_rate": 1.0
+      },
+      "llm_metrics": {
+        "provider_attempt_rows": 303,
+        "provider_success_rows": 0,
+        "provider_failure_rows": 303,
+        "parser_success_rows": 0,
+        "fallback_rows": 303,
+        "safety_override_rows": 0,
+        "postprocess_rows": 0,
+        "finish_reason_counts": {},
+        "prompt_tokens": [],
+        "completion_tokens": [],
+        "total_tokens": [],
+        "reasoning_tokens": [],
+        "latency_ms_success": []
+      }
+    },
+    {
+      "run_id": "FE05_HYBRID_v8_seed3_v4_real",
+      "controller": "HybridLLMController",
+      "seed": 3,
+      "vehicle_count": 8,
+      "scenario_id": "formal_low_v8_seed3",
+      "observed_unique_vehicle_count": 8,
+      "observed_vehicle_ids": [
+        "formal_low_v8_seed3_3_0",
+        "formal_low_v8_seed3_3_1",
+        "formal_low_v8_seed3_3_2",
+        "formal_low_v8_seed3_3_3",
+        "formal_low_v8_seed3_3_4",
+        "formal_low_v8_seed3_3_5",
+        "formal_low_v8_seed3_3_6",
+        "formal_low_v8_seed3_3_7"
+      ],
+      "departed_count": 8,
+      "arrived_count": 8,
+      "collision_count": 0,
+      "traffic_metrics": {
+        "mean_waiting_time": 15.125,
+        "mean_speed": 6.65200275535317,
+        "throughput": 8,
+        "completion_rate": 1.0
+      },
+      "llm_metrics": {
+        "provider_attempt_rows": 303,
+        "provider_success_rows": 0,
+        "provider_failure_rows": 303,
+        "parser_success_rows": 0,
+        "fallback_rows": 303,
+        "safety_override_rows": 0,
+        "postprocess_rows": 0,
+        "finish_reason_counts": {},
+        "prompt_tokens": [],
+        "completion_tokens": [],
+        "total_tokens": [],
+        "reasoning_tokens": [],
+        "latency_ms_success": []
+      }
+    },
+    {
+      "run_id": "FE06_HYBRID_SAFETY_v8_seed3_v4_real",
+      "controller": "HybridLLMSafetyController",
+      "seed": 3,
+      "vehicle_count": 8,
+      "scenario_id": "formal_low_v8_seed3",
+      "observed_unique_vehicle_count": 8,
+      "observed_vehicle_ids": [
+        "formal_low_v8_seed3_3_0",
+        "formal_low_v8_seed3_3_1",
+        "formal_low_v8_seed3_3_2",
+        "formal_low_v8_seed3_3_3",
+        "formal_low_v8_seed3_3_4",
+        "formal_low_v8_seed3_3_5",
+        "formal_low_v8_seed3_3_6",
+        "formal_low_v8_seed3_3_7"
+      ],
+      "departed_count": 8,
+      "arrived_count": 8,
+      "collision_count": 0,
+      "traffic_metrics": {
+        "mean_waiting_time": 15.125,
+        "mean_speed": 6.65200275535317,
+        "throughput": 8,
+        "completion_rate": 1.0
+      },
+      "llm_metrics": {
+        "provider_attempt_rows": 303,
+        "provider_success_rows": 1,
+        "provider_failure_rows": 302,
+        "parser_success_rows": 1,
+        "fallback_rows": 302,
+        "safety_override_rows": 0,
+        "postprocess_rows": 0,
+        "finish_reason_counts": {
+          "stop": 1
+        },
+        "prompt_tokens": [
+          543
+        ],
+        "completion_tokens": [
+          36
+        ],
+        "total_tokens": [
+          579
+        ],
+        "reasoning_tokens": [
+          10
+        ],
+        "latency_ms_success": [
+          381.07
+        ]
+      }
+    }
+  ]
+}

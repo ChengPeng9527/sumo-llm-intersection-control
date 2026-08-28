@@ -151,8 +151,15 @@ def load_project_config() -> dict:
     config = load_yaml_config("project_config.yaml")
     config["project_root"] = str(PROJECT_ROOT)
     config["project_root_path"] = PROJECT_ROOT
-    config["sumo_binary_path"] = resolve_project_path(config["sumo_binary"])
-    config["sumo_gui_binary_path"] = resolve_project_path(config["sumo_gui_binary"])
+    sumo_home = os.getenv("SUMO_HOME", "").strip()
+    if sumo_home:
+        # A user-supplied SUMO_HOME makes the checked-out project portable.
+        sumo_bin = Path(os.path.expandvars(sumo_home)).expanduser() / "bin"
+        config["sumo_binary_path"] = sumo_bin / Path(config["sumo_binary"]).name
+        config["sumo_gui_binary_path"] = sumo_bin / Path(config["sumo_gui_binary"]).name
+    else:
+        config["sumo_binary_path"] = resolve_project_path(config["sumo_binary"])
+        config["sumo_gui_binary_path"] = resolve_project_path(config["sumo_gui_binary"])
     config["sumo_config_path"] = resolve_project_path(config["sumo_config"])
     config["results_dir_path"] = resolve_project_path(config["results_dir"])
     return config

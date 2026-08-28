@@ -1,0 +1,18 @@
+{
+  "routes_file": "D:\\Sumo\\sumo_train\\simulation\\generated_routes\\phase2_s3_cooperative_opportunity_v12_seed1\\routes.xml",
+  "route_count": 12,
+  "route_ids": [
+    "N_W",
+    "E_N",
+    "W_S",
+    "S_E",
+    "N_S",
+    "S_N",
+    "E_S",
+    "W_N"
+  ],
+  "vehicle_count": 12,
+  "seed": 1,
+  "scenario_id": "phase2_s3_cooperative_opportunity_v12_seed1",
+  "sumocfg_path": "D:\\Sumo\\sumo_train\\simulation\\generated_routes\\phase2_s3_cooperative_opportunity_v12_seed1\\simulation.sumocfg"
+}

@@ -1,0 +1,17 @@
+{
+  "formal_run_count": 36,
+  "paired_condition_count": 18,
+  "valid_completion_count": 36,
+  "gemini_request_count": 93,
+  "provider_success_count": 93,
+  "parser_success_count": 93,
+  "fallback_count": 0,
+  "agreement_count": 89,
+  "disagreement_count": 4,
+  "prompt_tokens": 205347,
+  "completion_tokens": 4645,
+  "total_tokens": 209992,
+  "collision_count": 0,
+  "safety_intervention_count": 0,
+  "grant_timeout_count": 0
+}

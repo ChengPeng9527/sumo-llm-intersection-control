@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<additional xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xsi:noNamespaceSchemaLocation="http://sumo.dlr.de/xsd/additional_file.xsd">
+    <poly id="grass_nw" type="presentation.grass" color="49,67,60" fill="1" layer="-20"
+          shape="-181.00,31.00 -62.00,31.00 -62.00,112.00 -181.00,112.00"/>
+    <poly id="grass_ne" type="presentation.grass" color="49,67,60" fill="1" layer="-20"
+          shape="-24.00,31.00 104.00,31.00 104.00,112.00 -24.00,112.00"/>
+    <poly id="grass_sw" type="presentation.grass" color="49,67,60" fill="1" layer="-20"
+          shape="-181.00,-101.00 -62.00,-101.00 -62.00,-8.00 -181.00,-8.00"/>
+    <poly id="grass_se" type="presentation.grass" color="49,67,60" fill="1" layer="-20"
+          shape="-24.00,-101.00 104.00,-101.00 104.00,-8.00 -24.00,-8.00"/>
+    <poly id="pavement_nw" type="presentation.pavement" color="95,103,106" fill="1" layer="-10"
+          shape="-66.00,31.00 -58.00,31.00 -58.00,39.00 -66.00,39.00"/>
+    <poly id="pavement_ne" type="presentation.pavement" color="95,103,106" fill="1" layer="-10"
+          shape="-29.00,31.00 -21.00,31.00 -21.00,39.00 -29.00,39.00"/>
+    <poly id="pavement_sw" type="presentation.pavement" color="95,103,106" fill="1" layer="-10"
+          shape="-66.00,-13.00 -58.00,-13.00 -58.00,-5.00 -66.00,-5.00"/>
+    <poly id="pavement_se" type="presentation.pavement" color="95,103,106" fill="1" layer="-10"
+          shape="-29.00,-13.00 -21.00,-13.00 -21.00,-5.00 -29.00,-5.00"/>
+    <poly id="controller_control_zone_45m" type="presentation.control_zone"
+          color="45,190,245,210" fill="0" lineWidth="1.50" layer="20"
+          shape="1.35,11.26 0.67,19.07 -1.36,26.65 -4.68,33.76 -9.18,40.19 -14.72,45.73 -21.15,50.23 -28.26,53.55 -35.84,55.58 -43.65,56.26 -51.46,55.58 -59.04,53.55 -66.15,50.23 -72.58,45.73 -78.12,40.19 -82.62,33.76 -85.94,26.65 -87.97,19.07 -88.65,11.26 -87.97,3.45 -85.94,-4.13 -82.62,-11.24 -78.12,-17.67 -72.58,-23.21 -66.15,-27.71 -59.04,-31.03 -51.46,-33.06 -43.65,-33.74 -35.84,-33.06 -28.26,-31.03 -21.15,-27.71 -14.72,-23.21 -9.18,-17.67 -4.68,-11.24 -1.36,-4.13 0.67,3.45 1.35,11.26"/>
+</additional>
