@@ -271,6 +271,8 @@ def summarize_formal_run(result: dict) -> dict:
         "total_tokens": summary.get("total_tokens", 0),
         "agreement_count": sum(record.get("candidate_agreement") is True for record in comparable),
         "disagreement_count": sum(bool(record.get("candidate_disagreement")) for record in comparable),
+        "llm_episode_valid": summary.get("llm_episode_valid"),
+        "llm_effectiveness_eligible": summary.get("planner_mode") != GEMINI_CANDIDATE or bool(summary.get("llm_episode_valid")),
     }
 
 

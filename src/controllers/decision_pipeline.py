@@ -355,6 +355,7 @@ def run_pipeline_controller(
     grant_timeout_seconds: float = 45.0,
     candidate_provider_call: Callable[[str], object] | None = None,
     max_candidate_provider_requests: int = 0,
+    strict_llm_mode: bool = False,
     initial_demand_signature: str = "",
 ) -> dict:
     from common import (
@@ -768,6 +769,9 @@ def run_pipeline_controller(
             llm_mode="real",
             safety_guard_fn=safety_guard,
         )
+        if strict_llm_mode:
+            from src.experiments.llm_validity import enforce_strict_llm_decision
+            enforce_strict_llm_decision(next(iter(trace.values())), strict_llm_mode=True)
         request_parameters = {
             "model": PHASE2_MODEL,
             "timeout_seconds": PHASE2_TIMEOUT_SECONDS,

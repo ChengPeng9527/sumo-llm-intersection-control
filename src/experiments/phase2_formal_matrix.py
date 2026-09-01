@@ -169,12 +169,19 @@ def summarize_conditions(run_summaries: list[dict]) -> list[dict]:
 
     summaries: list[dict] = []
     for (scenario_class, vehicle_count, planner), rows in sorted(grouped.items()):
+        total_rows = list(rows)
+        if planner == GEMINI_CANDIDATE:
+            rows = [row for row in rows if row.get("llm_episode_valid") is True]
         summary = {
             "scenario_class": scenario_class,
             "vehicle_count": vehicle_count,
             "planner": planner,
             "seed_count": len(rows),
             "seeds": sorted(row["seed"] for row in rows),
+            "total_llm_episodes": len(total_rows) if planner == GEMINI_CANDIDATE else 0,
+            "valid_llm_episodes": len(rows) if planner == GEMINI_CANDIDATE else 0,
+            "invalid_llm_episodes": (len(total_rows) - len(rows)) if planner == GEMINI_CANDIDATE else 0,
+            "excluded_llm_episodes": (len(total_rows) - len(rows)) if planner == GEMINI_CANDIDATE else 0,
         }
         for metric in PRIMARY_METRICS:
             summary[metric] = _describe([row[metric] for row in rows])

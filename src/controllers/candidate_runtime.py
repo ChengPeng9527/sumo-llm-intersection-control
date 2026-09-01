@@ -327,12 +327,13 @@ class CandidateGrantController:
         return list(self.completed_decision_records)
 
     def summary(self) -> dict:
+        from src.experiments.llm_validity import summarize_llm_validity
         records = self.completed_decision_records
         durations = [float(record.get("grant_duration_seconds") or 0.0) for record in records]
         latencies = [float(record.get("latency_ms") or 0.0) for record in records]
         request_count = sum(bool(record.get("provider_request_attempted")) for record in records)
         fallback_count = sum(bool(record.get("fallback_used")) for record in records)
-        return {
+        summary = {
             "planner_mode": self.planner_mode,
             "decision_epoch_count": self.decision_epoch_count,
             "grant_count": len(records),
@@ -350,3 +351,5 @@ class CandidateGrantController:
             "total_completion_tokens": sum(int(record.get("completion_tokens") or 0) for record in records),
             "total_tokens": sum(int(record.get("total_tokens") or 0) for record in records),
         }
+        summary.update(summarize_llm_validity(records, llm_evaluation=self.planner_mode == GEMINI_CANDIDATE))
+        return summary

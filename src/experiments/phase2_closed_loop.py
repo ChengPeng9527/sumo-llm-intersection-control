@@ -47,6 +47,7 @@ def run_phase2_closed_loop_episode(
     candidate_provider_call: Callable[[str], object] | None = None,
     grant_timeout_seconds: float = 45.0,
     max_gemini_requests: int = 0,
+    strict_llm_mode: bool = False,
     run_label: str = "step8_smoke",
 ) -> dict:
     project = load_project_config()
@@ -79,6 +80,7 @@ def run_phase2_closed_loop_episode(
         candidate_provider_call=candidate_provider_call,
         max_candidate_provider_requests=max_gemini_requests,
         initial_demand_signature=generation["initial_demand_signature"],
+        strict_llm_mode=strict_llm_mode,
     )
     result["initial_conditions"] = initial_condition_record(generation)
     return result
