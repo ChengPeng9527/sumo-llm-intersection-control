@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import json
 import time
 from dataclasses import dataclass, field
 from datetime import datetime, timezone
@@ -70,6 +71,7 @@ class CandidateGrantController:
         vehicle_count: int,
         seed: int,
         grant_timeout_seconds: float = DEFAULT_GRANT_TIMEOUT_SECONDS,
+        before_planner_hook: Callable[["CandidateGrantController", list[dict], list[list[str]], int, int, float], None] | None = None,
     ) -> None:
         self.planner_mode = normalize_candidate_planner_mode(planner_mode)
         if grant_timeout_seconds <= 0:
@@ -81,6 +83,7 @@ class CandidateGrantController:
         self.vehicle_count = int(vehicle_count)
         self.seed = int(seed)
         self.grant_timeout_seconds = float(grant_timeout_seconds)
+        self.before_planner_hook = before_planner_hook
         self.active_grant: ActivePassageGrant | None = None
         self.completed_decision_records: list[dict] = []
         self.decision_epoch_count = 0
@@ -258,6 +261,15 @@ class CandidateGrantController:
         if self.active_grant is None and clearance_reason != "GRANT_TIMEOUT":
             candidate_groups = build_safe_candidate_groups(vehicle_states)
             if candidate_groups:
+                if self.before_planner_hook is not None:
+                    self.before_planner_hook(
+                        self,
+                        vehicle_states,
+                        candidate_groups,
+                        self.decision_epoch_count + 1,
+                        simulation_step,
+                        simulation_time,
+                    )
                 self.decision_epoch_count += 1
                 decision_epoch_started = True
                 request_started_at = _utc_now()
@@ -321,6 +333,80 @@ class CandidateGrantController:
             simulation_time=simulation_time,
             reason=reason,
         )
+
+    def checkpoint_state(self) -> dict:
+        """Return the complete mutable controller state required for replay."""
+        active_grant = None
+        if self.active_grant is not None:
+            active_grant = {
+                "candidate_id": self.active_grant.candidate_id,
+                "vehicle_ids": list(self.active_grant.vehicle_ids),
+                "start_step": self.active_grant.start_step,
+                "start_time": self.active_grant.start_time,
+                "trace_template": self.active_grant.trace_template,
+                "decision_record": self.active_grant.decision_record,
+            }
+        state = {
+            "schema_version": 1,
+            "planner_mode": self.planner_mode,
+            "run_id": self.run_id,
+            "scenario_id": self.scenario_id,
+            "vehicle_count": self.vehicle_count,
+            "seed": self.seed,
+            "grant_timeout_seconds": self.grant_timeout_seconds,
+            "decision_epoch_count": self.decision_epoch_count,
+            "completed_decision_records": self.completed_decision_records,
+            "active_grant": active_grant,
+        }
+        try:
+            return json.loads(json.dumps(state, allow_nan=False))
+        except (TypeError, ValueError) as exc:
+            raise ValueError("Controller state is not JSON serializable") from exc
+
+    @classmethod
+    def from_checkpoint_state(
+        cls,
+        state: dict,
+        *,
+        planner_fn: Callable[[list[dict], list[list[str]], int, int, float], PlannerDecision | dict[str, dict]],
+        safety_guard_fn: Callable[[dict[str, dict], list[dict]], dict[str, dict]],
+        before_planner_hook: Callable[["CandidateGrantController", list[dict], list[list[str]], int, int, float], None] | None = None,
+    ) -> "CandidateGrantController":
+        required = {
+            "schema_version", "planner_mode", "run_id", "scenario_id", "vehicle_count", "seed",
+            "grant_timeout_seconds", "decision_epoch_count", "completed_decision_records", "active_grant",
+        }
+        if not isinstance(state, dict) or set(state) != required or state.get("schema_version") != 1:
+            raise ValueError("Malformed controller checkpoint state")
+        controller = cls(
+            planner_mode=state["planner_mode"],
+            planner_fn=planner_fn,
+            safety_guard_fn=safety_guard_fn,
+            run_id=str(state["run_id"]),
+            scenario_id=str(state["scenario_id"]),
+            vehicle_count=int(state["vehicle_count"]),
+            seed=int(state["seed"]),
+            grant_timeout_seconds=float(state["grant_timeout_seconds"]),
+            before_planner_hook=before_planner_hook,
+        )
+        if not isinstance(state["completed_decision_records"], list) or int(state["decision_epoch_count"]) < 0:
+            raise ValueError("Malformed controller checkpoint records")
+        controller.completed_decision_records = json.loads(json.dumps(state["completed_decision_records"], allow_nan=False))
+        controller.decision_epoch_count = int(state["decision_epoch_count"])
+        active = state["active_grant"]
+        if active is not None:
+            active_required = {"candidate_id", "vehicle_ids", "start_step", "start_time", "trace_template", "decision_record"}
+            if not isinstance(active, dict) or set(active) != active_required or not active["candidate_id"] or not active["vehicle_ids"]:
+                raise ValueError("Malformed active grant checkpoint state")
+            controller.active_grant = ActivePassageGrant(
+                candidate_id=str(active["candidate_id"]),
+                vehicle_ids=tuple(str(vehicle_id) for vehicle_id in active["vehicle_ids"]),
+                start_step=int(active["start_step"]),
+                start_time=float(active["start_time"]),
+                trace_template=json.loads(json.dumps(active["trace_template"], allow_nan=False)),
+                decision_record=json.loads(json.dumps(active["decision_record"], allow_nan=False)),
+            )
+        return controller
 
     @property
     def decision_records(self) -> list[dict]:
