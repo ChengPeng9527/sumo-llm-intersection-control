@@ -1,5 +1,13 @@
 # Writing Status
 
+> **HISTORICAL / SUPERSEDED STATUS RECORD**
+>
+> This is an earlier manuscript-writing snapshot on the former Phase 18 branch.
+> It is not the current dissertation or project state. Use
+> [`docs/current_project_status.md`](../current_project_status.md) for current
+> state and its dissertation/Overleaf boundary. The underlying historical draft
+> inventory is retained below.
+
 Repository: `D:\Sumo\sumo_train`
 Branch: `phase-18-decision-pipeline-separation`
 HEAD: `b27052bdf2521fdfc710a3b3c7b9710396f59ebe`

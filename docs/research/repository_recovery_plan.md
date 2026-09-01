@@ -1,5 +1,14 @@
 # Repository Recovery Plan
 
+> **HISTORICAL / SUPERSEDED RECOVERY-STATUS RECORD**
+>
+> This recovery plan predates the verified canonical repository and current
+> release baseline. Do not use its historical recovery-source path or branch as
+> an operational repository instruction. The only canonical repository is
+> `D:\Sumo\sumo_train`; current state is recorded in
+> [`docs/current_project_status.md`](../current_project_status.md). The plan is
+> retained below solely as historical recovery provenance.
+
 ## Scope
 
 This plan records the recovery boundary between:

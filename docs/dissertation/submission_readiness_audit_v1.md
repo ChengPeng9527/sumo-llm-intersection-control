@@ -1,5 +1,12 @@
 # Submission Readiness Audit v1
 
+> **HISTORICAL / SUPERSEDED STATUS AUDIT**
+>
+> This audit applies to an earlier Phase 18 manuscript path and does not state
+> current repository or dissertation readiness. Use
+> [`docs/current_project_status.md`](../current_project_status.md) for current
+> state. The audit findings remain preserved as historical manuscript evidence.
+
 Repository: `D:\Sumo\sumo_train`
 Branch: `phase-18-decision-pipeline-separation`
 HEAD: `b27052bdf2521fdfc710a3b3c7b9710396f59ebe`
@@ -133,4 +140,3 @@ The manuscript is self-contained, the evidence boundary is stable, the citation 
 ## 15. Final Verdict
 
 - `READY_FOR_WORD_FORMATTING`
-

@@ -1,5 +1,12 @@
 ﻿# Research Readiness Review
 
+> **HISTORICAL / SUPERSEDED STATUS RECORD**
+>
+> This is a pre-formal-experiment Phase 18 readiness assessment. Its conclusion
+> that the formal sweep had not run is no longer current. Do not use it to infer
+> current project status; use [`docs/current_project_status.md`](../current_project_status.md).
+> The review remains preserved as historical readiness evidence only.
+
 ## Executive Summary
 
 The repository is **pilot-ready** and the method is effectively frozen for formal experimentation, but the project is **not yet dissertation-evaluation complete**.

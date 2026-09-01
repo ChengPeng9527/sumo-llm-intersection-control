@@ -1,5 +1,14 @@
 # Research Traceability Matrix
 
+> **HISTORICAL / SUPERSEDED RESEARCH-PLANNING STATUS RECORD**
+>
+> This five-RQ Phase 18 planning matrix predates the completed attribution-aware
+> research framing and Phase 2 formal matrix. It is not the
+> current claim/evidence mapping. Use
+> [`docs/current_project_status.md`](../current_project_status.md) for current
+> state and `release_evidence/CLAIM_TRACEABILITY.md` for the retained principal
+> evidence map. The original planning record is preserved unchanged below.
+
 | RQ | Hypothesis | Experiment | Metrics | Evidence | Expected Figure/Table | Results Section | Discussion Section |
 | --- | --- | --- | --- | --- | --- | --- | --- |
 | RQ1 | Raw LLM is usable, but not reliable enough alone | Experiment A | completion rate, throughput, mean waiting time, parser success rate, decision latency | historical live LLM runs, Phase 18 smoke, Phase 18 live revalidation | controller comparison table, raw action distribution figure | Results: raw-vs-baseline comparison | Discussion: whether LLM output is usable without extra layers |

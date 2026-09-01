@@ -1,5 +1,12 @@
 # Supervisor Readiness Audit v1
 
+> **HISTORICAL / SUPERSEDED STATUS AUDIT**
+>
+> This is an earlier Phase 18 supervisor-readiness assessment, not the current
+> dissertation or repository state. Use
+> [`docs/current_project_status.md`](../current_project_status.md) for current
+> state. Its historical assessment is retained below without reinterpretation.
+
 ## Scope
 
 This audit rates the current dissertation draft from a supervisor / MSc marker perspective.

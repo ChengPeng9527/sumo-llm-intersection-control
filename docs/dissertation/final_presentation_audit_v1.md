@@ -1,5 +1,12 @@
 # Final Presentation Audit v1
 
+> **HISTORICAL / SUPERSEDED STATUS AUDIT**
+>
+> This audit describes an earlier Phase 18 manuscript and figure set. It is not
+> the current dissertation or repository state. Use
+> [`docs/current_project_status.md`](../current_project_status.md) for current
+> state. Its historical presentation findings are retained below.
+
 Repository: `D:\Sumo\sumo_train`
 Branch: `phase-18-decision-pipeline-separation`
 HEAD: `b27052bdf2521fdfc710a3b3c7b9710396f59ebe`

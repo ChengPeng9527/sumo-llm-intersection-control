@@ -1,5 +1,14 @@
 # Current Research Status
 
+> **HISTORICAL / SUPERSEDED STATUS RECORD**
+>
+> This document is retained as a Phase 18 status snapshot. Its branch, test
+> baseline, formal-experiment readiness statements, and five-RQ planning model
+> predate the completed Phase 1/Phase 2 research and supervisor-release
+> baseline. Do not use it to infer current project status. The sole current
+> state source is [`docs/current_project_status.md`](../current_project_status.md).
+> Its historical research record remains preserved at its stated scope.
+
 ## Dissertation Goal
 
 Evaluate whether an LLM-assisted hybrid decision framework can improve cooperative decision making at an unsignalized intersection while preserving deterministic safety.

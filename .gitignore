@@ -5,6 +5,8 @@ __pycache__/
 venv/
 env/
 .env
+.env.*
+!.env.example
 results/
 simulation/generated_routes/
 archive/generated_old/
@@ -15,3 +17,10 @@ archive/unrelated_documents/
 *.pyo
 *.pyd
 *.log
+
+# Local dissertation reconstruction/export artefacts.
+docs/dissertation/SumoControl.zip
+docs/dissertation/_old_report_extract/
+docs/dissertation/final_submission_candidate.zip
+docs/dissertation/final_submission_latex_v7.zip
+docs/dissertation/final_reconstruction/
